@@ -1,0 +1,40 @@
+
+@extends('layouts.app')
+
+@section('content')
+
+<div class="w-[25.37em] h-[20em] bg-white border border-gray-400 rounded-xl">
+  
+  <!-- Botón para volver atrás -->
+  <button class="ml-4 mt-4 rounded-md border border-white">
+    <img src="{{ asset('svg/icons/back-icon.svg') }}" alt="">
+  </button>
+
+  <!-- Título de la sección -->
+  <h2 class="text-center text-2xl font-sans mt-[-1em]">Filtrar por categoria</h2>
+
+  <!-- Opciones de categoría -->
+  <div class="mt-4">
+    <label class="block ml-30 mb-4">
+      <input type="checkbox" class="mr-2"> Electrodomesticos
+    </label>
+    <label class="block ml-30 mb-4">
+      <input type="checkbox" class="mr-2"> Alimentos
+    </label>
+    <label class="block ml-30 mb-4">
+      <input type="checkbox" class="mr-2"> Entretenimiento
+    </label>
+    <label class="block ml-30 mb-6">
+      <input type="checkbox" class="mr-2"> Muebles
+    </label>
+  </div>
+
+  <!-- Botón de acción -->
+  <div class="flex justify-end mt-2em  mr-37">
+    <button type="submit" class="bg-[#063E67] text-white w-[6.5em] h-[2.5em] rounded-md hover:bg-[#0369a1]">
+      Aceptar
+    </button>
+  </div>
+</div>
+
+@endsection
