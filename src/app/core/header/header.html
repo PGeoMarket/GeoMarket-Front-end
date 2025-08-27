@@ -1,0 +1,65 @@
+<!-- navbar.component.html -->
+<div>
+  <!-- NAVBAR -->
+  <nav class="bg-[#f8fafc] border-b border-[#e5e7eb] px-4 py-2 flex items-center justify-between fixed w-full h-16 z-40">
+    <!-- logo y nombre -->
+    <div class="flex items-center mr-3">
+      <img src="/svg/logo.svg" alt="GeoMarket Logo" class="cursor-pointer" />
+      <img src="/svg/geomarket.svg" alt="" class="cursor-pointer hidden md:block" />
+    </div>
+
+    <!-- input y lupa -->
+    <div class="flex-1 flex justify-center">
+      <div class="relative max-w-[200px]">
+        <input type="text" placeholder="Busca aquí"
+          class="w-full py-2 pl-4 pr-10 border-2 border-[#cfd8dc] rounded-lg text-base text-[#153047] bg-white placeholder-[#b0bec5] focus:outline-none focus:border-[#4f8cff] transition" />
+      </div>
+      <img src="/svg/lupa.svg" alt="" class="cursor-pointer ml-2" />
+    </div>
+
+    <!-- tema y menú -->
+    <div>
+      <div class="flex items-center gap-x-2 ml-4">
+        <img src="/svg/teme.svg" alt="Tema" class="cursor-pointer" />
+        <img src="/svg/menu.svg" class="cursor-pointer" (click)="toggleMenu()" />
+      </div>
+    </div>
+  </nav>
+
+  <!-- OVERLAY para cerrar sidebar cuando se hace click fuera -->
+  <div 
+    *ngIf="open" 
+    class="fixed inset-0 z-40"
+    (click)="closeMenu()">
+  </div>
+
+  <!-- SIDEBAR -->
+  <div
+    class="fixed top-16 right-0 h-[calc(100vh-4rem)] w-[280px] md:w-[320px] bg-white shadow-lg z-50 transition-transform duration-300 transform"
+    [class.translate-x-0]="open"
+    [class.translate-x-full]="!open">
+    
+    <!-- Contenedor que ocupa todo el espacio disponible -->
+    <div class="h-full w-full">
+      @switch (role) {
+        @case ('seller') {
+          <app-seller />
+        }
+        @case ('buyer') {
+          <app-buyer />
+        }
+        @case ('guest') {
+          <app-guest />
+        }
+        @case ('admin') {
+          <app-admin />
+        }
+        @default {
+          <div class="h-full flex items-center justify-center text-gray-500">
+            <p>No hay sidebar disponible</p>
+          </div>
+        }
+      }
+    </div>
+  </div>
+</div>
