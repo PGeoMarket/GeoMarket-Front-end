@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common'; // <-- Importa CommonModule
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-add-product',
+  selector: 'app-edit-product',
   standalone: true,
-  imports: [CommonModule, FormsModule], // <-- Agrega CommonModule aquí
-  templateUrl: './add-product.html',
-  styleUrl: './add-product.css'
+  imports: [CommonModule, FormsModule],
+  templateUrl: './edit-product.html',
+  styleUrl: './edit-product.css'
 })
-export class AddProduct {
- product = {
-  name: '',
-  price: null,
-  category: '',
-  description: '',
-  hidden: false // <-- Agrega esta línea
-};
+export class EditProduct {
+  product = {
+    name: 'Arroz florhuila',
+    price: 1000,
+    category: 'alimentos',
+    description: 'Arroz blanco de grano largo, ideal para acompañar cualquier comida. Suave, esponjoso y fácil de preparar.'
+  };
   imagePreview: string | ArrayBuffer | null = null;
   imageFile: File | null = null;
 
@@ -33,13 +32,11 @@ export class AddProduct {
   }
 
   onSubmit() {
-    // lógica para enviar el formulario
+    // lógica para enviar el formulario editado
     console.log(this.product, this.imageFile);
   }
 
   onCancel() {
-  this.product = { name: '', price: null, category: '', description: '', hidden: false };
-  this.imagePreview = null;
-  this.imageFile = null;
-}
+    // lógica para cancelar la edición
+  }
 }

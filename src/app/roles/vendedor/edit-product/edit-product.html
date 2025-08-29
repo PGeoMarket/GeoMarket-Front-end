@@ -1,0 +1,49 @@
+<form (ngSubmit)="onSubmit()" #editForm="ngForm">
+  <div class="border-1 border-borde2 bg-blancoSucio rounded-[20px] p-3 h-[calc(100vh-(4rem+24px))] flex flex-col">
+
+    <div class="flex justify-end gap-2">
+      <button type="button" class="btn_negative" (click)="onCancel()">Cancelar</button>
+      <input type="submit" value="Publicar" class="btn_azulPotente">
+    </div>
+
+    <div class="h-full grid grid-rows-[40%_60%] overflow-scroll md:grid-cols-2 md:grid-rows-none">
+
+      <!-- Imagen -->
+      <div class="grid grid-rows-[80%_20%]">
+        <div class="border-1 border-borde1 rounded-2xl my-3 w-fit h-auto md:max-h-[500px] mx-auto">
+          <img *ngIf="!imagePreview" src="/img/florhuila.png" class="h-full rounded-[14px]">
+          <img *ngIf="imagePreview" [src]="imagePreview" class="h-full rounded-[14px]">
+        </div>
+        <div class="mx-auto">
+          <label for="upload" class="cursor-pointer px-4 py-2 btn_azulPotente transition">
+            Cargar imagen
+          </label>
+          <input type="file" id="upload" class="hidden" accept="image/*" (change)="onImageSelected($event)">
+        </div>
+      </div>
+
+      <!-- Inputs -->
+      <div class="grid grid-rows-[auto_1fr] md:p-5">
+        <div class="flex flex-col h-fit space-y-4">
+          <input type="text" name="productName" class="inputs_registro" placeholder="Nombre del producto" required [(ngModel)]="product.name">
+
+          <input type="number" name="productPrice" class="inputs_registro" placeholder="Precio del producto" required [(ngModel)]="product.price">
+
+          <div>
+            <label class="text-textosNoNegro">Categoria</label>
+            <select name="productCategory" class="bg-[#EDEDED] border-1 border-borde2 p-1 rounded-md mb-3 text-textosNoNegro" required [(ngModel)]="product.category">
+              <option value="electrodomesticos">Electrodomesticos</option>
+              <option value="alimentos">Alimentos</option>
+              <option value="entretenimiento">Entretenimiento</option>
+              <option value="muebles">Muebles</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <textarea name="productDescription" class="bg-white border-1 border-borde2 p-1 rounded-md w-full h-full" placeholder="Descripcion" [(ngModel)]="product.description"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>
