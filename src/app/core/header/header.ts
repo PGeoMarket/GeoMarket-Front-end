@@ -24,7 +24,7 @@ export class Header {
   messagesUrl = 'public/svg/icons/messages.svg';
   supportUrl = 'public/svg/icons/support.svg'; */
 
-  role:string='guest'
+  role:string='admin'
 
   open = false; // equivalente al x-data { open: false }
 

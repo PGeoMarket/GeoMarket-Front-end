@@ -1,3 +1,6 @@
 import { Routes } from '@angular/router';
+import { AddProduct } from './roles/vendedor/add-product/add-product';
 
-export const routes: Routes = [];
+export const routes: Routes = [
+    {path:'addProduct',component:AddProduct}
+];
