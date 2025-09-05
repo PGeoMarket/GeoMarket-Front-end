@@ -62,4 +62,6 @@ export class DialogManager {
     getRegisteredComponents(): string[] {
         return Array.from(this.componentRegistry.keys());
     }
+
+    
 }
