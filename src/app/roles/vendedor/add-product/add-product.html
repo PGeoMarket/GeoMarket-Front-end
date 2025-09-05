@@ -4,20 +4,23 @@
     <div class="flex justify-end gap-2">
       <label class="inline-flex items-center cursor-pointer">
         <span class="ms-3 text-sm font-medium text-gray-900">ocultar</span>
+        {{product.hidden}}
         <input type="checkbox" class="sr-only peer" [(ngModel)]="product.hidden" name="productHidden">
         <div
           class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600">
         </div>
       </label>
       <button type="button" class="btn_negative" (click)="onCancel()">Cancelar</button>
-      <input type="submit" value="Publicar" class="btn_azulPotente">
+      <input type="submit" value="Publicar" class="btn_azulPotente disabled:opacity-50 disabled:cursor-not-allowed" [disabled]="!productForm.valid">
     </div>
 
     <div class="h-full grid grid-rows-[40%_60%] overflow-scroll md:grid-cols-2 md:grid-rows-none">
 
       <!-- Imagen -->
       <div class="grid grid-rows-[80%_20%]">
+        <!-- Como antes no estaba lo agregue de forma basica el boton de quitar imagen-->
         <div class="border-1 border-borde1 rounded-2xl my-3 w-fit h-auto md:max-h-[500px] mx-auto">
+          <button class="btn_negative absolute" (click)="onResetImage()">X</button> 
           <img *ngIf="!imagePreview" src="/svg/imagePreviewDefault.svg" class="h-full rounded-[14px]">
           <img *ngIf="imagePreview" [src]="imagePreview" class="h-full rounded-[14px]">
         </div>
@@ -25,7 +28,7 @@
           <label for="upload" class="cursor-pointer px-4 py-2 btn_azulPotente transition">
             Cargar imagen
           </label>
-          <input type="file" id="upload" class="hidden" accept="image/*" (change)="onImageSelected($event)">
+          <input type="file" id="upload" class="hidden" accept="image/*" (change)="onImageSelected($event)" required>
         </div>
       </div>
 

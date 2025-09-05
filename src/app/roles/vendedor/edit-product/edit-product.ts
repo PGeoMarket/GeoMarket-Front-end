@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Closedialog } from "../../../core/directives/closedialog";
 
 @Component({
   selector: 'app-edit-product',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, Closedialog],
   templateUrl: './edit-product.html',
   styleUrl: './edit-product.css'
 })
@@ -14,7 +15,8 @@ export class EditProduct {
     name: 'Arroz florhuila',
     price: 1000,
     category: 'alimentos',
-    description: 'Arroz blanco de grano largo, ideal para acompañar cualquier comida. Suave, esponjoso y fácil de preparar.'
+    description: 'Arroz blanco de grano largo, ideal para acompañar cualquier comida. Suave, esponjoso y fácil de preparar.',
+    hidden: false,
   };
   imagePreview: string | ArrayBuffer | null = null;
   imageFile: File | null = null;

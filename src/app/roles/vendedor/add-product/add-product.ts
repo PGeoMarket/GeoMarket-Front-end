@@ -10,13 +10,13 @@ import { CommonModule } from '@angular/common'; // <-- Importa CommonModule
   styleUrl: './add-product.css'
 })
 export class AddProduct {
- product = {
-  name: '',
-  price: null,
-  category: '',
-  description: '',
-  hidden: false // <-- Agrega esta línea
-};
+  product = {
+    name: '',
+    price: null,
+    category: '',
+    description: '',
+    hidden: false // <-- Agrega esta línea
+  };
   imagePreview: string | ArrayBuffer | null = null;
   imageFile: File | null = null;
 
@@ -32,14 +32,20 @@ export class AddProduct {
     }
   }
 
+  onResetImage() {
+    this.imagePreview = null;
+    this.imageFile = null;
+
+  }
+
   onSubmit() {
     // lógica para enviar el formulario
     console.log(this.product, this.imageFile);
   }
 
   onCancel() {
-  this.product = { name: '', price: null, category: '', description: '', hidden: false };
-  this.imagePreview = null;
-  this.imageFile = null;
-}
+    this.product = { name: '', price: null, category: '', description: '', hidden: false };
+    this.imagePreview = null;
+    this.imageFile = null;
+  }
 }
