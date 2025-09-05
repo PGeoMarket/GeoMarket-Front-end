@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Closedialog } from "../../../core/directives/closedialog";
+import { DialogManager } from '../../../core/services/dialog-manager';
 
 @Component({
   selector: 'app-edit-product',
@@ -40,5 +41,11 @@ export class EditProduct {
 
   onCancel() {
     // lógica para cancelar la edición
+  }
+
+  private dialogManager = inject(DialogManager)
+
+  onCloseDialog() {
+    this.dialogManager.closeDialog();
   }
 }

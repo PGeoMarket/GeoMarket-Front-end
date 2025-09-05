@@ -1,42 +1,89 @@
+// src/app/core/services/dialog.service.ts
 import { GlobalPositionStrategy, Overlay, OverlayConfig, OverlayRef } from "@angular/cdk/overlay";
 import { ComponentPortal, TemplatePortal } from "@angular/cdk/portal";
-import { inject, Injectable, TemplateRef, ViewContainerRef } from "@angular/core";
-import { filter, merge } from "rxjs";
+import { inject, Injectable, TemplateRef, ViewContainerRef, Injector } from "@angular/core";
+import { filter, merge, Subject } from "rxjs";
 
 interface ComponentType<T> {
     new (...args: any[]): T;
 }
 
+export interface DialogData {
+    [key: string]: any;
+}
+
+export interface DialogRef<T = any> {
+    close: (result?: T) => void;
+    data?: DialogData;
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class Dialog {
-  private overlay = inject(Overlay);
-
+    private overlay = inject(Overlay);
     private overlayRef!: OverlayRef;
+    private dialogRef = new Subject<DialogRef>();
 
-    openDialog<T = unknown>(componentOrTemplate: ComponentType<T> | TemplateRef<T>, viewContainerRef?: ViewContainerRef) {
-        const config = this.getOverlayConfig();
-        const overlayRef = this.overlay.create(config);
+    openDialog<T = unknown>(
+        componentOrTemplate: ComponentType<T> | TemplateRef<T>, 
+        config?: {
+            data?: DialogData;
+            viewContainerRef?: ViewContainerRef;
+            disableClose?: boolean;
+            width?: string;
+            height?: string;
+        }
+    ): DialogRef {
+        const overlayConfig = this.getOverlayConfig(config);
+        const overlayRef = this.overlay.create(overlayConfig);
         this.overlayRef = overlayRef;
+
+        // Crear referencia del dialog
+        const dialogRef: DialogRef = {
+            close: (result?: any) => {
+                this.closeDialog();
+                this.dialogRef.next(result);
+            },
+            data: config?.data
+        };
+
         let portal: ComponentPortal<T> | TemplatePortal<T>;
+        
         if(componentOrTemplate instanceof TemplateRef) {
-            if(!viewContainerRef) return;
-            portal = new TemplatePortal(componentOrTemplate, viewContainerRef);
+            if(!config?.viewContainerRef) return dialogRef;
+            portal = new TemplatePortal(componentOrTemplate, config.viewContainerRef);
         } else {
-            portal = new ComponentPortal(componentOrTemplate);
+            // Crear injector personalizado para pasar datos
+            const injector = Injector.create({
+                providers: [
+                    { provide: dialogRef, useValue: dialogRef }
+                ]
+            });
+            portal = new ComponentPortal(componentOrTemplate, null, injector);
         }
 
-        overlayRef.attach(portal);
-        this.overlayDetachment(overlayRef);
+        const componentRef = overlayRef.attach(portal);
+        
+        // Pasar datos al componente si es ComponentPortal
+        if (componentRef?.instance && config?.data) {
+            Object.assign(componentRef.instance, config.data);
+        }
+
+        if (!config?.disableClose) {
+            this.overlayDetachment(overlayRef);
+        }
+
+        return dialogRef;
     }
 
-    getOverlayConfig(): OverlayConfig {
+    getOverlayConfig(config?: any): OverlayConfig {
         const state = new OverlayConfig({
             positionStrategy: new GlobalPositionStrategy().centerHorizontally().centerVertically(),
             panelClass: 'float-window',
             hasBackdrop: true,
+            width: config?.width || 'auto',
+            height: config?.height || 'auto',
         });
         return state;
     }
@@ -48,14 +95,12 @@ export class Dialog {
                 filter((event: KeyboardEvent) => event.key === 'Escape')
             );
 
-
-            //Click fuera del panelClass o ESC cierra ventana
-        /* merge(backdropClick$, escapeKey$).subscribe(() => {
-            this.overlayRef.dispose();
-        }) */
+        merge(backdropClick$, escapeKey$).subscribe(() => {
+            this.closeDialog();
+        });
     }
 
     closeDialog() {
         this.overlayRef?.dispose();
-    }  
+    }
 }

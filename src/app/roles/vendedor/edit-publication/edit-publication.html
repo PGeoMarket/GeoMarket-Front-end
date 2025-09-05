@@ -1,5 +1,5 @@
 <section class="flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 md:pt-[0px] " (click)="cerrarMenus()">    
-    @for (i of repeat; track $index) {
+    @for (publication of publications; track $index) {
 
         <!-- {{-- Contenedor de publicacion --}} -->
         <div class="div_publicacion relative">
@@ -18,7 +18,7 @@
                 @if (editarIndex!=null) {
                 <div
                     class="mt-1 bg-white border rounded shadow px-2 py-1 text-xs absolute  min-w-[80px]">
-                    <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer" (click)="openDialogComponent()">Editar</button>
+                    <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer" (click)="onEditProduct()">Editar</button>
                     <button class="block text-red-500 hover:underline w-full text-left cursor-pointer">Eliminar</button>
                 </div>
                 }
@@ -29,8 +29,8 @@
                 <app-edit-product class="fixed"></app-edit-product>
             </template>
            <!--  {{-- Imagen --}} -->
-            <div
-                class="flex w justify-end items-end  select-none bg-red-400
+            <div [ngStyle]="{'background-image': 'url(' + publication.imagen + ')'}"
+                class="flex w justify-end items-end  select-none
             h-[65%] bg-contain border-[1px] border-borde2 rounded-md">
                <!--  {{-- Estrellas: cada img es un tipo de estrella --}} -->
                 <div class="m-2 flex">
@@ -46,10 +46,11 @@
             <div class="div_tituloPrecio">
                 <!-- {{-- Titulo --}} -->
                 <p class="text-[20px] h-full md:text-[26px] overflow-hidden line-clamp-2 text-ellipsis text-nowrap">Mono
-                    usado, solo 2 messssssssssssssssssssssssssses</p>
+                    {{publication.titulo}}</p>
                 <!-- {{-- Precio --}} -->
-                <span class="text-[24px] md:text-[30px] ">-$1</span>
+                <span class="text-[24px] md:text-[30px] ">{{publication}}</span>
             </div>
         </div>
+        {{publication | json}}
     }
 </section>

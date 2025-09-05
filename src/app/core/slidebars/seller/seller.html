@@ -18,9 +18,9 @@
                 <img src="svg/favorites.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
                 <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">Favoritos</p>
             </div>
-            <div class="p-2 md:p-4">
+            <div class="p-2 md:p-4 cursor-pointer">
                 <img src="svg/addPublication.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
-                <a class="text-white inline  text-[1.2em] ml-1 md:text-[1.3em]" routerLink="vendedor">Publicar producto</a>
+                <a class="text-white inline  text-[1.2em] ml-1 md:text-[1.3em]" (click)="onAddProduct()">Publicar producto</a> <!-- routerLink="vendedor" -->
             </div>
             <div class="p-2 md:p-4 ">
                 <img src="svg/notifications.svg" class="inline w-7 h-7 md:w-auto md:h-auto ">

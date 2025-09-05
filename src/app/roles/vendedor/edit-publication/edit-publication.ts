@@ -1,29 +1,36 @@
-import { Component, inject, TemplateRef, viewChild, ViewContainerRef } from '@angular/core';
+import { Component, inject, OnInit, TemplateRef, viewChild, ViewContainerRef } from '@angular/core';
 import { Dialog } from '../../../core/services/dialog';
 import { Closedialog } from '../../../core/directives/closedialog';
 import { EditProduct } from '../edit-product/edit-product';
+import { DialogManager } from '../../../core/services/dialog-manager';
+import { Publication } from '../../../core/models/models';
+import { ApiService } from '../../../core/services/api';
+import { CommonModule, NgStyle } from '@angular/common'; 
 
 @Component({
   selector: 'app-edit-publication',
-  imports: [EditProduct, Closedialog],
+  imports: [EditProduct, Closedialog, NgStyle, CommonModule],
   templateUrl: './edit-publication.html',
   styleUrl: './edit-publication.css'
 })
-export class EditPublication {
+export class EditPublication implements OnInit {
   repeat = Array.from({ length: 16 });
+  publications!: Publication[];
+  
+  private dialogManager = inject(DialogManager);
 
-  dialogService = inject(Dialog);
+  constructor (private api:ApiService) {}
 
-  template = viewChild(TemplateRef);
-
-  viewContainerRef = viewChild('template', { read: ViewContainerRef });
-
-  openDialog() {
-    this.dialogService.openDialog(this.template()!, this.viewContainerRef()!);
+  ngOnInit(): void {
+    this.api.getPublications()
+    .subscribe({
+      next: data => this.publications = data,
+    })
   }
-
-  openDialogComponent() {
-    this.dialogService.openDialog(EditProduct);
+  onEditProduct() {
+    this.dialogManager.openDialog('edit-product', {
+      data: { mode: 'create' }
+    });
   }
 
   //CHATGPT:
