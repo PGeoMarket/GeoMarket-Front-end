@@ -1,12 +1,11 @@
 import { Routes } from '@angular/router';
-import { AddProduct } from './roles/vendedor/add-product/add-product';
-import { EditProduct } from './roles/vendedor/edit-product/edit-product';
-import { Vendedor } from './roles/vendedor/vendedor';
-import { Profile } from './roles/vendedor/profile/profile';
+import { AddProduct } from './features/vendedor/publications-own/add-product/add-product';
+import { EditProduct } from './features/vendedor/publications-own/edit-product/edit-product';
+import { Vendedor } from './features/vendedor/vendedor';
+import { ProfileSeller } from './features/vendedor/profile-seller/profile-seller';
 
 export const routes: Routes = [
-    {path:'addProduct',component:AddProduct},
-    {path:'editProduct',component:EditProduct},
-    {path:'vendedor',component:Vendedor},
-    {path:'sellerProfile',component:Profile},
+    {path:'add-product',component:AddProduct},
+    {path:'edit-product',component:EditProduct},
+    {path:'profile-seller',component:ProfileSeller},
 ];
