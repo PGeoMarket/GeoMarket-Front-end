@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, TemplateRef, viewChild, ViewContainerRef } from '@angular/core';
-import { Closedialog } from '../../../../core/dialogs/closedialog';
-import { EditProduct } from '../edit-product/edit-product';
-import { DialogManager } from '../../../../core/dialogs/dialog-manager';
-import { PublicationDTO, PublicationService } from '../../../../core/services/publication-service'; 
+import { Closedialog } from '../../../core/dialogs/closedialog'; 
+import { EditProduct } from '../dialogs/edit-product/edit-product'; 
+import { DialogManager } from '../../../core/dialogs/dialog-manager';
+import { PublicationDTO, PublicationService } from '../../../core/services/publication-service'; 
 import { CommonModule, NgStyle } from '@angular/common';
 import { Router } from '@angular/router';
 

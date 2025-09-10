@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { EditPublication } from '../publications-own/edit-publication/edit-publication';
+import { EditPublication } from '../edit-publication/edit-publication';
+
 
 @Component({
   selector: 'app-profile-seller',
