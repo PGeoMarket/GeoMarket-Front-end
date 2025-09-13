@@ -11,5 +11,6 @@ export const routes: Routes = [
     {path:'edit-product',component:EditProduct},
     {path:'profile-seller',component:ProfileSeller},
     {path:'favorite-publications',component:FavoritePublications},
-    {path:'ProfileOther',component:ProfileOther}
+    {path:'ProfileOther',component:ProfileOther},
+    {path:'profile-buyer'}
 ];

@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Admin } from '../slidebars/admin/admin';
-import { Buyer } from '../slidebars/buyer/buyer';
-import { Guest } from '../slidebars/guest/guest';
+import { AdminSlidebar } from '../slidebars/admin-slidebar/admin-slidebar';
+import { BuyerSlidebar } from '../slidebars/buyer-slidebar/buyer-slidebar';
+import { GuestSlidebar } from '../slidebars/guest-slidebar/guest-slidebar';
 import { SellerSlidebar } from '../slidebars/seller-slidebar/seller-slidebar';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule,SellerSlidebar,Admin,Buyer,Guest],
+  imports: [CommonModule,SellerSlidebar,AdminSlidebar,BuyerSlidebar,GuestSlidebar],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
@@ -24,7 +24,7 @@ export class Header {
   messagesUrl = 'public/svg/icons/messages.svg';
   supportUrl = 'public/svg/icons/support.svg'; */
 
-  role:string='seller'
+  role:string='buyer'
 
   open = false; // equivalente al x-data { open: false }
 
