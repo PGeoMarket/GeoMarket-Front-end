@@ -1,10 +1,9 @@
 import { Component, inject, OnInit, TemplateRef, viewChild, ViewContainerRef } from '@angular/core';
 import { Closedialog } from '../../../core/dialogs/closedialog'; 
-import { EditProduct } from '../dialogs/edit-product/edit-product'; 
+import { EditProduct } from '../dialogs-seller/edit-product/edit-product'; 
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
-import { PublicationDTO, PublicationService } from '../../../core/services/publication-service'; 
+import { Publication, PublicationService } from '../../../core/services/publication-service'; 
 import { CommonModule, NgStyle } from '@angular/common';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-publication',
@@ -14,22 +13,22 @@ import { Router } from '@angular/router';
 })
 export class EditPublication implements OnInit {
   repeat = Array.from({ length: 16 });
-  publications!: PublicationDTO[];
-  selectedPublication!: PublicationDTO;
+  publications!: Publication[];
+  selectedPublication!: Publication;
 
   private dialogManager = inject(DialogManager);
 
-  constructor(private publicationService: PublicationService, private router:Router) { }
+  constructor(private publicationService: PublicationService) { }
 
   ngOnInit(): void {
-    this.publicationService.getAll()
+    this.publicationService.getAllPublication()
       .subscribe({
         next: data => {this.publications = data; console.log(this.publications);
         }
         
       })
   }
-  onEditProduct(publication: PublicationDTO) {
+  onEditProduct(publication: Publication) {
     this.selectedPublication = publication;
 
     this.dialogManager.openDialog('edit-product', {
@@ -41,10 +40,12 @@ export class EditPublication implements OnInit {
     this.publicationService.delete(id).subscribe({
       next: data => {
         console.log(data);
-        this.router.navigate(['/profile-seller']);
-
+        this.ngOnInit();
       },
-
+      error: (err) => {
+        console.error('Error al eliminar', err);
+        // opcional: mostrar mensaje de error
+      }
     })
   }
 

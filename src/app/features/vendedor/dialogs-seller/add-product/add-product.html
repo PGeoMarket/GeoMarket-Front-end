@@ -1,13 +1,6 @@
 <form (ngSubmit)="onSubmit()" #productForm="ngForm">
   <div class="border-1 border-borde2 bg-blancoSucio rounded-[20px] p-3 h-[calc(100vh-(4rem+24px))] flex flex-col">
     <div class="flex justify-end gap-2">
-      <label class="inline-flex items-center cursor-pointer">
-        <span class="ms-3 text-sm font-medium text-gray-900">ocultar</span>
-        <input type="checkbox" class="sr-only peer" name="productHidden" [(ngModel)]="product.visibilidad">
-        <div
-          class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600">
-        </div>
-      </label>
       <button type="button" class="btn_negative" (click)="onCancel();" appClosedialog>Cancelar</button>
       <input type="submit" value="Publicar" class="btn_azulPotente disabled:opacity-50 disabled:cursor-not-allowed"
         [disabled]="!productForm.valid">
@@ -25,7 +18,7 @@
         <div class="mx-auto">
           <label for="upload" class="cursor-pointer px-4 py-2 btn_azulPotente transition">
             Cargar imagen 
-           <input type="text" name="productImage" id="" [(ngModel)]="product.image.url">
+           <input type="text" name="productImage" id="" [(ngModel)]="product.image.url" required>
           </label>
          <!--  <input type="file" id="upload" class="hidden" accept="image/*"> -->  <!-- (change)="onImageSelected($event)" -->
         </div>
@@ -34,15 +27,15 @@
       <!-- Inputs -->
       <div class="grid grid-rows-[auto_1fr] md:p-5">
         <div class="flex flex-col h-fit space-y-4">
-          <input type="text" name="productName" class="inputs_registro" placeholder="Nombre del producto" required [(ngModel)]="product.titulo">
+          <input type="text" name="productName" class="inputs_registro" placeholder="Nombre del producto" required [(ngModel)]="product.title">
 
-          <input type="number" name="productPrice" class="inputs_registro" placeholder="Precio del producto" required [(ngModel)]="product.precio">
+          <input type="number" name="productPrice" class="inputs_registro" placeholder="Precio del producto" required [(ngModel)]="product.price">
 
           <div>
             <label class="text-textosNoNegro">Categoria</label>
             <select name="productCategory"
               class="bg-[#EDEDED] border-1 border-borde2 p-1 rounded-md mb-3 text-textosNoNegro" required
-              [(ngModel)]="product.category_id">
+              [(ngModel)]="product.categoryId">
               <option [value]="1">Electrodomesticos</option>
               <option [value]="2">Alimentos</option>
               <option [value]="3">Entretenimiento</option>
@@ -52,7 +45,7 @@
         </div>
         <div>
           <textarea name="productDescription" class="bg-white border-1 border-borde2 p-1 rounded-md w-full h-full"
-            placeholder="Descripcion" [(ngModel)]="product.descripcion"></textarea>
+            placeholder="Descripcion" [(ngModel)]="product.description" required></textarea>
         </div>
       </div>
 

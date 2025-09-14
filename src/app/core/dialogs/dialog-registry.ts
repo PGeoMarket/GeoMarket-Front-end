@@ -1,8 +1,8 @@
 // src/app/core/dialog-registry.ts
 
 // Importa los componentes que se usarán como diálogos
-import { AddProduct } from "../../features/vendedor/dialogs/add-product/add-product";
-import { EditProduct } from "../../features/vendedor/dialogs/edit-product/edit-product";
+import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
+import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 
 /**
  * Diccionario de diálogos disponibles en la app.
