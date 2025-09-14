@@ -24,7 +24,7 @@ export interface ImageDTO {
   imageable_type?: string;
 }
 
-export interface Publication {
+export interface PublicationModel {
   id?: number;
   title: string;
   price: number | null;                    // 👈 ya no null ni opcional
@@ -43,14 +43,14 @@ export interface Publication {
 @Injectable({
   providedIn: 'root'
 })
-export class PublicationService extends CrudService<Publication, PublicationDTO> {
+export class PublicationService extends CrudService<PublicationModel, PublicationDTO> {
   protected override endpoint = 'publications';
 
   constructor(http: HttpClient) {
     super(http);
   }
 
-  getAllPublication(): Observable<Publication[]> {
+  getAllPublication(): Observable<PublicationModel[]> {
     return this.http.get<PublicationDTO[]>(
       `${this.API_URL}/${this.endpoint}?included=image`
     ).pipe(
@@ -58,7 +58,7 @@ export class PublicationService extends CrudService<Publication, PublicationDTO>
     );
   }
 
-  getByIdPublication(id: number): Observable<Publication> {
+  getByIdPublication(id: number): Observable<PublicationModel> {
     return this.http.get<PublicationDTO>(
       `${this.API_URL}/${this.endpoint}/${id}?included=image`
     ).pipe(
@@ -66,17 +66,17 @@ export class PublicationService extends CrudService<Publication, PublicationDTO>
     );
   }
 
-  createPublication(data: Publication) {         // 👈 ya no Partial
+  createPublication(data: PublicationModel) {         // 👈 ya no Partial
     const dto = this.transformToDTO(data);
     return super.create(dto);
   }
 
-  updatePublication(id: number, data: Publication) { // 👈 ya no Partial
+  updatePublication(id: number, data: PublicationModel) { // 👈 ya no Partial
     const dto = this.transformToDTO(data);
     return super.update(id, dto);
   }
 
-  private transformToModel(dto: PublicationDTO): Publication {
+  private transformToModel(dto: PublicationDTO): PublicationModel {
     return {
       id: dto.id,
       title: dto.titulo,
@@ -93,7 +93,7 @@ export class PublicationService extends CrudService<Publication, PublicationDTO>
     };
   }
 
-  private transformToDTO(model: Publication): PublicationDTO {
+  private transformToDTO(model: PublicationModel): PublicationDTO {
     return {
       id: model.id,
       titulo: model.title,

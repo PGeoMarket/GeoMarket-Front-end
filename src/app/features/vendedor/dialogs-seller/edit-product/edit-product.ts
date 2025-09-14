@@ -3,7 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Closedialog } from '../../../../core/dialogs/closedialog'; 
 import { DialogManager } from '../../../../core/dialogs/dialog-manager';
-import { Publication, PublicationService } from '../../../../core/services/publication-service'; 
+import { PublicationModel, PublicationService } from '../../../../core/services/publication-service'; 
 
 
 @Component({
@@ -14,8 +14,8 @@ import { Publication, PublicationService } from '../../../../core/services/publi
   styleUrl: './edit-product.css'
 })
 export class EditProduct implements OnInit {
-  @Input() publication!: Publication;    // Input desde el padre
-  product?: Publication;                 // Inicializado en ngOnInit
+  @Input() publication!: PublicationModel;    // Input desde el padre
+  product?: PublicationModel;                 // Inicializado en ngOnInit
   id?: number;                           // Inicializado en ngOnInit
   @Output() updated = new EventEmitter<void>();
 

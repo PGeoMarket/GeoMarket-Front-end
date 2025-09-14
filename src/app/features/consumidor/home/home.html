@@ -1,0 +1,39 @@
+<div class="flex justify-center" (click)="cerrarMenus()">
+    <div class="fixed w-[90%] flex justify-between items-center bg-background my-[-10px] py-2 z-40">
+        <!-- Filtrar -->
+
+        <ul class="nav">
+            <li>
+                <!-- Boton filtrar -->
+                <button class="btn_azulPotente cursor-pointer" (click)="abrirFiltros($event)">Filtrar</button>
+
+                <!-- Filtros -->
+                @if (isAbierto) {
+                <ul class="absolute bg-white text-textosNoNegro translate-x-2 translate-y-0 min-w-[200px] text-left">
+                    <li class="filtros">Filtrar por precio <img src="svg/icons/arrowBlue.svg"
+                            class="w-fit float-right ml-5 translate-y-[100%] rotate-90" alt=""></li>
+                    <li class="filtros">Filtrar por cercania <img src="svg/icons/arrowBlue.svg"
+                            class="w-fit float-right ml-5 translate-y-[100%] rotate-90" alt=""></li>
+                    <li class="filtros">Filtrar por categoria <img src="svg/icons/arrowBlue.svg"
+                            class="w-fit float-right ml-5 translate-y-[100%] rotate-90" alt=""></li>
+                </ul>
+                }
+            </li>
+
+        </ul>
+        <!-- Ubicacion -->
+        <div class="z-50">
+            <div class="text-azulSecundario cursor-pointer flex items-center">
+                <img src="svg/icons/location.svg" class="mr-2" alt="">
+                Santander de Quilichao
+            </div>
+            <!--             <div  class="b-gray-500/50 h-full w-full fixed top-0 left-0 select-none">
+                @include('components.mapa')  componente de mapa aqui
+            </div> -->
+        </div>
+    </div>
+
+</div>
+<div (click)="cerrarMenus()">
+    <app-publications></app-publications>
+</div>

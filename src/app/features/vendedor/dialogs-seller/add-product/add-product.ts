@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; // <-- Importa CommonModule
 import { DialogManager } from '../../../../core/dialogs/dialog-manager';
-/* import { Publication } from ; */
-import { Publication, PublicationService } from '../../../../core/services/publication-service';
+/* import { PublicationModel } from ; */
+import { PublicationModel, PublicationService } from '../../../../core/services/publication-service';
 import { Closedialog } from '../../../../core/dialogs/closedialog';
 import { Router } from '@angular/router';
 
@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
   styleUrl: './add-product.css'
 })
 export class AddProduct {
-  product: Publication = {
+  product: PublicationModel = {
     title: "",
     price: null as number | null,
     description: "",
