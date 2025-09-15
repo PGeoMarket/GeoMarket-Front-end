@@ -2,8 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common'; // <-- Importa CommonModule
 import { DialogManager } from '../../../../core/dialogs/dialog-manager';
-/* import { PublicationModel } from ; */
-import { PublicationModel, PublicationService } from '../../../../core/services/publication-service';
+/* import { PublicationDTO } from ; */
+import { PublicationDTO, PublicationService } from '../../../../core/services/publication-service';
 import { Closedialog } from '../../../../core/dialogs/closedialog';
 import { Router } from '@angular/router';
 
@@ -15,14 +15,12 @@ import { Router } from '@angular/router';
   styleUrl: './add-product.css'
 })
 export class AddProduct {
-  product: PublicationModel = {
-    title: "",
-    price: null as number | null,
-    description: "",
-    sellerId: 1,
-    image: {
-      url: "https://images7.memedroid.com/images/UPLOADED555/62c1103df10b7.jpeg",
-    }
+  product: PublicationDTO = {
+    titulo: "",
+    precio: null as number | null,
+    descripcion: "",
+    seller_id: 1,
+    imagen: "https://images7.memedroid.com/images/UPLOADED555/62c1103df10b7.jpeg",
 
   }
 
@@ -57,7 +55,7 @@ export class AddProduct {
         ...this.product
       };
 
-      this.publicationService.createPublication(payload).subscribe({
+      this.publicationService.create(payload).subscribe({
         next: (data) => {
           console.log('Creación exitosa', data);
           this.dialogManager.closeDialog();

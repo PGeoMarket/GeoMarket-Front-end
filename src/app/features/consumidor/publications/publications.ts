@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PublicationModel, PublicationService } from '../../../core/services/publication-service';
+import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './publications.css'
 })
 export class Publications implements OnInit {
-  publications!: PublicationModel[];
+  publications!: PublicationDTO[];
   scopeCategoryIds!: string;
 
   constructor (protected publicationService: PublicationService) {}
