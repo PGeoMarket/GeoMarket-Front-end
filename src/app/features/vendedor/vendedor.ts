@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AddProduct } from './dialogs/add-product/add-product'; // Ajusta la ruta si es necesario
+import { AddProduct } from './dialogs-seller/add-product/add-product'; // Ajusta la ruta si es necesario
 
 @Component({
   selector: 'app-vendedor',

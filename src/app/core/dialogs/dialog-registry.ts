@@ -1,8 +1,10 @@
 // src/app/core/dialog-registry.ts
 
 // Importa los componentes que se usarán como diálogos
-import { AddProduct } from "../../features/vendedor/dialogs/add-product/add-product";
-import { EditProduct } from "../../features/vendedor/dialogs/edit-product/edit-product";
+import { FilterByCategory } from "../../features/consumidor/dialogs/filter-by-category/filter-by-category";
+import { FilterByProximity } from "../../features/consumidor/dialogs/filter-by-proximity/filter-by-proximity";
+import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
+import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -14,7 +16,9 @@ export const DIALOG_COMPONENTS = {
   'edit-product': EditProduct,
 
   // Consumidor
-  // ...
+  // 
+  'filter-by-category': FilterByCategory,
+  'filter-by-proximity': FilterByProximity,
 
   // Admin
   // ...

@@ -27,7 +27,7 @@
 
         <!--  {{-- Imagen --}} -->
         <div [ngStyle]="{'background-image': 'url(' + publication.image.url + ')'}" class="flex w justify-end items-end  select-none
-            h-[65%] bg-contain border-[1px] border-borde2 rounded-md">
+            h-[65%] bg-cover bg-center border-[1px] border-borde2 rounded-md">
             <!--  {{-- Estrellas: cada img es un tipo de estrella --}} -->
             <div class="m-2 flex">
                 <img src="svg/starFull.svg" class="estrella" alt="">
@@ -42,15 +42,10 @@
         <div class="div_tituloPrecio">
             <!-- {{-- Titulo --}} -->
             <p class="text-[20px] h-full md:text-[26px] overflow-hidden line-clamp-2 text-ellipsis text-nowrap">
-                {{publication.titulo}}</p>
+                {{publication.title}}</p>
             <!-- {{-- Precio --}} -->
-            <span class="text-[24px] md:text-[30px] ">{{publication.precio | currency: 'COP'}}</span>
+            <span class="text-[24px] md:text-[30px] ">{{publication.price| currency: 'COP'}}</span>
         </div>
     </div>
-    }
-    @if (selectedPublication) {
-    <template class="fixed bg-black/50" appClosedialog>
-        <app-edit-product class="fixed" [publication]="selectedPublication"></app-edit-product>
-    </template>
     }
 </section>
