@@ -20,6 +20,7 @@ export class EditProduct implements OnInit {
   @Output() updated = new EventEmitter<void>();
 
   constructor(private publicationService: PublicationService) { }
+  private dialogManager = inject(DialogManager)
 
   ngOnInit(): void {
     // Inicializamos las variables a partir del Input
@@ -38,7 +39,7 @@ export class EditProduct implements OnInit {
       subscribe({
       next: (data) => {
         console.log('Actualización exitosa', data);
-        this.dialogManager.closeDialog();
+        this.onCloseDialog();
       },
       error: (err) => {
         console.error('Error al actualizar', err);
@@ -68,8 +69,6 @@ export class EditProduct implements OnInit {
     // notificar al padre o usar DialogManager; por ahora lo dejo vacío porque
     // dijiste no agregar nada innecesario)
   }
-
-  private dialogManager = inject(DialogManager)
 
   onCloseDialog() {
     this.dialogManager.closeDialog();

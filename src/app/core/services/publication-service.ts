@@ -45,14 +45,14 @@ export interface PublicationModel {
 })
 export class PublicationService extends CrudService<PublicationModel, PublicationDTO> {
   protected override endpoint = 'publications';
-
+  protected scope: string = "";
   constructor(http: HttpClient) {
     super(http);
   }
 
   getAllPublication(): Observable<PublicationModel[]> {
     return this.http.get<PublicationDTO[]>(
-      `${this.API_URL}/${this.endpoint}?included=image`
+      `${this.API_URL}/${this.endpoint}?included=image${this.scope}`
     ).pipe(
       map(dtos => dtos.map(dto => this.transformToModel(dto)))
     );
@@ -74,6 +74,11 @@ export class PublicationService extends CrudService<PublicationModel, Publicatio
   updatePublication(id: number, data: PublicationModel) { // 👈 ya no Partial
     const dto = this.transformToDTO(data);
     return super.update(id, dto);
+  }
+
+  getFilterPublication(filters: string): Observable<PublicationModel[]> {
+    this.scope = filters;
+    return this.getAllPublication();
   }
 
   private transformToModel(dto: PublicationDTO): PublicationModel {

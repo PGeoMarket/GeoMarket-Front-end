@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Publications } from '../publications/publications';
+import { DialogManager } from '../../../core/dialogs/dialog-manager';
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,8 @@ import { Publications } from '../publications/publications';
 export class Home {
   isAbierto: boolean = false;
 
+  private dialogManager = inject(DialogManager)
+
   abrirFiltros(event: MouseEvent) {
     event.stopPropagation(); // evita que cierre de inmediato
     this.isAbierto =  true;
@@ -17,5 +20,11 @@ export class Home {
 
   cerrarMenus() {
     this.isAbierto =  false;
+  }
+
+  onFilterByCategory() {
+    this.dialogManager.openDialog('filter-by-category', {
+      data: {mode: 'create'}
+    })
   }
 }

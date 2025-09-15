@@ -1,6 +1,7 @@
 // src/app/core/dialog-registry.ts
 
 // Importa los componentes que se usarán como diálogos
+import { FilterByCategory } from "../../features/consumidor/dialogs/filter-by-category/filter-by-category";
 import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 
@@ -14,7 +15,8 @@ export const DIALOG_COMPONENTS = {
   'edit-product': EditProduct,
 
   // Consumidor
-  // ...
+  // 
+  'filter-by-category': FilterByCategory,
 
   // Admin
   // ...
