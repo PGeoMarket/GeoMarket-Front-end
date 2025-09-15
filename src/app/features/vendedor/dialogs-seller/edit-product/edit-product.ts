@@ -34,7 +34,6 @@ export class EditProduct implements OnInit {
   onSubmit() {
     if (this.id && this.product) {
       console.log(this.product);
-      
       this.publicationService.updatePublication(this.id, this.product).
       subscribe({
       next: (data) => {

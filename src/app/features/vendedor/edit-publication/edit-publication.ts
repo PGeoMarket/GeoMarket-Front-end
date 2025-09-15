@@ -1,8 +1,8 @@
 import { Component, inject, OnInit, TemplateRef, viewChild, ViewContainerRef } from '@angular/core';
-import { Closedialog } from '../../../core/dialogs/closedialog'; 
-import { EditProduct } from '../dialogs-seller/edit-product/edit-product'; 
+import { Closedialog } from '../../../core/dialogs/closedialog';
+import { EditProduct } from '../dialogs-seller/edit-product/edit-product';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
-import { PublicationModel, PublicationService } from '../../../core/services/publication-service'; 
+import { PublicationModel, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule, NgStyle } from '@angular/common';
 
 @Component({
@@ -24,14 +24,14 @@ export class EditPublication implements OnInit {
     this.loadPublications();
   }
 
-  loadPublications () {
-  this.publicationService.getAllPublication()
-  .subscribe({
-    next: data => this.publications = data,
-    error: error=> console.error('No se puedo obtener las publicaciones: ' + error),
-    complete: () => console.log('Publicaciones obtenidas correctamente')    
-    
-  })
+  loadPublications() {
+    this.publicationService.getAllPublication()
+      .subscribe({
+        next: data => this.publications = data,
+        error: error => console.error('No se puedo obtener las publicaciones: ' + error),
+        complete: () => console.log('Publicaciones obtenidas correctamente')
+
+      })
   }
 
   onEditProduct(publication: PublicationModel) {
@@ -42,7 +42,7 @@ export class EditPublication implements OnInit {
     });
   }
 
-  onDeleteProduct(id:number) {
+  onDeleteProduct(id: number) {
     this.publicationService.delete(id).subscribe({
       next: data => {
         console.log(data);

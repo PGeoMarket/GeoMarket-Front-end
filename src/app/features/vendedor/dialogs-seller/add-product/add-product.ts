@@ -67,9 +67,4 @@ export class AddProduct {
     }
   }
 
-
-  onCancel() {
-    this.dialogManager.closeDialog();
-  }
-
 }

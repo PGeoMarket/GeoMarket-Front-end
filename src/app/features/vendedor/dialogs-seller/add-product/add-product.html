@@ -1,7 +1,7 @@
 <form (ngSubmit)="onSubmit()" #productForm="ngForm">
   <div class="border-1 border-borde2 bg-blancoSucio rounded-[20px] p-3 h-[calc(100vh-(4rem+24px))] flex flex-col">
     <div class="flex justify-end gap-2">
-      <button type="button" class="btn_negative" (click)="onCancel();" appClosedialog>Cancelar</button>
+      <button type="button" class="btn_negative" appClosedialog>Cancelar</button>
       <input type="submit" value="Publicar" class="btn_azulPotente disabled:opacity-50 disabled:cursor-not-allowed"
         [disabled]="!productForm.valid">
     </div>

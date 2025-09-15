@@ -11,8 +11,7 @@ import { DialogManager } from '../../../core/dialogs/dialog-manager';
 export class Home {
   isAbierto: boolean = false;
 
-  private dialogManager = inject(DialogManager)
-
+  dialogManager = inject(DialogManager);
   abrirFiltros(event: MouseEvent) {
     event.stopPropagation(); // evita que cierre de inmediato
     this.isAbierto =  true;
@@ -24,6 +23,12 @@ export class Home {
 
   onFilterByCategory() {
     this.dialogManager.openDialog('filter-by-category', {
+      data: {mode: 'create'}
+    })
+  }
+
+  onFilterByProximity() {
+    this.dialogManager.openDialog('filter-by-proximity', {
       data: {mode: 'create'}
     })
   }

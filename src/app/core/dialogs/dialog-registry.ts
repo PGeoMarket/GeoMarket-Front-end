@@ -2,6 +2,7 @@
 
 // Importa los componentes que se usarán como diálogos
 import { FilterByCategory } from "../../features/consumidor/dialogs/filter-by-category/filter-by-category";
+import { FilterByProximity } from "../../features/consumidor/dialogs/filter-by-proximity/filter-by-proximity";
 import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 
@@ -17,6 +18,7 @@ export const DIALOG_COMPONENTS = {
   // Consumidor
   // 
   'filter-by-category': FilterByCategory,
+  'filter-by-proximity': FilterByProximity,
 
   // Admin
   // ...
