@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Closedialog } from '../../../../core/dialogs/closedialog';
-import { PublicationModel, PublicationService } from '../../../../core/services/publication-service';
+import { PublicationDTO, PublicationService } from '../../../../core/services/publication-service';
 import { FormsModule } from '@angular/forms';
 import { Publications } from '../../publications/publications';
 
@@ -14,7 +14,7 @@ export class FilterByCategory extends Publications {
 // array con ids seleccionados
   selectedIds: number[] = [];
   scope: string = '&filter[category_id]=';
-  publicationsFiltred!: PublicationModel[];
+  publicationsFiltred!: PublicationDTO[];
 
   onCategoryChange(checked: boolean, categoryId: number) {
     if (checked) {

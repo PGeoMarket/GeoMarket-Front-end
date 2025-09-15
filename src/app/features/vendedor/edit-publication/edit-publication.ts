@@ -2,7 +2,7 @@ import { Component, inject, OnInit, TemplateRef, viewChild, ViewContainerRef } f
 import { Closedialog } from '../../../core/dialogs/closedialog';
 import { EditProduct } from '../dialogs-seller/edit-product/edit-product';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
-import { PublicationModel, PublicationService } from '../../../core/services/publication-service';
+import {  PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule, NgStyle } from '@angular/common';
 
 @Component({
@@ -13,8 +13,8 @@ import { CommonModule, NgStyle } from '@angular/common';
 })
 export class EditPublication implements OnInit {
   repeat = Array.from({ length: 16 });
-  publications!: PublicationModel[];
-  selectedPublication!: PublicationModel;
+  publications!: PublicationDTO[];
+  selectedPublication!: PublicationDTO;
 
   private dialogManager = inject(DialogManager);
 
@@ -28,13 +28,13 @@ export class EditPublication implements OnInit {
     this.publicationService.getAllPublication()
       .subscribe({
         next: data => this.publications = data,
-        error: error => console.error('No se puedo obtener las publicaciones: ' + error),
+        error: error => console.error('No se pudo obtener las publicaciones: ' + error),
         complete: () => console.log('Publicaciones obtenidas correctamente')
 
       })
   }
 
-  onEditProduct(publication: PublicationModel) {
+  onEditProduct(publication: PublicationDTO) {
     this.selectedPublication = publication;
 
     this.dialogManager.openDialog('edit-product', {
