@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-publications',
@@ -10,11 +11,20 @@ import { CommonModule } from '@angular/common';
 })
 export class Publications implements OnInit {
   publications!: PublicationDTO[];
-  scopeCategoryIds!: string;
+  scopes!: string;
 
-  constructor (protected publicationService: PublicationService) {}
+  constructor (protected publicationService: PublicationService, private route: ActivatedRoute) {}
   
   ngOnInit(): void {
+      this.route.queryParamMap.subscribe(queryParams => {
+        const filtros = queryParams.get('filtros');
+        if (filtros) console.log(filtros);
+        
+      });
+
+      
+    console.log(this.scopes);
+    
     this.loadPublications();
   }
 
@@ -29,12 +39,12 @@ export class Publications implements OnInit {
 
   loadFiltredPublications () {
     // si no hay scope definido, obtenemos todo
-    if (!this.scopeCategoryIds) {
+    if (!this.scopes) {
       this.loadPublications();
       return;
     }
 
-    this.publicationService.getFilterPublication(this.scopeCategoryIds)
+    this.publicationService.getFilterPublication(this.scopes)
       .subscribe({
         next: data => this.publications = data,
         error: error => console.error('Error a publications filtradas: ' + error),
@@ -42,9 +52,5 @@ export class Publications implements OnInit {
       });
   }
 
-  // <-- nuevo: recibe del hijo la scope y actualiza la lista
-  onCategoryApplied(scope: string) {
-    this.scopeCategoryIds = scope;
-    this.loadFiltredPublications();
-  }
+
 }
