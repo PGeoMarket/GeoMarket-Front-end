@@ -7,6 +7,7 @@ import { FavoritePublications } from './features/consumidor/favorite-publication
 import { ProfileOther } from './features/consumidor/profile-other/profile-other';
 import { SelectLocation } from './features/consumidor/dialogs/select-location/select-location';
 import { Map } from './features/consumidor/dialogs/map/map';
+import { ProfileConsumer } from './features/consumidor/profile-consumer/profile-consumer';
 
 export const routes: Routes = [
     {path: 'home', component: Home},
@@ -15,6 +16,7 @@ export const routes: Routes = [
     {path:'profile-seller',component:ProfileSeller},
     {path:'favorite-publications',component:FavoritePublications},
     {path:'ProfileOther',component:ProfileOther},
+    {path:'profile-buyer',component:ProfileConsumer},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
     {path: 'select-location', component: SelectLocation},
     {path: 'Map', component: Map},
