@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { Closedialog } from '../../../../core/dialogs/closedialog'; 
 import { DialogManager } from '../../../../core/dialogs/dialog-manager';
 import { PublicationDTO, PublicationService } from '../../../../core/services/publication-service'; 
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -20,7 +19,8 @@ export class EditProduct implements OnInit {
   id?: number;                           // Inicializado en ngOnInit
   @Output() updated = new EventEmitter<void>();
 
-  constructor(private publicationService: PublicationService, private router:Router ) { }
+  constructor(private publicationService: PublicationService) { }
+  private dialogManager = inject(DialogManager)
 
   ngOnInit(): void {
     // Inicializamos las variables a partir del Input
@@ -33,12 +33,12 @@ export class EditProduct implements OnInit {
 
   onSubmit() {
     if (this.id && this.product) {
+      console.log(this.product);
       this.publicationService.update(this.id, this.product).
       subscribe({
       next: (data) => {
         console.log('Actualización exitosa', data);
-        this.dialogManager.closeDialog();
-        this.router.navigate(['/profile-seller/']);
+        this.onCloseDialog();
       },
       error: (err) => {
         console.error('Error al actualizar', err);
@@ -47,13 +47,7 @@ export class EditProduct implements OnInit {
     });
     }
   }
-    /*   product = {
-      name: "",
-      price: 1000,
-      category: 'alimentos',
-      description: 'Arroz blanco de grano largo, ideal para acompañar cualquier comida. Suave, esponjoso y fácil de preparar.',
-      hidden: false,
-    }; */
+
   imagePreview: string | ArrayBuffer | null = null;
   imageFile: File | null = null;
 
@@ -74,8 +68,6 @@ export class EditProduct implements OnInit {
     // notificar al padre o usar DialogManager; por ahora lo dejo vacío porque
     // dijiste no agregar nada innecesario)
   }
-
-  private dialogManager = inject(DialogManager)
 
   onCloseDialog() {
     this.dialogManager.closeDialog();

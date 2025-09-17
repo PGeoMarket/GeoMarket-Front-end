@@ -1,5 +1,5 @@
 @if (product) {
-    <form (ngSubmit)="onSubmit()" #editForm="ngForm" class="fixed inset-0">
+    <form (ngSubmit)="onSubmit()" #editForm="ngForm">
   <div class="border-1 border-borde2 bg-blancoSucio md:overflow-auto overflow-y-auto rounded-[20px] w-[95%] p-3 md:h-[calc(100vh-(4rem+24px))] h-[calc(105vh-(4rem+24px))] flex flex-col">
 
     <div class="flex justify-end gap-2">
@@ -19,8 +19,8 @@
       <!-- Imagen -->
       <div class="grid grid-rows-[80%_20%]">
         <div class="border-1 border-borde1 rounded-2xl my-3 w-fit h-auto md:max-h-[500px] mx-auto">
-          <img *ngIf="!product.image.url" src="/img/florhuila.png" class="h-full rounded-[14px]">
-          <img *ngIf="product.image.url" [src]="product.image.url" class="h-full rounded-[14px]">
+          <img *ngIf="!product.image!.url" src="/img/florhuila.png" class="h-full rounded-[14px]">
+          <img *ngIf="product.image!.url" [src]="product.image!.url" class="h-full rounded-[14px]">
         </div>
         <div class="mx-auto">
           <label for="upload" class="cursor-pointer px-4 py-2 btn_azulPotente transition">
