@@ -5,6 +5,7 @@ import { ProfileSeller } from './features/vendedor/profile-seller/profile-seller
 import { Home } from './features/consumidor/home/home';
 import { FavoritePublications } from './features/consumidor/favorite-publications/favorite-publications';
 import { ProfileOther } from './features/consumidor/profile-other/profile-other';
+import { Faq } from './features/consumidor/faq/faq';
 
 export const routes: Routes = [
     {path: 'home', component: Home},
@@ -13,5 +14,6 @@ export const routes: Routes = [
     {path:'profile-seller',component:ProfileSeller},
     {path:'favorite-publications',component:FavoritePublications},
     {path:'ProfileOther',component:ProfileOther},
+    {path:'Faq',component:Faq},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
 ];

@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export abstract class CrudService<TModel, TDTO = TModel> {
   protected abstract endpoint: string;
-  protected readonly API_URL = 'http://api.geomarket.test/v1';
+  protected readonly API_URL = 'http://127.0.0.1:8000/v1';
 
   constructor(protected http: HttpClient) {}
 
