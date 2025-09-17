@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { DialogManager } from '../../../dialogs/dialog-manager';
 
 @Component({
   selector: 'app-admin',
@@ -7,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './admin-slidebar.css'
 })
 export class AdminSlidebar {
-
+ private dialogManager = inject(DialogManager);
+  onFaq() {
+    this.dialogManager.openDialog('faq', {
+      data: { mode: 'create' }
+    });
+  }
 }

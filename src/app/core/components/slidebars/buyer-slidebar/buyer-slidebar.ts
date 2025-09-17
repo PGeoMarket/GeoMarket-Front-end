@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { DialogManager } from '../../../dialogs/dialog-manager';
 
 
 @Component({
@@ -9,5 +10,11 @@ import { RouterLink } from '@angular/router';
   styleUrl: './buyer-slidebar.css'
 })
 export class BuyerSlidebar {
-
+ private dialogManager = inject(DialogManager);
+ 
+  onFaq() {
+    this.dialogManager.openDialog('faq', {
+      data: { mode: 'create' }
+    });
+  }
 }
