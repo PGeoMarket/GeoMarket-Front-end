@@ -6,6 +6,8 @@ import { Home } from './features/consumidor/home/home';
 import { FavoritePublications } from './features/consumidor/favorite-publications/favorite-publications';
 import { ProfileOther } from './features/consumidor/profile-other/profile-other';
 import { ProfileConsumer } from './features/consumidor/profile-consumer/profile-consumer';
+import { Register } from './features/invitado/register/register';
+import { RegisterAs } from './features/invitado/register-as/register-as';
 
 export const routes: Routes = [
     {path: 'home', component: Home},
@@ -16,4 +18,7 @@ export const routes: Routes = [
     {path:'ProfileOther',component:ProfileOther},
     {path:'profile-buyer',component:ProfileConsumer},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
+
+    {path:'register',component:Register},
+    {path:'register-as',component:RegisterAs}
 ];
