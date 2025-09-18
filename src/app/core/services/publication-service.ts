@@ -1,8 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { CrudService } from "./crud-service";
 import { Injectable } from "@angular/core";
-import { map, Observable } from "rxjs";
-
+import { map, Observable, Subject } from "rxjs";
 
 export interface PublicationDTO {
   id?: number;
@@ -25,20 +24,23 @@ export interface ImageDTO {
   imageable_type?: string;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class PublicationService extends CrudService<PublicationDTO> {
   protected override endpoint = 'publications';
-  protected scope: string = "";
+  
+  // Subject para comunicar filtros
+  private filterSubject = new Subject<string>();
+  filterChanged$ = this.filterSubject.asObservable();
+
   constructor(http: HttpClient) {
     super(http);
   }
 
   getAllPublication(): Observable<PublicationDTO[]> {
     return this.http.get<PublicationDTO[]>(
-      `${this.API_URL}/${this.endpoint}?included=image${this.scope}`);
+      `${this.API_URL}/${this.endpoint}?included=image`);
   }
 
   getByIdPublication(id: number): Observable<PublicationDTO> {
@@ -47,8 +49,12 @@ export class PublicationService extends CrudService<PublicationDTO> {
   }
 
   getFilterPublication(filters: string): Observable<PublicationDTO[]> {
-    this.scope = filters;
-    return this.getAll();
+    return this.http.get<PublicationDTO[]>(
+      `${this.API_URL}/${this.endpoint}?included=image${filters}`);
   }
 
+  // Método para emitir filtros
+  sendData(filters: string) {
+    this.filterSubject.next(filters);
+  }
 }
