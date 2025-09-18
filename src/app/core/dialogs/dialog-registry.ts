@@ -6,6 +6,7 @@ import { FilterByProximity } from "../../features/consumidor/dialogs/filter-by-p
 import { RegisterAs } from "../../features/invitado/register-as/register-as";
 import { Register } from "../../features/invitado/register/register";
 import { Faq } from "../../features/consumidor/faq/faq";
+import { Map } from "../../features/consumidor/dialogs/map/map";
 import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 
@@ -26,6 +27,7 @@ export const DIALOG_COMPONENTS = {
   'filter-by-proximity': FilterByProximity,
   'register-as':RegisterAs,
   'register':Register,
+  'map': Map, 
 
   // Admin
   // ...
