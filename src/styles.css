@@ -1,2 +1,55 @@
 /* You can add global styles to this file, and also import other style files */
 @import "tailwindcss";
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+
+    /* Colores */
+    --color-azulPotente: #063E67;
+    --color-azulSecundario: #4690FF;
+    --color-textosNoNegro: #393434;
+    --color-borde1: #C8C8C8;
+    --color-borde2: #B8B4B4;
+    --color-background: #F2F8FF;
+    --color-blancoSucio: #F7F7F7;
+
+}
+
+.btn_positive {
+    @apply bg-azulSecundario text-white px-2 py-0.5 text-sm md:text-base rounded-md border border-[#387FE9] min-w-[100px] text-center;
+}
+
+.btn_negative {
+    @apply bg-borde1 text-textosNoNegro px-2 py-0.5 text-sm md:text-base rounded-md border border-borde2 min-w-[100px] text-center;
+}
+
+.btn_azulPotente{
+    @apply bg-azulPotente text-white px-2 py-0.5 text-sm md:text-base rounded-md border border-azulPotente min-w-[100px] text-center;
+}
+
+.inputs_registro {
+  @apply w-full px-4 py-2 rounded-xl border text-[#393434] bg-[#F7F7F7] border-[#C8C8C8]
+         placeholder:text-[--color-borde2]
+         focus:outline-none
+         focus:invalid:border-red-600
+         focus:valid:border-blue-400;
+}
+
+
+
+.div_publicacion {
+    @apply cursor-pointer bg-white flex flex-col md:w-[256px] md:h-[412px] w-[165px] h-[300px] border-[2px] md:border-[3px] border-borde1 px-[5px] pt-[10px] md:px-[10px] md:pt-[10px] rounded-lg;
+}
+
+.estrella {
+    @apply h-auto w-auto;
+}
+
+.filtros {
+    @apply border-1 border-borde1 p-[10px];
+}
+
+.div_tituloPrecio {
+    @apply flex flex-col font-medium h-[35%] justify-between text-textosNoNegro py-2;
+}

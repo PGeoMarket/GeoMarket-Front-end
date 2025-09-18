@@ -1,0 +1,60 @@
+@if (product) {
+    <form (ngSubmit)="onSubmit()" #editForm="ngForm">
+  <div class="border-1 border-borde2 bg-blancoSucio md:overflow-auto overflow-y-auto rounded-[20px] w-[95%] p-3 md:h-[calc(100vh-(4rem+24px))] h-[calc(105vh-(4rem+24px))] flex flex-col">
+
+    <div class="flex justify-end gap-2">
+      <label class="inline-flex items-center cursor-pointer">
+        <span class="ms-3 text-sm font-medium text-gray-900 mx-1">Ocultar</span>
+        <input type="checkbox" class="sr-only peer" [(ngModel)]="product.visibilidad" name="productHidden">
+        <div
+          class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-azulPotente dark:bg-borde1 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600">
+        </div>
+      </label>
+      <button type="button" class="btn_negative" (click)="onCancel()" appClosedialog>Cancelar</button>
+      <input type="submit" value="Publicar" class="btn_azulPotente disabled:opacity-50 disabled:cursor-not-allowed" [disabled]="!editForm.valid">
+    </div>
+
+    <div class="h-full grid grid-rows-[40%_60%] md:grid-cols-2 md:grid-rows-none">
+
+      <!-- Imagen -->
+      <div class="grid grid-rows-[80%_20%]">
+        <div class="border-1 border-borde1 rounded-2xl my-3 w-fit h-auto md:max-h-[500px] mx-auto">
+          <img *ngIf="!product.image!.url" src="/img/florhuila.png" class="h-full rounded-[14px]">
+          <img *ngIf="product.image!.url" [src]="product.image!.url" class="h-full rounded-[14px]">
+        </div>
+        <div class="mx-auto">
+          <label for="upload" class="cursor-pointer px-4 py-2 btn_azulPotente transition">
+            Cargar imagen
+          </label>
+          <input type="file" id="upload" class="hidden" accept="image/*"> <!--  (change)="onImageSelected($event)" -->
+        </div>
+      </div>
+
+      <!-- Inputs -->
+      <div class="grid grid-rows-[auto_1fr] md:p-5">
+        <div class="flex flex-col h-fit space-y-4">
+          <input type="text" name="productName" class="inputs_registro" placeholder="Nombre del producto"
+          required [(ngModel)]="product.titulo" [value]="product.titulo">
+
+          <input type="number" name="productPrice" class="inputs_registro" placeholder="Precio del producto" 
+          required [(ngModel)]="product.precio" [value]="product.precio">
+
+          <div>
+            <label class="text-textosNoNegro">Categoria</label>
+            <select name="productCategory" class="bg-[#EDEDED] border-1 border-borde2 p-1 rounded-md mb-3 text-textosNoNegro" required [(ngModel)]="product.category_id">
+              <option [value]="1">Electrodomesticos</option>
+              <option [value]="2">Alimentos</option>
+              <option [value]="3">Entretenimiento</option>
+              <option [value]="4">Muebles</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <textarea name="productDescription" class="bg-white border-1 border-borde2 p-1 rounded-md w-full h-full" placeholder="Descripcion" [(ngModel)]="product.descripcion"></textarea>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</form>
+}

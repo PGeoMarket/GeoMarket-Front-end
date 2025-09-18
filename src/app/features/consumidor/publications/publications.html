@@ -1,0 +1,33 @@
+<section class="flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12 md:pt-7">
+
+@if (publications) {
+        @for (publication of publications; track $index) {
+    <!-- Contenedor de publicaciones -->
+
+    <!-- Contenedor de publicacion -->
+    <div class="div_publicacion">
+        <!--  {{-- Imagen --}} -->
+        <div [ngStyle]="{'background-image': 'url(' + publication.image!.url + ')'}" class="flex w justify-end items-end  select-none
+            h-[65%] bg-cover bg-center border-[1px] border-borde2 rounded-md">
+            <!--  {{-- Estrellas: cada img es un tipo de estrella --}} -->
+            <div class="m-2 flex">
+                <img src="svg/starFull.svg" class="estrella" alt="">
+                <img src="svg/starHalf.svg" class="estrella" alt="">
+                <img src="svg/starEmpty.svg" class="estrella" alt="">
+                <img src="svg/starEmpty.svg" class="estrella" alt="">
+                <img src="svg/starEmpty.svg" class="estrella" alt="">
+            </div>
+        </div>
+
+        <!-- {{-- Contenedor de titulo y precio --}} -->
+        <div class="div_tituloPrecio">
+            <!-- {{-- Titulo --}} -->
+            <p class="text-[20px] h-full md:text-[26px] overflow-hidden line-clamp-2 text-ellipsis text-nowrap">
+                {{publication.titulo}}</p>
+            <!-- {{-- Precio --}} -->
+            <span class="text-[24px] md:text-[30px] ">{{publication.precio| currency: 'COP'}}</span>
+        </div>
+    </div>
+    }
+}
+</section>
