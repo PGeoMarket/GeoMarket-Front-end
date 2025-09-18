@@ -1,11 +1,11 @@
-<div
+<div (click)="cerrarMenus()"
     class="border border-gray-300 rounded-xl p-2 md:p-4 flex flex-col md:flex-row gap-4 md:gap-6 bg-white shadow h-auto md:h-[calc(100vh-80px)]">
     <!-- Perfil vendedor -->
     <div
         class="w-full md:w-[370px] flex-shrink-0 flex flex-col border border-gray-300 rounded-xl p-4 md:p-6 bg-white relative mb-2 md:mb-0">
 
         <div options="false" class="absolute top-2 right-2 z-10">
-            <button (click)="options = 'open'"
+            <button (click)="abrirMenu($event)"
                 class="bg-gray-100 rounded-full w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
                 <svg class="w-5 h-5 cursor-pointer" fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 24 24">
@@ -14,13 +14,15 @@
                     <circle cx="12" cy="18" r="1.5" />
                 </svg>
             </button>
-<!--             <div x-show="open" (clickOutside)="open = false"
-                class="mt-1 bg-white border rounded shadow px-2 py-1 text-xs absolute  min-w-[80px]" x-transition>
+            @if (menuAbierto) {
+            <div class="mt-1 bg-white border rounded shadow px-2 py-1 text-xs absolute  min-w-[80px]" x-transition>
                 <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer">Calificar</button>
                 <button class="block text-red-500 hover:underline w-full text-left cursor-pointer">Reportar</button>
-            </div> -->
-            
+            </div>
+            }
+
         </div>
+
         <!-- icono perfil -->
         <div class="flex flex-col items-center mb-4 mt-2">
             <div class="bg-[#06406A] rounded-full w-24 h-24 flex items-center justify-center mb-2 relative">
@@ -48,22 +50,33 @@
         </div>
     </div>
     <!-- Catálogo y comentarios -->
-    <div class="flex-1 flex flex-col min-w-0" x-data="{ tab: 'catalogo' }">
-        <!-- Tabs -->
-        <div class="flex gap-2 mb-4">
-            <button [ngClass]="tab === 'catalogo' ? 'bg-[#06406A] text-white' : 'bg-gray-200 text-gray-700'"
-                class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
-                (click)="tab = 'catalogo'">Calificar</button>
-            <button [ngClass]="tab === 'comentarios' ? 'bg-[#06406A] text-white' : 'bg-gray-200 text-gray-700'"
-                class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
-                (click)="tab = 'comentarios'">Reportar</button>
-        </div>
-        <!-- Catálogo grid con scroll -->
-        <div class="overflow-auto" x-show="tab === 'catalogo'">
+    <!-- Catálogo y comentarios -->
+<div class="flex-1 flex flex-col min-w-0 min-h-0">
+    <!-- Tabs -->
+    <div class="flex gap-2 mb-4 flex-shrink-0">
+        <button [ngClass]="tab === 'catalogo' ? 'btn_azulPotente' : 'btn_negative'"
+            class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
+            (click)="tab = 'catalogo'">
+            Catálogo
+        </button>
 
+        <button [ngClass]="tab === 'comentarios' ? 'btn_azulPotente' : 'btn_negative'"
+            class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
+            (click)="tab = 'comentarios'">
+            Comentarios
+        </button>
+    </div>
+    <!-- Contenido -->
+    <div class="flex-1 min-h-0">
+        <!-- Catálogo grid con scroll -->
+        @if (tab=="catalogo" || !tab) {
+        <div class="h-full overflow-auto">
+            <app-edit-publication></app-edit-publication><!-- Falta la pantalla productos -->
         </div>
+        }
         <!-- Comentarios -->
-        <div class="flex-1 overflow-y-auto pr-2" x-show="tab === 'comentarios'">
+        @if (tab=="comentarios") {
+        <div class="h-full overflow-y-auto pr-2">
             <div class="flex flex-col gap-3">
                 @for (i of repeat; track $index){
                 <div class="flex items-center border rounded-lg bg-gray-100 shadow px-3 py-2 relative">
@@ -80,5 +93,7 @@
                 }
             </div>
         </div>
+        }
     </div>
+</div>
 </div>
