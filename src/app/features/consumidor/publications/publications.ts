@@ -1,24 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
 import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-publications',
+  standalone: true,
   imports: [CommonModule],
   templateUrl: './publications.html',
   styleUrl: './publications.css'
 })
+
+@Injectable({ providedIn: 'root' })
 export class Publications implements OnInit {
   publications!: PublicationDTO[];
-  scopeCategoryIds!: string;
+  private filterSubscription!: Subscription;
+  constructor(protected publicationService: PublicationService, private route: ActivatedRoute) { }
 
-  constructor (protected publicationService: PublicationService) {}
-  
   ngOnInit(): void {
+
     this.loadPublications();
+
+    this.filterSubscription = this.publicationService.filterChanged$
+    .subscribe(filters => {
+      this.loadFiltredPublications(filters);
+    });
   }
 
-  loadPublications () {
+  loadPublications() {
     this.publicationService.getAllPublication()
       .subscribe({
         next: data => this.publications = data,
@@ -27,24 +37,20 @@ export class Publications implements OnInit {
       });
   }
 
-  loadFiltredPublications () {
+  loadFiltredPublications(filters: string) {
     // si no hay scope definido, obtenemos todo
-    if (!this.scopeCategoryIds) {
+    if (!filters) {
       this.loadPublications();
       return;
     }
 
-    this.publicationService.getFilterPublication(this.scopeCategoryIds)
+    this.publicationService.getFilterPublication(filters) // Usar el parámetro filters
       .subscribe({
-        next: data => this.publications = data,
+        next: data => { this.publications = data },
         error: error => console.error('Error a publications filtradas: ' + error),
-        complete: () => console.log('publications filtradas:')
+        complete: () => console.log('publications filtradas:' + this.publications.length)
       });
   }
 
-  // <-- nuevo: recibe del hijo la scope y actualiza la lista
-  onCategoryApplied(scope: string) {
-    this.scopeCategoryIds = scope;
-    this.loadFiltredPublications();
-  }
+
 }

@@ -26,7 +26,8 @@
 
   <!-- Botón de acción -->
   <div class="flex justify-end mt-2em  mr-37">
-    <button (click)="applyFilter()" class="bg-[#063E67] text-white w-[6.5em] h-[2.5em] rounded-md hover:bg-[#0369a1]">
+    <button (click)="applyFilter()" [routerLink]="['home']" [queryParams]="{selectedIds}" class="bg-[#063E67] text-white w-[6.5em] h-[2.5em] rounded-md 
+    hover:bg-[#0369a1]" appClosedialog>
       Aceptar
     </button>
   </div>
