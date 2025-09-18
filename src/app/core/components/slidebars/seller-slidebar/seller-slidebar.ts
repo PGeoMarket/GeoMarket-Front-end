@@ -16,5 +16,10 @@ export class SellerSlidebar {
       data: { mode: 'create' }
     });
   }
+  onFaq() {
+    this.dialogManager.openDialog('faq', {
+      data: { mode: 'create' }
+    });
+  }
 
 }

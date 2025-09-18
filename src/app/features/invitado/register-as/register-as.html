@@ -1,0 +1,45 @@
+<!-- register-as.component.html -->
+<div class="fixed inset-0 flex items-center justify-center z-50">
+  
+  <!-- Selector de tipo de usuario -->
+  @if (mostrarSelector) {
+    <div class="border border-gray-300 rounded-xl w-fit p-6 bg-white mx-4 mt-20">
+      
+      <!--icono de regreso-->
+      <img src="svg/back-icon.svg" alt="Volver" class="cursor-pointer mb-4">
+
+      <!--caja de las opciones-->
+      <div class="rounded-xl text-center">
+        <h5 class="text-2xl font-normal text-gray-800 mb-6 leading-tight">
+          ¿Cómo desea <br> registrarse?
+        </h5>
+
+        <!--boton de registro como vendedor-->
+        <div
+          class="bg-[#06406A] rounded-xl flex flex-col w-[200px] p-6 items-center justify-center mb-6 cursor-pointer mx-auto"
+          (click)="seleccionarTipo('vendedor')">
+          <img src="svg/store.svg" alt="Vendedor" class="w-12 mb-3">
+          <span class="text-white text-lg">Vendedor</span>
+        </div>
+
+        <!--boton de registro como consumidor-->
+        <div
+          class="bg-[#06406A] rounded-xl flex flex-col w-[200px] p-6 items-center justify-center cursor-pointer mx-auto"
+          (click)="seleccionarTipo('consumidor')">
+          <img src="svg/cart.svg" alt="Consumidor" class="w-12 mb-3">
+          <span class="text-white text-lg">Consumidor</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Componente de registro (se muestra después de seleccionar) -->
+  @if (!mostrarSelector) {
+    <app-register 
+      [isVendedor]="tipoSeleccionado === 'vendedor'"
+      (volverAtras)="volverAlSelector()"
+      (cerrarModal)="cerrarModal()">
+    </app-register>
+  }
+
+</div>
