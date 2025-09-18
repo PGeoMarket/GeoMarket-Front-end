@@ -1,0 +1,231 @@
+<!-- register.component.html -->
+<div class="fixed inset-0 flex items-center justify-center z-50 p-4">
+  <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-md mx-auto relative max-h-screen overflow-y-auto">
+    
+    <!-- Botones de navegación -->
+    <div class="absolute top-4 left-4 right-4 flex justify-between">
+      <!-- Botón volver al selector -->
+      <img src="svg/back-icon.svg" class="cursor-pointer w-10 h-10" (click)="volver()">
+      <!-- Botón cerrar modal -->
+     
+    </div>
+
+    <!-- Logo principal -->
+    <div class="flex justify-center mb-2 mt-4">
+      <img src="svg/logo.svg" alt="Logo" class="h-16">
+    </div>
+
+    <!-- Texto "GeoMarket" -->
+    <div class="flex justify-center mb-6">
+      <img src="svg/geomarket.svg" alt="GeoMarket" class="h-8">
+    </div>
+
+    <!-- Formulario -->
+    <form (ngSubmit)="enviarFormulario()" #registerForm="ngForm">
+      
+      <div class="space-y-4">
+        <!-- Campo Nombre -->
+        <div>
+          <input 
+            type="text" 
+            name="nombre" 
+            [(ngModel)]="formData.nombre"
+            placeholder="Nombre" 
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="mostrarErrores && errors.nombre"
+            [class.border-gray-300]="!mostrarErrores || !errors.nombre"
+            required 
+            autofocus />
+          @if (mostrarErrores && errors.nombre) {
+            <div class="text-red-500 text-sm mt-1">
+              {{ errors.nombre }}
+            </div>
+          }
+        </div>
+        
+        <!-- Campo Apellidos -->
+        <div>
+          <input 
+            type="text" 
+            name="apellidos" 
+            [(ngModel)]="formData.apellidos"
+            placeholder="Apellidos" 
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="mostrarErrores && errors.apellidos"
+            [class.border-gray-300]="!mostrarErrores || !errors.apellidos"
+            required />
+          @if (mostrarErrores && errors.apellidos) {
+            <div class="text-red-500 text-sm mt-1">
+              {{ errors.apellidos }}
+            </div>
+          }
+        </div>
+
+        <!-- Campo Nombre del negocio (solo vendedor) -->
+        @if (isVendedor) {
+          <div>
+            <input 
+              type="text" 
+              name="nombre_negocio" 
+              [(ngModel)]="formData.nombre_negocio"
+              placeholder="Nombre negocio" 
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              [class.border-red-500]="mostrarErrores && errors.nombre_negocio"
+              [class.border-gray-300]="!mostrarErrores || !errors.nombre_negocio"
+              required />
+            @if (mostrarErrores && errors.nombre_negocio) {
+              <div class="text-red-500 text-sm mt-1">
+                {{ errors.nombre_negocio }}
+              </div>
+            }
+          </div>
+        }
+        
+        <!-- Campo Email -->
+        <div>
+          <input 
+            type="email" 
+            name="email" 
+            [(ngModel)]="formData.email"
+            placeholder="Correo electrónico" 
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="mostrarErrores && errors.email"
+            [class.border-gray-300]="!mostrarErrores || !errors.email"
+            required />
+          @if (mostrarErrores && errors.email) {
+            <div class="text-red-500 text-sm mt-1">
+              {{ errors.email }}
+            </div>
+          }
+        </div>
+        
+        <!-- Campo Confirmar Email -->
+        <div>
+          <input 
+            type="email" 
+            name="email_confirmation" 
+            [(ngModel)]="formData.email_confirmation"
+            placeholder="Confirmar correo electrónico" 
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="mostrarErrores && errors.email_confirmation"
+            [class.border-gray-300]="!mostrarErrores || !errors.email_confirmation"
+            required />
+          @if (mostrarErrores && errors.email_confirmation) {
+            <div class="text-red-500 text-sm mt-1">
+              {{ errors.email_confirmation }}
+            </div>
+          }
+        </div>
+        
+        <!-- Campo Teléfono -->
+        <div>
+          <input 
+            type="tel" 
+            name="telefono" 
+            [(ngModel)]="formData.telefono"
+            placeholder="Teléfono" 
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="mostrarErrores && errors.telefono"
+            [class.border-gray-300]="!mostrarErrores || !errors.telefono"
+            required />
+          @if (mostrarErrores && errors.telefono) {
+            <div class="text-red-500 text-sm mt-1">
+              {{ errors.telefono }}
+            </div>
+          }
+        </div>
+
+        <!-- Campo Dirección (solo vendedor) -->
+        @if (isVendedor) {
+          <div>
+            <input 
+              type="text" 
+              name="direccion" 
+              [(ngModel)]="formData.direccion"
+              placeholder="Direccion" 
+              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              [class.border-red-500]="mostrarErrores && errors.direccion"
+              [class.border-gray-300]="!mostrarErrores || !errors.direccion"
+              required />
+            @if (mostrarErrores && errors.direccion) {
+              <div class="text-red-500 text-sm mt-1">
+                {{ errors.direccion }}
+              </div>
+            }
+          </div>
+        }
+        
+        <!-- Campo Contraseña -->
+        <div>
+          <input 
+            type="password" 
+            name="password" 
+            [(ngModel)]="formData.password"
+            placeholder="Contraseña" 
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="mostrarErrores && errors.password"
+            [class.border-gray-300]="!mostrarErrores || !errors.password"
+            required />
+          @if (mostrarErrores && errors.password) {
+            <div class="text-red-500 text-sm mt-1">
+              {{ errors.password }}
+            </div>
+          }
+        </div>
+        
+        <!-- Campo Confirmar Contraseña -->
+        <div>
+          <input 
+            type="password" 
+            name="password_confirmation" 
+            [(ngModel)]="formData.password_confirmation"
+            placeholder="Confirmar contraseña" 
+            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            [class.border-red-500]="mostrarErrores && errors.password_confirmation"
+            [class.border-gray-300]="!mostrarErrores || !errors.password_confirmation"
+            required />
+          @if (mostrarErrores && errors.password_confirmation) {
+            <div class="text-red-500 text-sm mt-1">
+              {{ errors.password_confirmation }}
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Checkbox -->
+      <div class="mt-4">
+        <div class="flex items-center text-xs text-gray-600 justify-center">
+          <input 
+            type="checkbox" 
+            id="terms" 
+            name="terms" 
+            [(ngModel)]="formData.terms"
+            class="mr-2" 
+            required>
+          <label for="terms">Acepto términos y condiciones</label>
+        </div>
+        @if (mostrarErrores && errors.terms) {
+          <div class="text-red-500 text-sm mt-1 text-center">
+            {{ errors.terms }}
+          </div>
+        }
+      </div>
+
+      <!-- Botones -->
+      <div class="flex justify-center pt-3 gap-2">
+        <button 
+          type="button" 
+          class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+          (click)="cancelar()">
+          Cancelar
+        </button>
+        <button 
+          type="submit" 
+          class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+          Registrarse
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>

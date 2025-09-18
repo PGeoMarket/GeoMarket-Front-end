@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export abstract class CrudService<T> {
   protected abstract endpoint: string;
+
   protected readonly API_URL = 'http://api.geomarket.test/v1'; // tu backend Laravel
 
   constructor(protected http: HttpClient) {}

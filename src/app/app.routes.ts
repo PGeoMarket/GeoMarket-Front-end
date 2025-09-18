@@ -5,7 +5,12 @@ import { ProfileSeller } from './features/vendedor/profile-seller/profile-seller
 import { Home } from './features/consumidor/home/home';
 import { FavoritePublications } from './features/consumidor/favorite-publications/favorite-publications';
 import { ProfileOther } from './features/consumidor/profile-other/profile-other';
+import { Faq } from './features/consumidor/faq/faq';
+import { SelectLocation } from './features/consumidor/dialogs/select-location/select-location';
+import { Map } from './features/consumidor/dialogs/map/map';
 import { ProfileConsumer } from './features/consumidor/profile-consumer/profile-consumer';
+import { Register } from './features/invitado/register/register';
+import { RegisterAs } from './features/invitado/register-as/register-as';
 
 export const routes: Routes = [
     {path: 'home', component: Home},
@@ -14,6 +19,12 @@ export const routes: Routes = [
     {path:'profile-seller',component:ProfileSeller},
     {path:'favorite-publications',component:FavoritePublications},
     {path:'ProfileOther',component:ProfileOther},
+    {path:'Faq',component:Faq},
     {path:'profile-buyer',component:ProfileConsumer},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
+
+    {path:'register',component:Register},
+    {path:'register-as',component:RegisterAs},
+    {path: 'select-location', component: SelectLocation},
+    {path: 'Map', component: Map},
 ];

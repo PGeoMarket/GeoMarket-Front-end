@@ -33,4 +33,10 @@ export class Home {
       data: {mode: 'create'}
     })
   }
+
+  onOpenMap() {
+    this.dialogManager.openDialog('map', {
+      data: {mode: 'create'}
+    })
+  }
 }
