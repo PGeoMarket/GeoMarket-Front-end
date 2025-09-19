@@ -1,65 +1,98 @@
 <body class="min-h-screen flex justify-center p-4">
-  <div class="bg-white w-full max-w-[35em] border border-gray-400 rounded-xl p-6 max-h-[90vh] overflow-y-auto">
-        <!-- Botón de retroceso --> <button class="border border-white active:bg-[#dad8d8] p-2 rounded cursor-pointer" appClosedialog>
-            <img src="/svg/back-icon.svg" alt=""> </button> <!-- Imagen central de soporte -->
-        <div class="flex justify-center my-6"> <img src="/svg/soporte.svg" alt=""> </div> <!-- Título principal -->
-        <p class="text-center text-[#06406a] font-sans text-lg mb-6"> Soporte y preguntas <br> frecuentes </p>
+    <div class="bg-blancoSucio w-full max-w-[35em] border border-borde2 rounded-xl p-6 max-h-[90vh] overflow-y-auto">
+
+        <!-- Botón de retroceso -->
+        <button class=" p-2 rounded cursor-pointer" appClosedialog>
+            <img src="/svg/back-icon.svg" alt="">
+        </button>
+
+        <!-- Imagen central de soporte -->
+        <div class="flex justify-center my-6"> <img src="/svg/soporte.svg" alt=""> </div>
+
+        <!-- Título principal -->
+        <p class="text-center text-azulPotente font-sans text-lg mb-6"> Soporte y preguntas <br> frecuentes </p>
+
         <!-- Preguntas frecuentes -->
         <div class="space-y-4 px-4">
             <details class="group">
                 <summary class="font-sans cursor-pointer list-none">
-                    <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded"> <span>¿Cómo puedo
-                            publicar un producto?</span> <span
-                            class="transform group-open:rotate-180 transition-transform">▼</span> </div>
+                    <div class="flex items-center justify-between p-2 hover:bg-background rounded">
+                        <span>¿Cómo puedo publicar un producto?</span>
+                        <span class="transform group-open:rotate-180 transition-transform">▼</span>
+                    </div>
                 </summary>
-                <div class="bg-white border border-gray-400 rounded-xl p-4 mt-2 ml-4">
-                    <p class="font-sans text-sm text-gray-700"> Para publicar un producto, dirígete a la sección
+                <div class="bg-blancoSucio border border-borde2 rounded-xl p-4 mt-2 ml-4">
+                    <p class="font-sans text-sm text-textosNoNegro"> Para publicar un producto, dirígete a la sección
                         "Vender" en el menú principal, completa el formulario con la información del producto, agrega
                         fotos y establece el precio. </p>
                 </div>
             </details>
+
             <details class="group">
                 <summary class="font-sans cursor-pointer list-none">
-                    <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded"> <span>¿Cómo puedo
-                            contactar a un vendedor?</span> <span
-                            class="transform group-open:rotate-180 transition-transform">▼</span> </div>
+                    <div class="flex items-center justify-between p-2 hover:bg-background rounded">
+                        <span>¿Cómo puedo contactar a un vendedor?</span>
+                        <span class="transform group-open:rotate-180 transition-transform">▼</span>
+                    </div>
                 </summary>
-                <div class="bg-white border border-gray-400 rounded-xl p-4 mt-2 ml-4">
-                    <p class="font-sans text-sm text-gray-700"> Puedes contactar al vendedor mediante el botón
+                <div class="bg-blancoSucio border border-borde2 rounded-xl p-4 mt-2 ml-4">
+                    <p class="font-sans text-sm text-textosNoNegro"> Puedes contactar al vendedor mediante el botón
                         "Contactar" que aparece en cada producto, o usando el sistema de mensajería interna de la
                         plataforma. </p>
                 </div>
             </details>
+
             <details class="group">
                 <summary class="font-sans cursor-pointer list-none">
-                    <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded"> <span>¿Cómo edito mi
-                            perfil?</span> <span class="transform group-open:rotate-180 transition-transform">▼</span>
+                    <div class="flex items-center justify-between p-2 hover:bg-background rounded">
+                        <span>¿Cómo edito mi perfil?</span>
+                        <span class="transform group-open:rotate-180 transition-transform">▼</span>
                     </div>
                 </summary>
-                <div class="bg-white border border-gray-400 rounded-xl p-4 mt-2 ml-4">
-                    <p class="font-sans text-sm text-gray-700"> Ve a "Mi perfil" en el menú de usuario, allí podrás
+                <div class="bg-blancoSucio border border-borde2 rounded-xl p-4 mt-2 ml-4">
+                    <p class="font-sans text-sm text-textosNoNegro"> Ve a "Mi perfil" en el menú de usuario, allí podrás
                         editar tu información personal, foto de perfil y datos de contacto. </p>
                 </div>
             </details>
+
             <details class="group">
                 <summary class="font-sans cursor-pointer list-none">
-                    <div class="flex items-center justify-between p-2 hover:bg-gray-50 rounded"> <span>¿Es seguro
-                            comprar en la plataforma?</span> <span
-                            class="transform group-open:rotate-180 transition-transform">▼</span> </div>
+                    <div class="flex items-center justify-between p-2 hover:bg-background rounded">
+                        <span>¿Es seguro comprar en la plataforma?</span>
+                        <span class="transform group-open:rotate-180 transition-transform">▼</span>
+                    </div>
                 </summary>
-                <div class="bg-white border border-gray-400 rounded-xl p-4 mt-2 ml-4">
-                    <p class="font-sans text-sm text-gray-700"> Sí, contamos con sistemas de verificación de usuarios y
+                <div class="bg-blancoSucio border border-borde2 rounded-xl p-4 mt-2 ml-4">
+                    <p class="font-sans text-sm text-textosNoNegro"> Sí, contamos con sistemas de verificación de
+                        usuarios y
                         recomendamos siempre revisar las calificaciones del vendedor antes de realizar una compra. </p>
                 </div>
             </details>
-        </div> <!-- Nota al final -->
-        <p class="text-center font-sans mt-8 mb-4 text-gray-600"> Si su pregunta no se encuentra, puede enviarla: </p>
+        </div>
+
+        <!-- Nota al final -->
+        <p class="text-center font-sans mt-8 mb-4 text-textosNoNegro"> Si su pregunta no se encuentra, puede enviarla:
+        </p>
+
         <!-- Área de texto para nueva pregunta -->
-        <div class="px-4"> <label class="block"> <textarea placeholder="Escriba aquí..."
-                    class="w-full h-[5em] border border-gray-400 rounded-xl p-3 resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"></textarea>
-            </label> </div> <!-- Botón para enviar -->
-        <div class="flex justify-end px-4 mt-4 mb-2"> <button type="submit"
-                class="bg-[#063E67] text-white px-6 py-2 rounded-md hover:bg-[#0369a1] transition-colors font-medium">
-                Enviar </button> </div>
+        <form (ngSubmit)="onSubmit(mensaje.value)">
+            <!-- Textarea -->
+            <div class="px-4">
+                <label for="mensaje" class="block text-sm font-medium text-textosNoNegro mb-1">
+                    Mensaje
+                </label>
+                <textarea id="mensaje" name="mensaje" ngModel #mensaje="ngModel" required placeholder="Escriba aquí..."
+                    class="w-full h-[5em] border border-borde2 rounded-xl p-3 resize-none
+             focus:outline-none focus:ring-2 focus:ring-azulSecundario focus:border-transparent">
+    </textarea>
+            </div>
+
+            <!-- Botón -->
+            <div class="flex justify-end px-4 mt-4 mb-2">
+                <button type="submit" [disabled]="!mensaje.value" class="bg-azulPotente text-blancoSucio px-6 py-2 rounded-md font-medium transition-colors
+             hover:bg-azulSecundario
+             disabled:bg-gray-400 disabled:text-blancoSucio disabled:cursor-not-allowed">Enviar</button>
+            </div>
+        </form>
     </div>
 </body>
