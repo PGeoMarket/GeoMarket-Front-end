@@ -1,11 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Closedialog } from "../../../core/dialogs/closedialog";
 
 
 @Component({
   selector: 'app-register',
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule, FormsModule, Closedialog],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
@@ -14,10 +15,6 @@ export class Register {
  // Recibe si es vendedor desde el componente padre
   @Input() isVendedor: boolean = false;
   
-  // Eventos hacia el componente padre
-  @Output() volverAtras = new EventEmitter<void>();
-  @Output() cerrarModal = new EventEmitter<void>();
-
   // Datos del formulario
   formData = {
     nombre: '',
@@ -36,21 +33,8 @@ export class Register {
   errors: any = {};
   mostrarErrores: boolean = false;
   
-  // Método para volver al selector
-  volver() {
-    this.volverAtras.emit();
-  }
-  
-  // Cerrar modal completamente
-  cerrar() {
-    this.cerrarModal.emit();
-  }
-  
-  // Cancelar registro (vuelve al selector)
-  cancelar() {
-    this.volver();
-  }
-  
+
+ 
   // Validar formulario
   validarFormulario(): boolean {
     this.errors = {};
@@ -134,18 +118,41 @@ export class Register {
   }
   
   // Enviar formulario
-  enviarFormulario() {
-    this.mostrarErrores = true;
-    
-    if (this.validarFormulario()) {
-      console.log('Formulario válido, enviando datos...');
-      console.log('Es vendedor:', this.isVendedor);
-      console.log('Datos:', this.formData);
-      
-      // Aquí harías la llamada al backend
-      // this.authService.register(this.formData, this.isVendedor ? 'vendedor' : 'consumidor');
-    } else {
-      console.log('Formulario inválido, mostrando errores');
-    }
+// Enviar formulario
+enviarFormulario() {
+  this.mostrarErrores = true;
+  
+  if (this.validarFormulario()) {
+    console.log('Formulario válido, procesando nombres...');
+
+    // Dividir nombre en primer_nombre y segundo_nombre
+    const [primerNombre, ...restoNombre] = this.formData.nombre.trim().split(' ');
+    const segundoNombre = restoNombre.join(' '); // si solo escribió uno, queda vacío
+
+    // Dividir apellidos en primer_apellido y segundo_apellido
+    const [primerApellido, ...restoApellido] = this.formData.apellidos.trim().split(' ');
+    const segundoApellido = restoApellido.join(' '); // si solo escribió uno, queda vacío
+
+    // Crear payload para enviar a Laravel
+    const payload = {
+      primer_nombre: primerNombre,
+      segundo_nombre: segundoNombre || null,
+      primer_apellido: primerApellido,
+      segundo_apellido: segundoApellido || null,
+      nombre_negocio: this.formData.nombre_negocio || null,
+      email: this.formData.email,
+      telefono: this.formData.telefono,
+      direccion: this.formData.direccion,
+      password: this.formData.password,
+    };
+
+    console.log('Payload final para la API:', payload);
+    console.log('Es vendedor:', this.isVendedor);
+
+    // Aquí llamas a tu API con HttpClient
+    // this.http.post('http://localhost:8000/api/register', payload).subscribe(...)
+  } else {
+    console.log('Formulario inválido, mostrando errores');
   }
+}
 }
