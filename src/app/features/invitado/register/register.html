@@ -1,14 +1,12 @@
 <!-- register.component.html -->
 <div class="fixed inset-0 flex items-center justify-center z-50 p-4">
   <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-md mx-auto relative max-h-screen overflow-y-auto">
-    
     <!-- Botones de navegación -->
     <div class="absolute top-4 left-4 right-4 flex justify-between" appClosedialog>
 
-     <button class="rounded-md border border-white" appClosedialog>
-            <img src="svg/back-icon.svg" alt="">
-        </button>
-     
+      <button class="rounded-md border border-white" appClosedialog>
+        <img src="svg/back-icon.svg" alt="">
+      </button>
     </div>
 
     <!-- Logo principal -->
@@ -22,210 +20,234 @@
     </div>
 
     <!-- Formulario -->
-    <form (ngSubmit)="enviarFormulario()" #registerForm="ngForm">
-      
+    <form (ngSubmit)="sendForm(registerForm);" #registerForm="ngForm">
+
       <div class="space-y-4">
-        <!-- Campo Nombre -->
+        <!-- Campo Primer Nombre -->
         <div>
-          <input 
-            type="text" 
-            name="nombre" 
-            [(ngModel)]="formData.nombre"
-            placeholder="Nombre" 
-            class="w-full px-4 py-3 border rounded-lg"
-            [class.border-red-500]="mostrarErrores && errors.nombre"
-            [class.border-gray-300]="!mostrarErrores || !errors.nombre"
-            required 
+          <input type="text" name="primer_nombre" [(ngModel)]="registerUser.primer_nombre" placeholder="Primer Nombre*"
+            class="w-full px-4 py-3 border rounded-lg" #primerNombre="ngModel"
+            [class.border-red-500]="primerNombre.invalid && (primerNombre.touched || registerForm.submitted)"
+            [class.border-gray-300]="primerNombre.valid || (!primerNombre.touched && !registerForm.submitted)" required
             autofocus />
-          @if (mostrarErrores && errors.nombre) {
-            <div class="text-red-500 text-sm mt-1">
-              {{ errors.nombre }}
-            </div>
-          }
-        </div>
-        
-        <!-- Campo Apellidos -->
-        <div>
-          <input 
-            type="text" 
-            name="apellidos" 
-            [(ngModel)]="formData.apellidos"
-            placeholder="Apellidos" 
-            class="w-full px-4 py-3 border rounded-lg"
-            [class.border-red-500]="mostrarErrores && errors.apellidos"
-            [class.border-gray-300]="!mostrarErrores || !errors.apellidos"
-            required />
-          @if (mostrarErrores && errors.apellidos) {
-            <div class="text-red-500 text-sm mt-1">
-              {{ errors.apellidos }}
-            </div>
+          @if (primerNombre.invalid && (primerNombre.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            El primer nombre es obligatorio
+          </div>
           }
         </div>
 
-        <!-- Campo Nombre del negocio (solo vendedor) -->
-        @if (isVendedor) {
-          <div>
-            <input 
-              type="text" 
-              name="nombre_negocio" 
-              [(ngModel)]="formData.nombre_negocio"
-              placeholder="Nombre negocio" 
-              class="w-full px-4 py-3 border rounded-lg "
-              [class.border-red-500]="mostrarErrores && errors.nombre_negocio"
-              [class.border-gray-300]="!mostrarErrores || !errors.nombre_negocio"
-              required />
-            @if (mostrarErrores && errors.nombre_negocio) {
-              <div class="text-red-500 text-sm mt-1">
-                {{ errors.nombre_negocio }}
-              </div>
-            }
+        <!-- Campo Segundo Nombre -->
+        <div>
+          <input type="text" name="segundo_nombre" [(ngModel)]="registerUser.segundo_nombre"
+            placeholder="Segundo Nombre" class="w-full px-4 py-3 border rounded-lg" #segundoNombre="ngModel"
+            [class.border-red-500]="segundoNombre.invalid && segundoNombre.touched"
+            [class.border-gray-300]="segundoNombre.valid || !segundoNombre.touched" />
+        </div>
+
+        <!-- Campo Primer Apellido -->
+        <div>
+          <input type="text" name="primer_apellido" [(ngModel)]="registerUser.primer_apellido"
+            placeholder="Primer Apellido*" class="w-full px-4 py-3 border rounded-lg" #primerApellido="ngModel"
+            [class.border-red-500]="primerApellido.invalid && (primerApellido.touched || registerForm.submitted)"
+            [class.border-gray-300]="primerApellido.valid || (!primerApellido.touched && !registerForm.submitted)"
+            required />
+          @if (primerApellido.invalid && (primerApellido.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            El primer apellido es obligatorio
           </div>
-        }
-        
-        <!-- Campo Email -->
-        <div>
-          <input 
-            type="email" 
-            name="email" 
-            [(ngModel)]="formData.email"
-            placeholder="Correo electrónico" 
-            class="w-full px-4 py-3 border rounded-lg "
-            [class.border-red-500]="mostrarErrores && errors.email"
-            [class.border-gray-300]="!mostrarErrores || !errors.email"
-            required />
-          @if (mostrarErrores && errors.email) {
-            <div class="text-red-500 text-sm mt-1">
-              {{ errors.email }}
-            </div>
           }
         </div>
-        
-        <!-- Campo Confirmar Email -->
+
+        <!-- Campo Segundo Apellido -->
         <div>
-          <input 
-            type="email" 
-            name="email_confirmation" 
-            [(ngModel)]="formData.email_confirmation"
-            placeholder="Confirmar correo electrónico" 
-            class="w-full px-4 py-3 border rounded-lg "
-            [class.border-red-500]="mostrarErrores && errors.email_confirmation"
-            [class.border-gray-300]="!mostrarErrores || !errors.email_confirmation"
-            required />
-          @if (mostrarErrores && errors.email_confirmation) {
-            <div class="text-red-500 text-sm mt-1">
-              {{ errors.email_confirmation }}
-            </div>
-          }
+          <input type="text" name="segundo_apellido" [(ngModel)]="registerUser.segundo_apellido"
+            placeholder="Segundo Apellido" class="w-full px-4 py-3 border rounded-lg" #segundoApellido="ngModel"
+            [class.border-red-500]="segundoApellido.invalid && segundoApellido.touched"
+            [class.border-gray-300]="segundoApellido.valid || !segundoApellido.touched" />
         </div>
-        
+
+        @if (registerUser.role_id==2) {
         <!-- Campo Teléfono -->
-        <div>
+        <!--         <div>
           <input 
             type="tel" 
             name="telefono" 
-            [(ngModel)]="formData.telefono"
+            
             placeholder="Teléfono" 
             class="w-full px-4 py-3 border rounded-lg "
-            [class.border-red-500]="mostrarErrores && errors.telefono"
-            [class.border-gray-300]="!mostrarErrores || !errors.telefono"
+            #telefono="ngModel" ngModel
+            [(ngModel)]="telefono"
+            [class.border-red-500]="telefono.invalid && (telefono.touched || registerForm.submitted)"
+            [class.border-gray-300]="telefono.valid || (!telefono.touched && !registerForm.submitted)"
             required />
-          @if (mostrarErrores && errors.telefono) {
+          @if (telefono.invalid && (telefono.touched || registerForm.submitted)) {
             <div class="text-red-500 text-sm mt-1">
-              {{ errors.telefono }}
+              El teléfono es obligatorio
             </div>
+          }
+        </div> -->
+
+        <!-- Campo Nombre de la Tienda -->
+        <div>
+          <input type="text" name="nombre_tienda" [(ngModel)]="registerUser.nombre_tienda"
+            placeholder="Nombre de la Tienda*" class="w-full px-4 py-3 border rounded-lg " #nombre_tienda="ngModel"
+            [class.border-red-500]="nombre_tienda.invalid && (nombre_tienda.touched || registerForm.submitted)"
+            [class.border-gray-300]="nombre_tienda.valid || (!nombre_tienda.touched && !registerForm.submitted)"
+            required />
+          @if (nombre_tienda.invalid && (nombre_tienda.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            El nombre de la tienda es obligatorio
+          </div>
           }
         </div>
 
-        <!-- Campo Dirección (solo vendedor) -->
-        @if (isVendedor) {
-          <div>
-            <input 
-              type="text" 
-              name="direccion" 
-              [(ngModel)]="formData.direccion"
-              placeholder="Direccion" 
-              class="w-full px-4 py-3 border rounded-lg "
-              [class.border-red-500]="mostrarErrores && errors.direccion"
-              [class.border-gray-300]="!mostrarErrores || !errors.direccion"
-              required />
-            @if (mostrarErrores && errors.direccion) {
-              <div class="text-red-500 text-sm mt-1">
-                {{ errors.direccion }}
-              </div>
-            }
+        <!-- Campo Descripcion de la Tienda -->
+        <div>
+          <input type="text" name="descripcion" [(ngModel)]="registerUser.descripcion"
+            placeholder="Descripcion de la Tienda*" class="w-full px-4 py-3 border rounded-lg " #descripcion="ngModel"
+            [class.border-red-500]="descripcion.invalid && (descripcion.touched || registerForm.submitted)"
+            [class.border-gray-300]="descripcion.valid || (!descripcion.touched && !registerForm.submitted)" required />
+          @if (descripcion.invalid && (descripcion.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            El descripcion de la tienda es obligatorio
           </div>
+          }
+        </div>
+
+
+        <!-- Logica de api para lat y long -->
+
+
+        <!-- Campo Direccion de la Tienda -->
+        <div>
+          <input type="text" name="direccion" [(ngModel)]="registerUser.direccion" placeholder="Direccion de la Tienda*"
+            class="w-full px-4 py-3 border rounded-lg " #direccion="ngModel"
+            [class.border-red-500]="direccion.invalid && (direccion.touched || registerForm.submitted)"
+            [class.border-gray-300]="direccion.valid || (!direccion.touched && !registerForm.submitted)" required />
+          @if (direccion.invalid && (direccion.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            El direccion de la tienda es obligatorio
+          </div>
+          }
+        </div>
+
         }
-        
+
+<!-- Campo Email -->
+<div>
+  <input type="email" name="email" [(ngModel)]="registerUser.email" placeholder="Correo electrónico*"
+    class="w-full px-4 py-3 border rounded-lg " #email="ngModel"
+    [class.border-red-500]="email.invalid && (email.touched || registerForm.submitted)"
+    [class.border-gray-300]="email.valid || (!email.touched && !registerForm.submitted)" required email />
+  @if (email.invalid && (email.touched || registerForm.submitted)) {
+  <div class="text-red-500 text-sm mt-1">
+    @if (email.errors?.['required']) {
+      El correo electrónico es obligatorio
+    }
+    @if (email.errors?.['email']) {
+      El correo electrónico debe tener un formato válido
+    }
+  </div>
+  }
+  @if (emailTaken) {
+  <div class="text-red-500 text-sm mt-1">
+    El correo electrónico ya está en uso
+  </div>
+  }
+</div>
+
+<!-- Campo Confirmar Email -->
+<div>
+  <input type="email" name="email_confirmation" placeholder="Confirmar correo electrónico*"
+    class="w-full px-4 py-3 border rounded-lg " #emailConfirmation="ngModel" ngModel
+    [class.border-red-500]="(emailConfirmation.invalid && (emailConfirmation.touched || registerForm.submitted)) || (emailConfirmation.value && registerUser.email && emailConfirmation.value !== registerUser.email)"
+    [class.border-gray-300]="emailConfirmation.valid && (!emailConfirmation.value || !registerUser.email || emailConfirmation.value === registerUser.email) || (!emailConfirmation.touched && !registerForm.submitted)"
+    required email />
+  @if (emailConfirmation.invalid && (emailConfirmation.touched || registerForm.submitted)) {
+  <div class="text-red-500 text-sm mt-1">
+    @if (emailConfirmation.errors?.['required']) {
+      La confirmación del correo es obligatoria
+    }
+    @if (emailConfirmation.errors?.['email']) {
+      El correo electrónico debe tener un formato válido
+    }
+  </div>
+  }
+  @if (emailConfirmation.value && registerUser.email && emailConfirmation.value !== registerUser.email &&
+  (emailConfirmation.touched || registerForm.submitted)) {
+  <div class="text-red-500 text-sm mt-1">
+    Los correos no coinciden
+  </div>
+  }
+</div>
+
         <!-- Campo Contraseña -->
         <div>
-          <input 
-            type="password" 
-            name="password" 
-            [(ngModel)]="formData.password"
-            placeholder="Contraseña" 
-            class="w-full px-4 py-3 border rounded-lg"
-            [class.border-red-500]="mostrarErrores && errors.password"
-            [class.border-gray-300]="!mostrarErrores || !errors.password"
-            required />
-          @if (mostrarErrores && errors.password) {
-            <div class="text-red-500 text-sm mt-1">
-              {{ errors.password }}
-            </div>
+          <input type="password" name="password" [(ngModel)]="registerUser.password" placeholder="Contraseña*"
+            class="w-full px-4 py-3 border rounded-lg" #password="ngModel"
+            [class.border-red-500]="password.invalid && (password.touched || registerForm.submitted)"
+            [class.border-gray-300]="password.valid || (!password.touched && !registerForm.submitted)" required
+            minlength="8" />
+          @if (password.invalid && (password.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            @if (password.errors?.['required']) {
+            La contraseña es obligatoria
+            }
+            @if (password.errors?.['minlength']) {
+            La contraseña debe tener al menos 8 caracteres
+            }
+          </div>
           }
         </div>
-        
+
         <!-- Campo Confirmar Contraseña -->
         <div>
-          <input 
-            type="password" 
-            name="password_confirmation" 
-            [(ngModel)]="formData.password_confirmation"
-            placeholder="Confirmar contraseña" 
-            class="w-full px-4 py-3 border rounded-lg "
-            [class.border-red-500]="mostrarErrores && errors.password_confirmation"
-            [class.border-gray-300]="!mostrarErrores || !errors.password_confirmation"
+          <input type="password" name="password_confirmation" [(ngModel)]="registerUser.password_confirmation"
+            placeholder="Confirmar contraseña*" class="w-full px-4 py-3 border rounded-lg "
+            #passwordConfirmation="ngModel"
+            [class.border-red-500]="(passwordConfirmation.invalid && (passwordConfirmation.touched || registerForm.submitted)) || (passwordConfirmation.value && registerUser.password && passwordConfirmation.value !== registerUser.password)"
+            [class.border-gray-300]="passwordConfirmation.valid && (!passwordConfirmation.value || !registerUser.password || passwordConfirmation.value === registerUser.password) || (!passwordConfirmation.touched && !registerForm.submitted)"
             required />
-          @if (mostrarErrores && errors.password_confirmation) {
-            <div class="text-red-500 text-sm mt-1">
-              {{ errors.password_confirmation }}
-            </div>
+          @if (passwordConfirmation.invalid && (passwordConfirmation.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            La confirmación de contraseña es obligatoria
+          </div>
+          }
+          @if (passwordConfirmation.value && registerUser.password && passwordConfirmation.value !==
+          registerUser.password && (passwordConfirmation.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            Las contraseñas no coinciden
+          </div>
           }
         </div>
-      </div>
-
-      <!-- Checkbox -->
-      <div class="mt-4">
-        <div class="flex items-center text-xs text-gray-600 justify-center">
-          <input 
-            type="checkbox" 
-            id="terms" 
-            name="terms" 
-            [(ngModel)]="formData.terms"
-            class="mr-2" 
-            required>
-          <label for="terms">Acepto términos y condiciones</label>
-        </div>
-        @if (mostrarErrores && errors.terms) {
-          <div class="text-red-500 text-sm mt-1 text-center">
-            {{ errors.terms }}
+        <!-- Checkbox -->
+        <div class="mt-4">
+          <div class="flex items-center text-xs text-gray-600 justify-center">
+            <input type="checkbox" id="terms" name="terms" class="mr-2" #terms="ngModel" ngModel required>
+            <label for="terms">Acepto términos y condiciones</label>
           </div>
-        }
+          @if (terms.invalid && (terms.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1 text-center">
+            Debe aceptar los términos y condiciones
+          </div>
+          }
+        </div>
+
+        <!-- Botones -->
+        <div class="flex justify-center pt-3 gap-2">
+          <button type="button" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+            Cancelar
+          </button>
+          <button type="submit"
+            class="px-6 py-2 bg-[#06406A]  text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+            Registrarse
+          </button>
+        </div>
       </div>
 
-      <!-- Botones -->
-      <div class="flex justify-center pt-3 gap-2">
-        <button 
-          type="button" 
-          class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
-          Cancelar
-        </button>
-        <button 
-          type="submit" 
-          class="px-6 py-2 bg-[#06406A]  text-white rounded-lg ">
-          Registrarse
-        </button>
-      </div>
     </form>
 
   </div>
+
 </div>
