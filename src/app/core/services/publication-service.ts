@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { CrudService } from "./crud-service";
 import { Injectable } from "@angular/core";
-import { map, Observable, Subject } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 export interface PublicationDTO {
   id?: number;
@@ -31,7 +31,7 @@ export class PublicationService extends CrudService<PublicationDTO> {
   protected override endpoint = 'publications';
   
   // Subject para comunicar filtros
-  private filterSubject = new Subject<string>();
+  private filterSubject = new BehaviorSubject<string>('');
   filterChanged$ = this.filterSubject.asObservable();
 
   constructor(http: HttpClient) {
