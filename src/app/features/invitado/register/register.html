@@ -3,10 +3,11 @@
   <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-md mx-auto relative max-h-screen overflow-y-auto">
     
     <!-- Botones de navegación -->
-    <div class="absolute top-4 left-4 right-4 flex justify-between">
-      <!-- Botón volver al selector -->
-      <img src="svg/back-icon.svg" class="cursor-pointer w-10 h-10" (click)="volver()">
-      <!-- Botón cerrar modal -->
+    <div class="absolute top-4 left-4 right-4 flex justify-between" appClosedialog>
+
+     <button class="rounded-md border border-white" appClosedialog>
+            <img src="svg/back-icon.svg" alt="">
+        </button>
      
     </div>
 
@@ -31,7 +32,7 @@
             name="nombre" 
             [(ngModel)]="formData.nombre"
             placeholder="Nombre" 
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-3 border rounded-lg"
             [class.border-red-500]="mostrarErrores && errors.nombre"
             [class.border-gray-300]="!mostrarErrores || !errors.nombre"
             required 
@@ -50,7 +51,7 @@
             name="apellidos" 
             [(ngModel)]="formData.apellidos"
             placeholder="Apellidos" 
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-3 border rounded-lg"
             [class.border-red-500]="mostrarErrores && errors.apellidos"
             [class.border-gray-300]="!mostrarErrores || !errors.apellidos"
             required />
@@ -69,7 +70,7 @@
               name="nombre_negocio" 
               [(ngModel)]="formData.nombre_negocio"
               placeholder="Nombre negocio" 
-              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-4 py-3 border rounded-lg "
               [class.border-red-500]="mostrarErrores && errors.nombre_negocio"
               [class.border-gray-300]="!mostrarErrores || !errors.nombre_negocio"
               required />
@@ -88,7 +89,7 @@
             name="email" 
             [(ngModel)]="formData.email"
             placeholder="Correo electrónico" 
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-3 border rounded-lg "
             [class.border-red-500]="mostrarErrores && errors.email"
             [class.border-gray-300]="!mostrarErrores || !errors.email"
             required />
@@ -106,7 +107,7 @@
             name="email_confirmation" 
             [(ngModel)]="formData.email_confirmation"
             placeholder="Confirmar correo electrónico" 
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-3 border rounded-lg "
             [class.border-red-500]="mostrarErrores && errors.email_confirmation"
             [class.border-gray-300]="!mostrarErrores || !errors.email_confirmation"
             required />
@@ -124,7 +125,7 @@
             name="telefono" 
             [(ngModel)]="formData.telefono"
             placeholder="Teléfono" 
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-3 border rounded-lg "
             [class.border-red-500]="mostrarErrores && errors.telefono"
             [class.border-gray-300]="!mostrarErrores || !errors.telefono"
             required />
@@ -143,7 +144,7 @@
               name="direccion" 
               [(ngModel)]="formData.direccion"
               placeholder="Direccion" 
-              class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              class="w-full px-4 py-3 border rounded-lg "
               [class.border-red-500]="mostrarErrores && errors.direccion"
               [class.border-gray-300]="!mostrarErrores || !errors.direccion"
               required />
@@ -162,7 +163,7 @@
             name="password" 
             [(ngModel)]="formData.password"
             placeholder="Contraseña" 
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-3 border rounded-lg"
             [class.border-red-500]="mostrarErrores && errors.password"
             [class.border-gray-300]="!mostrarErrores || !errors.password"
             required />
@@ -180,7 +181,7 @@
             name="password_confirmation" 
             [(ngModel)]="formData.password_confirmation"
             placeholder="Confirmar contraseña" 
-            class="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            class="w-full px-4 py-3 border rounded-lg "
             [class.border-red-500]="mostrarErrores && errors.password_confirmation"
             [class.border-gray-300]="!mostrarErrores || !errors.password_confirmation"
             required />
@@ -215,13 +216,12 @@
       <div class="flex justify-center pt-3 gap-2">
         <button 
           type="button" 
-          class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
-          (click)="cancelar()">
+          class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
           Cancelar
         </button>
         <button 
           type="submit" 
-          class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+          class="px-6 py-2 bg-[#06406A]  text-white rounded-lg ">
           Registrarse
         </button>
       </div>

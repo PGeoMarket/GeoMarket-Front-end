@@ -6,7 +6,9 @@
     <div class="border border-gray-300 rounded-xl w-fit p-6 bg-white mx-4 mt-20">
       
       <!--icono de regreso-->
-      <img src="svg/back-icon.svg" alt="Volver" class="cursor-pointer mb-4">
+        <button class="rounded-md border border-white" appClosedialog>
+            <img src="svg/back-icon.svg" alt="">
+        </button>
 
       <!--caja de las opciones-->
       <div class="rounded-xl text-center">
@@ -16,7 +18,7 @@
 
         <!--boton de registro como vendedor-->
         <div
-          class="bg-[#06406A] rounded-xl flex flex-col w-[200px] p-6 items-center justify-center mb-6 cursor-pointer mx-auto"
+          class="bg-[#06406A] rounded-xl flex flex-col w-[200px] p-6 items-center  justify-center mb-6 cursor-pointer mx-auto"
           (click)="seleccionarTipo('vendedor')">
           <img src="svg/store.svg" alt="Vendedor" class="w-12 mb-3">
           <span class="text-white text-lg">Vendedor</span>
@@ -24,7 +26,7 @@
 
         <!--boton de registro como consumidor-->
         <div
-          class="bg-[#06406A] rounded-xl flex flex-col w-[200px] p-6 items-center justify-center cursor-pointer mx-auto"
+          class="bg-[#06406A] rounded-xl flex flex-col w-[200px] p-6 items-center justify-center hover:bg-blue-700 cursor-pointer mx-auto"
           (click)="seleccionarTipo('consumidor')">
           <img src="svg/cart.svg" alt="Consumidor" class="w-12 mb-3">
           <span class="text-white text-lg">Consumidor</span>

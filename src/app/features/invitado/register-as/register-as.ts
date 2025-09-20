@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Register } from '../register/register';
 import { CommonModule } from '@angular/common';
+import { Closedialog } from "../../../core/dialogs/closedialog";
 
 
 @Component({
   selector: 'app-register-as',
-  imports: [CommonModule,Register],
+  imports: [CommonModule, Register, Closedialog],
   templateUrl: './register-as.html',
   styleUrl: './register-as.css'
 })
