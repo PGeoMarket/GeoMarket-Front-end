@@ -9,6 +9,7 @@ import { Faq } from "../../features/consumidor/faq/faq";
 import { Map } from "../../features/consumidor/dialogs/map/map";
 import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
+import { Login } from "../../features/invitado/login/login";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -25,16 +26,16 @@ export const DIALOG_COMPONENTS = {
   // 
   'filter-by-category': FilterByCategory,
   'filter-by-proximity': FilterByProximity,
-  'register-as':RegisterAs,
-  'register':Register,
   'map': Map, 
 
   // Admin
   // ...
 
   // Invitado
-  // ...
-
+  // 
+    'login':Login,
+    'register-as':RegisterAs,
+    'register':Register,
   // Auth
   // ...
 } as const;
