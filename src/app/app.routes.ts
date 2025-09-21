@@ -11,6 +11,7 @@ import { Map } from './features/consumidor/dialogs/map/map';
 import { ProfileConsumer } from './features/consumidor/profile-consumer/profile-consumer';
 import { Register } from './features/invitado/register/register';
 import { RegisterAs } from './features/invitado/register-as/register-as';
+import { Login } from './features/invitado/login/login';
 
 export const routes: Routes = [
     {path: 'home', component: Home},
@@ -27,4 +28,6 @@ export const routes: Routes = [
     {path:'register-as',component:RegisterAs},
     {path: 'select-location', component: SelectLocation},
     {path: 'Map', component: Map},
+
+    {path: 'login', component: Login}
 ];
