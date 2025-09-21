@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Publications } from '../publications/publications';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
-import { FilterByCategory } from '../dialogs/filter-by-category/filter-by-category';
 
 @Component({
   selector: 'app-home',

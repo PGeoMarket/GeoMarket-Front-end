@@ -15,14 +15,13 @@ import { Subscription } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class Publications implements OnInit {
   publications!: PublicationDTO[];
-  private filterSubscription!: Subscription;
-  constructor(protected publicationService: PublicationService, private route: ActivatedRoute) { }
+  constructor(protected publicationService: PublicationService) { }
 
   ngOnInit(): void {
 
     this.loadPublications();
 
-    this.filterSubscription = this.publicationService.filterChanged$
+    this.publicationService.filterChanged$
     .subscribe(filters => {
       this.loadFiltredPublications(filters);
     });
