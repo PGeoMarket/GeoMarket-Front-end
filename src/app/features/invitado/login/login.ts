@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Closedialog } from "../../../core/dialogs/closedialog";
 import { CommonModule } from '@angular/common';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
-import { loginDTO } from '../../../core/services/login-service';
-import { logionService } from '../../../core/services/login-service';
+import { loginDTO, LoginService } from '../../../core/services/login-service';
+
 @Component({
   selector: 'app-login',
   imports: [Closedialog, CommonModule, FormsModule],
@@ -12,11 +12,6 @@ import { logionService } from '../../../core/services/login-service';
   styleUrl: './login.css'
 })
 export class Login {
-  loginService: any;
-onLogin(_t17: NgForm) {
-throw new Error('Method not implemented.');
-}
-
   login: loginDTO = {
     email: '',
     password: ''
@@ -29,18 +24,19 @@ throw new Error('Method not implemented.');
       data: { mode: 'create' }
     });
   }
-
+  constructor(private loginService: LoginService) { }
   onSubmit(form: any) {
-  if (form.invalid) return;
+    if (form.invalid) return;
 
-  this.loginService.login(this.login).subscribe({
-    next: (resp: { token: string; }) => {
-      console.log('✅ Login exitoso', resp);
-      localStorage.setItem('token', resp.token); 
-    },
-    error: (err: any) => {
-      console.error('❌ Error en login', err);
-    }
-  });
-}
+    this.loginService.login(this.login).subscribe({
+      next: (resp: { token: string; }) => {
+        console.log('✅ Login exitoso', resp);
+        localStorage.setItem('token', resp.token);
+      },
+      error: (err: any) => {
+        console.error('❌ Error en login', err);
+      }
+    });
+  }
+
 }
