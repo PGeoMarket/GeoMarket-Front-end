@@ -50,6 +50,11 @@ export class PublicationService extends CrudService<PublicationDTO> {
       `${this.API_URL}/${this.endpoint}/${id}?included=image`);
   }
 
+    getCommentsByIdPublication(id: number): Observable<PublicationDTO> {
+    return this.http.get<PublicationDTO>(
+      `${this.API_URL}/${this.endpoint}/${id}?included=comments`);
+  }
+
   getFilterPublication(filters: string): Observable<PublicationDTO[]> {
     return this.http.get<PublicationDTO[]>(
       `${this.API_URL}/${this.endpoint}?included=image${filters}`);
