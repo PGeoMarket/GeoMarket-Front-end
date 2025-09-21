@@ -3,11 +3,12 @@ import { PublicationDTO, PublicationService } from '../../../core/services/publi
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ProductDetail } from '../product-detail/product-detail';
 
 @Component({
   selector: 'app-publications',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ProductDetail],
   templateUrl: './publications.html',
   styleUrl: './publications.css'
 })
@@ -15,6 +16,7 @@ import { Subscription } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class Publications implements OnInit {
   publications!: PublicationDTO[];
+  publication_selected!:PublicationDTO | null;
   constructor(protected publicationService: PublicationService) { }
 
   ngOnInit(): void {
@@ -51,5 +53,20 @@ export class Publications implements OnInit {
       });
   }
 
+
+  //Logica a de abrir product-detail
+  open: boolean = false;
+
+  openProductDetail(publication: PublicationDTO) {
+    this.publication_selected = publication;
+    this.open = !this.open;
+    
+  }
+
+  closePublicationDetail() {
+    this.open = false;
+  }
+
+ 
 
 }

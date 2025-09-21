@@ -29,10 +29,12 @@ export interface ImageDTO {
 })
 export class PublicationService extends CrudService<PublicationDTO> {
   protected override endpoint = 'publications';
-  
+
   // Subject para comunicar filtros
   private filterSubject = new BehaviorSubject<string>('');
+  private publicationSubject = new BehaviorSubject<PublicationDTO | null>(null);
   filterChanged$ = this.filterSubject.asObservable();
+  publicationChanged$ = this.publicationSubject.asObservable();
 
   constructor(http: HttpClient) {
     super(http);
@@ -54,7 +56,11 @@ export class PublicationService extends CrudService<PublicationDTO> {
   }
 
   // Método para emitir filtros
-  sendData(filters: string) {
+  sendFilter(filters: string) {
     this.filterSubject.next(filters);
+  }
+
+  sendPublication(publication: PublicationDTO) {
+    this.publicationSubject.next(publication);
   }
 }
