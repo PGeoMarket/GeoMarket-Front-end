@@ -35,7 +35,7 @@ export class FilterByCategory {
     this.selectedIds.forEach(
       selectedId => this.filters += (this.scope + selectedId)
     )
-  this.publicationService.sendData(this.filters);
+  this.publicationService.sendFilter(this.filters);
   }
 
 }

@@ -4,10 +4,11 @@ import { AdminSlidebar } from '../slidebars/admin-slidebar/admin-slidebar';
 import { BuyerSlidebar } from '../slidebars/buyer-slidebar/buyer-slidebar';
 import { GuestSlidebar } from '../slidebars/guest-slidebar/guest-slidebar';
 import { SellerSlidebar } from '../slidebars/seller-slidebar/seller-slidebar';
+import { RouterLink } from '@angular/router'; 
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule,SellerSlidebar,AdminSlidebar,BuyerSlidebar,GuestSlidebar],
+  imports: [CommonModule, SellerSlidebar, AdminSlidebar, BuyerSlidebar, GuestSlidebar, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
@@ -24,7 +25,7 @@ export class Header {
   messagesUrl = 'public/svg/icons/messages.svg';
   supportUrl = 'public/svg/icons/support.svg'; */
 
-  role:string='guest'
+  role:string='seller'
 
   open = false; // equivalente al x-data { open: false }
 

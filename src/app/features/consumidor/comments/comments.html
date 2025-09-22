@@ -1,0 +1,50 @@
+<!-- Comentarios -->
+<h3 class="text-xl font-semibold">Comentarios</h3>
+@if (!seller_id) { <!-- aqui es si es user_id! = seller_id o si es guest -->
+<!-- Input para comentarios -->
+<div class="flex items-center space-x-2" (click)="'logica del login para guest o para vendedor'">
+    <input type="text" placeholder="Deja un comentario aquí.."
+        class="w-[90%] h-12 rounded-full px-2 border border-gray-300 focus:outline-none focus:border-[#144467]">
+    <button class="bg-transparent border-0 items-center justify-center">
+        <img src="svg/enviar.svg" alt="" class="w-10 h-10">
+    </button>
+</div>
+} @else {
+<form (ngSubmit)="onSubmit(comment_user.value);" #commentForm="ngForm">
+    <div class="flex items-center space-x-2">
+        <input type="text" placeholder="Deja un comentario aquí.." name="comment_user"
+            class="w-[90%] h-12 rounded-full px-2 border border-gray-300 focus:outline-none focus:border-[#144467]"
+            [class.border-red-500]="comment_user.invalid && (comment_user.touched || commentForm.submitted)" required
+            #comment_user="ngModel" ngModel>
+
+        <button type="submit" class=" bg-transparent border-0 items-center justify-center">
+            <img src="svg/enviar.svg" alt="" class="w-10 h-10">
+        </button>
+    </div>
+            @if (comment_user.invalid && (comment_user.touched || commentForm.submitted)) {
+        <div class="text-red-500 text-sm mt-1">
+            El este campo es obligatorio
+        </div>
+        }
+</form>
+}
+@if (comments) {
+<div class="space-y-2 overflow-y-scroll h-[200px] my-2.5">
+
+    @for (comment of comments; track $index) {
+    <div class="border border-gray-400 rounded-lg p-3">
+        <div class="flex items-start space-x-3">
+            <img class="w-8 h-8 rounded-full flex-shrink-0" src="svg/userProfiel.svg" alt="">
+            <div class="flex-1">
+                <div class="flex justify-between items-start">
+                    <span class="text-[#144467] font-bold text-sm">{{comment.user_id}}</span>
+                    <span class="text-xs text-gray-500">{{comment.created_at | date}}</span>
+                </div>
+                <p class="text-sm mt-1">{{comment.texto}}</p>
+            </div>
+        </div>
+    </div>
+    }
+</div>
+
+}
