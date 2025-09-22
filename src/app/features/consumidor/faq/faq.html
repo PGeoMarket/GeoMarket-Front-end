@@ -74,24 +74,47 @@
         <p class="text-center font-sans mt-8 mb-4 text-textosNoNegro"> Si su pregunta no se encuentra, puede enviarla:
         </p>
 
+        <!-- Mensajes simples -->
+        <div class="px-4 mb-4">
+            @if (showSuccessMessage) {
+                <div class="text-azulSecundario">Mensaje enviado correctamente</div>
+            }
+            
+            @if (showErrorMessage) {
+                <div class="text-azulPotente">Error al enviar el mensaje</div>
+            }
+            
+        </div>
+
         <!-- Área de texto para nueva pregunta -->
-        <form (ngSubmit)="onSubmit(mensaje.value)">
+        <form (ngSubmit)="onSubmit(mensaje.value)" #faqForm="ngForm">
             <!-- Textarea -->
             <div class="px-4">
                 <label for="mensaje" class="block text-sm font-medium text-textosNoNegro mb-1">
                     Mensaje
                 </label>
-                <textarea id="mensaje" name="mensaje" ngModel #mensaje="ngModel" required placeholder="Escriba aquí..."
+                <textarea 
+                    id="mensaje" 
+                    name="mensaje" 
+                    [(ngModel)]="faq.mensaje"
+                    #mensaje="ngModel" 
+                    required 
+                    placeholder="Escriba aquí..."
                     class="w-full h-[5em] border border-borde2 rounded-xl p-3 resize-none
-             focus:outline-none focus:ring-2 focus:ring-azulSecundario focus:border-transparent">
-    </textarea>
+                           focus:outline-none focus:ring-2 focus:ring-azulSecundario focus:border-transparent">
+                </textarea>
             </div>
 
             <!-- Botón -->
             <div class="flex justify-end px-4 mt-4 mb-2">
-                <button type="submit" [disabled]="!mensaje.value" class="bg-azulPotente text-blancoSucio px-6 py-2 rounded-md font-medium transition-colors
-             hover:bg-azulSecundario
-             disabled:bg-gray-400 disabled:text-blancoSucio disabled:cursor-not-allowed">Enviar</button>
+                <button 
+                    type="submit" 
+                    [disabled]="!mensaje.value" 
+                    class="bg-azulPotente text-blancoSucio px-6 py-2 rounded-md font-medium transition-colors
+                           hover:bg-azulSecundario
+                           disabled:bg-gray-400 disabled:text-blancoSucio disabled:cursor-not-allowed">
+                    Enviar
+                </button>
             </div>
         </form>
     </div>
