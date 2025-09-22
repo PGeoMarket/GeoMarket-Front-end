@@ -11,9 +11,9 @@ import { Map } from './features/consumidor/dialogs/map/map';
 import { ProfileConsumer } from './features/consumidor/profile-consumer/profile-consumer';
 import { Register } from './features/invitado/register/register';
 import { RegisterAs } from './features/invitado/register-as/register-as';
+import { ProductDetail } from './features/consumidor/product-detail/product-detail';
 import { Chats } from './features/consumidor/chats/chats';
 import { Login } from './features/invitado/login/login';
-
 
 export const routes: Routes = [
     {path: 'home', component: Home},

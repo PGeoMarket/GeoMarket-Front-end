@@ -1,11 +1,11 @@
+<!-- Contenedor de publicaciones -->
 <section class="flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12 md:pt-7">
 
-@if (publications) {
-        @for (publication of publications; track $index) {
-    <!-- Contenedor de publicaciones -->
+    @if (publications) {
+    @for (publication of publications; track $index) {
 
     <!-- Contenedor de publicacion -->
-    <div class="div_publicacion">
+    <div class="div_publicacion" (click)="openProductDetail(publication)">
         <!--  {{-- Imagen --}} -->
         <div [ngStyle]="{'background-image': 'url(' + publication.image!.url + ')'}" class="flex w justify-end items-end  select-none
             h-[65%] bg-cover bg-center border-[1px] border-borde2 rounded-md">
@@ -25,9 +25,21 @@
             <p class="text-[20px] h-full md:text-[26px] overflow-hidden line-clamp-2 text-ellipsis text-nowrap">
                 {{publication.titulo}}</p>
             <!-- {{-- Precio --}} -->
-            <span class="text-[24px] md:text-[30px] ">{{publication.precio| currency: 'COP'}}</span>
+            <span class="text-[24px] md:text-[30px] ">{{publication.precio | currency: 'COP'}}</span>
         </div>
     </div>
     }
-}
+    }
+
 </section>
+<div class="fixed top-16 right-1 h-[calc(100vh-4rem)] w-[280px] md:w-[320px] shadow-lg z-41 transition-transform duration-300 transform"
+    [class.translate-x-0]="open" [class.translate-x-full]="!open">
+    @if (publication_selected) {
+    <div class="h-full w-full">
+        <app-product-detail 
+            [publication_detail]="publication_selected" 
+            (close)="closePublicationDetail()"> <!-- Agregar output event -->
+        </app-product-detail>
+    </div>
+    }
+</div>

@@ -1,13 +1,12 @@
 import { Component, Injectable, OnInit } from '@angular/core';
 import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ProductDetail } from '../product-detail/product-detail';
 
 @Component({
   selector: 'app-publications',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ProductDetail],
   templateUrl: './publications.html',
   styleUrl: './publications.css'
 })
@@ -15,6 +14,7 @@ import { Subscription } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class Publications implements OnInit {
   publications!: PublicationDTO[];
+  publication_selected!: PublicationDTO | null;
   constructor(protected publicationService: PublicationService) { }
 
   ngOnInit(): void {
@@ -22,9 +22,9 @@ export class Publications implements OnInit {
     this.loadPublications();
 
     this.publicationService.filterChanged$
-    .subscribe(filters => {
-      this.loadFiltredPublications(filters);
-    });
+      .subscribe(filters => {
+        this.loadFiltredPublications(filters);
+      });
   }
 
   loadPublications() {
@@ -52,4 +52,34 @@ export class Publications implements OnInit {
   }
 
 
+  //Logica a de abrir product-detail
+  open: boolean = false;
+
+  private closeTimeout: any; // declara esto junto a las propiedades de la clase
+
+  openProductDetail(publication: PublicationDTO) {
+    // si hay un timeout de cierre pendiente, lo cancelamos (evita race conditions)
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = undefined;
+    }
+
+    if (this.open) return this.closePublicationDetail();
+
+    this.publication_selected = publication;
+    this.open = true;
+  }
+
+  closePublicationDetail() {
+    // iniciar la animación (cambia la clase)
+    this.open = false;
+
+    // esperar a que termine la transición CSS (Tailwind duration-300 = 300ms)
+    // y entonces limpiar publication_selected para que el contenido se quite después de animar
+    if (this.closeTimeout) clearTimeout(this.closeTimeout);
+    this.closeTimeout = setTimeout(() => {
+      this.publication_selected = null;
+      this.closeTimeout = undefined;
+    }, 300);
+  }
 }

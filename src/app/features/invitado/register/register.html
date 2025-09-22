@@ -134,53 +134,53 @@
 
         }
 
-<!-- Campo Email -->
-<div>
-  <input type="email" name="email" [(ngModel)]="registerUser.email" placeholder="Correo electrónico*"
-    class="w-full px-4 py-3 border rounded-lg " #email="ngModel"
-    [class.border-red-500]="email.invalid && (email.touched || registerForm.submitted)"
-    [class.border-gray-300]="email.valid || (!email.touched && !registerForm.submitted)" required email />
-  @if (email.invalid && (email.touched || registerForm.submitted)) {
-  <div class="text-red-500 text-sm mt-1">
-    @if (email.errors?.['required']) {
-      El correo electrónico es obligatorio
-    }
-    @if (email.errors?.['email']) {
-      El correo electrónico debe tener un formato válido
-    }
-  </div>
-  }
-  @if (emailTaken) {
-  <div class="text-red-500 text-sm mt-1">
-    El correo electrónico ya está en uso
-  </div>
-  }
-</div>
+        <!-- Campo Email -->
+        <div>
+          <input type="email" name="email" [(ngModel)]="registerUser.email" placeholder="Correo electrónico*"
+            class="w-full px-4 py-3 border rounded-lg " #email="ngModel"
+            [class.border-red-500]="email.invalid && (email.touched || registerForm.submitted)"
+            [class.border-gray-300]="email.valid || (!email.touched && !registerForm.submitted)" required email />
+          @if (email.invalid && (email.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            @if (email.errors?.['required']) {
+            El correo electrónico es obligatorio
+            }
+            @if (email.errors?.['email']) {
+            El correo electrónico debe tener un formato válido
+            }
+          </div>
+          }
+          @if (emailTaken) {
+          <div class="text-red-500 text-sm mt-1">
+            El correo electrónico ya está en uso
+          </div>
+          }
+        </div>
 
-<!-- Campo Confirmar Email -->
-<div>
-  <input type="email" name="email_confirmation" placeholder="Confirmar correo electrónico*"
-    class="w-full px-4 py-3 border rounded-lg " #emailConfirmation="ngModel" ngModel
-    [class.border-red-500]="(emailConfirmation.invalid && (emailConfirmation.touched || registerForm.submitted)) || (emailConfirmation.value && registerUser.email && emailConfirmation.value !== registerUser.email)"
-    [class.border-gray-300]="emailConfirmation.valid && (!emailConfirmation.value || !registerUser.email || emailConfirmation.value === registerUser.email) || (!emailConfirmation.touched && !registerForm.submitted)"
-    required email />
-  @if (emailConfirmation.invalid && (emailConfirmation.touched || registerForm.submitted)) {
-  <div class="text-red-500 text-sm mt-1">
-    @if (emailConfirmation.errors?.['required']) {
-      La confirmación del correo es obligatoria
-    }
-    @if (emailConfirmation.errors?.['email']) {
-      El correo electrónico debe tener un formato válido
-    }
-  </div>
-  }
-  @if (emailConfirmation.value && registerUser.email && emailConfirmation.value !== registerUser.email &&
-  (emailConfirmation.touched || registerForm.submitted)) {
-  <div class="text-red-500 text-sm mt-1">
-    Los correos no coinciden
-  </div>
-  }
-</div>
+        <!-- Campo Confirmar Email -->
+        <div>
+          <input type="email" name="email_confirmation" placeholder="Confirmar correo electrónico*"
+            class="w-full px-4 py-3 border rounded-lg " #emailConfirmation="ngModel" ngModel
+            [class.border-red-500]="(emailConfirmation.invalid && (emailConfirmation.touched || registerForm.submitted)) || (emailConfirmation.value && registerUser.email && emailConfirmation.value !== registerUser.email)"
+            [class.border-gray-300]="emailConfirmation.valid && (!emailConfirmation.value || !registerUser.email || emailConfirmation.value === registerUser.email) || (!emailConfirmation.touched && !registerForm.submitted)"
+            required email />
+          @if (emailConfirmation.invalid && (emailConfirmation.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            @if (emailConfirmation.errors?.['required']) {
+            La confirmación del correo es obligatoria
+            }
+            @if (emailConfirmation.errors?.['email']) {
+            El correo electrónico debe tener un formato válido
+            }
+          </div>
+          }
+          @if (emailConfirmation.value && registerUser.email && emailConfirmation.value !== registerUser.email &&
+          (emailConfirmation.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            Los correos no coinciden
+          </div>
+          }
+        </div>
 
         <!-- Campo Contraseña -->
         <div>
