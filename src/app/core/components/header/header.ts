@@ -5,23 +5,25 @@ import { BuyerSlidebar } from '../slidebars/buyer-slidebar/buyer-slidebar';
 import { GuestSlidebar } from '../slidebars/guest-slidebar/guest-slidebar';
 import { SellerSlidebar } from '../slidebars/seller-slidebar/seller-slidebar';
 import { RouterLink } from '@angular/router';
-
 import { UserService } from '../../services/user-service';
 import { LoginService } from '../../services/login-service';
+import { FormsModule } from '@angular/forms';
+import { PublicationService } from '../../services/publication-service';
+
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, SellerSlidebar, AdminSlidebar, BuyerSlidebar, GuestSlidebar, RouterLink],
+  imports: [CommonModule, SellerSlidebar, AdminSlidebar, BuyerSlidebar, GuestSlidebar, RouterLink,FormsModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
 export class Header {
   
-
   constructor(
     private userService: UserService, 
-    private loginService: LoginService
+    private loginService: LoginService,
+    private publicationService: PublicationService
   ) {
     let currentUser$ = this.userService.currentUser$;
   }
@@ -30,7 +32,6 @@ export class Header {
   
   open = false;
 
-  
 
   toggleMenu() {
     this.open = !this.open;
@@ -74,4 +75,12 @@ export class Header {
       }
     });
   }
+
+  searchPublicationByName(searchPublication: string) {
+    
+    this.publicationService.sendFilter('&filter[titulo]='+searchPublication);
+  }
+  
 }
+
+

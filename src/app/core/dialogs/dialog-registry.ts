@@ -11,6 +11,7 @@ import { SelectLocation } from "../../features/consumidor/dialogs/select-locatio
 import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 import { Login } from "../../features/invitado/login/login";
+import { RatePublication } from "../../features/consumidor/dialogs/rate-publication/rate-publication";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -28,7 +29,8 @@ export const DIALOG_COMPONENTS = {
   'filter-by-category': FilterByCategory,
   'filter-by-proximity': FilterByProximity,
   'map': Map, 
-  'select-location': SelectLocation, 
+  'select-location': SelectLocation,
+  'rate-publication': RatePublication,
 
   // Admin
   // ...
