@@ -31,6 +31,7 @@ export class Map implements OnInit {
   }
 
  private dialogManager = inject(DialogManager);
+
   OnConfirmar() {
     this.dialogManager.closeDialog()
    this.dialogManager.
