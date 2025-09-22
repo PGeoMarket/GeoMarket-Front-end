@@ -11,6 +11,7 @@ import { SelectLocation } from "../../features/consumidor/dialogs/select-locatio
 import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 import { Login } from "../../features/invitado/login/login";
+import { Reason } from "../../features/admin/reason/reason";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -31,6 +32,7 @@ export const DIALOG_COMPONENTS = {
   'select-location': SelectLocation, 
 
   // Admin
+  'reason': Reason,
   // ...
 
   // Invitado
