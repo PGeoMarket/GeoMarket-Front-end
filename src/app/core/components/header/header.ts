@@ -32,11 +32,6 @@ export class Header {
   
   open = false;
 
-  role:string='buyer'
-
-  open = false; // equivalente al x-data { open: false }
-
-  constructor (private publicationService: PublicationService) {}
 
   toggleMenu() {
     this.open = !this.open;
