@@ -38,16 +38,19 @@ export class Login {
     this.showErrorMessage = false;
 
     this.loginService.login(this.login).subscribe({
-      next: (resp: { token: string; }) => {
-        console.log('✅ Login exitoso', resp);
-        localStorage.setItem('token', resp.token);
+      next: (response) => {
+        console.log('✅ Login exitoso', response);
+        console.log('Token:', this.loginService.getToken());
+        console.log('Usuario:', response.user);
+        console.log('Rol:', response.user.role.nombre);
+        
         this.showSuccessMessage = true;
         
         // Ocultar mensaje después de 2 segundos
         setTimeout(() => {
           this.showSuccessMessage = false;
-          this.router.navigateByUrl('/home')
-          this.dialogManager.closeDialog()
+          this.router.navigateByUrl('/home');
+          this.dialogManager.closeDialog();
         }, 1000);
       },
       error: (err: any) => {
@@ -57,7 +60,6 @@ export class Login {
         // Ocultar mensaje de error después de 3 segundos
         setTimeout(() => {
           this.showErrorMessage = false;
-
         }, 3000);
       }
     });
