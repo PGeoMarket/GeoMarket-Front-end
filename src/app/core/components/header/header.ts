@@ -5,27 +5,32 @@ import { BuyerSlidebar } from '../slidebars/buyer-slidebar/buyer-slidebar';
 import { GuestSlidebar } from '../slidebars/guest-slidebar/guest-slidebar';
 import { SellerSlidebar } from '../slidebars/seller-slidebar/seller-slidebar';
 import { RouterLink } from '@angular/router';
-import { FormsModule } from "@angular/forms"; 
+import { UserService } from '../../services/user-service';
+import { LoginService } from '../../services/login-service';
+import { FormsModule } from '@angular/forms';
 import { PublicationService } from '../../services/publication-service';
+
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, SellerSlidebar, AdminSlidebar, BuyerSlidebar, GuestSlidebar, RouterLink, FormsModule],
+  standalone: true,
+  imports: [CommonModule, SellerSlidebar, AdminSlidebar, BuyerSlidebar, GuestSlidebar, RouterLink,FormsModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
 export class Header {
-  /* logoUrl = /svg/icons/logo.svg';
-  geomarketLogoUrl = 'assets/svg/icons/geomarket.svg';
-  lupaUrl = 'public/svg/icons/lupa.svg';
-  temaUrl = 'public/svg/icons/teme.svg';
-  menuUrl = 'public/svg/icons/menu.svg';
-  userProfileUrl = 'public/svg/icons/userProfiel.svg';
-  homeUrl = 'public/svg/icons/home.svg';
-  favoritesUrl = 'public/svg/icons/favorites.svg';
-  addPublicationUrl = 'public/svg/icons/addPublication.svg';
-  messagesUrl = 'public/svg/icons/messages.svg';
-  supportUrl = 'public/svg/icons/support.svg'; */
+  
+  constructor(
+    private userService: UserService, 
+    private loginService: LoginService,
+    private publicationService: PublicationService
+  ) {
+    let currentUser$ = this.userService.currentUser$;
+  }
+  
+  // Estado reactivo del usuario
+  
+  open = false;
 
   role:string='buyer'
 
@@ -41,8 +46,46 @@ export class Header {
     this.open = false;
   }
 
+  // Getters para el rol
+  get role(): string {
+    return this.userService.getUserRole();
+  }
+
+  get isLoggedIn(): boolean {
+    return this.userService.isLoggedIn();
+  }
+
+  get isAdmin(): boolean {
+    return this.userService.isAdmin();
+  }
+
+  get isVendedor(): boolean {
+    return this.userService.isVendedor();
+  }
+
+  get isConsumidor(): boolean {
+    return this.userService.isConsumidor();
+  }
+
+  // Logout
+  logout(): void {
+    this.loginService.logout().subscribe({
+      next: () => {
+        console.log('Logout exitoso');
+      },
+      error: () => {
+        // Logout local aunque falle el servidor
+        localStorage.clear();
+        this.userService.clearUserData();
+      }
+    });
+  }
+
   searchPublicationByName(searchPublication: string) {
     
     this.publicationService.sendFilter('&filter[titulo]='+searchPublication);
   }
+  
 }
+
+
