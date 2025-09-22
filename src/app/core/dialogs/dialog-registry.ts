@@ -7,8 +7,11 @@ import { RegisterAs } from "../../features/invitado/register-as/register-as";
 import { Register } from "../../features/invitado/register/register";
 import { Faq } from "../../features/consumidor/faq/faq";
 import { Map } from "../../features/consumidor/dialogs/map/map";
+import { SelectLocation } from "../../features/consumidor/dialogs/select-location/select-location";
 import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
+import { Login } from "../../features/invitado/login/login";
+import { RatePublication } from "../../features/consumidor/dialogs/rate-publication/rate-publication";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -25,16 +28,18 @@ export const DIALOG_COMPONENTS = {
   // 
   'filter-by-category': FilterByCategory,
   'filter-by-proximity': FilterByProximity,
-  'register-as':RegisterAs,
-  'register':Register,
   'map': Map, 
+  'select-location': SelectLocation,
+  'rate-publication': RatePublication,
 
   // Admin
   // ...
 
   // Invitado
-  // ...
-
+  // 
+    'login':Login,
+    'register-as':RegisterAs,
+    'register':Register,
   // Auth
   // ...
 } as const;

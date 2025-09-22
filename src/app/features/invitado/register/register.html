@@ -4,7 +4,7 @@
     <!-- Botones de navegación -->
     <div class="absolute top-4 left-4 right-4 flex justify-between" appClosedialog>
 
-      <button class="rounded-md border border-white" appClosedialog>
+      <button class="rounded-md border border-white cursor-pointer" appClosedialog>
         <img src="svg/back-icon.svg" alt="">
       </button>
     </div>
@@ -17,6 +17,16 @@
     <!-- Texto "GeoMarket" -->
     <div class="flex justify-center mb-6">
       <img src="svg/geomarket.svg" alt="GeoMarket" class="h-8">
+    </div>
+
+    <!-- Mensajes simples -->
+    <div class="mb-4">
+      @if (showSuccessMessage) {
+        <div class="text-azulSecundario">Usuario registrado correctamente. Redirigiendo al login...</div>
+      }
+      @if (showErrorMessage) {
+         <div class="text-azulSecundario">Error al registrar usuario</div>
+      }
     </div>
 
     <!-- Formulario -->

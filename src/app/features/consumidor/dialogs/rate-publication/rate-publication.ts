@@ -1,0 +1,55 @@
+import { Component, inject, OnInit } from '@angular/core';
+import { Closedialog } from "../../../../core/dialogs/closedialog";
+import { FormsModule } from "@angular/forms";
+import { CommentDTO, CommentService } from '../../../../core/services/comment-service';
+import { DialogManager } from '../../../../core/dialogs/dialog-manager';
+
+@Component({
+  selector: 'app-rate-publication',
+  imports: [Closedialog, FormsModule],
+  templateUrl: './rate-publication.html',
+  styleUrl: './rate-publication.css'
+})
+export class RatePublication implements OnInit {
+  submit_comment!: CommentDTO;
+  publication_id!: number;
+  rating: number | null = null;
+
+  constructor(private commentService: CommentService) { }
+
+  dialogManager = inject(DialogManager)
+
+  ngOnInit(): void {
+    this.commentService.publicationIdChanged$
+      .subscribe(publication_id => {
+        this.publication_id = publication_id!;
+      })
+    console.log(this.publication_id);
+
+  }
+
+  setRating(value: number) {
+    this.rating = value;
+  }
+
+
+  onSubmit(comment_user: string) {
+    if (!comment_user) return;
+    this.submit_comment = {
+      ...this.submit_comment,
+      publication_id: this.publication_id,
+      user_id: 3,
+      texto: comment_user,
+      valor_estrella: this.rating!, //falta pantalla
+    }
+    this.commentService.create(this.submit_comment)
+      .subscribe({
+        next: data => console.log(data),
+        error: error => console.error('Error al crear comentario', error, this.submit_comment),
+        complete: () => {
+          console.log('Comentario hecho con extio');
+          this.dialogManager.closeDialog();
+        },
+      })
+  }
+}

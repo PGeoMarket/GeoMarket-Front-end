@@ -8,17 +8,24 @@ import { DialogManager } from '../../../dialogs/dialog-manager';
   styleUrl: './guest-slidebar.css'
 })
 export class GuestSlidebar {
-  dialogManager=inject(DialogManager);
+  dialogManager = inject(DialogManager);
 
-  onRegisterAs(){
+  onRegisterAs() {
     this.dialogManager.openDialog('register-as', {
-      data: {mode: 'create'}
+      data: { mode: 'create' }
     })
   }
 
-   onRegister(){
-    this.dialogManager.openDialog('onRegister', {
-      data: {mode: 'create'}
+  onRegister() {
+    this.dialogManager.openDialog('Register', {
+      data: { mode: 'create' }
     })
   }
+
+  onLogin() {
+    this.dialogManager.openDialog('login', {
+      data: { mode: 'create' }
+    });
+  }
+
 }
