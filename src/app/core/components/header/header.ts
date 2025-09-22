@@ -4,11 +4,13 @@ import { AdminSlidebar } from '../slidebars/admin-slidebar/admin-slidebar';
 import { BuyerSlidebar } from '../slidebars/buyer-slidebar/buyer-slidebar';
 import { GuestSlidebar } from '../slidebars/guest-slidebar/guest-slidebar';
 import { SellerSlidebar } from '../slidebars/seller-slidebar/seller-slidebar';
-import { RouterLink } from '@angular/router'; 
+import { RouterLink } from '@angular/router';
+import { FormsModule } from "@angular/forms"; 
+import { PublicationService } from '../../services/publication-service';
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule, SellerSlidebar, AdminSlidebar, BuyerSlidebar, GuestSlidebar, RouterLink],
+  imports: [CommonModule, SellerSlidebar, AdminSlidebar, BuyerSlidebar, GuestSlidebar, RouterLink, FormsModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
@@ -25,9 +27,15 @@ export class Header {
   messagesUrl = 'public/svg/icons/messages.svg';
   supportUrl = 'public/svg/icons/support.svg'; */
 
+<<<<<<< HEAD
   role:string='buyer'
 
+=======
+  role:string='seller'
+>>>>>>> origin/dev
   open = false; // equivalente al x-data { open: false }
+
+  constructor (private publicationService: PublicationService) {}
 
   toggleMenu() {
     this.open = !this.open;
@@ -35,5 +43,10 @@ export class Header {
 
   closeMenu() {
     this.open = false;
+  }
+
+  searchPublicationByName(searchPublication: string) {
+    
+    this.publicationService.sendFilter('&filter[titulo]='+searchPublication);
   }
 }

@@ -1,0 +1,60 @@
+<div class="w-[32.68em] p-4 rounded-md border border-gray-400 bg-white font-sans">
+  <form (ngSubmit)="onSubmit(comment_user.value);" #commentForm="ngForm">
+
+    <!-- Encabezado -->
+    <div class="flex items-center">
+      <button class="rounded-lg w-10 h-10 border-0 flex items-center justify-center" appClosedialog>
+        <img src="svg/back-icon.svg" alt="atras" class="w-15 h-15">
+      </button>
+      <p class="text-2xl ml-4">Calificar</p>
+      <!-- Estrellas -->
+      <div class="relative flex flex-col items-center ml-[10%]">
+        <div class="flex space-x-1">
+          @for (star of [1,2,3,4,5]; track $index) {
+          <span class="text-[2.5em] cursor-pointer transition" [class.text-yellow-400]="(rating ?? 0) >= star"
+            [class.text-blue-900]="(rating ?? 0) < star" (click)="setRating(star)">
+            &#9733;
+          </span>
+
+          }
+        </div>
+
+        <!-- Valor seleccionado -->
+        <input type="hidden" name="valor_estrella" [(ngModel)]="rating" #valor_estrella="ngModel" required>
+
+
+        @if ((valor_estrella.invalid && (valor_estrella.touched || commentForm.submitted))
+        || (commentForm.submitted && (rating === null || rating === 0))) {
+        <div class="text-red-500 text-sm mt-2">
+          Este campo es obligatorio
+        </div>
+        }
+
+      </div>
+    </div>
+
+    <div class="relative flex items-center justify-center my-2 flex-wrap">
+      <textarea placeholder="Deja un comentario aquí.." name="comment_user"
+        class="w-[90%] h-[100px] rounded-md px-2 border border-gray-300 justify-center focus:outline-none focus:border-[#144467]"
+        [class.border-red-500]="comment_user.invalid && (comment_user.touched || commentForm.submitted)" required
+        #comment_user="ngModel" ngModel></textarea>
+
+      @if (comment_user.invalid && (comment_user.touched || commentForm.submitted)) {
+      <div class="text-red-500 text-sm mt-1 w-[90%]">
+        El este campo es obligatorio
+      </div>
+      }
+    </div>
+
+    <!-- Botones -->
+    <div class="flex justify-end space-x-4">
+      <button type="button" class="w-32 h-12 btn_negative" appClosedialog>
+        Cancelar
+      </button>
+      <button type="submit" class="w-32 h-12 btn_positive">
+        Calificar
+      </button>
+
+    </div>
+  </form>
+</div>
