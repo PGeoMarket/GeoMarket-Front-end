@@ -21,7 +21,6 @@ export interface LoginResponse {
 })
 export class LoginService extends CrudService<loginDTO> {
   protected override endpoint = 'login';
-  baseUrl: any;
 
   constructor(http: HttpClient, private userService: UserService) {
     super(http);

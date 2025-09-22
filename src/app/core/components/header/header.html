@@ -11,7 +11,7 @@
     <!-- input y lupa -->
     <div class="flex-1 flex justify-center">
       <div class="relative max-w-[200px]">
-        <input type="text" placeholder="Busca aquí" #searchPublication="ngModel" ngModel required=""
+        <input type="text" placeholder="Busca aquí" #searchPublication="ngModel" ngModel required
           class="w-full py-2 pl-4 pr-10 border-2 border-[#cfd8dc] rounded-lg text-base text-[#153047] bg-white placeholder-[#b0bec5] focus:outline-none focus:border-[#4f8cff] transition" />
       </div>
       <button (click)="searchPublicationByName(searchPublication.value)" routerLink="home" [disabled]="searchPublication.invalid">
