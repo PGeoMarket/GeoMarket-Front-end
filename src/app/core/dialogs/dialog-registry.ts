@@ -12,6 +12,7 @@ import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/a
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 import { Login } from "../../features/invitado/login/login";
 import { Reason } from "../../features/admin/reason/reason";
+import { EditSeller } from "../../features/vendedor/edit-seller/edit-seller";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -23,6 +24,7 @@ export const DIALOG_COMPONENTS = {
   // Vendedor
   'add-product': AddProduct,
   'edit-product': EditProduct,
+  'edit-seller': EditSeller,
 
   // Consumidor
   // 
