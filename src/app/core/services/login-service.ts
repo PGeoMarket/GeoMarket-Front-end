@@ -4,13 +4,12 @@ import { CrudService } from './crud-service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-
 export interface loginDTO {
   email: EmailValidator | string;
   password: string;
 }
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LoginService extends CrudService<loginDTO> {
   protected override endpoint = 'login';
@@ -21,6 +20,9 @@ export class LoginService extends CrudService<loginDTO> {
   }
 
   login(credentials: loginDTO): Observable<{ token: string }> {
-    return this.http.post<{ token: string }>(`${this.baseUrl}/${this.endpoint}`, credentials);
+    return this.http.post<{ token: string }>(
+      `${this.API_URL}/${this.endpoint}`,
+      credentials
+    );
   }
 }
