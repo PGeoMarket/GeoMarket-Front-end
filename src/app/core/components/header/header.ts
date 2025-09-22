@@ -27,12 +27,8 @@ export class Header {
   messagesUrl = 'public/svg/icons/messages.svg';
   supportUrl = 'public/svg/icons/support.svg'; */
 
-<<<<<<< HEAD
   role:string='buyer'
 
-=======
-  role:string='seller'
->>>>>>> origin/dev
   open = false; // equivalente al x-data { open: false }
 
   constructor (private publicationService: PublicationService) {}
