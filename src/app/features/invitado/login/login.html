@@ -20,6 +20,16 @@
             </div>
         </div>
 
+        <!-- Mensajes simples -->
+        <div class="mb-4">
+            @if (showSuccessMessage) {
+                <div class="text-azulSecundario">Inicio de sesión exitoso</div>
+            }
+            @if (showErrorMessage) {
+                <div class="text-red-500 text-[12px]">Las credenciales proporcionadas son incorrectas</div>
+            }
+        </div>
+
         <!-- Formulario -->
         <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm" class="space-y-3">
 

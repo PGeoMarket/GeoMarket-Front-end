@@ -33,6 +33,11 @@ export class Home {
     })
   }
 
+    onFilterByPrice() {
+    this.dialogManager.openDialog('filter-by-price', {
+      data: {mode: 'create'}
+    })
+  }
   onOpenMap() {
     this.dialogManager.openDialog('map', {
       data: {mode: 'create'}

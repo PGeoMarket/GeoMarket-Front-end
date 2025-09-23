@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { CrudService } from './crud-service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { PublicationService } from './publication-service';
 
 export interface CommentDTO {
@@ -20,6 +20,9 @@ export class CommentService extends CrudService<CommentDTO> {
   protected override endpoint = 'comments';
   private filter_by_publication = 'filter[publication_id]';
 
+    private publicationIdSubject = new BehaviorSubject<number | null>(null);
+    publicationIdChanged$ = this.publicationIdSubject.asObservable();
+
   publicationService =  inject(PublicationService);
   constructor(http: HttpClient) {
     super(http);
@@ -28,4 +31,8 @@ export class CommentService extends CrudService<CommentDTO> {
   getCommentByPublication (publication_id: number) : Observable<CommentDTO[]> {
     return this.http.get<CommentDTO[]>(`${this.API_URL}/${this.endpoint}?${this.filter_by_publication}=${publication_id}`)
   }
+
+    sendPublicationId(publication_id: number) {
+      this.publicationIdSubject.next(publication_id);
+    }
 }
