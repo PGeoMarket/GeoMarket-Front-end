@@ -18,6 +18,7 @@ import { FilterByPrice } from "../../features/consumidor/dialogs/filter-by-price
 import { ProfileConsumer } from "../../features/consumidor/profile-consumer/profile-consumer";
 import { Chats } from "../../features/consumidor/chats/chats";
 import { ReportManagement } from "../../features/admin/report-management/report-management";
+import { Report } from "../../features/consumidor/dialogs/report/report";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -42,6 +43,7 @@ export const DIALOG_COMPONENTS = {
   'select-location': SelectLocation,
   'rate-publication': RatePublication,
   'report-management': ReportManagement,
+  'report':Report,
 
   // Admin
   'reason': Reason,
