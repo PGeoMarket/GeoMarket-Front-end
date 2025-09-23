@@ -11,6 +11,8 @@ import { SelectLocation } from "../../features/consumidor/dialogs/select-locatio
 import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 import { Login } from "../../features/invitado/login/login";
+import { Reason } from "../../features/admin/reason/reason";
+import { EditSeller } from "../../features/vendedor/edit-seller/edit-seller";
 import { RatePublication } from "../../features/consumidor/dialogs/rate-publication/rate-publication";
 import { FilterByPrice } from "../../features/consumidor/dialogs/filter-by-price/filter-by-price";
 import { ProfileConsumer } from "../../features/consumidor/profile-consumer/profile-consumer";
@@ -25,6 +27,7 @@ export const DIALOG_COMPONENTS = {
   // Vendedor
   'add-product': AddProduct,
   'edit-product': EditProduct,
+  'edit-seller': EditSeller,
 
   // Consumidor
   // 
@@ -37,6 +40,7 @@ export const DIALOG_COMPONENTS = {
   'rate-publication': RatePublication,
 
   // Admin
+  'reason': Reason,
   // ...
 
   // Invitado
