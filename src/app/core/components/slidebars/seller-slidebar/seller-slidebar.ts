@@ -25,6 +25,12 @@ export class SellerSlidebar {
     });
   }
 
+  onChats() {
+    this.dialogManager.openDialog('chats', {
+      data: { mode: 'create' }
+    });
+  }
+
   logout(): void {
     this.loginService.logout().subscribe({
       next: () => {
