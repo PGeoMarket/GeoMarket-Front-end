@@ -1,0 +1,61 @@
+<body class="min-h-screen flex justify-center items-center p-4">
+  <div class="bg-blancoSucio w-full max-w-[30em] border border-borde2 rounded-xl p-13 max-h-[90vh] overflow-y-auto relative">
+
+    <!-- Botón volver -->
+    <button class="p-2 rounded cursor-pointer absolute top-4 left-4" appClosedialog>
+      <img src="svg/back-icon.svg" alt="">
+    </button>
+
+    <!-- Título -->
+    <p class="text-center text-azulPotente font-sans text-xl mb-6">Motivo del reporte</p>
+
+    <!-- Lista de opciones -->
+    <form class="space-y-3">
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="accent-azulPotente" />
+        <span>Producto prohibido</span>
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="accent-azulPotente" />
+        <span>Información engañosa</span>
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="accent-azulPotente" />
+        <span>Spam</span>
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="accent-azulPotente" />
+        <span>Contenido inapropiado</span>
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="accent-azulPotente" />
+        <span>Producto peligroso</span>
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="accent-azulPotente" />
+        <span>Práctica comercial sospechosa</span>
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input type="checkbox" class="accent-azulPotente" />
+        <span>Otro motivo</span>
+      </label>
+
+      <!-- Campo especificar -->
+      <textarea id="mensaje" name="mensaje" placeholder="Especificar..." class="w-full h-[5em] border border-borde2 rounded-xl p-3 resize-none focus:outline-none focus:ring-2 focus:ring-azulSecundario focus:border-transparent"></textarea>
+      
+    </form>
+
+    <!-- Botones -->
+    <div class="flex justify-end gap-3 mt-6">
+      <button type="button" class="btn_negative cursor-pointer">Cancelar</button>
+      <button type="submit" class="btn_positive cursor-pointer">Reportar</button>
+    </div>
+  </div>
+</body>
+

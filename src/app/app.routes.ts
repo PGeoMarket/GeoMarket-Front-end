@@ -15,6 +15,7 @@ import { ProductDetail } from './features/consumidor/product-detail/product-deta
 import { Chats } from './features/consumidor/chats/chats';
 import { Login } from './features/invitado/login/login';
 import { ReportManagement } from './features/admin/report-management/report-management';
+import { Report } from './features/consumidor/dialogs/report/report';
 
 export const routes: Routes = [
     {path: 'home', component: Home},
@@ -23,7 +24,7 @@ export const routes: Routes = [
     {path:'profile-seller',component:ProfileSeller},
     {path:'favorite-publications',component:FavoritePublications},
     {path:'ProfileOther',component:ProfileOther},
-    {path:'Faq',component:Faq},
+    {path:'faq',component:Faq},
     {path:'profile-buyer',component:ProfileConsumer},
     {path: '', redirectTo: '/home', pathMatch: 'full'},
 
@@ -34,5 +35,6 @@ export const routes: Routes = [
     {path: 'chats',component:Chats},
     {path: 'login', component: Login},
     {path: 'profile-consumer', component: ProfileConsumer},
-    {path: 'report-management', component: ReportManagement}
+    {path: 'report-management', component: ReportManagement},
+     {path: 'report', component: Report}
 ];
