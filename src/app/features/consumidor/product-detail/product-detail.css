@@ -1,0 +1,6 @@
+.fav-icon {
+  transition: transform 0.3s ease;  /* solo animar el transform */
+}
+.fav-icon:active {
+  transform: scale(1.1);            /* efecto pequeño de zoom al click */
+}
