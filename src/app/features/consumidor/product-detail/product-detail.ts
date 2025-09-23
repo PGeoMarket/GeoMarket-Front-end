@@ -14,8 +14,15 @@ export class ProductDetail {
 @Input() publication_detail!: PublicationDTO | null;
 @Output() close = new EventEmitter<void>();
 
+favorito: boolean =  false;
 removePublicationDetail() {
   this.close.emit(); // Emitir evento al padre  
   // NO modifiques this.publication_detail ni this.open aquí
+}
+
+changeFavoritePublication() {
+ this.favorito = !this.favorito;
+
+ //aqui api xd
 }
 }
