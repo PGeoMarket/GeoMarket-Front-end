@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { CrudService } from './crud-service';
+import { PublicationDTO } from './publication-service';
 
-export interface User {
+export interface UserDTO {
   id: number;
   primer_nombre: string;
   segundo_nombre?: string;
@@ -22,28 +24,20 @@ export interface User {
   };
 }
 
-export interface UserDTO {
-  primer_nombre: string;
-  segundo_nombre:string;
-  primer_apellido: string;
-  segundo_apellido: string;
-  email: string;
-  password_hash: string;
-  role_id: number;
-  activo: boolean;
-}
-
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService extends CrudService<UserDTO> {
   private apiUrl = 'http://127.0.0.1:80000/v1';
   
+  protected override endpoint = 'users';
+
   // Estado reactivo del usuario actual
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
+  private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
 
-  constructor(private http: HttpClient) {
+  constructor(http: HttpClient) {
+    super(http);
     this.loadUserFromStorage();
   }
 
@@ -61,7 +55,7 @@ export class UserService {
   }
 
   // Guardar usuario
-  saveUser(user: User): void {
+  saveUser(user: UserDTO): void {
     localStorage.setItem('user_data', JSON.stringify(user));
     this.currentUserSubject.next(user);
   }
@@ -73,7 +67,7 @@ export class UserService {
   }
 
   // Obtener usuario actual
-  getCurrentUser(): User | null {
+  getCurrentUser(): UserDTO | null {
     return this.currentUserSubject.value;
   }
 
@@ -102,10 +96,18 @@ export class UserService {
   }
 
   // Obtener información actualizada del usuario desde el servidor
-  getMe(): Observable<{ user: User }> {
-    return this.http.get<{ user: User }>(`${this.apiUrl}/me`)
+  getMe(): Observable<{ user: UserDTO }> {
+    return this.http.get<{ user: UserDTO }>(`${this.apiUrl}/me`)
       .pipe(
         tap(response => this.saveUser(response.user))
       );
+  }
+
+  getFavorites(): Observable<PublicationDTO[]>{
+    const user = this.getCurrentUser();
+    let userId = user?.id;
+    console.log(`${this.API_URL}/${this.endpoint}/${userId}/favorites`);
+    
+    return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites`)
   }
 }
