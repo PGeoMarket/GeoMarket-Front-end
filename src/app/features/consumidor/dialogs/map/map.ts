@@ -31,10 +31,13 @@ export class Map implements OnInit {
   }
 
  private dialogManager = inject(DialogManager);
+
   OnConfirmar() {
-    this.dialogManager.openDialog('select-location', {
+    this.dialogManager.closeDialog()
+   this.dialogManager.
+    openDialog('select-location', {
       data: { mode: 'create' }
-    });
+    }); 
   }
 
 }

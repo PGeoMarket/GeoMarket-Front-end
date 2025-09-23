@@ -12,6 +12,7 @@ import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/a
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 import { Login } from "../../features/invitado/login/login";
 import { RatePublication } from "../../features/consumidor/dialogs/rate-publication/rate-publication";
+import { FilterByPrice } from "../../features/consumidor/dialogs/filter-by-price/filter-by-price";
 import { ProfileConsumer } from "../../features/consumidor/profile-consumer/profile-consumer";
 
 /**
@@ -30,6 +31,7 @@ export const DIALOG_COMPONENTS = {
   'profile-consumer' : ProfileConsumer,
   'filter-by-category': FilterByCategory,
   'filter-by-proximity': FilterByProximity,
+  'filter-by-price': FilterByPrice,
   'map': Map, 
   'select-location': SelectLocation,
   'rate-publication': RatePublication,
