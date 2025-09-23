@@ -33,5 +33,6 @@ export const routes: Routes = [
     {path: 'Map', component: Map},
     {path: 'chats',component:Chats},
     {path: 'login', component: Login},
-    {path: 'report-management', component: ReportManagement},
+    {path: 'profile-consumer', component: ProfileConsumer},
+    {path: 'report-management', component: ReportManagement}
 ];

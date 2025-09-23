@@ -14,22 +14,22 @@ import { PublicationService } from '../../services/publication-service';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, SellerSlidebar, AdminSlidebar, BuyerSlidebar, GuestSlidebar, RouterLink,FormsModule],
+  imports: [CommonModule, SellerSlidebar, AdminSlidebar, BuyerSlidebar, GuestSlidebar, RouterLink, FormsModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
 export class Header {
-  
+
   constructor(
-    private userService: UserService, 
+    private userService: UserService,
     private loginService: LoginService,
     private publicationService: PublicationService
   ) {
     let currentUser$ = this.userService.currentUser$;
   }
-  
+
   // Estado reactivo del usuario
-  
+
   open = false;
 
 
@@ -77,10 +77,9 @@ export class Header {
   }
 
   searchPublicationByName(searchPublication: string) {
-    
-    this.publicationService.sendFilter('&filter[titulo]='+searchPublication);
+    this.publicationService.sendFilter('&filter[titulo]=' + searchPublication);
   }
-  
+
 }
 
 
