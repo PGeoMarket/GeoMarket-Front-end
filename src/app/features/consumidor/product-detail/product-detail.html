@@ -8,9 +8,16 @@
             (click)="removePublicationDetail()">
             <img src="svg/back-icon.svg" alt="atras" class="w-15 h-15">
         </button>
-        <button class="rounded-lg border-0 w-10 h-10 flex items-center justify-center">
+<div>
+            <button (click)="abrirMenu($event)" class="rounded-lg border-0 w-10 h-10 flex items-center justify-center">
             <img src="svg/trespuntos.svg" alt="puntos" class="w-7 h-7">
         </button>
+                    @if (menuAbierto) {
+            <div class="bg-white border rounded shadow px-2 py-1 text-xs absolute min-w-[80px] right-[10%]">
+                <button class="block text-red-500 hover:underline w-full text-left cursor-pointer" (click)="onReporManagment()">Reportar</button>
+            </div>
+            }
+</div>
     </div>
 
     <!-- Título -->
