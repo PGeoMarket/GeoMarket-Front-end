@@ -8,9 +8,16 @@
             (click)="removePublicationDetail()">
             <img src="svg/back-icon.svg" alt="atras" class="w-15 h-15">
         </button>
-        <button class="rounded-lg border-0 w-10 h-10 flex items-center justify-center">
+<div>
+            <button (click)="abrirMenu($event)" class="rounded-lg border-0 w-10 h-10 flex items-center justify-center">
             <img src="svg/trespuntos.svg" alt="puntos" class="w-7 h-7">
         </button>
+                    @if (menuAbierto) {
+            <div class="bg-white border rounded shadow px-2 py-1 text-xs absolute min-w-[80px] right-[10%]">
+                <button class="block text-red-500 hover:underline w-full text-left cursor-pointer" (click)="onReporManagment()">Reportar</button>
+            </div>
+            }
+</div>
     </div>
 
     <!-- Título -->
@@ -23,8 +30,11 @@
     <!-- Precio y botón favorito -->
     <div class="flex justify-between items-center">
         <p class="text-gray-500 text-xl font-semibold">{{publication_detail.precio | currency: 'COP'}}</p>
-        <button class="bg-transparent">
-            <img src="svg/favoritooscuro.svg" alt="corazon" class="w-6 h-6">
+        <button class="bg-transparent" (click)="changeFavoritePublication()">
+            <img [src]="favorito ? 'svg/favoritesoscuro_relleno.svg' : 'svg/favoritesoscuro_vacio.svg'" alt="corazon"
+                class="w-10 h-10 fav-icon">
+
+
         </button>
     </div>
 
@@ -63,10 +73,11 @@
     </div>
 
     <!-- Comentarios -->
-     <div class="my-5">
-    <app-comments [publication_id]="publication_detail.id!" [seller_id]="publication_detail.seller_id!"></app-comments>
+    <div class="mt-5">
+        <app-comments [publication_id]="publication_detail.id!"
+            [seller_id]="publication_detail.seller_id!"></app-comments>
 
-     </div>
+    </div>
 
 </div>
 }
