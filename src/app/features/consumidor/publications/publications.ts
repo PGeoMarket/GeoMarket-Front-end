@@ -25,6 +25,11 @@ export class Publications implements OnInit {
       .subscribe(filters => {
         this.loadFiltredPublications(filters);
       });
+
+    this.publicationService.reload_publicationChanged$
+      .subscribe(() => {
+        this.loadPublications();
+      })
   }
 
   loadPublications() {

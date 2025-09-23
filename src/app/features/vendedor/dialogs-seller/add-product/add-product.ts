@@ -20,8 +20,6 @@ export class AddProduct {
     precio: null as number | null,
     descripcion: "",
     seller_id: 1,
-    imagen: "https://images7.memedroid.com/images/UPLOADED555/62c1103df10b7.jpeg",
-
   }
 
   private dialogManager = inject(DialogManager);
@@ -31,7 +29,7 @@ export class AddProduct {
   imagePreview: string | ArrayBuffer | null = null;
   imageFile: File | null = null;
 
-  /*   onImageSelected(event: Event) {
+    onImageSelected(event: Event) {
       const file = (event.target as HTMLInputElement).files?.[0];
       if (file) {
         this.imageFile = file;
@@ -46,8 +44,7 @@ export class AddProduct {
     onResetImage() {
       this.imagePreview = null;
       this.imageFile = null;
-      this.product.image.url = '';
-    } */
+    }
 
   onSubmit() {
     if (this.product) {
@@ -58,6 +55,7 @@ export class AddProduct {
       this.publicationService.create(payload).subscribe({
         next: (data) => {
           console.log('Creación exitosa', data);
+          this.publicationService.reloadPublication(true)
           this.dialogManager.closeDialog();
         },
         error: (err) => console.error('Error al crear', err)

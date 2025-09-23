@@ -11,16 +11,16 @@
       <div class="grid grid-rows-[80%_20%]">
         <!-- Como antes no estaba lo agregue de forma basica el boton de quitar imagen-->
         <div class="border-1 border-borde1 rounded-2xl my-3 w-fit h-auto md:max-h-[500px] mx-auto">
-          <button class="btn_negative absolute" >X</button> <!-- (click)="onResetImage()" -->
+          <button class="btn_negative absolute" (click)="onResetImage()">X</button > 
           <img *ngIf="!imagePreview" src="/svg/imagePreviewDefault.svg" class="h-full rounded-[14px]">
           <img *ngIf="imagePreview" [src]="imagePreview" class="h-full rounded-[14px]">
         </div>
         <div class="mx-auto">
           <label for="upload" class="cursor-pointer px-4 py-2 btn_azulPotente transition">
             Cargar imagen 
-           <input type="text" name="productImage" id="" [(ngModel)]="product.imagen" required>
+          <input type="file" id="upload" class="hidden" accept="image/*" (change)="onImageSelected($event)">  
+
           </label>
-         <!--  <input type="file" id="upload" class="hidden" accept="image/*"> -->  <!-- (change)="onImageSelected($event)" -->
         </div>
       </div>
 

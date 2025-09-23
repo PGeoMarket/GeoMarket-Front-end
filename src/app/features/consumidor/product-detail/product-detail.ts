@@ -42,8 +42,8 @@ export class ProductDetail {
   }
 
   onReporManagment() {
-/*         this.dialogManager.openDialog(flotante de reportar, {
+       this.dialogManager.openDialog('report', {
       data: { mode: 'create' }
-    }); */
+    });
   }
 }

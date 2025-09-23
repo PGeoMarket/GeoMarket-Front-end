@@ -5,7 +5,7 @@
   class="bg-azulPotente text-white w-full h-10 rounded-lg font-medium">Comentar</button>
 
 <div class="space-y-2 overflow-y-scroll overflow-x-hidden h-[200px] my-2.5">
-  @if (comments.length!=0) {
+  @if (comments.length) {
 
   @for (comment of comments; track $index) {
   <div class="border border-gray-400 rounded-lg p-3">
