@@ -37,9 +37,14 @@ export class EditPublication implements OnInit {
   onEditProduct(publication: PublicationDTO) {
     this.selectedPublication = publication;
 
-    this.dialogManager.openDialog('edit-product', {
-      data: { publication: this.selectedPublication } // Pasamos todo el objeto
-    });
+this.dialogManager.openDialog('edit-product', {
+  data: { publication: this.selectedPublication },
+  onClose: (res) => {
+    console.log('cerrado con', res);
+    this.loadPublications();
+  }
+});
+
   }
 
   onDeleteProduct(id: number) {
