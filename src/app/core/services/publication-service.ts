@@ -32,9 +32,9 @@ export class PublicationService extends CrudService<PublicationDTO> {
 
   // Subject para comunicar filtros
   private filterSubject = new BehaviorSubject<string>('');
-  private publicationSubject = new BehaviorSubject<PublicationDTO | null>(null);
+  private reload_publicationSubject = new BehaviorSubject<boolean>(false);
   filterChanged$ = this.filterSubject.asObservable();
-  publicationChanged$ = this.publicationSubject.asObservable();
+  reload_publicationChanged$ = this.reload_publicationSubject.asObservable();
 
   constructor(http: HttpClient) {
     super(http);
@@ -65,7 +65,7 @@ export class PublicationService extends CrudService<PublicationDTO> {
     this.filterSubject.next(filters);
   }
 
-  sendPublication(publication: PublicationDTO) {
-    this.publicationSubject.next(publication);
+  reloadPublication(reload_publication: boolean) {
+    this.reload_publicationSubject.next(reload_publication);
   }
 }
