@@ -14,6 +14,7 @@ import { RegisterAs } from './features/invitado/register-as/register-as';
 import { ProductDetail } from './features/consumidor/product-detail/product-detail';
 import { Chats } from './features/consumidor/chats/chats';
 import { Login } from './features/invitado/login/login';
+import { ReportManagement } from './features/admin/report-management/report-management';
 
 export const routes: Routes = [
     {path: 'home', component: Home},
@@ -32,5 +33,6 @@ export const routes: Routes = [
     {path: 'Map', component: Map},
     {path: 'chats',component:Chats},
     {path: 'login', component: Login},
-    {path: 'profile-consumer', component: ProfileConsumer}
+    {path: 'profile-consumer', component: ProfileConsumer},
+    {path: 'report-management', component: ReportManagement}
 ];

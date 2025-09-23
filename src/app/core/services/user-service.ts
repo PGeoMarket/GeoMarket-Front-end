@@ -22,11 +22,22 @@ export interface User {
   };
 }
 
+export interface UserDTO {
+  primer_nombre: string;
+  segundo_nombre:string;
+  primer_apellido: string;
+  segundo_apellido: string;
+  email: string;
+  password_hash: string;
+  role_id: number;
+  activo: boolean;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'http://localhost:8000/api/v1';
+  private apiUrl = 'http://127.0.0.1:80000/v1';
   
   // Estado reactivo del usuario actual
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -87,7 +98,7 @@ export class UserService {
   }
 
   isConsumidor(): boolean {
-    return this.getUserRole() === 'consumidor';
+    return this.getUserRole() === 'Consumidor';
   }
 
   // Obtener información actualizada del usuario desde el servidor
