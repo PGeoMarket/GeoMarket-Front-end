@@ -1,31 +1,57 @@
-<div class="bg-white flex flex-col items-center p-4 ">
-            <img src="svg/userProfiel.svg" alt="Perfil" class="w-12 h-12 md:w-auto md:h-auto">
-            <p class="text-azulPotente text-sm md:text-lg mt-2">pedro picapiedra</p>
-            <a href="" class="text-[#4690FF] text-xs md:text-base">consumidor</a>
-            <p class="bg-[#06406A] text-white py-1 px-3 md:px-5 w-fit rounded-[16px] mt-2 md:mt-3 text-xs md:text-sm" routerLink="/profile-buyer">
-                perfil</p>
-        </div>
+<div class="bg-white flex flex-col items-center p-4">
+  <img
+    src="svg/userProfiel.svg"
+    alt="Perfil"
+    class="w-12 h-12 md:w-auto md:h-auto"
+  />
+  <p class="text-azulPotente text-sm md:text-lg mt-2">pedro picapiedra</p>
+  <a href="" class="text-[#4690FF] text-xs md:text-base">consumidor</a>
+  <p
+    class="bg-[#06406A] text-white py-1 px-3 md:px-5 w-fit rounded-[16px] mt-2 md:mt-3 text-xs md:text-sm"
+    routerLink="/profile-buyer"
+  >
+    perfil
+  </p>
+</div>
 
-        <!-- Menú -->
-        <div class="bg-[#06406A] h-full">
-            <div class="p-2 md:p-4">
-                <img src="/svg/home.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
-                <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">Inicio</p>
-            </div>
-            <div class="p-2 md:p-4">
-                <img src="svg/favorites.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
-                <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em] cursor-pointer" routerLink="favorite-publications">Favoritos</p>
-            </div>
-            <div class="p-2 md:p-4">
-                <img src="svg/messages.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
-                <p class="text-white inline  text-[1.2em] ml-1 md:text-[1.3em]">Mensajes</p>
-            </div>
-            <div class="p-2 md:p-4 ">
-                <img src="svg/notifications.svg" class="inline w-7 h-7 md:w-auto md:h-auto ">
-                <p class="text-white inline  text-[1.2em] ml-1 md:text-[1.3em]">Notificaciones</p>
-            </div>
-            <div class="p-2 md:p-4 cursor-pointer" (click)="onFaq()">
-                <img src="svg/support.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
-                <p class="text-white inline  text-[1.2em] ml-1 md:text-[1.3em]">Soporte y preguntas frecuentes</p>
-            </div>
-        </div>
+
+<!-- Menú -->
+<div class="bg-[#06406A] h-full flex flex-col">
+  <div class="p-2 md:p-4">
+    <img src="/svg/home.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
+    <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">Inicio</p>
+  </div>
+  <div class="p-2 md:p-4">
+    <img src="svg/favorites.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
+    <p
+      class="text-white inline text-[1.2em] ml-1 md:text-[1.3em] cursor-pointer"
+      routerLink="favorite-publications"
+    >
+      Favoritos
+    </p>
+  </div>
+  <div class="p-2 md:p-4">
+    <img src="svg/messages.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
+    <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">Mensajes</p>
+  </div>
+  <div class="p-2 md:p-4">
+    <img
+      src="svg/notifications.svg"
+      class="inline w-7 h-7 md:w-auto md:h-auto"
+    />
+    <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">
+      Notificaciones
+    </p>
+  </div>
+  <div class="p-2 md:p-4 cursor-pointer" (click)="onFaq()">
+    <img src="svg/support.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
+    <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">
+      Soporte y preguntas frecuentes
+    </p>
+  </div>
+  <div class="p-2 mt-5 cursor-pointer" (click)="logout()" routerLink="home">
+    <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">
+      cerrar sesión
+    </p>
+  </div>
+</div>

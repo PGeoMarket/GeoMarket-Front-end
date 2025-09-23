@@ -1,49 +1,46 @@
 <!-- Comentarios -->
 <h3 class="text-xl font-semibold">Comentarios</h3>
-@if (!seller_id) { <!-- aqui es si es user_id! = seller_id o si es guest -->
-<!-- Input para comentarios -->
-<div class="flex items-center space-x-2" (click)="'logica del login para guest o para vendedor'">
-    <input type="text" placeholder="Deja un comentario aquí.."
-        class="w-[90%] h-12 rounded-full px-2 border border-gray-300 focus:outline-none focus:border-[#144467]">
-    <button class="bg-transparent border-0 items-center justify-center">
-        <img src="svg/enviar.svg" alt="" class="w-10 h-10">
-    </button>
-</div>
-} @else {
-<form (ngSubmit)="onSubmit(comment_user.value);" #commentForm="ngForm">
-    <div class="flex items-center space-x-2">
-        <input type="text" placeholder="Deja un comentario aquí.." name="comment_user"
-            class="w-[90%] h-12 rounded-full px-2 border border-gray-300 focus:outline-none focus:border-[#144467]"
-            [class.border-red-500]="comment_user.invalid && (comment_user.touched || commentForm.submitted)" required
-            #comment_user="ngModel" ngModel>
 
-        <button type="submit" class=" bg-transparent border-0 items-center justify-center">
-            <img src="svg/enviar.svg" alt="" class="w-10 h-10">
-        </button>
-    </div>
-            @if (comment_user.invalid && (comment_user.touched || commentForm.submitted)) {
-        <div class="text-red-500 text-sm mt-1">
-            El este campo es obligatorio
-        </div>
-        }
-</form>
-}
+<button (click)="onRatePublication()"
+    class="bg-azulPotente text-white w-full h-10 rounded-lg font-medium">Comentar</button>
+
 @if (comments) {
-<div class="space-y-2 overflow-y-scroll h-[200px] my-2.5">
+<div class="space-y-2 overflow-y-scroll overflow-x-hidden h-[200px] my-2.5">
 
     @for (comment of comments; track $index) {
-    <div class="border border-gray-400 rounded-lg p-3">
-        <div class="flex items-start space-x-3">
-            <img class="w-8 h-8 rounded-full flex-shrink-0" src="svg/userProfiel.svg" alt="">
-            <div class="flex-1">
-                <div class="flex justify-between items-start">
-                    <span class="text-[#144467] font-bold text-sm">{{comment.user_id}}</span>
-                    <span class="text-xs text-gray-500">{{comment.created_at | date}}</span>
-                </div>
-                <p class="text-sm mt-1">{{comment.texto}}</p>
-            </div>
+<div class="border border-gray-400 rounded-lg p-3">
+  <div class="flex items-start space-x-3">
+    <img class="w-8 h-8 rounded-full flex-shrink-0" src="svg/userProfiel.svg" alt="">
+
+    <!-- agregado min-w-0 para que el hijo flex pueda encogerse -->
+    <div class="flex-1 min-w-0">
+      <div class="flex justify-between items-center">
+        <span class="text-[#144467] font-bold text-sm">{{comment.user_id}}</span>
+        <div>
+          @for (star of [1,2,3,4,5]; track $index) {
+            <span class="text-xl"
+              [class.text-yellow-400]="star <= comment.valor_estrella!"
+              [class.text-blue-900]="star > comment.valor_estrella!">
+              &#9733;
+            </span>
+          }
         </div>
+      </div>
+
+      <!-- p con clases para romper palabras y respetar saltos de línea -->
+      <p class="text-sm mt-1 whitespace-pre-line break-words">
+        {{ comment.texto }}
+      </p>
+
+      <!-- mejor usar un bloque alineado a la derecha en vez de float -->
+      <div class="text-xs text-gray-500 text-right mt-1">
+        {{ comment.created_at | date }}
+      </div>
     </div>
+
+  </div>
+</div>
+
     }
 </div>
 
