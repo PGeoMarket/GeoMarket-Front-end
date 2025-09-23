@@ -13,6 +13,7 @@ import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product
 import { Login } from "../../features/invitado/login/login";
 import { RatePublication } from "../../features/consumidor/dialogs/rate-publication/rate-publication";
 import { FilterByPrice } from "../../features/consumidor/dialogs/filter-by-price/filter-by-price";
+import { ProfileConsumer } from "../../features/consumidor/profile-consumer/profile-consumer";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -27,6 +28,7 @@ export const DIALOG_COMPONENTS = {
 
   // Consumidor
   // 
+  'profile-consumer' : ProfileConsumer,
   'filter-by-category': FilterByCategory,
   'filter-by-proximity': FilterByProximity,
   'filter-by-price': FilterByPrice,
