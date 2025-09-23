@@ -17,6 +17,7 @@ import { RatePublication } from "../../features/consumidor/dialogs/rate-publicat
 import { FilterByPrice } from "../../features/consumidor/dialogs/filter-by-price/filter-by-price";
 import { ProfileConsumer } from "../../features/consumidor/profile-consumer/profile-consumer";
 import { Chats } from "../../features/consumidor/chats/chats";
+import { ReportManagement } from "../../features/admin/report-management/report-management";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -40,6 +41,7 @@ export const DIALOG_COMPONENTS = {
   'map': Map, 
   'select-location': SelectLocation,
   'rate-publication': RatePublication,
+  'report-management': ReportManagement,
 
   // Admin
   'reason': Reason,
