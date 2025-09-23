@@ -31,5 +31,6 @@ export const routes: Routes = [
     {path: 'select-location', component: SelectLocation},
     {path: 'Map', component: Map},
     {path: 'chats',component:Chats},
-    {path: 'login', component: Login}
+    {path: 'login', component: Login},
+    {path: 'profile-consumer', component: ProfileConsumer}
 ];
