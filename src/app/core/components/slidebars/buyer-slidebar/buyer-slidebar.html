@@ -21,7 +21,7 @@
       Favoritos
     </p>
   </div>
-  <div class="p-2 md:p-4">
+  <div class="p-2 md:p-4 cursor-pointer" (click)="onChats()">
     <img src="svg/messages.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
     <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">Mensajes</p>
   </div>
@@ -41,6 +41,7 @@
     </p>
   </div>
   <div class="p-2 mt-5 cursor-pointer" (click)="logout()" routerLink="home">
+    <img src="svg/logout.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
     <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">
       cerrar sesión
     </p>

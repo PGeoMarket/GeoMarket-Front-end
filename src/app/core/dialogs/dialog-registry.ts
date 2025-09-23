@@ -16,6 +16,7 @@ import { EditSeller } from "../../features/vendedor/edit-seller/edit-seller";
 import { RatePublication } from "../../features/consumidor/dialogs/rate-publication/rate-publication";
 import { FilterByPrice } from "../../features/consumidor/dialogs/filter-by-price/filter-by-price";
 import { ProfileConsumer } from "../../features/consumidor/profile-consumer/profile-consumer";
+import { Chats } from "../../features/consumidor/chats/chats";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -31,6 +32,7 @@ export const DIALOG_COMPONENTS = {
 
   // Consumidor
   // 
+  'chats': Chats,
   'profile-consumer' : ProfileConsumer,
   'filter-by-category': FilterByCategory,
   'filter-by-proximity': FilterByProximity,
