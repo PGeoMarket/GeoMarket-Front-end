@@ -18,13 +18,28 @@
             </div>
         </div>
         <!-- Info -->
-        <div class="text-left w-full mt-2 text-[15px] space-y-1">
-            <div><span class="font-bold">Nombre:</span> <br> Don Goku Castañeda</div>
-            <div><span class="font-bold">Negocio:</span> <br> Tiendita del dragón</div>
-            <div><span class="font-bold">Correo:</span> <br> dongokucastañeda@gmail.com</div>
-            <div><span class="font-bold">Telefono:</span> <br> 3001231231</div>
-            <div><span class="font-bold">Direccion:</span> <br> Cr 49 No. 134A-07, C.P 11001</div>
-        </div>
+       <form class="w-full flex flex-col gap-3">
+  <label class="text-gray-700 text-sm">Nombre</label>
+  <input type="text" value="{{user?.primer_nombre}} {{user?.segundo_nombre}}" disabled
+    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+
+  <label class="text-gray-700 text-sm">Negocio</label>
+  <input type="text" value="Tiendita del dragón" disabled
+    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+
+  <label class="text-gray-700 text-sm">Correo</label>
+  <input type="email" value="dongokucastañeda@gmail.com" disabled
+    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+
+  <label class="text-gray-700 text-sm">Teléfono</label>
+  <input type="tel" value="3001231231" disabled
+    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+
+  <label class="text-gray-700 text-sm">Dirección</label>
+  <input type="text" value="Cr 49 No. 134A-07, C.P 11001" disabled
+    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+</form>
+
         <!-- Mapa, botón y estrellas -->
         <div class="flex items-end gap-2 mt-6 w-full mb-8">
             <div class="relative">

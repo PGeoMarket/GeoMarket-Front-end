@@ -22,15 +22,15 @@
   <!-- Formulario de datos -->
   <form class="w-full flex flex-col gap-3">
     <label class="text-gray-700 text-sm">Nombre</label>
-    <input type="text" value="Alberto" disabled
+    <input type="text" value="{{user?.primer_nombre}} {{user?.segundo_nombre}}" disabled
       class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
     <label class="text-gray-700 text-sm">Apellidos</label>
-    <input type="text" value="Mendoza" disabled
+    <input type="text" value="{{user?.primer_apellido}} {{user?.segundo_apellido}}" disabled
       class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
     <label class="text-gray-700 text-sm">Correo</label>
-    <input type="email" value="AlbertoMendoza@gmail.com" disabled
+    <input type="email" value="{{user?.email}}" disabled
       class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
     <button type="button"
