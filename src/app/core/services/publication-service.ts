@@ -96,7 +96,7 @@ override update(id: number, data: Partial<PublicationDTO>): Observable<Publicati
   formData.append('_method', 'PUT');
 
   // Enviar como POST (Laravel interpretará _method=PUT)
-  return this.http.put<PublicationDTO>(`${this.API_URL}/${this.endpoint}/${id}`, formData);
+  return this.http.post<PublicationDTO>(`${this.API_URL}/${this.endpoint}/${id}`, formData);
 }
 
 
