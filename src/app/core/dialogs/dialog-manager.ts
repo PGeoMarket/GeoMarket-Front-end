@@ -38,6 +38,7 @@ export class DialogManager {
     disableClose?: boolean;
     width?: string;
     height?: string;
+    onClose?: (result?: any) => void; // <-- agregado
   }): DialogRef | null {
     const component = this.componentRegistry.get(componentName);
 
@@ -55,6 +56,7 @@ export class DialogManager {
     disableClose?: boolean;
     width?: string;
     height?: string;
+    onClose?: (result?: any) => void; // <-- agregado
   }): DialogRef {
     return this.dialog.openDialog(component, config);
   }

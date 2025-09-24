@@ -35,7 +35,6 @@ export const DIALOG_COMPONENTS = {
 
   // Consumidor
   // 
-  'chats': Chats,
   'profile-consumer' : ProfileConsumer,
   'filter-by-category': FilterByCategory,
   'filter-by-proximity': FilterByProximity,

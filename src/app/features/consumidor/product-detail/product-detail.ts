@@ -3,6 +3,7 @@ import { PublicationDTO } from '../../../core/services/publication-service';
 import { CommonModule } from '@angular/common';
 import { Comments } from '../comments/comments';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
+import { UserService } from '../../../core/services/user-service';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,6 +18,7 @@ export class ProductDetail {
 
   private dialogManager = inject(DialogManager);
 
+  constructor (private userService: UserService) {}
 
   menuAbierto: boolean = false;
   abrirMenu(event: MouseEvent) {
@@ -36,14 +38,46 @@ export class ProductDetail {
   }
 
   changeFavoritePublication() {
+    if (!this.userService.isLoggedIn()) {
+      this.dialogManager.openDialog('login', {
+        data: { mode: 'create' }
+      });
+
+      return;
+    }
+
+    //respectiva flotante/pantalla
+    //aqui api xd
     this.favorito = !this.favorito;
 
-    //aqui api xd
   }
 
-  onReporManagment() {
-/*         this.dialogManager.openDialog(flotante de reportar, {
+  onChat() {
+
+    if (!this.userService.isLoggedIn()) {
+      this.dialogManager.openDialog('login', {
+        data: { mode: 'create' }
+      });
+
+      return;
+    }
+
+    //logica del chat
+  }
+
+  onReport() {
+    if (!this.userService.isLoggedIn()) {
+      this.dialogManager.openDialog('login', {
+        data: { mode: 'create' }
+      });
+
+      return;
+    }
+
+    //respectiva flotante/pantalla
+    this.dialogManager.openDialog('report', {
       data: { mode: 'create' }
-    }); */
+    });
   }
 }
+

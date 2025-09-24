@@ -4,23 +4,85 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { CrudService } from './crud-service';
 import { PublicationDTO } from './publication-service';
 
+
 export interface UserDTO {
   id: number;
   primer_nombre: string;
-  segundo_nombre?: string;
+  segundo_nombre?: string | null;
   primer_apellido: string;
-  segundo_apellido?: string;
+  segundo_apellido?: string | null;
   email: string;
   role_id: number;
   activo: boolean;
+  created_at: string;
+  updated_at: string;
+
   role: {
     id: number;
     nombre: string;
+    created_at: string;
+    updated_at: string;
   };
+
   seller?: {
     id: number;
+    user_id: number;
     nombre_tienda: string;
-    descripcion?: string;
+    descripcion?: string | null;
+    activo: boolean;
+    puntuacion_promedio: number;
+    created_at: string;
+    updated_at: string;
+
+    coordinate: {
+      id: number;
+      created_at: string;
+      updated_at: string;
+      latitud: number;
+      longitud: number;
+      direccion: string;
+      coordinateable_type: string;
+      coordinateable_id: number;
+    };
+
+    image: {
+      id: number;
+      created_at: string;
+      updated_at: string;
+      url: string;
+      public_id?: string | null;
+      imageable_type: string;
+      imageable_id: number;
+    } | null;
+
+    phones: {
+      id: number;
+      numero_telefono: number;
+      seller_id: number;
+      created_at: string;
+      updated_at: string;
+    }[];
+  } | null;
+
+  image?: {
+    id: number;
+    created_at: string;
+    updated_at: string;
+    url: string;
+    public_id?: string | null;
+    imageable_type: string;
+    imageable_id: number;
+  } | null;
+
+  coordinate?: {
+    id: number;
+    created_at: string;
+    updated_at: string;
+    latitud: number;
+    longitud: number;
+    direccion: string;
+    coordinateable_type: string;
+    coordinateable_id: number;
   };
 }
 

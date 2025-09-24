@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Closedialog } from "../../../../core/dialogs/closedialog";
 import { FormsModule } from "@angular/forms";
 import { CommentDTO, CommentService } from '../../../../core/services/comment-service';
@@ -12,7 +12,7 @@ import { DialogManager } from '../../../../core/dialogs/dialog-manager';
 })
 export class RatePublication implements OnInit {
   submit_comment!: CommentDTO;
-  publication_id!: number;
+  @Input() publication_id!: number;
   rating: number | null = null;
 
   constructor(private commentService: CommentService) { }
@@ -20,10 +20,7 @@ export class RatePublication implements OnInit {
   dialogManager = inject(DialogManager)
 
   ngOnInit(): void {
-    this.commentService.publicationIdChanged$
-      .subscribe(publication_id => {
-        this.publication_id = publication_id!;
-      })
+
     console.log(this.publication_id);
 
   }
@@ -44,12 +41,28 @@ export class RatePublication implements OnInit {
     }
     this.commentService.create(this.submit_comment)
       .subscribe({
-        next: data => console.log(data),
+        next: data => {
+          console.log(data);
+          this.onCloseDialog({ saved: true, comment_user: data ?? this.submit_comment });
+        },
         error: error => console.error('Error al crear comentario', error, this.submit_comment),
         complete: () => {
           console.log('Comentario hecho con extio');
-          this.dialogManager.closeDialog();
+
         },
       })
+  }
+
+    onCloseDialog(result?: any) {
+    // si el método _close fue inyectado al componente (por openDialog),
+    // úsalo — eso cierra el overlay y ejecuta el callback onClose del llamador.
+    const maybeClose = (this as any)._close;
+    if (typeof maybeClose === 'function') {
+      maybeClose(result);
+      return;
+    }
+
+    // fallback: cerrar con el manager (no dispara onClose callback)
+    this.dialogManager.closeDialog();
   }
 }

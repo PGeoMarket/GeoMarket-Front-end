@@ -2,7 +2,7 @@ import { Component, inject, OnInit, TemplateRef, viewChild, ViewContainerRef } f
 import { Closedialog } from '../../../core/dialogs/closedialog';
 import { EditProduct } from '../dialogs-seller/edit-product/edit-product';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
-import {  PublicationDTO, PublicationService } from '../../../core/services/publication-service';
+import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule, NgStyle } from '@angular/common';
 
 @Component({
@@ -22,6 +22,10 @@ export class EditPublication implements OnInit {
 
   ngOnInit(): void {
     this.loadPublications();
+    this.publicationService.reload_publicationChanged$
+      .subscribe(() => {
+        this.loadPublications();
+      })
   }
 
   loadPublications() {
@@ -38,8 +42,13 @@ export class EditPublication implements OnInit {
     this.selectedPublication = publication;
 
     this.dialogManager.openDialog('edit-product', {
-      data: { publication: this.selectedPublication } // Pasamos todo el objeto
+      data: { publication: this.selectedPublication },
+      onClose: (res) => {
+        console.log('cerrado con', res);
+        this.loadPublications();
+      }
     });
+
   }
 
   onDeleteProduct(id: number) {
