@@ -93,6 +93,7 @@ override update(id: number, data: Partial<PublicationDTO>): Observable<Publicati
   if (data.imagen) formData.append('imagen', data.imagen);
 
   // <-- Método override necesario para multipart + "PUT"
+  formData.append('_method', 'PUT');
 
   // Enviar como POST (Laravel interpretará _method=PUT)
   return this.http.put<PublicationDTO>(`${this.API_URL}/${this.endpoint}/${id}`, formData);
