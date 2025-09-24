@@ -11,7 +11,7 @@
         <!-- icono perfil -->
         <div class="flex flex-col items-center mb-4 mt-2">
             <div class="bg-[#06406A] rounded-full w-24 h-24 flex items-center justify-center mb-2 relative">
-                <img src="/svg/profile.svg" alt="Avatar" class="w-14 h-14">
+                <img [src]=" user?.seller?.image?.url || '/svg/profile.svg'" alt="Avatar" class=" object-cover rounded-full w-24 h-24">
                 <button class="absolute bottom-2 right-2 bg-gray-100 rounded-full p-2 shadow">
                     <img src="/svg/edit.svg" alt="Editar" class="w-5 h-5 cursor-pointer">
                 </button>
@@ -36,7 +36,7 @@
     class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
   <label class="text-gray-700 text-sm">Dirección</label>
-  <input type="text" value="{{user?.coordinate}}" disabled
+  <input type="text" [value]="user?.seller?.coordinate?.direccion" disabled
     class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 </form>
 
