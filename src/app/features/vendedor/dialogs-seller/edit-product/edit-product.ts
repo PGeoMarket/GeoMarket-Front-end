@@ -17,7 +17,6 @@ export class EditProduct implements OnInit {
   @Input() publication!: PublicationDTO;    // Input desde el padre
   product?: PublicationDTO;                 // Inicializado en ngOnInit
   id?: number;                           // Inicializado en ngOnInit
-  @Output() updated = new EventEmitter<void>();
 
   constructor(private publicationService: PublicationService) { }
   private dialogManager = inject(DialogManager)
@@ -32,9 +31,12 @@ export class EditProduct implements OnInit {
   }
 
   onSubmit() {
-    if (this.id && this.product) {
-      console.log(this.product);
-      this.publicationService.update(this.id, this.product).
+    if (this.id && this.product && this.imageFile) {
+      const payload: PublicationDTO = {
+        ...this.product,
+        imagen: this.imageFile
+      };
+      this.publicationService.update(this.id, payload).
         subscribe({
           next: (data) => {
             console.log('Actualización exitosa', data);
@@ -63,6 +65,16 @@ export class EditProduct implements OnInit {
     }
   }
 
+    onResetImage() {
+    this.imagePreview = null;
+    this.imageFile = null;
+    // Limpiar el input file
+    const fileInput = document.getElementById('upload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
+
   onCancel() {
     // lógica para cancelar la edición (si quieres cerrar desde aquí, tendrás que
     // notificar al padre o usar DialogManager; por ahora lo dejo vacío porque
@@ -78,6 +90,7 @@ export class EditProduct implements OnInit {
       return;
     }
 
+    
     // fallback: cerrar con el manager (no dispara onClose callback)
     this.dialogManager.closeDialog();
   }
