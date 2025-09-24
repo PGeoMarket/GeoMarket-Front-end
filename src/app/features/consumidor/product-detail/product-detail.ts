@@ -65,7 +65,7 @@ export class ProductDetail {
     //logica del chat
   }
 
-  onReporManagment() {
+  onReport() {
     if (!this.userService.isLoggedIn()) {
       this.dialogManager.openDialog('login', {
         data: { mode: 'create' }
