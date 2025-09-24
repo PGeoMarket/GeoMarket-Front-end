@@ -3,6 +3,7 @@ import { CommentDTO, CommentService } from '../../../core/services/comment-servi
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
+import { UserService } from '../../../core/services/user-service';
 
 @Component({
   selector: 'app-comments',
@@ -18,7 +19,7 @@ export class Comments implements OnInit {
   dialogManager = inject(DialogManager);
   //Solo para pruebas
 
-  constructor(private commentService: CommentService) { }
+  constructor(private commentService: CommentService, private userService: UserService) { }
 
   ngOnInit(): void {
 
@@ -39,14 +40,15 @@ export class Comments implements OnInit {
   }
 
   onRatePublication() {
-    this.dialogManager.openDialog('rate-publication', {
-      data: { publication_id: this.publication_id },
-      onClose: (res) => {
-        console.log('cerrado con', res);
-        this.loadComments();
-      }
-    })
+    if (!this.userService.isLoggedIn()) {
+      this.dialogManager.openDialog('login', {
+        data: { mode: 'create' }
+      });
 
+      return;
+    }
+
+    //respectiva flotante/pantalla
+    
   }
-
 }

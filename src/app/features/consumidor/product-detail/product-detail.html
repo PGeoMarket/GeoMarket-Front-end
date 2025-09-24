@@ -52,7 +52,7 @@
     </div>
 
     @if (publication_detail.seller_id) { <!-- aqui es si es user_id! = seller_id -->
-    <button class="bg-azulSecundario text-white w-full h-10 rounded-lg font-medium">Mandar mensaje</button>
+    <button class="bg-azulSecundario text-white w-full h-10 rounded-lg font-medium" (click)="onChat()">Mandar mensaje</button>
 
     }
 
