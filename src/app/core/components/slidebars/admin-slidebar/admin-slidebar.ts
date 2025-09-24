@@ -1,6 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { DialogManager } from '../../../dialogs/dialog-manager';
 import { UserDTO, UserService } from '../../../services/user-service';
+import { LoginService } from '../../../services/login-service';
 
 @Component({
   selector: 'app-admin',
@@ -16,7 +17,7 @@ export class AdminSlidebar implements OnInit{
     });
   }
   user: UserDTO | null = null;
-  constructor(private userService:UserService){}
+  constructor(private userService:UserService , private loginService:LoginService){}
   ngOnInit(): void {
     this.getUserData();
   }
@@ -25,5 +26,18 @@ export class AdminSlidebar implements OnInit{
   getUserData() {
     this.user = this.userService.getCurrentUser();
     console.log(this.user);
+  }
+
+    logout(): void {
+    this.loginService.logout().subscribe({
+      next: () => {
+        console.log('Logout exitoso');
+      },
+      error: () => {
+        // Logout local aunque falle el servidor
+        localStorage.clear();
+        this.userService.clearUserData();
+      }
+    });
   }
 }
