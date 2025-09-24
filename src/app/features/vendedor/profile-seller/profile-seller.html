@@ -11,20 +11,35 @@
         <!-- icono perfil -->
         <div class="flex flex-col items-center mb-4 mt-2">
             <div class="bg-[#06406A] rounded-full w-24 h-24 flex items-center justify-center mb-2 relative">
-                <img src="/svg/profile.svg" alt="Avatar" class="w-14 h-14">
+                <img [src]=" user?.seller?.image?.url || '/svg/profile.svg'" alt="Avatar" class=" object-cover rounded-full w-24 h-24">
                 <button class="absolute bottom-2 right-2 bg-gray-100 rounded-full p-2 shadow">
                     <img src="/svg/edit.svg" alt="Editar" class="w-5 h-5 cursor-pointer">
                 </button>
             </div>
         </div>
         <!-- Info -->
-        <div class="text-left w-full mt-2 text-[15px] space-y-1">
-            <div><span class="font-bold">Nombre:</span> <br> Don Goku Castañeda</div>
-            <div><span class="font-bold">Negocio:</span> <br> Tiendita del dragón</div>
-            <div><span class="font-bold">Correo:</span> <br> dongokucastañeda@gmail.com</div>
-            <div><span class="font-bold">Telefono:</span> <br> 3001231231</div>
-            <div><span class="font-bold">Direccion:</span> <br> Cr 49 No. 134A-07, C.P 11001</div>
-        </div>
+       <form class="w-full flex flex-col gap-3">
+  <label class="text-gray-700 text-sm">Nombre</label>
+  <input type="text" value="{{user?.primer_nombre}} {{user?.segundo_nombre}}" disabled
+    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+
+  <label class="text-gray-700 text-sm">Negocio</label>
+  <input type="text" value="{{user?.seller?.nombre_tienda}}" disabled
+    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+
+  <label class="text-gray-700 text-sm">Correo</label>
+  <input type="email" value="{{user?.email}}" disabled
+    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+
+  <label class="text-gray-700 text-sm">Teléfono</label>
+  <input type="tel" [value]="user?.seller?.phones?.[0]?.numero_telefono"  disabled
+    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+
+  <label class="text-gray-700 text-sm">Dirección</label>
+  <input type="text" [value]="user?.seller?.coordinate?.direccion" disabled
+    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+</form>
+
         <!-- Mapa, botón y estrellas -->
         <div class="flex items-end gap-2 mt-6 w-full mb-8">
             <div class="relative">

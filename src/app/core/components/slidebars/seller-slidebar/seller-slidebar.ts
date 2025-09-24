@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { DialogManager } from '../../../dialogs/dialog-manager';
 import { RouterLink } from '@angular/router';
 import { LoginService } from '../../../services/login-service';
-import { UserService } from '../../../services/user-service';
+import { UserDTO, UserService } from '../../../services/user-service';
 
 @Component({
   selector: 'app-seller-slidebar',
@@ -10,9 +10,13 @@ import { UserService } from '../../../services/user-service';
   templateUrl: './seller-slidebar.html',
   styleUrl: './seller-slidebar.css'
 })
-export class SellerSlidebar {
+export class SellerSlidebar implements OnInit {
   private dialogManager = inject(DialogManager);
+  user: UserDTO | null = null;
  constructor(private loginService: LoginService,private userService: UserService) {}
+  ngOnInit(): void {
+    this.getUserData();
+  }
 
   onAddProduct() {
     this.dialogManager.openDialog('add-product', {
@@ -44,4 +48,8 @@ export class SellerSlidebar {
     });
   }
 
+   getUserData() {
+    this.user = this.userService.getCurrentUser();
+    console.log(this.user);
+  }
 }
