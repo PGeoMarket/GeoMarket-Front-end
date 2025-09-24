@@ -24,19 +24,19 @@
     class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
   <label class="text-gray-700 text-sm">Negocio</label>
-  <input type="text" value="Tiendita del dragón" disabled
+  <input type="text" value="{{user?.seller?.nombre_tienda}}" disabled
     class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
   <label class="text-gray-700 text-sm">Correo</label>
-  <input type="email" value="dongokucastañeda@gmail.com" disabled
+  <input type="email" value="{{user?.email}}" disabled
     class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
   <label class="text-gray-700 text-sm">Teléfono</label>
-  <input type="tel" value="3001231231" disabled
+  <input type="tel" [value]="user?.seller?.phones?.[0]?.numero_telefono"  disabled
     class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
   <label class="text-gray-700 text-sm">Dirección</label>
-  <input type="text" value="Cr 49 No. 134A-07, C.P 11001" disabled
+  <input type="text" value="{{user?.coordinate}}" disabled
     class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 </form>
 
