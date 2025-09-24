@@ -2,10 +2,11 @@ import { Component, inject, OnInit } from '@angular/core';
 import { DialogManager } from '../../../dialogs/dialog-manager';
 import { UserDTO, UserService } from '../../../services/user-service';
 import { LoginService } from '../../../services/login-service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './admin-slidebar.html',
   styleUrl: './admin-slidebar.css'
 })
