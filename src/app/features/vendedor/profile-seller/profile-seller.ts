@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { EditPublication } from '../edit-publication/edit-publication';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
+import { Loader } from '@googlemaps/js-api-loader';
 import { UserDTO, UserService } from '../../../core/services/user-service';
 
 
@@ -15,6 +16,32 @@ export class ProfileSeller implements OnInit {
   tab: string = "catalogo";
   repeat = Array.from({ length: 16 });
 
+  title = 'google-maps';
+
+  ngOnInit(): void {
+     this.getUserData();
+    const loader = new Loader({
+      apiKey: 'AIzaSyB5z4XpgHuZimhlIFzBKd2ey_VtzcRgcvs',
+      version: 'weekly'
+    });
+
+    loader.load().then(() => {
+      const mapElement = document.getElementById("mapax");
+      if (mapElement) {
+        new google.maps.Map(mapElement, {
+          center: { lat: 4.60971, lng: -74.08175 },
+          zoom: 6
+        });
+      }
+    });
+  }
+
+  onOpenMap() {
+    this.dialogManager.openDialog('map', {
+      data: { mode: 'create' }
+    })
+  }
+
   private dialogManager = inject(DialogManager);
   onOpenEdit() {
     this.dialogManager.openDialog('edit-seller', {
@@ -24,9 +51,6 @@ export class ProfileSeller implements OnInit {
   user: UserDTO | null = null;
 
   constructor(private userService: UserService) { }
-  ngOnInit(): void {
-    this.getUserData();
-  }
 
   getUserData() {
     this.user = this.userService.getCurrentUser();

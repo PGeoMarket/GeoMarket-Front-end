@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Closedialog } from "../../../core/dialogs/closedialog";
 import { Router } from '@angular/router';
 import { UserDTO, UserService } from '../../../core/services/user-service';
+import { DialogManager } from '../../../core/dialogs/dialog-manager';
 
 @Component({
   selector: 'app-profile-consumer',
@@ -23,6 +24,12 @@ export class ProfileConsumer implements OnInit {
     this.router.navigate(['/']); // o la ruta que quieras
   }
 
+   private dialogManager = inject(DialogManager);
+        onOpenEditConsumer() {
+          this.dialogManager.openDialog('edit-consumer', {
+            data: { mode: 'create' }
+          });
+        }
 
    getUserData(){
        this.user = this.userService.getCurrentUser();
