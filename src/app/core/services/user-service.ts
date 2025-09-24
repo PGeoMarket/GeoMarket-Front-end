@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { CrudService } from './crud-service';
 import { PublicationDTO } from './publication-service';
 
@@ -172,4 +172,20 @@ export class UserService extends CrudService<UserDTO> {
     
     return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites`)
   }
+
+getOwnPublications() {
+  const user = this.getCurrentUser();
+  let sellerId = user!.seller!.id;
+console.log("id del vendedor: "+sellerId)
+  console.log(`${this.API_URL}/${this.endpoint}/${sellerId}?included=seller.publications.image`);
+
+  return this.http
+    .get<any>(`${this.API_URL}/${this.endpoint}/${sellerId}?included=seller.publications.image`)
+    .pipe(
+      map((response: any) => {
+        // Asegura que siempre regrese un array
+        return response?.user?.seller?.publications ?? [];
+      })
+    );
+}
 }

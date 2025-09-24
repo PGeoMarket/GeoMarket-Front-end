@@ -5,6 +5,7 @@ import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule, NgStyle } from '@angular/common';
 import { ProductDetail } from '../../consumidor/product-detail/product-detail';
+import { UserService } from '../../../core/services/user-service';
 
 @Component({
   selector: 'app-edit-publication',
@@ -13,32 +14,37 @@ import { ProductDetail } from '../../consumidor/product-detail/product-detail';
   styleUrl: './edit-publication.css'
 })
 export class EditPublication implements OnInit {
-  repeat = Array.from({ length: 16 });
   publications!: PublicationDTO[];
   selectedPublication!: PublicationDTO;
-
   publication_selected!: PublicationDTO | null;
 
   private dialogManager = inject(DialogManager);
 
-  constructor(private publicationService: PublicationService) { }
+  constructor(private publicationService: PublicationService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.loadPublications();
+    this.loadOwnPublications();
     this.publicationService.reload_publicationChanged$
       .subscribe(() => {
-        this.loadPublications();
+        this.loadOwnPublications();
       })
   }
 
-  loadPublications() {
-    this.publicationService.getAllPublication()
-      .subscribe({
-        next: data => this.publications = data,
-        error: error => console.error('No se pudo obtener las publicaciones: ' + error),
-        complete: () => console.log('Publicaciones obtenidas correctamente')
+  loadOwnPublications() {
+ /*    this.userService.getOwnPublications().subscribe({
+      next: data => this.publications = data,
+      error: error => console.error('No se pudo obtener las publicaciones: ' + error),
+      complete: () => console.log('Publicaciones obtenidas correctamente')
+    }); */
 
-      })
+    this.publicationService.getAllPublication().subscribe({
+      next: data => this.publications = data,
+      error: error => console.error('No se pudo obtener las publicaciones: ' + error),
+      complete: () => console.log('Publicaciones obtenidas correctamente')
+    });
+
+    console.log(this.publications);
+
   }
 
   onEditProduct(publication: PublicationDTO) {
@@ -48,7 +54,7 @@ export class EditPublication implements OnInit {
       data: { publication: this.selectedPublication },
       onClose: (res) => {
         console.log('cerrado con', res);
-        this.loadPublications();
+        this.loadOwnPublications();
       }
     });
 

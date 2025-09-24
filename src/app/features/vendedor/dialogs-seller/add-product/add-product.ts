@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { DialogManager } from '../../../../core/dialogs/dialog-manager';
@@ -6,6 +6,7 @@ import { DialogManager } from '../../../../core/dialogs/dialog-manager';
 import { PublicationDTO, PublicationService } from '../../../../core/services/publication-service';
 import { Closedialog } from '../../../../core/dialogs/closedialog';
 import { Router } from '@angular/router';
+import { UserDTO, UserService } from '../../../../core/services/user-service';
 
 @Component({
   selector: 'app-add-product',
@@ -14,20 +15,34 @@ import { Router } from '@angular/router';
   templateUrl: './add-product.html',
   styleUrl: './add-product.css'
 })
-export class AddProduct {
+export class AddProduct implements OnInit{
   product: PublicationDTO = {
     titulo: "",
     precio: null as number | null,
     descripcion: "",
-    seller_id: 1,
   }
+
+  user!: UserDTO;
 
   private dialogManager = inject(DialogManager);
 
-  constructor(private publicationService: PublicationService, private router: Router) { }
+  constructor(private publicationService: PublicationService, private router: Router, private userService: UserService) { }
 
   imagePreview: string | ArrayBuffer | null = null;
   imageFile: File | null = null;
+
+
+ngOnInit(): void {
+  this.user = this.userService.getCurrentUser()!;
+
+  this.product = {
+    ...this.product,
+    seller_id: this.user.seller?.id,
+  }
+
+  console.log(this.user.seller!.id);
+  
+}
 
   onImageSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
