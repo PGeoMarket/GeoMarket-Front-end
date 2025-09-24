@@ -4,10 +4,11 @@ import { EditProduct } from '../dialogs-seller/edit-product/edit-product';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule, NgStyle } from '@angular/common';
+import { ProductDetail } from '../../consumidor/product-detail/product-detail';
 
 @Component({
   selector: 'app-edit-publication',
-  imports: [EditProduct, Closedialog, NgStyle, CommonModule],
+  imports: [EditProduct, Closedialog, NgStyle, CommonModule, ProductDetail],
   templateUrl: './edit-publication.html',
   styleUrl: './edit-publication.css'
 })
@@ -15,6 +16,8 @@ export class EditPublication implements OnInit {
   repeat = Array.from({ length: 16 });
   publications!: PublicationDTO[];
   selectedPublication!: PublicationDTO;
+
+  publication_selected!: PublicationDTO | null;
 
   private dialogManager = inject(DialogManager);
 
@@ -78,4 +81,35 @@ export class EditPublication implements OnInit {
     this.editarIndex = null;
   }
 
+
+
+  open: boolean = false;
+
+  private closeTimeout: any; // declara esto junto a las propiedades de la clase
+
+  openProductDetail(publication: PublicationDTO) {
+    // si hay un timeout de cierre pendiente, lo cancelamos (evita race conditions)
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = undefined;
+    }
+
+    if (this.open) return this.closePublicationDetail();
+
+    this.publication_selected = publication;
+    this.open = true;
+  }
+
+  closePublicationDetail() {
+    // iniciar la animación (cambia la clase)
+    this.open = false;
+
+    // esperar a que termine la transición CSS (Tailwind duration-300 = 300ms)
+    // y entonces limpiar publication_selected para que el contenido se quite después de animar
+    if (this.closeTimeout) clearTimeout(this.closeTimeout);
+    this.closeTimeout = setTimeout(() => {
+      this.publication_selected = null;
+      this.closeTimeout = undefined;
+    }, 300);
+  }
 }

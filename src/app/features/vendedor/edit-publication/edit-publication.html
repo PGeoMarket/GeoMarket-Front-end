@@ -1,12 +1,12 @@
-<section class="flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 md:pt-[0px] " (click)="cerrarMenus()">
+<section class="flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 md:pt-[0px] overflow-x-hidden " (click)="cerrarMenus()">
     @for (publication of publications; track $index) {
 
     <!-- {{-- Contenedor de publicacion --}} -->
-    <div class="div_publicacion relative">
+    <div class="div_publicacion relative"  (click)="openProductDetail(publication)">
         <!-- {{-- tres puntitos --}} -->
         <div class="z-10 absolute">
 
-            <button (click)="abrirMenu($index, $event)"
+            <button (click)="abrirMenu($index, $event);"
                 class="bg-gray-100 rounded-full w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
                 <svg class="w-5 h-5 cursor-pointer" fill="none" stroke="currentColor" stroke-width="2"
                     viewBox="0 0 24 24">
@@ -18,7 +18,7 @@
             @if (editarIndex==$index) {
             <div class="mt-1 bg-white border rounded shadow px-2 py-1 text-xs absolute  min-w-[80px]">
                 <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer"
-                    (click)="onEditProduct(publication)">Editar</button>
+                    (click)="onEditProduct(publication);">Editar</button>
                 <button class="block text-red-500 hover:underline w-full text-left cursor-pointer" (click)="onDeleteProduct(publication.id!)">Eliminar</button>
             </div>
             }
@@ -49,3 +49,14 @@
     </div>
     }
 </section>
+<div class="fixed top-16 right-1 h-[calc(100vh-4rem)] w-[280px] md:w-[320px] shadow-lg z-41 transition-transform duration-300 transform"
+    [class.translate-x-0]="open" [class.translate-x-full]="!open">
+    @if (publication_selected) {
+    <div class="h-full w-full">
+        <app-product-detail 
+            [publication_detail]="publication_selected" 
+            (close)="closePublicationDetail()"> <!-- Agregar output event -->
+        </app-product-detail>
+    </div>
+    }
+</div>
