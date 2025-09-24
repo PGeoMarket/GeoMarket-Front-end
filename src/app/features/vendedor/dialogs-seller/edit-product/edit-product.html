@@ -16,17 +16,26 @@
 
     <div class="h-full grid grid-rows-[40%_60%] md:grid-cols-2 md:grid-rows-none">
 
+
       <!-- Imagen -->
       <div class="grid grid-rows-[80%_20%]">
+        <!-- Como antes no estaba lo agregue de forma basica el boton de quitar imagen-->
         <div class="border-1 border-borde1 rounded-2xl my-3 w-fit h-auto md:max-h-[500px] mx-auto">
-          <img *ngIf="!product.image!.url" src="/img/florhuila.png" class="h-full rounded-[14px]">
-          <img *ngIf="product.image!.url" [src]="product.image!.url" class="h-full rounded-[14px]">
+          <button class="btn_negative absolute" (click)="onResetImage()">X</button > 
+          @if (!imagePreview) {
+          <img [src]="product.image?.url" class="h-full rounded-[14px]">
+
+          } @else {
+          <img [src]="imagePreview" class="h-full rounded-[14px]">
+
+          }
         </div>
         <div class="mx-auto">
           <label for="upload" class="cursor-pointer px-4 py-2 btn_azulPotente transition">
-            Cargar imagen
+            Cargar imagen 
+          <input type="file" id="upload" class="hidden" accept="image/*" (change)="onImageSelected($event)" name="image" required #image="ngModel" ngModel>  
+
           </label>
-          <input type="file" id="upload" class="hidden" accept="image/*"> <!--  (change)="onImageSelected($event)" -->
         </div>
       </div>
 
