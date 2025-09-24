@@ -36,5 +36,5 @@ export const routes: Routes = [
     {path: 'login', component: Login},
     {path: 'profile-consumer', component: ProfileConsumer},
     {path: 'report-management', component: ReportManagement},
-     {path: 'report', component: Report}
+    {path: 'report', component: Report}
 ];

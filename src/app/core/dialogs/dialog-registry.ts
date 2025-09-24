@@ -19,6 +19,7 @@ import { ProfileConsumer } from "../../features/consumidor/profile-consumer/prof
 import { Chats } from "../../features/consumidor/chats/chats";
 import { ReportManagement } from "../../features/admin/report-management/report-management";
 import { Report } from "../../features/consumidor/dialogs/report/report";
+import { EditConsumer } from "../../features/consumidor/edit-consumer/edit-consumer";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -44,6 +45,7 @@ export const DIALOG_COMPONENTS = {
   'rate-publication': RatePublication,
   'report-management': ReportManagement,
   'report':Report,
+  'edit-consumer': EditConsumer,
 
   // Admin
   'reason': Reason,
