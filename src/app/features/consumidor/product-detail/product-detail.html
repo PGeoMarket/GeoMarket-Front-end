@@ -40,9 +40,14 @@
     </div>
 
     <!-- Estrellas -->
-    <div>
-        <img class="w-24" src="svg/stars.svg" alt="estrella">
-    </div>
+            <div class="m-2 flex">
+            @for (star of [1,2,3,4,5]; track $index) {
+            <span class="text-3xl" [class.text-yellow-400]="star <= publication_detail.puntuacion_promedio!"
+              [class.text-blue-900]="star > publication_detail.puntuacion_promedio!">
+              &#9733;
+            </span>
+            }
+            </div>
 
     <!-- Descripción -->
     <div class="bg-gray-100 rounded-lg p-4">
