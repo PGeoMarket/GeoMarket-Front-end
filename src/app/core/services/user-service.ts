@@ -90,7 +90,6 @@ export interface UserDTO {
   providedIn: 'root'
 })
 export class UserService extends CrudService<UserDTO> {
-  private apiUrl = 'http://192.168.0.21:8000/v1';
   
   protected override endpoint = 'users';
 
@@ -159,7 +158,7 @@ export class UserService extends CrudService<UserDTO> {
 
   // Obtener información actualizada del usuario desde el servidor
   getMe(): Observable<{ user: UserDTO }> {
-    return this.http.get<{ user: UserDTO }>(`${this.apiUrl}/me`)
+    return this.http.get<{ user: UserDTO }>(`${this.API_URL}/me`)
       .pipe(
         tap(response => this.saveUser(response.user))
       );
