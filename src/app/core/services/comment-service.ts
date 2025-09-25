@@ -11,6 +11,15 @@ export interface CommentDTO {
   user_id: number;
   publication_id: number | null;
   created_at?: string;
+  user: UserDTO;
+}
+
+export interface UserDTO {
+  id: number;
+  primer_nombre: string;
+  segundo_nombre: string | null;
+  primer_apellido: string;
+  segundo_apellido: string | null;
 }
 
 @Injectable({
