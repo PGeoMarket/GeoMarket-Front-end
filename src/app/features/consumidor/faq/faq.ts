@@ -11,17 +11,18 @@ import { UserService } from '../../../core/services/user-service';
   templateUrl: './faq.html',
   styleUrl: './faq.css'
 })
+
 export class Faq {
   faq: FaqDTO = {
     mensaje: '',
-    user_id: 1 // ⚡ Aquí deberías asignar el ID del usuario autenticado
+    user_id:  0// ⚡ Aquí deberías asignar el ID del usuario autenticado
   };
 
   // Estados para el feedback
   showSuccessMessage: boolean = false;
   showErrorMessage: boolean = false;
 
- constructor(private faqService: FaqService, private UserService:UserService) { 
+  constructor(private faqService: FaqService, private UserService:UserService) { 
     this.faq.user_id=UserService.getUserId()
   }
 
