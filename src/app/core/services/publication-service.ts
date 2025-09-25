@@ -11,6 +11,7 @@ export interface PublicationDTO {
   visibilidad?: boolean;
   seller_id?: number;
   category_id?: number;
+  puntuacion_promedio?: number,
   image?: ImageDTO;
   imagen?: File;
   created_at?: string;
