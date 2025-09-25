@@ -44,4 +44,9 @@ export class CommentService extends CrudService<CommentDTO> {
     sendPublicationId(publication_id: number) {
       this.publicationIdSubject.next(publication_id);
     }
+
+    getSellerByComments(seller_id: number): Observable<any> { 
+  return this.http.get<any>(`${this.API_URL}/sellers/${seller_id}?include=publications.comments.user`);
+}
+
 }
