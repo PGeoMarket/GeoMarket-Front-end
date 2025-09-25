@@ -20,6 +20,12 @@ export interface UserDTO {
   segundo_nombre: string | null;
   primer_apellido: string;
   segundo_apellido: string | null;
+  image: ImageDTO | null;
+}
+
+export interface ImageDTO {
+  id: number;
+  url: string;
 }
 
 @Injectable({
