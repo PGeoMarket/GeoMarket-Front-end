@@ -20,6 +20,7 @@ import { Chats } from "../../features/consumidor/chats/chats";
 import { ReportManagement } from "../../features/admin/report-management/report-management";
 import { Report } from "../../features/consumidor/dialogs/report/report";
 import { EditConsumer } from "../../features/consumidor/edit-consumer/edit-consumer";
+import { SubmitFaq } from "../../features/consumidor/dialogs/submit-faq/submit-faq";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -28,6 +29,7 @@ import { EditConsumer } from "../../features/consumidor/edit-consumer/edit-consu
 export const DIALOG_COMPONENTS = {
   //all
   'faq':Faq,
+  'submit-faq':SubmitFaq,
   // Vendedor
   'add-product': AddProduct,
   'edit-product': EditProduct,

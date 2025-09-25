@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Closedialog } from "../../../core/dialogs/closedialog";
 import { FaqDTO, FaqService } from '../../../core/services/faq-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../core/services/user-service';
+import { DialogManager } from '../../../core/dialogs/dialog-manager';
+
 
 @Component({
   selector: 'app-faq',
@@ -13,6 +15,16 @@ import { UserService } from '../../../core/services/user-service';
 })
 
 export class Faq {
+dialogManager = inject(DialogManager);
+
+  OnSubmitFaq() {
+    this.dialogManager.closeDialog()
+   this.dialogManager.
+    openDialog('submit-faq', {
+      data: { mode: 'create' }
+    }); 
+  }
+
   faq: FaqDTO = {
     mensaje: '',
     user_id:  0// ⚡ Aquí deberías asignar el ID del usuario autenticado
@@ -28,6 +40,10 @@ export class Faq {
 
 
   onSubmit(mensaje: string) {
+    
+    
+    
+
     this.faq.mensaje = mensaje;
     this.showSuccessMessage = false;
     this.showErrorMessage = false;
