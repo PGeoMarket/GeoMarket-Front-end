@@ -1,64 +1,63 @@
 <section class="flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 md:pt-[0px] overflow-x-hidden " (click)="cerrarMenus()">
- @if (publications) {
-     @for (publication of publications; track $index) {
+  @if (publications) {
+    @for (publication of publications; track $index) {
 
-    <!-- {{-- Contenedor de publicacion --}} -->
-    <div class="div_publicacion relative"  (click)="openProductDetail(publication)">
-        <!-- {{-- tres puntitos --}} -->
+      <!-- Contenedor de publicacion -->
+      <div class="div_publicacion relative" (click)="openProductDetail(publication)">
+
+        <!-- tres puntitos -->
         <div class="z-10 absolute">
+          <!-- evitar que este click burbujee hacia el padre -->
+          <button (click)="abrirMenu($index, $event); $event.stopPropagation();"
+                  class="bg-gray-100 rounded-full w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
+            <svg class="w-5 h-5 cursor-pointer" fill="none" stroke="currentColor" stroke-width="2"
+                 viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="1.5" />
+              <circle cx="12" cy="6" r="1.5" />
+              <circle cx="12" cy="18" r="1.5" />
+            </svg>
+          </button>
 
-            <button (click)="abrirMenu($index, $event);"
-                class="bg-gray-100 rounded-full w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
-                <svg class="w-5 h-5 cursor-pointer" fill="none" stroke="currentColor" stroke-width="2"
-                    viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="1.5" />
-                    <circle cx="12" cy="6" r="1.5" />
-                    <circle cx="12" cy="18" r="1.5" />
-                </svg>
-            </button>
-            @if (editarIndex==$index) {
-            <div class="mt-1 bg-white border rounded shadow px-2 py-1 text-xs absolute  min-w-[80px]">
-                <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer"
-                    (click)="onEditProduct(publication);">Editar</button>
-                <button class="block text-red-500 hover:underline w-full text-left cursor-pointer" (click)="onDeleteProduct(publication.id!)">Eliminar</button>
+          @if (editarIndex==$index) {
+            <!-- evitar que clicks dentro del menú burbujeen -->
+            <div class="mt-1 bg-white border rounded shadow px-2 py-1 text-xs absolute min-w-[80px]"
+                 (click)="$event.stopPropagation()">
+              <!-- también prevenir propagación en las acciones -->
+              <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer"
+                      (click)="onEditProduct(publication); $event.stopPropagation();">
+                Editar
+              </button>
+              <button class="block text-red-500 hover:underline w-full text-left cursor-pointer"
+                      (click)="onDeleteProduct(publication.id!); $event.stopPropagation();">
+                Eliminar
+              </button>
             </div>
-            }
+          }
 
         </div>
 
-        <!--  {{-- Imagen --}} -->
-        <div [ngStyle]="{'background-image': 'url(' + publication.image!.url + ')'}" class="flex w justify-end items-end  select-none
-            h-[65%] bg-cover bg-center border-[1px] border-borde2 rounded-md">
-            <!--  {{-- Estrellas: cada img es un tipo de estrella --}} -->
-            <div class="m-2 flex">
-                <img src="svg/starFull.svg" class="estrella" alt="">
-                <img src="svg/starHalf.svg" class="estrella" alt="">
-                <img src="svg/starEmpty.svg" class="estrella" alt="">
-                <img src="svg/starEmpty.svg" class="estrella" alt="">
-                <img src="svg/starEmpty.svg" class="estrella" alt="">
-            </div>
+        <!-- Imagen -->
+        <div [ngStyle]="{'background-image': 'url(' + publication.image!.url + ')'}"
+             class="flex w justify-end items-end select-none h-[65%] bg-cover bg-center border-[1px] border-borde2 rounded-md">
+          <div class="m-2 flex">
+            <img src="svg/starFull.svg" class="estrella" alt="">
+            <img src="svg/starHalf.svg" class="estrella" alt="">
+            <img src="svg/starEmpty.svg" class="estrella" alt="">
+            <img src="svg/starEmpty.svg" class="estrella" alt="">
+            <img src="svg/starEmpty.svg" class="estrella" alt="">
+          </div>
         </div>
 
-        <!-- {{-- Contenedor de titulo y precio --}} -->
+        <!-- Título y precio -->
         <div class="div_tituloPrecio">
-            <!-- {{-- Titulo --}} -->
-            <p class="text-[20px] h-full md:text-[26px] overflow-hidden line-clamp-2 text-ellipsis text-nowrap">
-                {{publication.titulo}}</p>
-            <!-- {{-- Precio --}} -->
-            <span class="text-[20px] md:text-[30px]">{{publication.precio | currency:'COP':'symbol':'1.0-0'}}</span>
+          <p class="text-[20px] h-full md:text-[26px] overflow-hidden line-clamp-2 text-ellipsis text-nowrap">
+            {{publication.titulo}}
+          </p>
+          <span class="text-[20px] md:text-[30px]">
+            {{publication.precio | currency:'COP':'symbol':'1.0-0'}}
+          </span>
         </div>
-    </div>
+      </div>
     }
- }
+  }
 </section>
-<div class="fixed top-16 right-1 h-[calc(100vh-4rem)] w-[280px] md:w-[320px] shadow-lg z-41 transition-transform duration-300 transform"
-    [class.translate-x-0]="open" [class.translate-x-full]="!open">
-    @if (publication_selected) {
-    <div class="h-full w-full">
-        <app-product-detail 
-            [publication_detail]="publication_selected" 
-            (close)="closePublicationDetail()"> <!-- Agregar output event -->
-        </app-product-detail>
-    </div>
-    }
-</div>
