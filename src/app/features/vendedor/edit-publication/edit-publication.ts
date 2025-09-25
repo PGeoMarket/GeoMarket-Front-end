@@ -4,38 +4,47 @@ import { EditProduct } from '../dialogs-seller/edit-product/edit-product';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule, NgStyle } from '@angular/common';
+import { ProductDetail } from '../../consumidor/product-detail/product-detail';
+import { UserService } from '../../../core/services/user-service';
 
 @Component({
   selector: 'app-edit-publication',
-  imports: [EditProduct, Closedialog, NgStyle, CommonModule],
+  imports: [EditProduct, Closedialog, NgStyle, CommonModule, ProductDetail],
   templateUrl: './edit-publication.html',
   styleUrl: './edit-publication.css'
 })
 export class EditPublication implements OnInit {
-  repeat = Array.from({ length: 16 });
   publications!: PublicationDTO[];
   selectedPublication!: PublicationDTO;
+  publication_selected!: PublicationDTO | null;
 
   private dialogManager = inject(DialogManager);
 
-  constructor(private publicationService: PublicationService) { }
+  constructor(private publicationService: PublicationService, private userService: UserService) { }
 
   ngOnInit(): void {
-    this.loadPublications();
+    this.loadOwnPublications();
     this.publicationService.reload_publicationChanged$
       .subscribe(() => {
-        this.loadPublications();
+        this.loadOwnPublications();
       })
   }
 
-  loadPublications() {
-    this.publicationService.getAllPublication()
-      .subscribe({
-        next: data => this.publications = data,
-        error: error => console.error('No se pudo obtener las publicaciones: ' + error),
-        complete: () => console.log('Publicaciones obtenidas correctamente')
+  loadOwnPublications() {
+    this.userService.getOwnPublications().subscribe({
+      next: data => this.publications = data,
+      error: error => console.error('No se pudo obtener las publicaciones: ' + error),
+      complete: () => console.log('Publicaciones obtenidas correctamente')
+    });
 
-      })
+/*     this.publicationService.getAllPublication().subscribe({
+      next: data => this.publications = data,
+      error: error => console.error('No se pudo obtener las publicaciones: ' + error),
+      complete: () => console.log('Publicaciones obtenidas correctamente')
+    }); */
+
+    console.log(this.publications);
+
   }
 
   onEditProduct(publication: PublicationDTO) {
@@ -45,7 +54,7 @@ export class EditPublication implements OnInit {
       data: { publication: this.selectedPublication },
       onClose: (res) => {
         console.log('cerrado con', res);
-        this.loadPublications();
+        this.loadOwnPublications();
       }
     });
 
@@ -78,4 +87,35 @@ export class EditPublication implements OnInit {
     this.editarIndex = null;
   }
 
+
+
+  open: boolean = false;
+
+  private closeTimeout: any; // declara esto junto a las propiedades de la clase
+
+  openProductDetail(publication: PublicationDTO) {
+    // si hay un timeout de cierre pendiente, lo cancelamos (evita race conditions)
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = undefined;
+    }
+
+    if (this.open) return this.closePublicationDetail();
+
+    this.publication_selected = publication;
+    this.open = true;
+  }
+
+  closePublicationDetail() {
+    // iniciar la animación (cambia la clase)
+    this.open = false;
+
+    // esperar a que termine la transición CSS (Tailwind duration-300 = 300ms)
+    // y entonces limpiar publication_selected para que el contenido se quite después de animar
+    if (this.closeTimeout) clearTimeout(this.closeTimeout);
+    this.closeTimeout = setTimeout(() => {
+      this.publication_selected = null;
+      this.closeTimeout = undefined;
+    }, 300);
+  }
 }

@@ -41,7 +41,7 @@ export class Comments implements OnInit {
 
   onRatePublication() {
     if (!this.userService.isLoggedIn()) {
-      this.dialogManager.openDialog('login', {
+      this.dialogManager.openDialog('rate-publication', {
         data: { mode: 'create' }
       });
 

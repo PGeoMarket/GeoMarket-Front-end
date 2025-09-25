@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { CrudService } from './crud-service';
 import { PublicationDTO } from './publication-service';
 
@@ -90,7 +90,7 @@ export interface UserDTO {
   providedIn: 'root'
 })
 export class UserService extends CrudService<UserDTO> {
-  private apiUrl = 'http://127.0.0.1:80000/v1';
+  private apiUrl = 'http://192.168.0.21:8000/v1';
   
   protected override endpoint = 'users';
 
@@ -172,4 +172,20 @@ export class UserService extends CrudService<UserDTO> {
     
     return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites`)
   }
+
+getOwnPublications() {
+  const user = this.getCurrentUser();
+  let user_id = user?.id;
+console.log("id del vendedor: "+user_id)
+  console.log(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`);
+
+  return this.http
+    .get<any>(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`)
+    .pipe(
+      map((response: any) => {
+        // Asegura que siempre regrese un array
+        return response?.user?.seller?.publications ?? [];
+      })
+    );
+}
 }

@@ -31,10 +31,10 @@ export class EditProduct implements OnInit {
   }
 
   onSubmit() {
-    if (this.id && this.product && this.imageFile) {
+    if (this.id && this.product) {
       const payload: PublicationDTO = {
         ...this.product,
-        imagen: this.imageFile
+        imagen: this.imageFile!
       };
       this.publicationService.update(this.id, payload).
         subscribe({

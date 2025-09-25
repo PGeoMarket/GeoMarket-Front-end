@@ -4,7 +4,7 @@ import { AdminSlidebar } from '../slidebars/admin-slidebar/admin-slidebar';
 import { BuyerSlidebar } from '../slidebars/buyer-slidebar/buyer-slidebar';
 import { GuestSlidebar } from '../slidebars/guest-slidebar/guest-slidebar';
 import { SellerSlidebar } from '../slidebars/seller-slidebar/seller-slidebar';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { UserService } from '../../services/user-service';
 import { LoginService } from '../../services/login-service';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +23,8 @@ export class Header {
   constructor(
     private userService: UserService,
     private loginService: LoginService,
-    private publicationService: PublicationService
+    private publicationService: PublicationService,
+    private router: Router,
   ) {
     let currentUser$ = this.userService.currentUser$;
   }
@@ -77,7 +78,9 @@ export class Header {
   }
 
   searchPublicationByName(searchPublication: string) {
+    this.router.navigate(['/home']);
     this.publicationService.sendFilter('&filter[titulo]=' + searchPublication);
+
   }
 
 }
