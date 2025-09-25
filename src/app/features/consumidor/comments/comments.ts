@@ -41,14 +41,24 @@ export class Comments implements OnInit {
 
   onRatePublication() {
     if (!this.userService.isLoggedIn()) {
-      this.dialogManager.openDialog('rate-publication', {
+      this.dialogManager.openDialog('login', {
         data: { mode: 'create' }
       });
 
       return;
     }
 
-    //respectiva flotante/pantalla
-    
+    //
+    const user = this.userService.getCurrentUser();
+    this.dialogManager.openDialog('rate-publication', {
+      data: { publication_id: this.publication_id,  user_id: user?.id  },
+      onClose: (res) => {
+        console.log('cerrado con', res);
+        this.loadComments();
+      }
+
+    });
+
+
   }
 }

@@ -72,7 +72,7 @@ export class EditPublication implements OnInit {
       error: (err) => {
         console.error('Error al eliminar', err);
         // opcional: mostrar mensaje de error
-      }
+      
     })
   }
 
