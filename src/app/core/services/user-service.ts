@@ -193,4 +193,8 @@ console.log("id del vendedor: "+user_id)
     return user?.id ?? 1;
   }
 
+  getSellerId(): number {
+    const user = this.getCurrentUser();
+    return user?.seller?.id ?? 1;
+  }
 }

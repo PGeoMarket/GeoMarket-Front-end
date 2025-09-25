@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { CrudService } from './crud-service';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { PublicationService } from './publication-service';
 
 export interface CommentDTO {
@@ -51,8 +51,18 @@ export class CommentService extends CrudService<CommentDTO> {
       this.publicationIdSubject.next(publication_id);
     }
 
-    getSellerByComments(seller_id: number): Observable<any> { 
-  return this.http.get<any>(`${this.API_URL}/sellers/${seller_id}?include=publications.comments.user`);
+    getSellerByComments(seller_id: number): Observable<CommentDTO[]> {
+  return this.http
+    .get<any>(`${this.API_URL}/sellers/${seller_id}?include=publications.comments.user`)
+    .pipe(
+      map((response: any) => {
+        // extrae los comentarios de todas las publicaciones
+        const publications = response?.seller?.publications ?? [];
+        return publications.flatMap((p: any) => p.comments ?? []);
+      })
+    );
 }
+
+
 
 }
