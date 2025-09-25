@@ -26,6 +26,7 @@ export class Faq {
     this.faq.user_id=UserService.getUserId()
   }
 
+
   onSubmit(mensaje: string) {
     this.faq.mensaje = mensaje;
     this.showSuccessMessage = false;

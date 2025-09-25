@@ -90,7 +90,6 @@ export interface UserDTO {
   providedIn: 'root'
 })
 export class UserService extends CrudService<UserDTO> {
-  private apiUrl = 'http://127.0.0.1:80000/v1';
   
   protected override endpoint = 'users';
 
@@ -159,7 +158,7 @@ export class UserService extends CrudService<UserDTO> {
 
   // Obtener información actualizada del usuario desde el servidor
   getMe(): Observable<{ user: UserDTO }> {
-    return this.http.get<{ user: UserDTO }>(`${this.apiUrl}/me`)
+    return this.http.get<{ user: UserDTO }>(`${this.API_URL}/me`)
       .pipe(
         tap(response => this.saveUser(response.user))
       );
@@ -175,12 +174,12 @@ export class UserService extends CrudService<UserDTO> {
 
 getOwnPublications() {
   const user = this.getCurrentUser();
-  let sellerId = user!.seller!.id;
-console.log("id del vendedor: "+sellerId)
-  console.log(`${this.API_URL}/${this.endpoint}/${sellerId}?included=seller.publications.image`);
+  let user_id = user?.id;
+console.log("id del vendedor: "+user_id)
+  console.log(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`);
 
   return this.http
-    .get<any>(`${this.API_URL}/${this.endpoint}/${sellerId}?included=seller.publications.image`)
+    .get<any>(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`)
     .pipe(
       map((response: any) => {
         // Asegura que siempre regrese un array
@@ -193,4 +192,5 @@ console.log("id del vendedor: "+sellerId)
     const user = this.getCurrentUser();
     return user?.id ?? 1;
   }
+
 }

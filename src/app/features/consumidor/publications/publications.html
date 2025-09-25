@@ -11,11 +11,12 @@
             h-[65%] bg-cover bg-center border-[1px] border-borde2 rounded-md">
             <!--  {{-- Estrellas: cada img es un tipo de estrella --}} -->
             <div class="m-2 flex">
-                <img src="svg/starFull.svg" class="estrella" alt="">
-                <img src="svg/starHalf.svg" class="estrella" alt="">
-                <img src="svg/starEmpty.svg" class="estrella" alt="">
-                <img src="svg/starEmpty.svg" class="estrella" alt="">
-                <img src="svg/starEmpty.svg" class="estrella" alt="">
+            @for (star of [1,2,3,4,5]; track $index) {
+            <span class="text-3xl" [class.text-yellow-400]="star <= publication.puntuacion_promedio!"
+              [class.text-blue-900]="star > publication.puntuacion_promedio!">
+              &#9733;
+            </span>
+            }
             </div>
         </div>
 

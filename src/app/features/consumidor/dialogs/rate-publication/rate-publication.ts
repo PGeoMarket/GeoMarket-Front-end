@@ -13,6 +13,7 @@ import { DialogManager } from '../../../../core/dialogs/dialog-manager';
 export class RatePublication implements OnInit {
   submit_comment!: CommentDTO;
   @Input() publication_id!: number;
+  @Input() user_id!: number;
   rating: number | null = null;
 
   constructor(private commentService: CommentService) { }
@@ -35,7 +36,7 @@ export class RatePublication implements OnInit {
     this.submit_comment = {
       ...this.submit_comment,
       publication_id: this.publication_id,
-      user_id: 3,
+      user_id: this.user_id,
       texto: comment_user,
       valor_estrella: this.rating!, //falta pantalla
     }

@@ -31,17 +31,17 @@ export class EditPublication implements OnInit {
   }
 
   loadOwnPublications() {
- /*    this.userService.getOwnPublications().subscribe({
-      next: data => this.publications = data,
-      error: error => console.error('No se pudo obtener las publicaciones: ' + error),
-      complete: () => console.log('Publicaciones obtenidas correctamente')
-    }); */
-
-    this.publicationService.getAllPublication().subscribe({
+    this.userService.getOwnPublications().subscribe({
       next: data => this.publications = data,
       error: error => console.error('No se pudo obtener las publicaciones: ' + error),
       complete: () => console.log('Publicaciones obtenidas correctamente')
     });
+
+/*     this.publicationService.getAllPublication().subscribe({
+      next: data => this.publications = data,
+      error: error => console.error('No se pudo obtener las publicaciones: ' + error),
+      complete: () => console.log('Publicaciones obtenidas correctamente')
+    }); */
 
     console.log(this.publications);
 
@@ -58,9 +58,12 @@ export class EditPublication implements OnInit {
       }
     });
 
+
   }
 
   onDeleteProduct(id: number) {
+    this.closePublicationDetail();
+
     this.publicationService.delete(id).subscribe({
       next: data => {
         console.log(data);
