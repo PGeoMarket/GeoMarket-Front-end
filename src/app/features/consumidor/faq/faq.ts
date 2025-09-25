@@ -3,6 +3,7 @@ import { Closedialog } from "../../../core/dialogs/closedialog";
 import { FaqDTO, FaqService } from '../../../core/services/faq-service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../../core/services/user-service';
 
 @Component({
   selector: 'app-faq',
@@ -20,7 +21,10 @@ export class Faq {
   showSuccessMessage: boolean = false;
   showErrorMessage: boolean = false;
 
-  constructor(private faqService: FaqService) { }
+ constructor(private faqService: FaqService, private UserService:UserService) { 
+    this.faq.user_id=UserService.getUserId()
+  }
+
 
   onSubmit(mensaje: string) {
     this.faq.mensaje = mensaje;
