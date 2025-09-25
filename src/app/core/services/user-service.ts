@@ -188,4 +188,9 @@ console.log("id del vendedor: "+sellerId)
       })
     );
 }
+
+ getUserId(): number {
+    const user = this.getCurrentUser();
+    return user?.id ?? 1;
+  }
 }
