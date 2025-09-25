@@ -58,9 +58,12 @@ export class EditPublication implements OnInit {
       }
     });
 
+
   }
 
   onDeleteProduct(id: number) {
+    this.closePublicationDetail();
+
     this.publicationService.delete(id).subscribe({
       next: data => {
         console.log(data);
