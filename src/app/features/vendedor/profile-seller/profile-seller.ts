@@ -4,11 +4,12 @@ import { EditPublication } from '../edit-publication/edit-publication';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { Loader } from '@googlemaps/js-api-loader';
 import { UserDTO, UserService } from '../../../core/services/user-service';
+import { CommentsProfile } from "../comments-profile/comments-profile";
 
 
 @Component({
   selector: 'app-profile-seller',
-  imports: [CommonModule, EditPublication],
+  imports: [CommonModule, EditPublication, CommentsProfile],
   templateUrl: './profile-seller.html',
   styleUrl: './profile-seller.css'
 })
@@ -56,4 +57,7 @@ export class ProfileSeller implements OnInit {
     this.user = this.userService.getCurrentUser();
     console.log(this.user);
   }
+
+   
+
 }

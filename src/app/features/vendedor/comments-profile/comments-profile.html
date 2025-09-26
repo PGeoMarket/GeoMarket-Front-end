@@ -1,0 +1,40 @@
+<div class="flex flex-col gap-2">
+  <!-- Si no hay comentarios -->
+  @if (comments.length === 0) {
+    <div class="text-[var(--color-borde2)] text-xs">
+      No hay comentarios en esta publicación todavía.
+    </div>
+  }
+
+  <!-- Lista de comentarios -->
+  @for (comment of comments; track comment.id) {
+    <div
+      class="flex items-center border rounded-lg bg-[var(--color-blancoSucio)] shadow px-2 py-1 relative border-[var(--color-borde1)]"
+    >
+      <!-- Avatar -->
+      <img
+        [src]="comment.user?.image?.url || '/svg/profile.svg'"
+        class="w-8 h-8 bg-[var(--color-azulPotente)] rounded-full mr-2 object-cover"
+        alt="avatar"
+      />
+
+      <!-- Datos -->
+      <div class="flex-1">
+        <div class="font-medium text-xs text-[var(--color-azulPotente)]">
+          {{ comment.user?.primer_nombre }} {{ comment.user?.primer_apellido }}
+        </div>
+        <div class="text-xs text-[var(--color-textosNoNegro)]">
+          {{ comment.texto }}
+        </div>
+        <div class="text-[10px] text-[var(--color-borde2)]">
+          {{ comment.created_at | date: 'shortDate' }}
+        </div>
+      </div>
+
+      <!-- Estrellas -->
+      <div class="flex items-center ml-2 text-[var(--color-azulSecundario)] text-xs">
+        ⭐ {{ comment.valor_estrella || 0 }}
+      </div>
+    </div>
+  }
+</div>
