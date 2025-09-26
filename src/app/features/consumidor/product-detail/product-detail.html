@@ -65,8 +65,8 @@
 
     <!-- Usuario vendedor -->
     <div class="bg-gray-300 rounded-xl p-4 flex items-center space-x-4">
-        <img class="w-10 h-10 rounded-full" src="svg/userProfiel.svg" alt="foto">
-        <p class="font-medium">{{publication_detail.seller_id}} ahi veo q colocar</p>
+        <img class="w-10 h-10 rounded-full" [src]="seller_product_detail.image.url" alt="foto">
+        <p class="font-medium">{{seller_product_detail.nombre_tienda}}</p>
     </div>
 
     <!-- Botones y mapa -->
