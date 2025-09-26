@@ -136,7 +136,6 @@ export class UserService extends CrudService<UserDTO> {
     return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites`)
   }
 
-<<<<<<< HEAD
   changeFavorites(publication_id: number) {
     const user = this.getCurrentUser();
     let userId = user?.id;
@@ -149,9 +148,6 @@ export class UserService extends CrudService<UserDTO> {
     return this.http.post<any>(`${this.API_URL}/${this.endpoint}/${userId}/favorites/toggle`, formData);
   }
 
-=======
-  //se debe pasar a seller o publications
->>>>>>> f22a3f78a5f3c969e73c5ee944ab2b28205279cd
   getOwnPublications() {
     const user = this.getCurrentUser();
     let user_id = user?.id;
