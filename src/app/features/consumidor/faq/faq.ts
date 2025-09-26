@@ -46,7 +46,8 @@ dialogManager = inject(DialogManager);
         // Ocultar el mensaje después de 3 segundos
         setTimeout(() => {
           this.showSuccessMessage = false;
-        }, 3000);
+this.OnSubmitFaq();
+        }, 1000);
       },
       error: (err) => {
         console.error('Error al enviar ❌', err);
@@ -59,7 +60,6 @@ dialogManager = inject(DialogManager);
       }
     });
   }
-  
   OnSubmitFaq() {
     this.dialogManager.closeDialog()
    this.dialogManager.
