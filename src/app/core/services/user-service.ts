@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { CrudService } from './crud-service';
-import { PublicationDTO } from './publication-service';
+import { ImageDTO, PublicationDTO } from './publication-service';
+import { CommentDTO } from './comment-service';
 
 
 export interface UserDTO {
@@ -11,13 +12,13 @@ export interface UserDTO {
   segundo_nombre?: string | null;
   primer_apellido: string;
   segundo_apellido?: string | null;
-  email: string;
-  role_id: number;
-  activo: boolean;
-  created_at: string;
-  updated_at: string;
+  email?: string;
+  role_id?: number;
+  activo?: boolean;
+  created_at?: string;
+  updated_at?: string;
 
-  role: {
+  role?: {
     id: number;
     nombre: string;
     created_at: string;
@@ -45,15 +46,7 @@ export interface UserDTO {
       coordinateable_id: number;
     };
 
-    image: {
-      id: number;
-      created_at: string;
-      updated_at: string;
-      url: string;
-      public_id?: string | null;
-      imageable_type: string;
-      imageable_id: number;
-    } | null;
+    image: ImageDTO;
 
     phones: {
       id: number;
@@ -64,15 +57,7 @@ export interface UserDTO {
     }[];
   } | null;
 
-  image?: {
-    id: number;
-    created_at: string;
-    updated_at: string;
-    url: string;
-    public_id?: string | null;
-    imageable_type: string;
-    imageable_id: number;
-  } | null;
+  image?: ImageDTO | null;
 
   coordinate?: {
     id: number;
@@ -90,7 +75,7 @@ export interface UserDTO {
   providedIn: 'root'
 })
 export class UserService extends CrudService<UserDTO> {
-  
+
   protected override endpoint = 'users';
 
   // Estado reactivo del usuario actual
@@ -164,33 +149,38 @@ export class UserService extends CrudService<UserDTO> {
       );
   }
 
-  getFavorites(): Observable<PublicationDTO[]>{
+  getFavorites(): Observable<PublicationDTO[]> {
     const user = this.getCurrentUser();
     let userId = user?.id;
     console.log(`${this.API_URL}/${this.endpoint}/${userId}/favorites`);
-    
+
     return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites`)
   }
 
-getOwnPublications() {
-  const user = this.getCurrentUser();
-  let user_id = user?.id;
-console.log("id del vendedor: "+user_id)
-  console.log(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`);
+  getOwnPublications() {
+    const user = this.getCurrentUser();
+    let user_id = user?.id;
+    console.log("id del vendedor: " + user_id)
+    console.log(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`);
 
-  return this.http
-    .get<any>(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`)
-    .pipe(
-      map((response: any) => {
-        // Asegura que siempre regrese un array
-        return response?.user?.seller?.publications ?? [];
-      })
-    );
-}
+    return this.http
+      .get<any>(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`)
+      .pipe(
+        map((response: any) => {
+          // Asegura que siempre regrese un array
+          return response?.user?.seller?.publications ?? [];
+        })
+      );
+  }
 
- getUserId(): number {
+  getUserId(): number {
     const user = this.getCurrentUser();
     return user?.id ?? 1;
   }
+
+getUserImage(user_id: number) {
+  return this.http.get<UserDTO>(`${this.API_URL}/${this.endpoint}/${user_id}?included=image`);
+}
+
 
 }
