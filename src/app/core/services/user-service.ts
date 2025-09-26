@@ -182,5 +182,9 @@ getUserImage(user_id: number) {
   return this.http.get<UserDTO>(`${this.API_URL}/${this.endpoint}/${user_id}?included=image`);
 }
 
+getSellerId(): number | null {
+  const user = this.getCurrentUser();
+  return user?.seller?.id ?? null;
+}
 
 }

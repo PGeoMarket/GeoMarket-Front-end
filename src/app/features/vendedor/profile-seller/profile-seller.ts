@@ -58,8 +58,6 @@ export class ProfileSeller implements OnInit {
     console.log(this.user);
   }
 
-   get sellerId(): number {
-    return this.userService.getSellerId();
-  }
+   
 
 }
