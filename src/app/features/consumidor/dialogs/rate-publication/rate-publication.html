@@ -1,5 +1,5 @@
 <div class=" p-4 rounded-md border border-gray-400 bg-white font-sans">
-  <form (ngSubmit)="onSubmit();" #commentForm="ngForm">
+  <form (ngSubmit)="onSubmit(comment_user.value);" #commentForm="ngForm">
     <button class="rounded-lg w-10 h-10 border-0 flex items-center justify-center" appClosedialog>
       <img src="svg/back-icon.svg" alt="atras" class="w-15 h-15">
     </button>
@@ -19,7 +19,7 @@
         </div>
 
         <!-- hidden model -->
-        <input type="hidden" name="valor_estrella" [(ngModel)]="submit_comment.valor_estrella" #valor_estrella="ngModel" required>
+        <input type="hidden" name="valor_estrella" [(ngModel)]="rating" #valor_estrella="ngModel" required>
 
         <!-- contenedor reservado (altura fija) -->
         <div class="h-6 w-full"></div>
@@ -43,7 +43,7 @@
       <textarea placeholder="Deja un comentario aquí.." name="comment_user"
         class="w-full h-[120px] border border-gray-400 rounded-lg bg-white resize-none p-3 focus:outline-none focus:border-[#144467]"
         [class.border-red-500]="comment_user.invalid && (comment_user.touched || commentForm.submitted)" required
-        [(ngModel)]="submit_comment.texto"  #comment_user="ngModel"></textarea>
+        #comment_user="ngModel" ngModel></textarea>
 
       <!-- espacio reservado (ocupado siempre por el contenedor, pero vacío) -->
       <div class="h-6"></div>
