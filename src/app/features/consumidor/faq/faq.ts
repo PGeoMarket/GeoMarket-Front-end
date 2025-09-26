@@ -17,14 +17,6 @@ import { DialogManager } from '../../../core/dialogs/dialog-manager';
 export class Faq {
 dialogManager = inject(DialogManager);
 
-  OnSubmitFaq() {
-    this.dialogManager.closeDialog()
-   this.dialogManager.
-    openDialog('submit-faq', {
-      data: { mode: 'create' }
-    }); 
-  }
-
   faq: FaqDTO = {
     mensaje: '',
     user_id:  0// ⚡ Aquí deberías asignar el ID del usuario autenticado
@@ -41,9 +33,6 @@ dialogManager = inject(DialogManager);
 
   onSubmit(mensaje: string) {
     
-    
-    
-
     this.faq.mensaje = mensaje;
     this.showSuccessMessage = false;
     this.showErrorMessage = false;
@@ -57,7 +46,8 @@ dialogManager = inject(DialogManager);
         // Ocultar el mensaje después de 3 segundos
         setTimeout(() => {
           this.showSuccessMessage = false;
-        }, 3000);
+this.OnSubmitFaq();
+        }, 1000);
       },
       error: (err) => {
         console.error('Error al enviar ❌', err);
@@ -69,5 +59,12 @@ dialogManager = inject(DialogManager);
         }, 3000);
       }
     });
+  }
+  OnSubmitFaq() {
+    this.dialogManager.closeDialog()
+   this.dialogManager.
+    openDialog('submit-faq', {
+      data: { mode: 'create' }
+    }); 
   }
 }
