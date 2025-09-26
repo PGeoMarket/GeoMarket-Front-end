@@ -1,33 +1,112 @@
 <div
-    class="bg-white p-6 sm:p-8 rounded-lg shadow-md w-170 max-w-sm relative border border-gray-200 overflow-y-auto max-h-[90vh]">
-    <button class=" p-0.1 rounded cursor-pointer" appClosedialog>
-        <img src="/svg/back-icon.svg" alt="">
-    </button>
-    <!-- perfil -->
-    <div class="flex justify-center mb-6">
-        <div class="relative w-32 h-32"> <img [src]="user?.image?.url || '/svg/profile.svg'" alt="Foto de perfil"
-                class="w-32 h-32 rounded-full object-cover bg-blue-900" />
-            <!--editar -->
-            <div class="absolute bottom-2 right-2" for="upload"> <img src="/svg/edit.svg" alt="Editar"
-                    class="w-8 h-8 rounded-full bg-white p-1 shadow-md cursor-pointer" /> </div>
-        </div>
-    </div>
-    <!-- Formulario -->
-    <form class="space-y-5">
-        <div> <label class="block text-sm font-medium text-textosNoNegro pb-0.5" >Nombre:</label> <input value="{{user?.primer_nombre}}" type="text"
-                class="inputs_registro w-full" > </div>
-        <div> <label class="block text-sm font-medium text-gray-700 pb-0.5">Segundo Nombre:</label> <input value="{{user?.segundo_nombre}}" type="text"
-                class="inputs_registro w-full"> </div>
-        <div> <label class="block text-sm font-medium text-gray-700 pb-0.5">Apellido:</label> <input value="{{user?.primer_apellido}}" type="text"
-                class="inputs_registro w-full"> </div>
-        <div> <label class="block text-sm font-medium text-gray-700 pb-0.5">Segundo Apellido:</label> <input value="{{user?.segundo_apellido}}" type="text"
-                class="inputs_registro w-full"> </div>
-        <div> <label class="block text-sm font-medium text-gray-700 pb-0.5">Correo:</label> <input value="{{user?.email}}" type="text"
-                class="inputs_registro w-full"> </div>
+  class="bg-white p-6 sm:p-8 rounded-lg shadow-md w-170 max-w-sm relative border border-gray-200 overflow-y-auto max-h-[90vh]">
 
-        <div class="flex justify-center items-center space-x-4 pt-4"> <button class="btn_negative"
-                appClosedialog>Cancelar</button>
-            <button class="btn_positive">Guardar</button>
-        </div>
-    </form>
+  <button class="p-0.1 rounded cursor-pointer" appClosedialog>
+    <img src="/svg/back-icon.svg" alt="Atrás">
+  </button>
+
+  <!-- Foto de perfil estática -->
+  <div class="flex justify-center mb-6">
+    <img
+      [src]="user?.image?.url || '/svg/profile.svg'"
+      alt="Foto de perfil"
+      class="w-32 h-32 rounded-full object-cover bg-blue-900"
+    />
+  </div>
+
+  <form
+    class="space-y-5"
+    (ngSubmit)="saveUser()"
+    #editForm="ngForm">
+
+    <div>
+      <label for="primer_nombre" class="block text-sm font-medium text-textosNoNegro pb-0.5">
+        Nombre:
+      </label>
+      <input
+        id="primer_nombre"
+        name="primer_nombre"
+        [(ngModel)]="user!.primer_nombre"
+        type="text"
+        class="inputs_registro w-full"
+      />
+    </div>
+
+    <div>
+      <label for="segundo_nombre" class="block text-sm font-medium text-gray-700 pb-0.5">
+        Segundo Nombre:
+      </label>
+      <input
+        id="segundo_nombre"
+        name="segundo_nombre"
+        [(ngModel)]="user!.segundo_nombre"
+        type="text"
+        class="inputs_registro w-full"
+      />
+    </div>
+
+    <div>
+      <label for="primer_apellido" class="block text-sm font-medium text-gray-700 pb-0.5">
+        Apellido:
+      </label>
+      <input
+        id="primer_apellido"
+        name="primer_apellido"
+        [(ngModel)]="user!.primer_apellido"
+        type="text"
+        class="inputs_registro w-full"
+      />
+    </div>
+
+    <div>
+      <label for="segundo_apellido" class="block text-sm font-medium text-gray-700 pb-0.5">
+        Segundo Apellido:
+      </label>
+      <input
+        id="segundo_apellido"
+        name="segundo_apellido"
+        [(ngModel)]="user!.segundo_apellido"
+        type="text"
+        class="inputs_registro w-full"
+      />
+    </div>
+
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700 pb-0.5">
+        Correo:
+      </label>
+      <input
+        id="email"
+        name="email"
+        [(ngModel)]="user!.email"
+        type="email"
+        class="inputs_registro w-full"
+      />
+    </div>
+
+    <div class="flex justify-center items-center space-x-4 pt-4">
+      <button
+        type="button"
+        class="btn_negative"
+        appClosedialog>
+        Cancelar
+      </button>
+      <button
+        type="submit"
+        class="btn_positive">
+        Guardar
+      </button>
+    </div>
+  </form>
+
+  <p
+    *ngIf="showSuccessMessage"
+    class="mt-4 text-green-600 text-center">
+    Perfil actualizado correctamente.
+  </p>
+  <p
+    *ngIf="showErrorMessage"
+    class="mt-4 text-red-600 text-center">
+    Error al actualizar el perfil.
+  </p>
 </div>

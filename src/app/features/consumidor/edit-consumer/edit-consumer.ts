@@ -1,49 +1,64 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Closedialog } from '../../../core/dialogs/closedialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserDTO, UserService } from '../../../core/services/user-service';
 import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { CrudService } from '../../../core/services/crud-service';
 
 @Component({
+  standalone: true,
   selector: 'app-edit-consumer',
-  imports: [Closedialog, CommonModule, FormsModule],
   templateUrl: './edit-consumer.html',
-  styleUrl: './edit-consumer.css'
+  styleUrls: ['./edit-consumer.css'],
+  imports: [Closedialog, CommonModule, FormsModule]
 })
-export class EditConsumer {
-  emailTaken!: boolean;
-  showSuccessMessage: boolean = false;
-  showErrorMessage: boolean = false;
+export class EditConsumer extends CrudService<UserDTO> implements OnInit {
+  protected override endpoint = 'users';
+  showSuccessMessage = false;
+  showErrorMessage = false;
   user: UserDTO | null = null;
 
-  constructor(private UserService: UserService) { }
+  constructor(
+    private userService: UserService,
+    http: HttpClient
+  ) {
+    super(http);
+  }
+
   ngOnInit(): void {
-    this.getUserData();
-  }
-  getUserData() {
-    this.user = this.UserService.getCurrentUser();
-    console.log(this.user);
-
+    this.user = this.userService.getCurrentUser();
   }
 
-  override update(id: number, data: Partial<UserDTO>): Observable<UserDTO> {
+  saveUser(): void {
+    if (!this.user) return;
+    this.update(this.user.id, this.user).subscribe({
+      next: resp => {
+        this.user = resp;
+        this.showSuccessMessage = true;
+      },
+      error: err => {
+        console.error(err);
+        this.showErrorMessage = true;
+      }
+    });
+  }
+
+  override update(
+    id: number,
+    data: Partial<UserDTO>
+  ): Observable<UserDTO> {
     const formData = new FormData();
-
-    // Campos obligatorios
-    formData.append('Nombre', data.primer_nombre ?? '');
-    formData.append('Segundo Nombre', data.segundo_nombre != null ? data.segundo_nombre.toString() : '');
-    formData.append('Apellido', data.primer_apellido ?? '');
-    formData.append('Segundo Apellido', data.segundo_apellido != null ? data.segundo_apellido.toString() : '');
-    formData.append('Correo', data.email ?? '');
-
-    // Campos opcionales
-    if (data.image) formData.append('imagen', data.image);
-
-    // <-- Método override necesario para multipart + "PUT"
+    formData.append('primer_nombre', data.primer_nombre ?? '');
+    formData.append('segundo_nombre', data.segundo_nombre ?? '');
+    formData.append('primer_apellido', data.primer_apellido ?? '');
+    formData.append('segundo_apellido', data.segundo_apellido ?? '');
+    formData.append('email', data.email ?? '');
     formData.append('_method', 'PUT');
-
-    // Enviar como POST (Laravel interpretará _method=PUT)
-    return this.http.post<UserDTO>(`${this.API_URL}/${this.endpoint}/${id}`, formData);
+    return this.http.post<UserDTO>(
+      `${this.API_URL}/${this.endpoint}/${id}`,
+      formData
+    );
   }
 }
