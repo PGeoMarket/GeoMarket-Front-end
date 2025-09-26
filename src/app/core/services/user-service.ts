@@ -130,6 +130,7 @@ export class UserService extends CrudService<UserDTO> {
     return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites`)
   }
 
+  //se debe pasar a seller o publications
   getOwnPublications() {
     const user = this.getCurrentUser();
     let user_id = user?.id;
