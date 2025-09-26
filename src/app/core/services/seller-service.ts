@@ -18,7 +18,7 @@ export interface SellerDTO {
 
     coordinate: CoordinateDTO | null;
 
-    image: ImageDTO;
+    image?: ImageDTO;
 
     phones: {
       id: number;
