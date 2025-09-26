@@ -5,20 +5,41 @@
     <img src="/svg/back-icon.svg" alt="Atrás">
   </button>
 
-  <!-- Foto de perfil estática -->
+  <!-- Foto de perfil -->
   <div class="flex justify-center mb-6">
-    <img
-      [src]="user?.image?.url || '/svg/profile.svg'"
-      alt="Foto de perfil"
-      class="w-32 h-32 rounded-full object-cover bg-blue-900"
-    />
+    <div class="relative w-32 h-32">
+      <img
+        [src]="user?.image?.url || '/svg/profile.svg'"
+        alt="Foto de perfil"
+        class="w-32 h-32 rounded-full object-cover bg-blue-900"
+      />
+
+      <!-- File input oculto + label para abrir diálogo -->
+      <input
+        type="file"
+        id="upload"
+        hidden
+        
+      />
+      <label
+        for="upload"
+        class="absolute bottom-2 right-2 cursor-pointer"
+      >
+        <img
+          src="/svg/edit.svg"
+          alt="Editar foto"
+          class="w-8 h-8 rounded-full bg-white p-1 shadow-md"
+        />
+      </label>
+    </div>
   </div>
 
+  <!-- Formulario -->
   <form
     class="space-y-5"
     (ngSubmit)="saveUser()"
-    #editForm="ngForm">
-
+    #editForm="ngForm"
+  >
     <div>
       <label for="primer_nombre" class="block text-sm font-medium text-textosNoNegro pb-0.5">
         Nombre:
@@ -88,25 +109,16 @@
       <button
         type="button"
         class="btn_negative"
-        appClosedialog>
+        appClosedialog
+      >
         Cancelar
       </button>
       <button
         type="submit"
-        class="btn_positive">
+        class="btn_positive"
+      >
         Guardar
       </button>
     </div>
   </form>
-
-  <p
-    *ngIf="showSuccessMessage"
-    class="mt-4 text-green-600 text-center">
-    Perfil actualizado correctamente.
-  </p>
-  <p
-    *ngIf="showErrorMessage"
-    class="mt-4 text-red-600 text-center">
-    Error al actualizar el perfil.
-  </p>
 </div>
