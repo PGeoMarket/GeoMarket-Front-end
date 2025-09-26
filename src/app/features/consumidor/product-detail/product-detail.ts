@@ -23,6 +23,9 @@ export class ProductDetail implements OnInit{
   constructor (private userService: UserService, private sellerService: SellerService) {}
 
   ngOnInit(): void {    
+
+    this.publicationsFavorite()
+
     this.sellerService.getByIdSeller(this.publication_detail?.seller_id!)
     .subscribe({
       next: data => this.seller_product_detail = data,
@@ -59,10 +62,29 @@ export class ProductDetail implements OnInit{
       return;
     }
 
-    //respectiva flotante/pantalla
-    //aqui api xd
-    this.favorito = !this.favorito;
+    this.userService.changeFavorites(this.publication_detail?.id!)
+    .subscribe({
+      next: data=> console.log(data)
+    });
+    this.favorito = !this.favorito
+    
+    this.userService.reloadFavoritePublications(true);
+    
+  }
 
+  publicationsFavorite () {
+    this.userService.getFavorites()
+    .subscribe({
+      next: data => {
+        data.forEach(p => {
+          if (this.publication_detail!.id == p.id ) {
+            this.favorito = true;
+            return;
+          }
+        });
+        
+      }
+    })
   }
 
   onChat() {
