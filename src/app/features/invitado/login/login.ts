@@ -42,7 +42,7 @@ export class Login {
         console.log('✅ Login exitoso', response);
         console.log('Token:', this.loginService.getToken());
         console.log('Usuario:', response.user);
-        console.log('Rol:', response.user.role.nombre);
+        console.log('Rol:', response.user.role!.nombre);
         
         this.showSuccessMessage = true;
         

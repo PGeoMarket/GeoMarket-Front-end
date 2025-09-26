@@ -32,7 +32,8 @@ export class RatePublication implements OnInit {
 
 
   onSubmit(comment_user: string) {
-    if (!comment_user) return;
+    if (!comment_user || !this.rating) return;
+    
     this.submit_comment = {
       ...this.submit_comment,
       publication_id: this.publication_id,
