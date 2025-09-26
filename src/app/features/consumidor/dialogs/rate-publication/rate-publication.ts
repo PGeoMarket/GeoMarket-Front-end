@@ -31,14 +31,13 @@ export class RatePublication implements OnInit {
   }
 
 
-  onSubmit(comment_user: string) {
-    if (!comment_user) return;
+  onSubmit() {
+    if (!!this.submit_comment.texto) return;
+
     this.submit_comment = {
       ...this.submit_comment,
       publication_id: this.publication_id,
       user_id: this.user_id,
-      texto: comment_user,
-      valor_estrella: this.rating!, //falta pantalla
     }
     this.commentService.create(this.submit_comment)
       .subscribe({

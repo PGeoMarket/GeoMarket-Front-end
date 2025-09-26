@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, TemplateRef, viewChild, ViewContainerRef } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Closedialog } from '../../../core/dialogs/closedialog';
 import { EditProduct } from '../dialogs-seller/edit-product/edit-product';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
