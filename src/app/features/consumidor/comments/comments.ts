@@ -3,7 +3,7 @@ import { CommentDTO, CommentService } from '../../../core/services/comment-servi
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
-import { UserService } from '../../../core/services/user-service';
+import { UserDTO, UserService } from '../../../core/services/user-service';
 
 @Component({
   selector: 'app-comments',
@@ -13,6 +13,7 @@ import { UserService } from '../../../core/services/user-service';
 })
 export class Comments implements OnInit {
   comments!: CommentDTO[];
+  user!: UserDTO[];
   @Input() publication_id!: number;
   @Input() seller_id!: number;
 
@@ -32,11 +33,27 @@ export class Comments implements OnInit {
 
     this.commentService.getCommentByPublication(this.publication_id)
       .subscribe({
-        next: data => this.comments = data,
+        next: data => {
+          this.comments = data                    
+        },
         error: error => console.error('Error al cargar  comentarios', error),
         complete: () => { console.log('Cantidad de comentarios cargados correctamente: ' + this.comments.length) },
 
       })
+      console.log(this.comments)
+      
+/* 
+      this.comments.forEach((comment, index)=> {
+        this.userService.getById(comment.user_id)
+        .subscribe({
+          next: data => {
+            
+            
+          }
+        })
+        
+      }) */
+      
   }
 
   onRatePublication() {
@@ -51,7 +68,7 @@ export class Comments implements OnInit {
     //
     const user = this.userService.getCurrentUser();
     this.dialogManager.openDialog('rate-publication', {
-      data: { publication_id: this.publication_id,  user_id: user?.id  },
+      data: { publication_id: this.publication_id, user_id: user?.id },
       onClose: (res) => {
         console.log('cerrado con', res);
         this.loadComments();
@@ -59,6 +76,6 @@ export class Comments implements OnInit {
 
     });
 
-
   }
+
 }

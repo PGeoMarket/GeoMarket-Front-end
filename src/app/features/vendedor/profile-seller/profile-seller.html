@@ -72,31 +72,18 @@
                 Comentarios
             </button>
         </div>
-        <!-- Catálogo grid con scroll -->
-        @if (tab=="catalogo" || !tab) {
-        <div class="overflow-auto">
-            <app-edit-publication></app-edit-publication><!-- Falta la pantalla productos -->
-        </div>
-        }
-        <!-- Comentarios -->
-        @if (tab=="comentarios") {
-        <div class="flex-1 overflow-y-auto pr-2">
-            <div class="flex flex-col gap-3">
-                @for (i of repeat; track $index){
-                <div class="flex items-center border rounded-lg bg-gray-100 shadow px-3 py-2 relative">
-                    <img src="/svg/profile.svg" class="w-10 h-10 bg-[#06406A] rounded-full mr-3 cursor-pointer"
-                        alt="avatar">
-                    <div class="flex-1">
-                        <div class="font-semibold text-sm text-[#06406A]">@usuario_17</div>
-                        <div class="text-xs text-gray-600">¡Hace 1 mes! Todo fácil. ¡Súper! & Goodds</div>
-                    </div>
-                    <div class="flex items-center ml-2">
-                        <img src="/svg/stars.svg" alt="" class="h-6">
-                    </div>
-                </div>
-                }
-            </div>
-        </div>
-        }
+       <!-- Catálogo grid con scroll -->
+    @if (tab=="catalogo" || !tab) {
+    <div class="overflow-auto">
+      <app-edit-publication></app-edit-publication>
+    </div>
+    }
+
+    <!-- Comentarios dinámicos -->
+    @if (tab=="comentarios") {
+    <div class="flex-1 overflow-y-auto pr-2">
+      <app-comments-profile></app-comments-profile>
+    </div>
+    }
     </div>
 </div>
