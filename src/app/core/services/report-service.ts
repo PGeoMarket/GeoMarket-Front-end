@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { CrudService } from './crud-service';
+import { HttpClient } from '@angular/common/http';
 
 export interface ReportDTO {
   id: number;
@@ -13,6 +15,11 @@ export interface ReportDTO {
 @Injectable({
   providedIn: 'root'
 })
-export class ReportService {
-  
+export class ReportService extends CrudService<ReportDTO>{
+
+  protected override endpoint = 'reports';
+
+  constructor(http: HttpClient) {
+    super(http);
+  }  
 }
