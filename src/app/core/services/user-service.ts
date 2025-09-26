@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { CrudService } from './crud-service';
 import { ImageDTO, PublicationDTO } from './publication-service';
-import { CommentDTO } from './comment-service';
+import { SellerDTO } from './seller-service'; 
 
 
 export interface UserDTO {
@@ -25,41 +25,15 @@ export interface UserDTO {
     updated_at: string;
   };
 
-  seller?: {
-    id: number;
-    user_id: number;
-    nombre_tienda: string;
-    descripcion?: string | null;
-    activo: boolean;
-    puntuacion_promedio: number;
-    created_at: string;
-    updated_at: string;
-
-    coordinate: {
-      id: number;
-      created_at: string;
-      updated_at: string;
-      latitud: number;
-      longitud: number;
-      direccion: string;
-      coordinateable_type: string;
-      coordinateable_id: number;
-    };
-
-    image: ImageDTO;
-
-    phones: {
-      id: number;
-      numero_telefono: number;
-      seller_id: number;
-      created_at: string;
-      updated_at: string;
-    }[];
-  } | null;
+  seller?: SellerDTO;
 
   image?: ImageDTO | null;
 
-  coordinate?: {
+  coordinate?: CoordinateDTO | null;
+}
+
+
+export interface CoordinateDTO {
     id: number;
     created_at: string;
     updated_at: string;
@@ -68,7 +42,6 @@ export interface UserDTO {
     direccion: string;
     coordinateable_type: string;
     coordinateable_id: number;
-  };
 }
 
 @Injectable({
@@ -160,8 +133,8 @@ export class UserService extends CrudService<UserDTO> {
   getOwnPublications() {
     const user = this.getCurrentUser();
     let user_id = user?.id;
-    console.log("id del vendedor: " + user_id)
-    console.log(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`);
+    console.log("id del usuario: " + user_id)
+    //console.log(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`);
 
     return this.http
       .get<any>(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`)
