@@ -1,9 +1,10 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { PublicationDTO } from '../../../core/services/publication-service';
 import { CommonModule } from '@angular/common';
 import { Comments } from '../comments/comments';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { UserService } from '../../../core/services/user-service';
+import { SellerDTO, SellerService } from '../../../core/services/seller-service';
 
 @Component({
   selector: 'app-product-detail',
@@ -11,14 +12,26 @@ import { UserService } from '../../../core/services/user-service';
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
-export class ProductDetail {
+export class ProductDetail implements OnInit{
 
   @Input() publication_detail!: PublicationDTO | null;
   @Output() close = new EventEmitter<void>();
+  seller_product_detail!: SellerDTO;
 
   private dialogManager = inject(DialogManager);
 
-  constructor (private userService: UserService) {}
+  constructor (private userService: UserService, private sellerService: SellerService) {}
+
+  ngOnInit(): void {    
+    this.sellerService.getByIdSeller(this.publication_detail?.seller_id!)
+    .subscribe({
+      next: data => this.seller_product_detail = data,
+      error: error => console.error("No se pudo traer a seller", error),
+      complete: () => console.log("Vendedor traido correctamente")
+      
+    })
+    
+  }
 
   menuAbierto: boolean = false;
   abrirMenu(event: MouseEvent) {
