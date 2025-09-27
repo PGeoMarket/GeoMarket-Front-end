@@ -42,20 +42,14 @@ export class CommentService extends CrudService<CommentDTO> {
   }
 
   getSellerByComments(seller_id: number): Observable<CommentDTO[]> {
-    console.log(`${this.API_URL}/sellers/${seller_id}?included=publications.comments.user.image`);
-    
-    return this.http
-      .get<{ seller: { publications: { comments: CommentDTO[] }[] } }>(
-        `${this.API_URL}/sellers/${seller_id}?included=publications.comments.user.image`
-      )
-      .pipe(
-        map((response) => {
-          const publications = response?.seller?.publications ?? [];
-          return publications.flatMap((p) => p.comments ?? []);
-        })
-      );
-  }
-
+  return this.http
+    .get<{ publications: { comments: CommentDTO[] }[] }>(
+      `${this.API_URL}/sellers/${seller_id}?included=publications.comments.user.image`
+    )
+    .pipe(
+      map((response) => response.publications.flatMap((p) => p.comments ?? []))
+    );
+}
 
 
 
