@@ -160,4 +160,41 @@ getSellerId(): number | null {
   return user?.seller?.id ?? null;
 }
 
+updateUser(id: number, data: Partial<UserDTO>): Observable<UserDTO> {
+  const formData = new FormData();
+
+  formData.append('primer_nombre', data.primer_nombre ?? '');
+  formData.append('segundo_nombre', data.segundo_nombre ?? '');
+  formData.append('primer_apellido', data.primer_apellido ?? '');
+  formData.append('segundo_apellido', data.segundo_apellido ?? '');
+  formData.append('email', data.email ?? '');
+
+  if (data.role_id !== undefined && data.role_id !== null) {
+    formData.append('role_id', data.role_id.toString());
+  }
+
+  formData.append('_method', 'PUT');
+
+  return this.http.post<UserDTO>(
+    `${this.API_URL}/${this.endpoint}/${id}`,
+    formData
+  ).pipe(
+    tap(user => this.saveUser(user)) // 🔥 guarda en localStorage
+  );
+}
+
+// Actualizar solo la imagen del usuario
+updateUserImage(userId: number, file: File): Observable<UserDTO> {
+  const formData = new FormData();
+  formData.append('image', file);
+  formData.append('_method', 'PUT');
+
+  return this.http.post<UserDTO>(
+    `${this.API_URL}/${this.endpoint}/${userId}`,
+    formData
+  ).pipe(
+    tap(user => this.saveUser(user)) // 🔥 actualiza el usuario guardado
+  );
+}
+
 }
