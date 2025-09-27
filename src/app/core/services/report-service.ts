@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { CrudService } from './crud-service';
 import { HttpClient } from '@angular/common/http';
+import { PublicationDTO } from './publication-service';
+import { Observable } from 'rxjs';
+import { UserDTO } from './user-service';
 
 export interface ReportDTO {
   id: number;
@@ -9,7 +12,14 @@ export interface ReportDTO {
   reportable_type: string; // Ej: "App\\Models\\Publication" o "App\\Models\\User"
   reason_id: number;
   descripcion_adicional: string | null;
-  estado: number; // 0 = pendiente, 1 = resuelto (o lo que hayas definido)
+  estado: number;
+  reportable?: UserDTO | PublicationDTO;
+  reason?: ReasonDTO;
+}
+export interface ReasonDTO {
+  id: number;
+  motivo: string;
+  applies_to: string; // "publication" | "user"
 }
 
 @Injectable({
@@ -21,5 +31,9 @@ export class ReportService extends CrudService<ReportDTO>{
 
   constructor(http: HttpClient) {
     super(http);
-  }  
+  } 
+  
+  getReportWithReportable():Observable<ReportDTO[]>{
+    return this.http.get<ReportDTO[]>(`${this.API_URL}/${this.endpoint}?included=reason,reportable.image`)
+  }
 }
