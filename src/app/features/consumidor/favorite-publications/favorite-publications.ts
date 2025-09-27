@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PublicationDTO } from '../../../core/services/publication-service';
 import { UserService } from '../../../core/services/user-service';
 import { CommonModule } from '@angular/common';
-import { Publications } from "../publications/publications";
 import { ProductDetail } from '../product-detail/product-detail';
 
 
@@ -15,14 +14,19 @@ import { ProductDetail } from '../product-detail/product-detail';
 export class FavoritePublications implements OnInit {
 publications!: PublicationDTO[];
 publication_selected!: PublicationDTO | null;
-constructor(private UserService:UserService){}
+constructor(private userService:UserService){}
 
 ngOnInit(): void {
-  this.getFavoritePublications()
+  this.getFavoritePublications();
+
+  this.userService.favoritePublications$
+  .subscribe( r =>{
+    this.getFavoritePublications();
+  })
 }
 
 getFavoritePublications(){
-this.UserService.getFavorites().subscribe({
+this.userService.getFavorites().subscribe({
   next:data=>this.publications=data,
   error: error => console.error('No se pudo obtener las publicaciones: ' + error),
         complete: () => console.log('Publicaciones obtenidas correctamente')
@@ -57,5 +61,7 @@ open: boolean = false;
       this.publication_selected = null;
       this.closeTimeout = undefined;
     }, 300);
+
+    this.getFavoritePublications();
   }
 }

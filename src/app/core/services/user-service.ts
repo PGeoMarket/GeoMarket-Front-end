@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { CrudService } from './crud-service';
 import { ImageDTO, PublicationDTO } from './publication-service';
-import { SellerDTO } from './seller-service'; 
+import { SellerDTO } from './seller-service';
 
 
 export interface UserDTO {
@@ -34,14 +34,14 @@ export interface UserDTO {
 
 
 export interface CoordinateDTO {
-    id: number;
-    created_at: string;
-    updated_at: string;
-    latitud: number;
-    longitud: number;
-    direccion: string;
-    coordinateable_type: string;
-    coordinateable_id: number;
+  id: number;
+  created_at: string;
+  updated_at: string;
+  latitud: number;
+  longitud: number;
+  direccion: string;
+  coordinateable_type: string;
+  coordinateable_id: number;
 }
 
 @Injectable({
@@ -54,6 +54,9 @@ export class UserService extends CrudService<UserDTO> {
   // Estado reactivo del usuario actual
   private currentUserSubject = new BehaviorSubject<UserDTO | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();
+
+  private favoritePublicationsSubject = new BehaviorSubject<boolean>(false);
+  public favoritePublications$ = this.favoritePublicationsSubject.asObservable();
 
   constructor(http: HttpClient) {
     super(http);
@@ -71,6 +74,10 @@ export class UserService extends CrudService<UserDTO> {
         this.clearUserData();
       }
     }
+  }
+
+    reloadFavoritePublications(reload_publication: boolean) {
+    this.favoritePublicationsSubject.next(reload_publication);
   }
 
   // Guardar usuario
@@ -125,9 +132,20 @@ export class UserService extends CrudService<UserDTO> {
   getFavorites(): Observable<PublicationDTO[]> {
     const user = this.getCurrentUser();
     let userId = user?.id;
-    console.log(`${this.API_URL}/${this.endpoint}/${userId}/favorites`);
 
     return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites`)
+  }
+
+  changeFavorites(publication_id: number) {
+    const user = this.getCurrentUser();
+    let userId = user?.id;
+
+    const formData = new FormData();
+
+    if (publication_id) formData.append('publication_id', String(publication_id));
+    formData.append('_method', 'PATCH');
+
+    return this.http.post<any>(`${this.API_URL}/${this.endpoint}/${userId}/favorites/toggle`, formData);
   }
 
   getOwnPublications() {
@@ -151,13 +169,13 @@ export class UserService extends CrudService<UserDTO> {
     return user?.id ?? 1;
   }
 
-getUserImage(user_id: number) {
-  return this.http.get<UserDTO>(`${this.API_URL}/${this.endpoint}/${user_id}?included=image`);
-}
+  getUserImage(user_id: number) {
+    return this.http.get<UserDTO>(`${this.API_URL}/${this.endpoint}/${user_id}?included=image`);
+  }
 
-getSellerId(): number | null {
-  const user = this.getCurrentUser();
-  return user?.seller?.id ?? null;
-}
+  getSellerId(): number | null {
+    const user = this.getCurrentUser();
+    return user?.seller?.id ?? null;
+  }
 
 }
