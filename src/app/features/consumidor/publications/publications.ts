@@ -16,9 +16,8 @@ import { DialogManager } from '../../../core/dialogs/dialog-manager';
 @Injectable({ providedIn: 'root' })
 export class Publications implements OnInit {
   publications!: PublicationDTO[];
-  publication_selected!: PublicationDTO | null;
-  dialogManager = inject(DialogManager);
-  constructor(protected publicationService: PublicationService, private userService:UserService) { }
+  publication_selected!: PublicationDTO | null; 
+  constructor(protected publicationService: PublicationService) { }
 
   ngOnInit(): void {
 
