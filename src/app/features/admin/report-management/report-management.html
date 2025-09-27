@@ -13,19 +13,19 @@
         <div class="overflow-y-auto flex flex-col gap-2 pr-1">
 
             <!-- Más chats -->
-            @for (i of repeat; track $index){
+            @for (report of reports; track $index){
                 <div class="border-3 border-borde1 rounded-lg p-2 grid grid-cols-[auto_1fr_auto] grid-rows-[auto_auto] items-center cursor-pointer" (click)="ifOpen=!ifOpen" >
                     <div class="w-16 h-16 md:w-20 md:h-20 bg-gray-100 overflow-hidden rounded-full shadow row-span-2 mr-1">
                         <img src="img/florhuila.png" alt="" class="w-full h-full object-cover" />
                     </div>
                     <p class="text-azulPotente font-semibold text-[0.9em] mt-1 md:text-[1.2em]">
-                        Harina xxxxg $xxxxx (juan)
+                        {{getReportableTitle(report)}}
                     </p>
                     <div class="row-span-2 flex flex-col justify-between items-end h-full self-stretch text-sm text-textosNoNegro">
                         <p>hoy</p>
                         <p>23:25</p>
                     </div>
-                    <p class="text-textosNoNegro text-[0.8em] md:text-[1em]">Motivo: incumplir normas</p>
+                    <p class="text-textosNoNegro text-[0.8em] md:text-[1em]">Motivo: {{report.reason?.motivo}}</p>
                 </div>
             }
         </div>
