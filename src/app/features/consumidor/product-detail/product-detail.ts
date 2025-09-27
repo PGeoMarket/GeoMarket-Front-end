@@ -78,7 +78,7 @@ export class ProductDetail implements OnInit{
     //logica del chat
   }
 
-  onReport() {
+  /* onReport() {
     if (!this.userService.isLoggedIn()) {
       this.dialogManager.openDialog('login', {
         data: { mode: 'create' }
@@ -91,6 +91,26 @@ export class ProductDetail implements OnInit{
     this.dialogManager.openDialog('report', {
       data: { mode: 'create' }
     });
+  } */
+
+    onReport(){
+     if (!this.userService.isLoggedIn()) {
+      this.dialogManager.openDialog('login', {
+        data: { mode: 'create' }
+      });
+
+      return;
+    }
+
+     const user = this.userService.getCurrentUser();
+    this.dialogManager.openDialog('report', {
+      data: { publication_id: this.publication_detail?.id, user_id: user?.id },
+      onClose: (res) => {
+        console.log('cerrado con', res);
+      }
+
+    });
+
   }
 }
 

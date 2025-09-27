@@ -1,7 +1,9 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, inject, Injectable, OnInit } from '@angular/core';
 import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule } from '@angular/common';
 import { ProductDetail } from '../product-detail/product-detail';
+import { UserService } from '../../../core/services/user-service';
+import { DialogManager } from '../../../core/dialogs/dialog-manager';
 
 @Component({
   selector: 'app-publications',
@@ -15,7 +17,8 @@ import { ProductDetail } from '../product-detail/product-detail';
 export class Publications implements OnInit {
   publications!: PublicationDTO[];
   publication_selected!: PublicationDTO | null;
-  constructor(protected publicationService: PublicationService) { }
+  dialogManager = inject(DialogManager);
+  constructor(protected publicationService: PublicationService, private userService:UserService) { }
 
   ngOnInit(): void {
 
@@ -87,4 +90,6 @@ export class Publications implements OnInit {
       this.closeTimeout = undefined;
     }, 300);
   }
+
+  
 }

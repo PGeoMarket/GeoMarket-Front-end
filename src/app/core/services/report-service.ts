@@ -22,4 +22,5 @@ export class ReportService extends CrudService<ReportDTO>{
   constructor(http: HttpClient) {
     super(http);
   }  
+
 }
