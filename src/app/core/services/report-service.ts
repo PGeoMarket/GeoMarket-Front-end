@@ -36,4 +36,12 @@ export class ReportService extends CrudService<ReportDTO>{
   getReportWithReportable():Observable<ReportDTO[]>{
     return this.http.get<ReportDTO[]>(`${this.API_URL}/${this.endpoint}?included=reason,reportable.image`)
   }
+
+ 
+  reportPublication(publicationId: number, payload: any):Observable<any>{
+    console.log(`${this.API_URL}/publications/${publicationId}/report`, payload);
+    
+    return this.http.post(`${this.API_URL}/publications/${publicationId}/report`, payload)
+  }
+
 }
