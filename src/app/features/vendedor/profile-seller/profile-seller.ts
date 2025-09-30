@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { EditPublication } from '../edit-publication/edit-publication';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { Loader } from '@googlemaps/js-api-loader';
 import { UserDTO, UserService } from '../../../core/services/user-service';
 import { CommentsProfile } from "../comments-profile/comments-profile";
+import { EditPublication } from '../edit-publication/edit-publication';
+
 
 
 @Component({
@@ -20,7 +21,7 @@ export class ProfileSeller implements OnInit {
   title = 'google-maps';
 
   ngOnInit(): void {
-     this.getUserData();
+    this.getUserData();
     const loader = new Loader({
       apiKey: 'AIzaSyB5z4XpgHuZimhlIFzBKd2ey_VtzcRgcvs',
       version: 'weekly'
@@ -43,10 +44,15 @@ export class ProfileSeller implements OnInit {
     })
   }
 
+
   private dialogManager = inject(DialogManager);
   onOpenEdit() {
     this.dialogManager.openDialog('edit-seller', {
-      data: { mode: 'create' }
+      data: { mode: 'create' },
+      onClose: (res) => {
+        console.log('cerrado con', res);
+        this.userService.getMe().subscribe();
+      }
     });
   }
   user: UserDTO | null = null;
@@ -58,6 +64,6 @@ export class ProfileSeller implements OnInit {
     console.log(this.user);
   }
 
-   
+
 
 }

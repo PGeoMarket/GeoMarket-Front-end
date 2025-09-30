@@ -28,6 +28,7 @@ export interface UserDTO {
   seller?: SellerDTO;
 
   image?: ImageDTO | null;
+  imagen?: File;
 
   coordinate?: CoordinateDTO | null;
 }
@@ -76,7 +77,7 @@ export class UserService extends CrudService<UserDTO> {
     }
   }
 
-    reloadFavoritePublications(reload_publication: boolean) {
+  reloadFavoritePublications(reload_publication: boolean) {
     this.favoritePublicationsSubject.next(reload_publication);
   }
 
@@ -178,4 +179,24 @@ export class UserService extends CrudService<UserDTO> {
     return user?.seller?.id ?? null;
   }
 
+  override update(id: number, data: Partial<UserDTO>): Observable<UserDTO> {
+    const formData = new FormData();
+
+    formData.append('primer_nombre', data.primer_nombre ?? '');
+    formData.append('segundo_nombre', data.segundo_nombre ?? '');
+    formData.append('primer_apellido', data.primer_apellido ?? '');
+    formData.append('segundo_apellido', data.segundo_apellido ?? '');
+    formData.append('email', data.email ?? '');
+    formData.append('imagen', data.imagen  ?? '');
+    formData.append('_method', 'PUT');
+
+    if (data.role_id !== undefined && data.role_id !== null) {
+      formData.append('role_id', data.role_id.toString());
+    }
+
+    formData.append('_method', 'PUT');
+
+     return this.http.post<UserDTO>(
+      `${this.API_URL}/${this.endpoint}/${id}`, formData)
+  }
 }

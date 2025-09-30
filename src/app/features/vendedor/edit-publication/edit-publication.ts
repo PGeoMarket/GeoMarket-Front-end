@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Closedialog } from '../../../core/dialogs/closedialog';
-import { EditProduct } from '../dialogs-seller/edit-product/edit-product';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule, NgStyle } from '@angular/common';
 import { ProductDetail } from '../../consumidor/product-detail/product-detail';
 import { UserService } from '../../../core/services/user-service';
+import { EditProduct } from '../dialogs-seller/edit-product/edit-product';
 
 @Component({
   selector: 'app-edit-publication',
