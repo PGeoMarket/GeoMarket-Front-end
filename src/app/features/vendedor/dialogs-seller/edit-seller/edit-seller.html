@@ -7,14 +7,17 @@
   <!-- Foto de perfil de la tienda -->
   <div class="flex justify-center mb-6">
     <div class="relative w-32 h-32">
-      <img [src]="store?.image?.url || '/svg/profile.svg'" alt="Foto de perfil"
-        class="w-32 h-32 rounded-full object-cover bg-blue-900" />
+      <div class="border-1 border-borde1 rounded-full my-3 w-fit h-auto md:max-h-[500px] mx-auto">
+          <button class="btn_negative absolute" (click)="onResetImage()">X</button > 
+          <img *ngIf="!imagePreview" [src]="user_edit.image?.url" class="h-full rounded-full">
+          <img *ngIf="imagePreview" [src]="imagePreview" class="h-full rounded-full">
+        </div>
       <!-- Botón para editar -->
       <div class="absolute bottom-2 right-2">
         <label class="cursor-pointer">
           <img src="/svg/edit.svg" alt="Editar"
             class="w-8 h-8 rounded-full bg-white p-1 shadow-md" />
-          <input type="file" accept="image/*" class="hidden" (change)="onFileSelected($event)" />
+          <input type="file" accept="image/*" class="hidden" (change)="onImageSelected($event)" />
         </label>
       </div>
     </div>
@@ -30,7 +33,7 @@
       <label class="block text-sm font-medium text-gray-700 pb-0.5">
         Primer Nombre:
       </label>
-      <input type="text" [(ngModel)]="user!.primer_nombre" name="primer_nombre"
+      <input type="text" [(ngModel)]="user_edit!.primer_nombre" name="primer_nombre"
         class="inputs_registro w-full" />
     </div>
 
@@ -39,7 +42,7 @@
       <label class="block text-sm font-medium text-gray-700 pb-0.5">
         Segundo Nombre:
       </label>
-      <input type="text" [(ngModel)]="user!.segundo_nombre" name="segundo_nombre"
+      <input type="text" [(ngModel)]="user_edit!.segundo_nombre" name="segundo_nombre"
         class="inputs_registro w-full" />
     </div>
 
@@ -48,7 +51,7 @@
       <label class="block text-sm font-medium text-gray-700 pb-0.5">
         Primer Apellido:
       </label>
-      <input type="text" [(ngModel)]="user!.primer_apellido" name="primer_apellido"
+      <input type="text" [(ngModel)]="user_edit!.primer_apellido" name="primer_apellido"
         class="inputs_registro w-full" />
     </div>
 
@@ -57,7 +60,7 @@
       <label class="block text-sm font-medium text-gray-700 pb-0.5">
         Segundo Apellido:
       </label>
-      <input type="text" [(ngModel)]="user!.segundo_apellido" name="segundo_apellido"
+      <input type="text" [(ngModel)]="user_edit!.segundo_apellido" name="segundo_apellido"
         class="inputs_registro w-full" />
     </div>
 
@@ -66,7 +69,7 @@
       <label class="block text-sm font-medium text-gray-700 pb-0.5">
         Email:
       </label>
-      <input type="email" [(ngModel)]="user!.email" name="email"
+      <input type="email" [(ngModel)]="user_edit!.email" name="email"
         class="inputs_registro w-full" />
     </div>
 
@@ -78,7 +81,7 @@
       <label class="block text-sm font-medium text-gray-700 pb-0.5">
         Nombre de la Tienda:
       </label>
-      <input type="text" [(ngModel)]="store!.nombre_tienda" name="nombre_tienda"
+      <input type="text" [(ngModel)]="user_edit.seller!.nombre_tienda" name="nombre_tienda"
         class="inputs_registro w-full" />
     </div>
 
@@ -87,16 +90,21 @@
       <label class="block text-sm font-medium text-gray-700 pb-0.5">
         Descripción:
       </label>
-      <textarea [(ngModel)]="store!.descripcion" name="descripcion"
-        class="inputs_registro w-full"></textarea>
+      <textarea [(ngModel)]="user.seller!.descripcion" name="descripcion"
+        class="inputs_registro w-full"></textarea> 
+        {{
+          user_edit | json
+        }}
     </div>
+
+    
 
     <!-- Dirección -->
     <div>
       <label class="block text-sm font-medium text-gray-700 pb-0.5">
         Dirección:
       </label>
-      <input type="text" [(ngModel)]="store!.coordinate!.direccion" name="direccion"
+      <input type="text" [(ngModel)]="user!.seller!.coordinate!.direccion" name="direccion"
         class="inputs_registro w-full" />
     </div>
 

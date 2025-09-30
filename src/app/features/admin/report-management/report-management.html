@@ -16,7 +16,7 @@
             @for (report of reports; track $index){
                 <div class="border-3 border-borde1 rounded-lg p-2 grid grid-cols-[auto_1fr_auto] grid-rows-[auto_auto] items-center cursor-pointer" (click)="ifOpen=!ifOpen" >
                     <div class="w-16 h-16 md:w-20 md:h-20 bg-gray-100 overflow-hidden rounded-full shadow row-span-2 mr-1">
-                        <img src="img/florhuila.png" alt="" class="w-full h-full object-cover" />
+                        <img src="{{report.reportable?.image?.url}}" alt="" class="w-full h-full object-cover" />
                     </div>
                     <p class="text-azulPotente font-semibold text-[0.9em] mt-1 md:text-[1.2em]">
                         {{getReportableTitle(report)}}
