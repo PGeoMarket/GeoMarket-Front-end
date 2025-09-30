@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Closedialog } from '../../../core/dialogs/closedialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,6 +6,7 @@ import { UserDTO, UserService } from '../../../core/services/user-service';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { CrudService } from '../../../core/services/crud-service';
+import { DialogManager } from '../../../core/dialogs/dialog-manager';
 
 @Component({
   standalone: true,                             // ← obliga a declarar standalone
@@ -22,7 +23,13 @@ export class EditConsumer
   emailTaken!: boolean;
   showSuccessMessage = false;
   showErrorMessage = false;
-  user: UserDTO | null = null;
+  user!: UserDTO;
+  user_edit!: UserDTO;
+  isLoading = false;
+  
+  imagePreview: string | ArrayBuffer | null = null;
+  imageFile: File | null = null;
+  dialogManager = inject(DialogManager);
 
   constructor(
     private userService: UserService,      // ← inyección en minúscula para usarla abajo
@@ -32,52 +39,76 @@ export class EditConsumer
   }
 
   ngOnInit(): void {
-    this.user = this.userService.getCurrentUser();
-    console.log(this.user);
+    this.isLoading = true;
+    this.userService.getMe().subscribe({
+      next: (response) => {
+        this.user = response.user;
+        this.user_edit = JSON.parse(JSON.stringify(this.user));
+        this.isLoading = false;
+      },
+      error: (err) => {
+        this.showErrorMessage = true;
+        this.isLoading = false;
+        console.error('Error cargando usuario:', err);
+      }
+    });
   }
 
-  saveUser(): void {
-  if (!this.user) return;
+  saveChanges(): void {
+    if (!this.user_edit) return;
 
-  this.update(this.user.id, this.user).subscribe({
-    next: resp => {
-      this.showSuccessMessage = true;
+    this.isLoading = true;
+    this.showSuccessMessage = false;
+    this.showErrorMessage = false;
 
-      // Mezclar con el usuario previo
-      const merged = { ...this.user, ...resp };
-      this.user = merged;
-
-      this.userService.saveUser(merged);
-    },
-    error: err => {
-      this.showErrorMessage = true;
-      console.error(err);
+    if (this.imageFile) {
+      this.user_edit.imagen = this.imageFile;
     }
-  });
-}
 
-  override update(
-  id: number,
-  data: Partial<UserDTO>
-): Observable<UserDTO> {
-  const formData = new FormData();
+    // ✅ Primero actualizar usuario
+    this.userService.update(this.user_edit.id, this.user_edit).subscribe({
+      next: (updatedUser) => {
+        this.user = updatedUser;
 
-  formData.append('primer_nombre', data.primer_nombre ?? '');
-  formData.append('segundo_nombre', data.segundo_nombre ?? '');
-  formData.append('primer_apellido', data.primer_apellido ?? '');
-  formData.append('segundo_apellido', data.segundo_apellido ?? '');
-  formData.append('email', data.email ?? '');
+        // ✅ Luego actualizar seller si existe
+        if (this.user_edit.id) {
+          // No hay seller, solo se actualizó el usuario
+          this.user_edit = JSON.parse(JSON.stringify(this.user));
+          this.showSuccessMessage = true;
+          this.isLoading = false;
 
-  // 👇 Campo que faltaba
-  if (data.role_id !== undefined && data.role_id !== null) {
-    formData.append('role_id', data.role_id.toString());
+          setTimeout(() => {
+                  window.location.reload();
+                }, 1000)
+            this.userService.getMe().subscribe()
+            this.dialogManager.closeDialog()
+        }
+      },
+      error: (err) => {
+        this.showErrorMessage = true;
+        this.isLoading = false;
+        console.error('Error actualizando usuario:', err);
+      }
+    });
+  }
+  onImageSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.imageFile = file;
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
   }
 
-  formData.append('_method', 'PUT');
-
-  return this.http.post<UserDTO>(
-    `${this.API_URL}/${this.endpoint}/${id}`,
-    formData
-  );
-}
+  onResetImage(): void {
+    this.imagePreview = null;
+    this.imageFile = null;
+    const fileInput = document.getElementById('upload') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  }
 }

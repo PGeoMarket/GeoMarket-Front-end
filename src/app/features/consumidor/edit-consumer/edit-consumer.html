@@ -5,119 +5,72 @@
     <img src="/svg/back-icon.svg" alt="Atrás">
   </button>
 
-  <!-- Foto de perfil -->
+  <!-- Foto de perfil de la tienda -->
   <div class="flex justify-center mb-6">
     <div class="relative w-32 h-32">
-      <img
-        [src]="user?.image?.url || '/svg/profile.svg'"
-        alt="Foto de perfil"
-        class="w-32 h-32 rounded-full object-cover bg-blue-900"
-      />
-
-      <!-- File input oculto + label para abrir diálogo -->
-      <input
-        type="file"
-        id="upload"
-        hidden
-        
-      />
-      <label
-        for="upload"
-        class="absolute bottom-2 right-2 cursor-pointer"
-      >
-        <img
-          src="/svg/edit.svg"
-          alt="Editar foto"
-          class="w-8 h-8 rounded-full bg-white p-1 shadow-md"
-        />
-      </label>
+      <div class="border-1 border-borde1 rounded-full my-3 w-fit h-auto md:max-h-[500px] mx-auto">
+        <button class="btn_negative absolute" (click)="onResetImage()">X</button>
+        <img *ngIf="!imagePreview" [src]="user_edit.image?.url" class="h-full rounded-full">
+        <img *ngIf="imagePreview" [src]="imagePreview" class="h-full rounded-full">
+      </div>
+      
+      <!-- Botón para editar -->
+      <div class="absolute bottom-2 right-2">
+        <label class="cursor-pointer">
+          <img src="/svg/edit.svg" alt="Editar" class="w-8 h-8 rounded-full bg-white p-1 shadow-md" />
+          <input type="file" accept="image/*" class="hidden" (change)="onImageSelected($event)" />
+        </label>
+      </div>
     </div>
   </div>
 
   <!-- Formulario -->
-  <form
-    class="space-y-5"
-    (ngSubmit)="saveUser()"
-    #editForm="ngForm"
-  >
+  <form class="space-y-5" #editForm="ngForm">
     <div>
       <label for="primer_nombre" class="block text-sm font-medium text-textosNoNegro pb-0.5">
         Nombre:
       </label>
-      <input
-        id="primer_nombre"
-        name="primer_nombre"
-        [(ngModel)]="user!.primer_nombre"
-        type="text"
-        class="inputs_registro w-full"
-      />
+      <input id="primer_nombre" name="primer_nombre" [(ngModel)]="user_edit!.primer_nombre" type="text"
+        class="inputs_registro w-full" />
     </div>
 
     <div>
       <label for="segundo_nombre" class="block text-sm font-medium text-gray-700 pb-0.5">
         Segundo Nombre:
       </label>
-      <input
-        id="segundo_nombre"
-        name="segundo_nombre"
-        [(ngModel)]="user!.segundo_nombre"
-        type="text"
-        class="inputs_registro w-full"
-      />
+      <input id="segundo_nombre" name="segundo_nombre" [(ngModel)]="user_edit!.segundo_nombre" type="text"
+        class="inputs_registro w-full" />
     </div>
 
     <div>
       <label for="primer_apellido" class="block text-sm font-medium text-gray-700 pb-0.5">
         Apellido:
       </label>
-      <input
-        id="primer_apellido"
-        name="primer_apellido"
-        [(ngModel)]="user!.primer_apellido"
-        type="text"
-        class="inputs_registro w-full"
-      />
+      <input id="primer_apellido" name="primer_apellido" [(ngModel)]="user_edit!.primer_apellido" type="text"
+        class="inputs_registro w-full" />
     </div>
 
     <div>
       <label for="segundo_apellido" class="block text-sm font-medium text-gray-700 pb-0.5">
         Segundo Apellido:
       </label>
-      <input
-        id="segundo_apellido"
-        name="segundo_apellido"
-        [(ngModel)]="user!.segundo_apellido"
-        type="text"
-        class="inputs_registro w-full"
-      />
+      <input id="segundo_apellido" name="segundo_apellido" [(ngModel)]="user_edit!.segundo_apellido" type="text"
+        class="inputs_registro w-full" />
     </div>
 
     <div>
       <label for="email" class="block text-sm font-medium text-gray-700 pb-0.5">
         Correo:
       </label>
-      <input
-        id="email"
-        name="email"
-        [(ngModel)]="user!.email"
-        type="email"
-        class="inputs_registro w-full"
-      />
+      <input id="email" name="email" [(ngModel)]="user_edit!.email" type="email" class="inputs_registro w-full" />
     </div>
 
     <div class="flex justify-center items-center space-x-4 pt-4">
-      <button
-        type="button"
-        class="btn_negative"
-        appClosedialog
-      >
+      <button type="button" class="btn_negative" appClosedialog>
         Cancelar
       </button>
-      <button
-        type="submit"
-        class="btn_positive"
-      >
-        Guardar
+      <button type="submit" class="btn_positive cursor-pointer" (click)="saveChanges()">
+        {{ isLoading ? 'Guardando...' : 'Guardar' }}
       </button>
     </div>
   </form>
