@@ -36,7 +36,6 @@ export class ProfileSeller implements OnInit {
         });
       }
     });
-    this.userService.getMe();
   }
 
   onOpenMap() {
@@ -52,7 +51,7 @@ export class ProfileSeller implements OnInit {
       data: { mode: 'create' },
       onClose: (res) => {
         console.log('cerrado con', res);
-        this.userService.getMe();
+        this.userService.getMe().subscribe();
       }
     });
   }

@@ -2,9 +2,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Closedialog } from '../../../../core/dialogs/closedialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { SellerDTO } from '../../../../core/services/seller-service';
 import { UserDTO, UserService } from '../../../../core/services/user-service';
+import { SellerService } from '../../../../core/services/seller-service'; // 👈 IMPORTAR
 import { DialogManager } from '../../../../core/dialogs/dialog-manager';
+import { forkJoin } from 'rxjs'; // 👈 IMPORTAR
 
 @Component({
   selector: 'app-edit-seller',
@@ -18,57 +19,91 @@ export class EditSeller implements OnInit {
   user_edit!: UserDTO;
   imagePreview: string | ArrayBuffer | null = null;
   imageFile: File | null = null;
-
   showSuccessMessage = false;
   showErrorMessage = false;
+  isLoading = false;
 
-  constructor(private userService: UserService) { }
+  dialogManager = inject(DialogManager);
 
-dialogManager=inject(DialogManager)
+  constructor(
+    private userService: UserService,
+    private sellerService: SellerService // 👈 INYECTAR
+  ) {}
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.userService.getMe().subscribe({
-      next: updated => {
-       console.log(updated +'hola');
-        this.showSuccessMessage = true;
+      next: (response) => {
+        this.user = response.user;
+        this.user_edit = JSON.parse(JSON.stringify(this.user));
+        this.isLoading = false;
       },
-      error: err => {
+      error: (err) => {
         this.showErrorMessage = true;
-        console.error(err);
-      },
-      complete:() =>{
-       
-      }
-    });;
-/* console.log(this.userService.getMe()); */
-
-    if (this.user?.seller) {
-      this.user.seller = this.user.seller;
-    }
-
-    this.user_edit = { ...this.user }
-
-  }
-
-  saveChanges(): void {
-    if (!this.user) return;
-
-    this.userService.update(this.user_edit.id, this.user_edit).subscribe({
-      next: updated => {
-        this.user = updated;
-        this.showSuccessMessage = true;
-      },
-      error: err => {
-        this.showErrorMessage = true;
-        console.error(err);
-      },
-      complete:() =>{
-       
+        this.isLoading = false;
+        console.error('Error cargando usuario:', err);
       }
     });
   }
 
-onImageSelected(event: Event) {
+  saveChanges(): void {
+  if (!this.user_edit) return;
+  
+  this.isLoading = true;
+  this.showSuccessMessage = false;
+  this.showErrorMessage = false;
+
+  if (this.imageFile) {
+    this.user_edit.imagen = this.imageFile;
+  }
+
+  // ✅ Primero actualizar usuario
+  this.userService.update(this.user_edit.id, this.user_edit).subscribe({
+    next: (updatedUser) => {
+      this.user = updatedUser;
+      
+      // ✅ Luego actualizar seller si existe
+      if (this.user_edit.seller?.id) {
+        this.sellerService.updateSeller(
+          this.user_edit.seller.id, 
+          this.user_edit.seller
+        ).subscribe({
+          next: (updatedSeller) => {
+            this.user.seller = updatedSeller;
+            this.user_edit = JSON.parse(JSON.stringify(this.user));
+            this.showSuccessMessage = true;
+            this.isLoading = false;
+            
+            setTimeout(() => {
+                  window.location.reload();
+                }, 1000)
+            this.userService.getMe().subscribe()
+            this.dialogManager.closeDialog()
+          },
+          error: (err) => {
+            this.showErrorMessage = true;
+            this.isLoading = false;
+            console.error('Error actualizando seller:', err);
+          }
+        });
+      } else {
+        // No hay seller, solo se actualizó el usuario
+        this.user_edit = JSON.parse(JSON.stringify(this.user));
+        this.showSuccessMessage = true;
+        this.isLoading = false;
+        
+        setTimeout(() => this.showSuccessMessage = false, 3000);
+      }
+    },
+    error: (err) => {
+      this.showErrorMessage = true;
+      this.isLoading = false;
+      console.error('Error actualizando usuario:', err);
+    }
+  });
+}
+
+  onImageSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       this.imageFile = file;
@@ -80,10 +115,9 @@ onImageSelected(event: Event) {
     }
   }
 
-  onResetImage() {
+  onResetImage(): void {
     this.imagePreview = null;
     this.imageFile = null;
-    // Limpiar el input file
     const fileInput = document.getElementById('upload') as HTMLInputElement;
     if (fileInput) {
       fileInput.value = '';
