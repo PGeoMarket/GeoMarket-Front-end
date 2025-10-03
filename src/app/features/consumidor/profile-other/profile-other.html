@@ -1,4 +1,4 @@
-<div (click)="cerrarMenus()"
+<div
     class="border border-gray-300 rounded-xl p-2 md:p-4 flex flex-col md:flex-row gap-4 md:gap-6 bg-white shadow h-auto md:h-[calc(100vh-80px)]">
     <!-- Perfil vendedor -->
     <div
@@ -32,11 +32,15 @@
         </div>
         <!-- Info -->
         <div class="text-left w-full mt-2 text-[15px] space-y-1">
-            <div><span class="font-bold">Nombre:</span> <br> Don Goku Castañeda</div>
-            <div><span class="font-bold">Negocio:</span> <br> Tiendita del dragón</div>
-            <div><span class="font-bold">Correo:</span> <br> dongokucastañeda@gmail.com</div>
-            <div><span class="font-bold">Telefono:</span> <br> 3001231231</div>
-            <div><span class="font-bold">Direccion:</span> <br> Cr 49 No. 134A-07, C.P 11001</div>
+            <div><span class="font-bold">Nombre:</span> <br> {{seller.user.primer_nombre}} {{seller.user.segundo_nombre}} {{seller.user.primer_apellido}} {{seller.user.segundo_apellido}}</div>
+            <div><span class="font-bold">Negocio:</span> <br> {{seller.nombre_tienda}}</div>
+<!--             <div><span class="font-bold">Correo:</span> <br> dongokucastañeda@gmail.com</div> -->
+            <div><span class="font-bold">Telefono:</span> <br> 
+            @for (telefono of seller.phones; track $index) {
+                {{telefono.numero_telefono}} <br>
+            }
+            </div>
+            <div><span class="font-bold">Direccion:</span> <br> {{seller.coordinate?.direccion}} </div>
         </div>
         <!-- Mapa, botón y estrellas -->
         <div class="flex items-end gap-2 mt-6 w-full mb-8">
@@ -49,51 +53,51 @@
             </div>
         </div>
     </div>
-    <!-- Catálogo y comentarios -->
-    <!-- Catálogo y comentarios -->
-<div class="flex-1 flex flex-col min-w-0 min-h-0">
-    <!-- Tabs -->
-    <div class="flex gap-2 mb-4 flex-shrink-0">
-        <button [ngClass]="tab === 'catalogo' ? 'btn_azulPotente' : 'btn_negative'"
-            class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
-            (click)="tab = 'catalogo'">
-            Catálogo
-        </button>
 
-        <button [ngClass]="tab === 'comentarios' ? 'btn_azulPotente' : 'btn_negative'"
-            class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
-            (click)="tab = 'comentarios'">
-            Comentarios
-        </button>
-    </div>
-    <!-- Contenido -->
-    <div class="flex-1 min-h-0">
-        <!-- Catálogo grid con scroll -->
-        @if (tab=="catalogo" || !tab) {
-        <div class="h-full overflow-x-hidden">
-            <app-edit-publication></app-edit-publication><!-- Falta la pantalla productos -->
+    <!-- Catálogo y comentarios -->
+    <div class="flex-1 flex flex-col min-w-0 min-h-0">
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-4 flex-shrink-0">
+            <button [ngClass]="tab === 'catalogo' ? 'btn_azulPotente' : 'btn_negative'"
+                class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
+                (click)="tab = 'catalogo'">
+                Catálogo
+            </button>
+
+            <button [ngClass]="tab === 'comentarios' ? 'btn_azulPotente' : 'btn_negative'"
+                class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
+                (click)="tab = 'comentarios'">
+                Comentarios
+            </button>
         </div>
-        }
-        <!-- Comentarios -->
-        @if (tab=="comentarios") {
-        <div class="h-full overflow-y-auto pr-2">
-            <div class="flex flex-col gap-3">
-                @for (i of repeat; track $index){
-                <div class="flex items-center border rounded-lg bg-gray-100 shadow px-3 py-2 relative">
-                    <img src="/svg/profile.svg" class="w-10 h-10 bg-[#06406A] rounded-full mr-3 cursor-pointer"
-                        alt="avatar">
-                    <div class="flex-1">
-                        <div class="font-semibold text-sm text-[#06406A]">@usuario_17</div>
-                        <div class="text-xs text-gray-600">¡Hace 1 mes! Todo fácil. ¡Súper! & Goodds</div>
-                    </div>
-                    <div class="flex items-center ml-2">
-                        <img src="/svg/stars.svg" alt="" class="h-6">
-                    </div>
-                </div>
-                }
+        <!-- Contenido -->
+        <div class="flex-1 min-h-0">
+            <!-- Catálogo grid con scroll -->
+            @if (tab=="catalogo" || !tab) {
+            <div class="h-full overflow-x-hidden">
+                <app-publications></app-publications><!-- Falta la pantalla productos -->
             </div>
+            }
+            <!-- Comentarios -->
+            @if (tab=="comentarios") {
+            <div class="h-full overflow-y-auto pr-2">
+                <div class="flex flex-col gap-3">
+                    @for (i of repeat; track $index){
+                    <div class="flex items-center border rounded-lg bg-gray-100 shadow px-3 py-2 relative">
+                        <img src="/svg/profile.svg" class="w-10 h-10 bg-[#06406A] rounded-full mr-3 cursor-pointer"
+                            alt="avatar">
+                        <div class="flex-1">
+                            <div class="font-semibold text-sm text-[#06406A]">@usuario_17</div>
+                            <div class="text-xs text-gray-600">¡Hace 1 mes! Todo fácil. ¡Súper! & Goodds</div>
+                        </div>
+                        <div class="flex items-center ml-2">
+                            <img src="/svg/stars.svg" alt="" class="h-6">
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+            }
         </div>
-        }
     </div>
-</div>
 </div>
