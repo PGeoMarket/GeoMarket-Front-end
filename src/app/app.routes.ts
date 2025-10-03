@@ -23,7 +23,7 @@ export const routes: Routes = [
     {path:'edit-product',component:EditProduct},
     {path:'profile-seller',component:ProfileSeller},
     {path:'favorite-publications',component:FavoritePublications},
-    {path:'ProfileOther',component:ProfileOther},
+    {path:'ProfileOther/:id',component:ProfileOther},
     {path:'faq',component:Faq},
     {path:'profile-buyer',component:ProfileConsumer},
     {path: '', redirectTo: '/home', pathMatch: 'full'},

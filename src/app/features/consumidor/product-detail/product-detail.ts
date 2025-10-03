@@ -5,10 +5,11 @@ import { Comments } from '../comments/comments';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { UserService } from '../../../core/services/user-service';
 import { SellerDTO, SellerService } from '../../../core/services/seller-service';
+import { RouterLink } from '@angular/router'; 
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule, Comments],
+  imports: [CommonModule, Comments, RouterLink],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })

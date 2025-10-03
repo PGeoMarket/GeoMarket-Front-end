@@ -16,6 +16,8 @@ export interface SellerDTO {
   created_at: string;
   updated_at: string;
 
+  user: UserBySellerDTO;
+
   coordinate: CoordinateDTO | null;
 
   image?: ImageDTO;
@@ -27,6 +29,13 @@ export interface SellerDTO {
     created_at: string;
     updated_at: string;
   }[];
+}
+
+export interface UserBySellerDTO {
+    primer_nombre: string;
+  segundo_nombre?: string | null;
+  primer_apellido: string;
+  segundo_apellido?: string | null;
 }
 
 
@@ -42,7 +51,7 @@ export class SellerService extends CrudService<SellerDTO> {
   }
 
   getByIdSeller(id: number): Observable<SellerDTO> {
-    return this.http.get<SellerDTO>(`${this.API_URL}/${this.endpoint}/${id}?included=image`);
+    return this.http.get<SellerDTO>(`${this.API_URL}/${this.endpoint}/${id}?included=image,user,coordinate,phones`);
   }
 
   updateSeller(sellerId: number, data: Partial<SellerDTO>): Observable<SellerDTO> {

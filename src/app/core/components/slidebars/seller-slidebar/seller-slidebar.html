@@ -11,15 +11,21 @@
 
 <!-- Menú -->
 <div class="bg-[#06406A] h-full overflow-y-auto">
-    <div class="p-2 md:p-4">
+
+    <!-- Home -->
+    <div class="p-2 md:p-4" routerLink="home">
         <img src="svg/home.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
         <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">Inicio</p>
     </div>
-    <div class="p-2 md:p-4">
+
+    <!-- Favoritos -->
+    <div class="p-2 md:p-4" routerLink="favorite-publications">
         <img src="svg/favorites.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
-        <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em] cursor-pointer"
-            routerLink="favorite-publications">Favoritos</p>
+        <p class="text-white inline text-[1.2em] 
+        ml-1 md:text-[1.3em] cursor-pointer">Favoritos</p>
     </div>
+
+    <!-- Publicar producto -->
     <div class="p-2 md:p-4 cursor-pointer"  (click)="onAddProduct()">
         <img src="svg/addPublication.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
         <a class="text-white inline  text-[1.2em] ml-1 md:text-[1.3em]">Publicar producto</a>
@@ -29,14 +35,20 @@
         <img src="svg/notifications.svg" class="inline w-7 h-7 md:w-auto md:h-auto ">
         <p class="text-white inline  text-[1.2em] ml-1 md:text-[1.3em]">Notificaciones</p>
     </div> -->
+
+    <!-- Mensajes -->
     <div class="p-2 md:p-4 cursor-pointer" routerLink="/chats">
         <img src="svg/messages.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
         <p class="text-white inline  text-[1.2em] ml-1 md:text-[1.3em]">Mensajes</p>
     </div>
+
+    <!-- FaQ -->
     <div class="p-2 md:p-4 cursor-pointer" (click)="onFaq()">
         <img src="svg/support.svg" class="inline w-7 h-7 md:w-auto md:h-auto">
         <p class="text-white inline  text-[1.2em] ml-1 md:text-[1.3em]">Soporte y preguntas frecuentes</p>
     </div>
+
+    <!-- Logout -->
     <div class="p-2 mt-5 cursor-pointer" (click)="logout()" routerLink="home">
         <img src="svg/logout.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
         <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">
