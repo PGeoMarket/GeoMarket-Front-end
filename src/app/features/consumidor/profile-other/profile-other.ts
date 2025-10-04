@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Publications } from '../publications/publications';
 import { ActivatedRoute } from '@angular/router';
 import { PublicationService } from '../../../core/services/publication-service';
 import { SellerDTO, SellerService } from '../../../core/services/seller-service';
+import { DialogManager } from '../../../core/dialogs/dialog-manager';
 
 @Component({
   selector: 'app-profile-other',
@@ -18,6 +19,7 @@ export class ProfileOther {
   seller!: SellerDTO;
 
   constructor(private route: ActivatedRoute, private publicationService: PublicationService, private sellerService: SellerService) { }
+  dialogManager = inject(DialogManager);
 
   ngOnInit(): void {
     this.seller_id = Number(this.route.snapshot.paramMap.get('id'));
@@ -42,6 +44,12 @@ export class ProfileOther {
     const filtersSeller = `&filter[seller_id]=${this.seller_id}`;
 
     this.publicationService.sendFilter(filtersSeller);
+  }
+
+    onOpenMap() {
+    this.dialogManager.openDialog('map', {
+      data: { mode: 'create' }
+    })
   }
 
     menuAbierto: boolean = false;
