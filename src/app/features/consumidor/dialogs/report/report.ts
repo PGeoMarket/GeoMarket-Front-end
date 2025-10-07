@@ -13,7 +13,7 @@ export class Report implements OnInit {
  
   @Input() publication_id!: number;
   @Input() user_id!: number;
-
+  @Input() seller_id!: number;
   reason_id: number | null = null;
   descripcion_adicional: string = "";
 
@@ -22,6 +22,7 @@ export class Report implements OnInit {
   ngOnInit(): void {
     console.log("publication_id:", this.publication_id);
     console.log("user_id:", this.user_id);
+    console.log("seller_id:", this.seller_id);
   }
 
  onSubmit(): void {
@@ -37,16 +38,30 @@ export class Report implements OnInit {
   };
 
   console.log("Payload que se envía:", payload);
-
-  this.reportService.reportPublication(this.publication_id, payload).subscribe({
-  next: res => {
-    console.log("Reporte enviado:", res);
-    alert("Reporte enviado con éxito ✅");
-  },
-  error: err => {
-    console.error("Error al enviar reporte:", err);
-    alert("Hubo un error al enviar el reporte ❌");
-  }
-});
+if (this.publication_id) {
+      // Reporte de publicación
+      this.reportService.reportPublication(this.publication_id, payload).subscribe({
+        next: res => {
+          console.log("Reporte de publicación enviado:", res);
+          alert("Reporte de publicación enviado con éxito ✅");
+        },
+        error: err => {
+          console.error("Error al enviar reporte de publicación:", err);
+          alert("Hubo un error al enviar el reporte de la publicación ❌");
+        }
+      });
+    } else if (this.seller_id) {
+      // Reporte de perfil
+      this.reportService.reportSeller(this.seller_id, payload).subscribe({
+        next: res => {
+          console.log("Reporte de perfil enviado:", res);
+          alert("Reporte del perfil enviado con éxito ✅");
+        },
+        error: err => {
+          console.error("Error al enviar reporte de perfil:", err);
+          alert("Hubo un error al enviar el reporte del perfil ❌");
+        }
+      });
+    } 
 }
 }
