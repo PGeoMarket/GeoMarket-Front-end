@@ -2,7 +2,11 @@
     <div class="grid grid-rows-[auto_1fr_auto] h-full min-h-0">
         <!-- Header -->
         <div class="flex items-center gap-3 border-b border-borde2 rounded-t-lg p-2">
-            <img src="svg/back-icon.svg" class="cursor-pointer w-6 h-6" onclick="">
+            <!-- Botón de volver -->
+            <img src="svg/back-icon.svg" 
+                 class="cursor-pointer w-6 h-6" 
+                 (click)="onClose()">
+            
             <div class="w-14 h-14 md:w-16 md:h-16 bg-gray-100 overflow-hidden rounded-full shadow">
                 <img src="img/florhuila.png" alt="" class="w-full h-full object-cover" />
             </div>
