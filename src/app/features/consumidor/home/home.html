@@ -1,28 +1,10 @@
 <div class="flex justify-center" (click)="cerrarMenus()">
     <div class="fixed w-[90%] flex justify-between items-center bg-white my-[-8px] py-2 z-40">
         <!-- Filtrar -->
+        <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event"></app-filters>
 
-        <ul class="nav">
-            <li>
-                <!-- Boton filtrar -->
-                <button class="btn_azulPotente cursor-pointer" (click)="abrirFiltros($event)">Filtrar {{filtro}}</button>
-
-                <!-- Filtros -->
-                @if (isAbierto) {
-                <ul class="absolute bg-white text-textosNoNegro translate-x-2 translate-y-0 min-w-[200px] text-left">
-                    <li class="filtros" (click)="onFilterByPrice()">Filtrar por precio <img src="svg/arrowBlue.svg"
-                            class="w-fit float-right ml-5 translate-y-[100%] rotate-90" alt=""></li>
-                    <li class="filtros" (click)="onFilterByProximity()">Filtrar por cercania <img src="svg/arrowBlue.svg"
-                            class="w-fit float-right ml-5 translate-y-[100%] rotate-90" alt=""></li>
-                    <li class="filtros" (click)="onFilterByCategory()">Filtrar por categoria <img src="svg/arrowBlue.svg"
-                            class="w-fit float-right ml-5 translate-y-[100%] rotate-90" alt=""></li>
-                </ul>
-                }
-            </li>
-
-        </ul>
         <!-- Ubicacion -->
-        <div class="z-50" >
+        <div class="z-50">
             <div class="text-azulSecundario cursor-pointer flex items-center" (click)="onOpenMap()">
                 <img src="svg/icons/location.svg" class="mr-2" alt="">
                 Santander de Quilichao
