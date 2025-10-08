@@ -8,9 +8,9 @@
   <!-- Foto de perfil de la tienda -->
   <div class="flex justify-center mb-6">
     <div class="relative w-32 h-32">
-      <div class="border-1 border-borde1 rounded-full my-3 w-fit h-auto md:max-h-[500px] mx-auto">
-        <button class="btn_negative absolute" (click)="onResetImage()">X</button>
-        <img *ngIf="!imagePreview" [src]="user_edit.image?.url" class="h-full rounded-full">
+      <div class="relative w-32 h-32 rounded-full overflow-hidden border border-borde1 my-3 mx-auto">
+        <button class="bg-gray-400 rounded-full px-3 absolute top-3 left-5" (click)="onResetImage()">X</button>
+        <img *ngIf="!imagePreview" [src]="user_edit.image?.url" class="w-full h-full object-cover rounded-full">
         <img *ngIf="imagePreview" [src]="imagePreview" class="h-full rounded-full">
       </div>
       
