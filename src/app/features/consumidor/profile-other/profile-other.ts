@@ -66,21 +66,28 @@ export class ProfileOther {
     cerrarMenus() {
       this.menuAbierto = false;
     }
-  onReport(publicationId?: number) {
+  onReport() {
   if (!this.userService.isLoggedIn()) {
     this.dialogManager.openDialog('login', { data: { mode: 'create' } });
     return;
   }
 
-  const user = this.userService.getCurrentUser();
+  const currentUser = this.userService.getCurrentUser();
+
+  // Evitar que el usuario se reporte a sí mismo
+  if (currentUser?.id === this.seller?.id) {
+    alert("No puedes reportarte a ti mismo.");
+    return;
+  }
 
   this.dialogManager.openDialog('report', {
     data: {
-      seller_id: this.seller?.id,
-      user_id: user?.id
+      user_id: currentUser?.id, // quien reporta
+      seller_id: this.seller?.id // perfil a reportar
     },
     onClose: (res) => console.log('Reporte cerrado con:', res)
   });
 }
+
 
 }

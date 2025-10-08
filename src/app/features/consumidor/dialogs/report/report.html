@@ -39,7 +39,7 @@
       }
 
       <!-- Motivos para PERFILES -->
-      @if (seller_id) {
+      @if (user_id) {
         <label class="flex items-center gap-2">
           <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="5" class="accent-azulPotente" />
           <span>Perfil falso o suplantación</span>
@@ -70,7 +70,7 @@
       <!-- Campo especificar -->
       <textarea id="mensaje" name="mensaje" [(ngModel)]="descripcion_adicional"
         placeholder="Especificar..."
-        [disabled]="reason_id !== 10"
+        [disabled]="reason_id !== 9"
         class="w-full h-[5em] border border-borde2 rounded-xl p-3 resize-none 
                focus:outline-none focus:ring-2 focus:ring-azulSecundario focus:border-transparent"></textarea>
 
