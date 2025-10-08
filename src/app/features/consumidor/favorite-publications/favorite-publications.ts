@@ -1,39 +1,36 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PublicationDTO } from '../../../core/services/publication-service';
 import { UserService } from '../../../core/services/user-service';
 import { CommonModule } from '@angular/common';
 import { ProductDetail } from '../product-detail/product-detail';
+import { Filters } from '../filters/filters';
+import { DialogManager } from '../../../core/dialogs/dialog-manager';
+import { Publications } from '../publications/publications';
 
 
 @Component({
   selector: 'app-favorite-publications',
-  imports: [CommonModule, ProductDetail],
+  imports: [CommonModule, Publications, Filters],
   templateUrl: './favorite-publications.html',
   styleUrl: './favorite-publications.css'
 })
-export class FavoritePublications implements OnInit {
-publications!: PublicationDTO[];
-publication_selected!: PublicationDTO | null;
-constructor(private userService:UserService){}
+export class FavoritePublications {
+  publications!: PublicationDTO[];
+  publication_selected!: PublicationDTO | null;
+  isAbierto: boolean = false;
+  dialogManager = inject(DialogManager);
 
-ngOnInit(): void {
-  this.getFavoritePublications();
 
-  this.userService.favoritePublications$
-  .subscribe( r =>{
-    this.getFavoritePublications();
-  })
-}
+  abrirFiltros(event: MouseEvent) {
+    event.stopPropagation(); // evita que cierre de inmediato
+    this.isAbierto = true;
+  }
 
-getFavoritePublications(){
-this.userService.getFavorites().subscribe({
-  next:data=>this.publications=data,
-  error: error => console.error('No se pudo obtener las publicaciones: ' + error),
-        complete: () => console.log('Publicaciones obtenidas correctamente')
-});
-}
+  cerrarMenus() {
+    this.isAbierto = false;
+  }
 
-open: boolean = false;
+  open: boolean = false;
 
   private closeTimeout: any; // declara esto junto a las propiedades de la clase
 
@@ -62,6 +59,5 @@ open: boolean = false;
       this.closeTimeout = undefined;
     }, 300);
 
-    this.getFavoritePublications();
   }
 }

@@ -1,6 +1,5 @@
 <!-- Contenedor principal -->
 <div class="min-h-screen flex justify-center items-center p-4">
-
   <div class="bg-blancoSucio w-full max-w-[30em] border border-borde2 rounded-xl p-12 max-h-[90vh] overflow-y-auto relative">
 
     <!-- Botón volver -->
@@ -9,58 +8,77 @@
     </button>
 
     <!-- Título -->
-    <p class="text-center text-azulPotente font-sans text-xl mb-6">Motivo del reporte</p>
+    <p class="text-center text-azulPotente font-sans text-xl mb-6">
+      Motivo del reporte
+    </p>
 
     <!-- Lista de opciones -->
     <form class="space-y-3" (ngSubmit)="onSubmit()" #reportForm="ngForm">
-  <label class="flex items-center gap-2">
-    <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="1" class="accent-azulPotente" />
-    <span>Producto prohibido</span>
-  </label>
 
-  <label class="flex items-center gap-2">
-    <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="2" class="accent-azulPotente" />
-    <span>Información engañosa</span>
-  </label>
+      <!-- Motivos para PUBLICACIONES -->
+      @if (publication_id) {
+        <label class="flex items-center gap-2">
+          <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="1" class="accent-azulPotente" />
+          <span>Producto prohibido</span>
+        </label>
 
-  <label class="flex items-center gap-2">
-    <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="7" class="accent-azulPotente" />
-    <span>Spam</span>
-  </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="2" class="accent-azulPotente" />
+          <span>Información engañosa</span>
+        </label>
 
-  <label class="flex items-center gap-2">
-    <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="8" class="accent-azulPotente" />
-    <span>Contenido inapropiado</span>
-  </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="3" class="accent-azulPotente" />
+          <span>Producto peligroso</span>
+        </label>
 
-  <label class="flex items-center gap-2">
-    <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="3" class="accent-azulPotente" />
-    <span>Producto peligroso</span>
-  </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="4" class="accent-azulPotente" />
+          <span>Práctica comercial sospechosa</span>
+        </label>
+      }
 
-  <label class="flex items-center gap-2">
-    <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="4" class="accent-azulPotente" />
-    <span>Práctica comercial sospechosa</span>
-  </label>
+      <!-- Motivos para PERFILES -->
+      @if (user_id) {
+        <label class="flex items-center gap-2">
+          <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="5" class="accent-azulPotente" />
+          <span>Perfil falso o suplantación</span>
+        </label>
 
-  <label class="flex items-center gap-2">
-    <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="9" class="accent-azulPotente" />
-    <span>Otro motivo</span>
-  </label>
+        <label class="flex items-center gap-2">
+          <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="6" class="accent-azulPotente" />
+          <span>Comportamiento abusivo</span>
+        </label>
+      }
 
-  <!-- Campo especificar -->
-  <textarea id="mensaje" name="mensaje" [(ngModel)]="descripcion_adicional"
-    placeholder="Especificar..."
-    [disabled]="reason_id !== 9"
-    class="w-full h-[5em] border border-borde2 rounded-xl p-3 resize-none 
-           focus:outline-none focus:ring-2 focus:ring-azulSecundario focus:border-transparent"></textarea>
+      <!-- Motivos que aplican a ambos (both) -->
+      <label class="flex items-center gap-2">
+        <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="7" class="accent-azulPotente" />
+        <span>Spam</span>
+      </label>
 
-  <!-- Botones -->
-  <div class="flex justify-end gap-3 mt-6">
-    <button type="button" class="btn_negative cursor-pointer" appClosedialog>Cancelar</button>
-    <button type="submit" class="btn_positive cursor-pointer">Reportar</button>
+      <label class="flex items-center gap-2">
+        <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="8" class="accent-azulPotente" />
+        <span>Contenido inapropiado</span>
+      </label>
+
+      <label class="flex items-center gap-2">
+        <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="9" class="accent-azulPotente" />
+        <span>Otro motivo</span>
+      </label>
+
+      <!-- Campo especificar -->
+      <textarea id="mensaje" name="mensaje" [(ngModel)]="descripcion_adicional"
+        placeholder="Especificar..."
+        [disabled]="reason_id !== 9"
+        class="w-full h-[5em] border border-borde2 rounded-xl p-3 resize-none 
+               focus:outline-none focus:ring-2 focus:ring-azulSecundario focus:border-transparent"></textarea>
+
+      <!-- Botones -->
+      <div class="flex justify-end gap-3 mt-6">
+        <button type="button" class="btn_negative cursor-pointer" appClosedialog>Cancelar</button>
+        <button type="submit" class="btn_positive cursor-pointer">Reportar</button>
+      </div>
+    </form>
   </div>
-</form>
-  </div>
-
 </div>

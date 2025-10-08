@@ -1,9 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Publications } from '../publications/publications';
 import { ActivatedRoute } from '@angular/router';
 import { PublicationService } from '../../../core/services/publication-service';
 import { SellerDTO, SellerService } from '../../../core/services/seller-service';
+import { DialogManager } from '../../../core/dialogs/dialog-manager';
+import { UserService } from '../../../core/services/user-service';
+import { PublicationDTO } from '../../../core/services/publication-service';
 
 @Component({
   selector: 'app-profile-other',
@@ -12,13 +15,16 @@ import { SellerDTO, SellerService } from '../../../core/services/seller-service'
   styleUrl: './profile-other.css'
 })
 export class ProfileOther {
+   @Input() publication_detail!: PublicationDTO | null;
   tab: string = "catalogo";
   repeat = Array.from({ length: 16 });
   seller_id!: number;
   seller!: SellerDTO;
 
-  constructor(private route: ActivatedRoute, private publicationService: PublicationService, private sellerService: SellerService) { }
 
+  constructor(private route: ActivatedRoute, private publicationService: PublicationService, private sellerService: SellerService, private userService:UserService) { }
+  dialogManager = inject(DialogManager);
+  
   ngOnInit(): void {
     this.seller_id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadSellerProfile();
@@ -44,6 +50,12 @@ export class ProfileOther {
     this.publicationService.sendFilter(filtersSeller);
   }
 
+    onOpenMap() {
+    this.dialogManager.openDialog('map', {
+      data: { mode: 'create' }
+    })
+  }
+
     menuAbierto: boolean = false;
     abrirMenu(event: MouseEvent) {
       event.stopPropagation(); // evita que cierre de inmediato
@@ -54,5 +66,28 @@ export class ProfileOther {
     cerrarMenus() {
       this.menuAbierto = false;
     }
-  
+  onReport() {
+  if (!this.userService.isLoggedIn()) {
+    this.dialogManager.openDialog('login', { data: { mode: 'create' } });
+    return;
+  }
+
+  const currentUser = this.userService.getCurrentUser();
+
+  // Evitar que el usuario se reporte a sí mismo
+  if (currentUser?.id === this.seller?.id) {
+    alert("No puedes reportarte a ti mismo.");
+    return;
+  }
+
+  this.dialogManager.openDialog('report', {
+    data: {
+      user_id: currentUser?.id, // quien reporta
+      seller_id: this.seller?.id // perfil a reportar
+    },
+    onClose: (res) => console.log('Reporte cerrado con:', res)
+  });
+}
+
+
 }

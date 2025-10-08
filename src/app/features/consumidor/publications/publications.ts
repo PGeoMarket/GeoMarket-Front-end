@@ -1,9 +1,8 @@
-import { Component, inject, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, Input, OnInit } from '@angular/core';
 import { PublicationDTO, PublicationService } from '../../../core/services/publication-service';
 import { CommonModule } from '@angular/common';
 import { ProductDetail } from '../product-detail/product-detail';
 import { UserService } from '../../../core/services/user-service';
-import { DialogManager } from '../../../core/dialogs/dialog-manager';
 
 @Component({
   selector: 'app-publications',
@@ -16,8 +15,10 @@ import { DialogManager } from '../../../core/dialogs/dialog-manager';
 @Injectable({ providedIn: 'root' })
 export class Publications implements OnInit {
   publications!: PublicationDTO[];
-  publication_selected!: PublicationDTO | null; 
-  constructor(protected publicationService: PublicationService) { }
+  publications_temp!: PublicationDTO[];
+  publication_selected!: PublicationDTO | null;
+  @Input() isFrom_favorites: boolean = false;
+  constructor(protected publicationService: PublicationService, private userService: UserService) { }
 
   ngOnInit(): void {
 
@@ -29,18 +30,32 @@ export class Publications implements OnInit {
       });
 
     this.publicationService.reload_publicationChanged$
-      .subscribe(() => {
-        this.loadPublications();
+      .subscribe((isReload_publication) => {
+        if (isReload_publication) {
+          this.loadPublications();
+        }
       })
   }
 
   loadPublications() {
-    this.publicationService.getAllPublication()
-      .subscribe({
-        next: data => this.publications = data,
-        error: error => console.error('No se pudo obtener las publicaciones: ' + error),
-        complete: () => console.log('Publicaciones obtenidas correctamente')
-      });
+    if (!this.isFrom_favorites) {
+      this.publicationService.getAllPublication()
+        .subscribe({
+          next: data => this.publications = data,
+          error: error => console.error('No se pudo obtener las publicaciones: ' + error),
+          complete: () => console.log('Publicaciones obtenidas correctamente')
+        });
+      return;
+    }
+
+    this.userService.getFavorites().subscribe({
+      next: data => {
+            this.publications = data
+            this.publications_temp = data
+          },
+      error: error => console.error('No se pudo obtener las publicaciones: ' + error),
+      complete: () => console.log('Publicaciones obtenidas correctamente')
+    });
   }
 
   loadFiltredPublications(filters: string) {
@@ -50,14 +65,36 @@ export class Publications implements OnInit {
       return;
     }
 
-    this.publicationService.getFilterPublication(filters) // Usar el parámetro filters
-      .subscribe({
-        next: data => { this.publications = data },
-        error: error => console.error('Error a publications filtradas: ' + error),
-        complete: () => console.log('publications filtradas:' + this.publications.length)
-      });
+    if (!this.isFrom_favorites) {
+      this.publicationService.getFilterPublication(filters) // Usar el parámetro filters
+        .subscribe({
+          next: data => { this.publications = data },
+          error: error => console.error('Error a publications filtradas: ' + error),
+          complete: () => console.log('publications filtradas:' + this.publications.length)
+        });
+      return;
+    }
+    this.loadFavoriteFiltredPublications(filters);
+
   }
 
+  loadFavoriteFiltredPublications(filters: string) {
+    let filters_split = filters.split("&filter[category_id]="); //21 es la longitud de "&filter[seller_id]=" al inicio, para
+    let filtrado: PublicationDTO[] = [];
+
+    this.publications_temp.filter(pub => {
+      filters_split.forEach(f => {
+        if (f != "") {
+          if (pub.category_id == Number(f)) {
+            filtrado.push(pub);
+          }
+        }
+      });
+
+    });
+
+    this.publications = filtrado;
+  }
 
   //Logica a de abrir product-detail
   open: boolean = false;
@@ -90,5 +127,5 @@ export class Publications implements OnInit {
     }, 300);
   }
 
-  
+
 }
