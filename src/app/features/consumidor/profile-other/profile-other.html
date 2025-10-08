@@ -16,7 +16,7 @@
             </button>
             @if (menuAbierto) {
             <div class="mt-1 bg-white border rounded shadow px-2 py-1 text-xs absolute  min-w-[80px] z-10 right-[10%]">
-                <button class="block text-red-500 hover:underline w-full text-left cursor-pointer">Reportar</button>
+                <button class="block text-red-500 hover:underline w-full text-left cursor-pointer" (click)="onReport(publication_detail?.id)">Reportar</button>
             </div>
             }
 
