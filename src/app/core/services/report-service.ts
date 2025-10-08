@@ -44,8 +44,8 @@ export class ReportService extends CrudService<ReportDTO>{
     return this.http.post(`${this.API_URL}/publications/${publicationId}/report`, payload)
   }
 
-  reportSeller(sellerId: number, payload: any):Observable<any> {
-  return this.http.post(`${this.API_URL}/users/${sellerId}/report`, payload);
+  reportUser(userId: number, payload: any):Observable<any> {
+  return this.http.post(`${this.API_URL}/users/${userId}/report`, payload);
 }
 
 }
