@@ -10,24 +10,43 @@
 <div class="bg-[#06406A] h-full flex flex-col">
 
   <!-- Home -->
-  <div class="p-2 md:p-4" routerLink="home">
-    <img src="/svg/home.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
-    <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">Inicio</p>
+  <div class="flex items-center py-3 sm:py-3 md:py-2 lg:py-3 px-3 cursor-pointer" routerLink="home">
+    <img src="/svg/home.svg" class="inline w-8 h-8 sm:w-8 sm:h-8 md:w-6 md:h-6 lg:w-9 lg:h-9" />
+    <p class="text-white inline ml-3 text-lg sm:text-xl md:text-[1.1em] lg:text-[1.3em]">Inicio</p>
   </div>
 
   <!-- Favoritos -->
-  <div class="p-2 md:p-4" routerLink="favorite-publications">
-    <img src="svg/favorites.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
-    <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em] cursor-pointer">
+  <div class="flex items-center py-3 sm:py-3 md:py-2 lg:py-3 px-3 cursor-pointer" routerLink="favorite-publications">
+    <img src="svg/favorites.svg" class="inline w-8 h-8 sm:w-8 sm:h-8 md:w-6 md:h-6 lg:w-9 lg:h-9" />
+    <p class="text-white inline ml-3 text-lg sm:text-xl md:text-[1.1em] lg:text-[1.3em] cursor-pointer">
       Favoritos
     </p>
   </div>
 
   <!-- Mensajes -->
-  <div class="p-2 md:p-4 cursor-pointer" routerLink="/chats">
-    <img src="svg/messages.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
-    <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">Mensajes</p>
+  <div class="flex items-center py-3 sm:py-3 md:py-2 lg:py-3 px-3 cursor-pointer" routerLink="/chats">
+    <img src="svg/messages.svg" class="inline w-8 h-8 sm:w-8 sm:h-8 md:w-6 md:h-6 lg:w-9 lg:h-9" />
+    <p class="text-white inline ml-3 text-lg sm:text-xl md:text-[1.1em] lg:text-[1.3em]">Mensajes</p>
   </div>
+
+  <!-- FaQ -->
+  <div class="flex items-center py-3 sm:py-3 md:py-2 lg:py-3 px-3 cursor-pointer" (click)="onFaq()">
+    <img src="svg/support.svg" class="inline w-8 h-8 sm:w-8 sm:h-8 md:w-6 md:h-6 lg:w-9 lg:h-9" />
+    <p class="text-white inline ml-3 text-lg sm:text-xl md:text-[1.1em] lg:text-[1.3em]">
+      Soporte y preguntas frecuentes
+    </p>
+  </div>
+
+  <!-- Logout -->
+  <div class="flex items-center py-3 sm:py-3 md:py-2 lg:py-3 px-3 mt-4 cursor-pointer" (click)="logout()" routerLink="home">
+    <img src="svg/logout.svg" class="inline w-8 h-8 sm:w-8 sm:h-8 md:w-6 md:h-6 lg:w-9 lg:h-9" />
+    <p class="text-white inline ml-3 text-lg sm:text-xl md:text-[1.1em] lg:text-[1.3em]">
+      Cerrar sesión
+    </p>
+  </div>
+</div>
+
+
   <!-- <div class="p-2 md:p-4">
     <img
       src="svg/notifications.svg"
@@ -37,20 +56,3 @@
       Notificaciones
     </p>
   </div> -->
-
-  <!-- FaQ -->
-  <div class="p-2 md:p-4 cursor-pointer" (click)="onFaq()">
-    <img src="svg/support.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
-    <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">
-      Soporte y preguntas frecuentes
-    </p>
-  </div>
-
-  <!-- Logout -->
-  <div class="p-2 mt-5 cursor-pointer" (click)="logout()" routerLink="home">
-    <img src="svg/logout.svg" class="inline w-7 h-7 md:w-auto md:h-auto" />
-    <p class="text-white inline text-[1.2em] ml-1 md:text-[1.3em]">
-      cerrar sesión
-    </p>
-  </div>
-</div>

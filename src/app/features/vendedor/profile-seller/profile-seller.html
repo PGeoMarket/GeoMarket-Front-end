@@ -1,11 +1,12 @@
 <div
-    class="border border-gray-300 rounded-xl p-2 md:p-4 flex flex-col md:flex-row gap-4 md:gap-6 bg-white shadow h-auto md:h-[calc(100vh-80px)]">
+    class="border border-gray-300 rounded-xl p-2 md:p-4 flex flex-col md:flex-row gap-4 md:gap-6 bg-white shadow h-auto md:h-[calc(100vh-80px)] overflow-hidden overflow-y-auto">
     <!-- Perfil vendedor -->
     <div
         class="w-full md:w-[370px] flex-shrink-0 flex flex-col border border-gray-300 rounded-xl p-4 md:p-6 bg-white relative mb-2 md:mb-0 md:overflow-auto">
         <!-- Botón editar datos -->
         <button
-            class="absolute top-4 right-4 bg-gray-100 rounded-md px-4 py-1 text-sm text-gray-700 shadow hover:bg-gray-200 z-1 cursor-pointer" (click)="onOpenEdit()">
+            class="absolute top-4 right-4 bg-gray-100 rounded-md px-4 py-1 text-sm text-gray-700 shadow hover:bg-gray-200 z-1 cursor-pointer"
+            (click)="onOpenEdit()">
             Editar datos
         </button>
         <!-- icono perfil -->
@@ -13,45 +14,57 @@
             <div class="relative w-32 h-32 rounded-full overflow-hidden border border-borde1 my-3 mx-auto">
                 <img [src]="user?.image?.url || '/svg/profile.svg'" alt="Avatar" class="w-full h-full object-cover rounded-full">
             </div>
+            <div class="m-2 flex bottom-0">
+                @for (star of [1,2,3,4,5]; track $index) {
+                <span class="text-3xl" [class.text-yellow-400]="star <= user?.seller?.puntuacion_promedio!"
+                    [class.text-blue-900]="star > user?.seller?.puntuacion_promedio!">
+                    &#9733;
+                </span>
+                }
+            </div>
         </div>
         <!-- Info -->
-       <form class="w-full flex flex-col gap-3">
-  <label class="text-gray-700 text-sm">Nombre</label>
-  <input type="text" value="{{user?.primer_nombre}} {{user?.segundo_nombre}}" disabled
-    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+        <form class="w-full flex flex-col gap-3">
+            <label class="text-gray-700 text-sm">Nombre</label>
+            <input type="text" value="{{user?.primer_nombre}} {{user?.segundo_nombre}}" disabled
+                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
-  <label class="text-gray-700 text-sm">Negocio</label>
-  <input type="text" value="{{user?.seller?.nombre_tienda}}" disabled
-    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+            <label class="text-gray-700 text-sm">Negocio</label>
+            <input type="text" value="{{user?.seller?.nombre_tienda}}" disabled
+                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
-  <label class="text-gray-700 text-sm">Correo</label>
-  <input type="email" value="{{user?.email}}" disabled
-    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+            <label class="text-gray-700 text-sm">Correo</label>
+            <input type="email" value="{{user?.email}}" disabled
+                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
-  <label class="text-gray-700 text-sm">Teléfono</label>
-  <input type="tel" [value]="user?.seller?.phones?.[0]?.numero_telefono"  disabled
-    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+            <label class="text-gray-700 text-sm">Teléfono</label>
+            <input type="tel" [value]="user?.seller?.phones?.[0]?.numero_telefono" disabled
+                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
-  <label class="text-gray-700 text-sm">Dirección</label>
-  <input type="text" [value]="user?.seller?.coordinate?.direccion" disabled
-    class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
-</form>
+            <label class="text-gray-700 text-sm">Dirección</label>
+            <input type="text" [value]="user?.seller?.coordinate?.direccion" disabled
+                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+            <label class="text-gray-700 text-sm">Descripción:</label>
+            <textarea [value]="user?.seller?.descripcion" disabled
+                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base h-[100px] max-h-[500px] resize-none"></textarea>
+        </form>
 
         <!-- Mapa, botón y estrellas -->
-        <div class="flex items-end gap-2 mt-6 w-full mb-8" >
-            <div class="relative" >
+        <div class="flex items-end gap-2 mt-6 w-full mb-8">
+            <div class="relative">
                 <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1992.160176789594!2d-76.48352223851431!3d3.0082367277367377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e307f3134b20a77%3A0xcb8ce9e4a1c72448!2sSENA%20Regional%20Cauca!5e0!3m2!1ses-419!2sco!4v1750977951386!5m2!1ses-419!2sco"
-        class="w-full h-full" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"> </iframe>
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1992.160176789594!2d-76.48352223851431!3d3.0082367277367377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e307f3134b20a77%3A0xcb8ce9e4a1c72448!2sSENA%20Regional%20Cauca!5e0!3m2!1ses-419!2sco!4v1750977951386!5m2!1ses-419!2sco"
+                    class="w-full h-full" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
                 <button
-                    class="absolute left-2  bg-[#06406A] text-white rounded-md px-4 py-1 text-base font-semibold shadow hover:bg-[#05345a] cursor-pointer" (click)="onOpenMap()" >
+                    class="absolute left-2  bg-[#06406A] text-white rounded-md px-4 py-1 text-base font-semibold shadow hover:bg-[#05345a] cursor-pointer"
+                    (click)="onOpenMap()">
                     Editar ubicación
                 </button>
             </div>
-            <div class="flex ml-auto items-center h-full">
-                <img src="/svg/stars.svg" alt="Estrellas" class="h-10">
-            </div>
         </div>
+
+
     </div>
     <!-- Catálogo y comentarios -->
     <div class="flex-1 flex flex-col min-w-0" x-data="{ tab: 'catalogo' }">
@@ -69,18 +82,18 @@
                 Comentarios
             </button>
         </div>
-       <!-- Catálogo grid con scroll -->
-    @if (tab=="catalogo" || !tab) {
-    <div class="overflow-auto">
-      <app-edit-publication></app-edit-publication>
-    </div>
-    }
+        <!-- Catálogo grid con scroll -->
+        @if (tab=="catalogo" || !tab) {
+        <div class="overflow-auto">
+            <app-edit-publication></app-edit-publication>
+        </div>
+        }
 
-    <!-- Comentarios dinámicos -->
-    @if (tab=="comentarios") {
-    <div class="flex-1 overflow-y-auto pr-2">
-      <app-comments-profile></app-comments-profile>
-    </div>
-    }
+        <!-- Comentarios dinámicos -->
+        @if (tab=="comentarios") {
+        <div class="flex-1 overflow-y-auto pr-2">
+            <app-comments-profile></app-comments-profile>
+        </div>
+        }
     </div>
 </div>
