@@ -5,7 +5,8 @@ import { Comments } from '../comments/comments';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { UserService } from '../../../core/services/user-service';
 import { SellerDTO, SellerService } from '../../../core/services/seller-service';
-import { RouterLink } from '@angular/router'; 
+import { Router, RouterLink } from '@angular/router'; 
+import { ChatService } from '../../../core/services/chat-service';
 
 @Component({
   selector: 'app-product-detail',
@@ -22,7 +23,7 @@ export class ProductDetail implements OnInit{
 
   private dialogManager = inject(DialogManager);
 
-  constructor (private userService: UserService, private sellerService: SellerService) {}
+  constructor (private userService: UserService, private sellerService: SellerService,private chatService: ChatService, private router: Router ) {}
 
   ngOnInit(): void {    
 
@@ -124,7 +125,24 @@ export class ProductDetail implements OnInit{
       return;
     }
 
-    //logica del chat
+    this.chatService.createChatFromPublication(this.publication_detail!.id!)
+      .subscribe({
+        next: (response) => {
+          if (response.success) {
+            console.log('✅ Chat creado/encontrado:', response.chat);
+            
+            // Conectar a Ably
+            this.chatService.connectToChat(response.chat);
+            
+            // Navegar a la pantalla de chats
+            this.router.navigate(['chats']);
+          }
+        },
+        error: (error) => {
+          console.error('❌ Error al crear chat:', error);
+          alert('Error al iniciar el chat. Intenta de nuevo.');
+        }
+      });
   }
 
   /* onReport() {
@@ -161,5 +179,7 @@ export class ProductDetail implements OnInit{
     });
 
   }
+
+  
 }
 

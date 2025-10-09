@@ -2,6 +2,9 @@ import { Component, HostListener } from '@angular/core';
 import { OpenChat } from "../open-chat/open-chat";
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ChatDTO, ChatService } from '../../../core/services/chat-service';
+import { Observable } from 'rxjs';
+import { UserService } from '../../../core/services/user-service';
 
 @Component({
   selector: 'app-chats',
@@ -10,12 +13,33 @@ import { CommonModule } from '@angular/common';
   styleUrl: './chats.css'
 })
 export class Chats {
-  repeat = Array.from({ length: 16 });
+  chatsList$: Observable<ChatDTO[]>;
   ifOpen: boolean = false;
   private windowWidth: number = 0;
+  userRole?:string
 
-  constructor(private router: Router) {
+  constructor(
+    private router: Router,
+    private chatService: ChatService,
+    private userService: UserService
+  ) {
     this.windowWidth = window.innerWidth;
+    this.chatsList$ = this.chatService.chatsList$;
+    this.userRole=userService.getUserRole()
+  }
+
+  
+
+
+  ngOnInit(): void {
+    // Cargar lista de chats al iniciar
+    this.chatService.loadChatsList();
+    
+    // Si hay un chat ya conectado, abrirlo
+    const currentChat = this.chatService.getCurrentChat();
+    if (currentChat) {
+      this.ifOpen = true;
+    }
   }
 
   @HostListener('window:resize', ['$event'])
@@ -24,10 +48,12 @@ export class Chats {
   }
 
   isMobile(): boolean {
-    return this.windowWidth < 768; // md breakpoint de Tailwind
+    return this.windowWidth < 768;
   }
 
-  openChat() {
+  openChat(chat: ChatDTO) {
+    // Conectar a este chat
+    this.chatService.connectToChat(chat);
     this.ifOpen = true;
   }
 
