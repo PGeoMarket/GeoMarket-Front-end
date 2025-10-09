@@ -22,7 +22,7 @@ export class Report implements OnInit {
   ngOnInit(): void {
     console.log("publication_id:", this.publication_id);
     console.log("user_id:", this.user_id);
-     console.log("seller_id:", this.seller_id);
+     console.log("user_seller_id:", this.seller_id);
   }
 
   onSubmit(): void {

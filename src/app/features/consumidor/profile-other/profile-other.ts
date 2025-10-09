@@ -50,6 +50,10 @@ export class ProfileOther {
     this.publicationService.sendFilter(filtersSeller);
   }
 
+  user_seller_id(): number | null {
+    return this.seller?this.seller.user_id : null;
+  }
+
     onOpenMap() {
     this.dialogManager.openDialog('map', {
       data: { mode: 'create' }
@@ -73,21 +77,19 @@ export class ProfileOther {
   }
 
   const currentUser = this.userService.getCurrentUser();
-
+  const reportUser = this.user_seller_id();
   // Evitar que el usuario se reporte a sí mismo
-  if (currentUser?.id === this.seller?.id) {
-    alert("No puedes reportarte a ti mismo.");
-    return;
-  }
+  if (currentUser?.id === reportUser) {
+      alert("No puedes reportarte a ti mismo.");
+      return;
+    }
 
   this.dialogManager.openDialog('report', {
     data: {
       user_id: currentUser?.id, // quien reporta
-      seller_id: this.seller?.id // perfil a reportar
+      seller_id: reportUser // perfil a reportar
     },
     onClose: (res) => console.log('Reporte cerrado con:', res)
   });
 }
-
-
 }
