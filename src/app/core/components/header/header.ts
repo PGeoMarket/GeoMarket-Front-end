@@ -4,29 +4,35 @@ import { AdminSlidebar } from '../slidebars/admin-slidebar/admin-slidebar';
 import { BuyerSlidebar } from '../slidebars/buyer-slidebar/buyer-slidebar';
 import { GuestSlidebar } from '../slidebars/guest-slidebar/guest-slidebar';
 import { SellerSlidebar } from '../slidebars/seller-slidebar/seller-slidebar';
+import { Router, RouterLink } from '@angular/router';
+import { UserService } from '../../services/user-service';
+import { LoginService } from '../../services/login-service';
+import { FormsModule } from '@angular/forms';
+import { PublicationService } from '../../services/publication-service';
+
 
 @Component({
   selector: 'app-header',
-  imports: [CommonModule,SellerSlidebar,AdminSlidebar,BuyerSlidebar,GuestSlidebar],
+  standalone: true,
+  imports: [CommonModule, SellerSlidebar, AdminSlidebar, BuyerSlidebar, GuestSlidebar, RouterLink, FormsModule],
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
 export class Header {
-  /* logoUrl = /svg/icons/logo.svg';
-  geomarketLogoUrl = 'assets/svg/icons/geomarket.svg';
-  lupaUrl = 'public/svg/icons/lupa.svg';
-  temaUrl = 'public/svg/icons/teme.svg';
-  menuUrl = 'public/svg/icons/menu.svg';
-  userProfileUrl = 'public/svg/icons/userProfiel.svg';
-  homeUrl = 'public/svg/icons/home.svg';
-  favoritesUrl = 'public/svg/icons/favorites.svg';
-  addPublicationUrl = 'public/svg/icons/addPublication.svg';
-  messagesUrl = 'public/svg/icons/messages.svg';
-  supportUrl = 'public/svg/icons/support.svg'; */
 
-  role:string='buyer'
+  constructor(
+    private userService: UserService,
+    private loginService: LoginService,
+    private publicationService: PublicationService,
+    private router: Router,
+  ) {
+    let currentUser$ = this.userService.currentUser$;
+  }
 
-  open = false; // equivalente al x-data { open: false }
+  // Estado reactivo del usuario
+
+  open = false;
+
 
   toggleMenu() {
     this.open = !this.open;
@@ -35,4 +41,48 @@ export class Header {
   closeMenu() {
     this.open = false;
   }
+
+  // Getters para el rol
+  get role(): string {
+    return this.userService.getUserRole();
+  }
+
+  get isLoggedIn(): boolean {
+    return this.userService.isLoggedIn();
+  }
+
+  get isAdmin(): boolean {
+    return this.userService.isAdmin();
+  }
+
+  get isVendedor(): boolean {
+    return this.userService.isVendedor();
+  }
+
+  get isConsumidor(): boolean {
+    return this.userService.isConsumidor();
+  }
+
+  // Logout
+  logout(): void {
+    this.loginService.logout().subscribe({
+      next: () => {
+        console.log('Logout exitoso');
+      },
+      error: () => {
+        // Logout local aunque falle el servidor
+        localStorage.clear();
+        this.userService.clearUserData();
+      }
+    });
+  }
+
+  searchPublicationByName(searchPublication: string) {
+    this.router.navigate(['/home']);
+    this.publicationService.sendFilter('&filter[titulo]=' + searchPublication);
+
+  }
+
 }
+
+

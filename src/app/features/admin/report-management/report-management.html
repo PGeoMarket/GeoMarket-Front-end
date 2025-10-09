@@ -1,0 +1,40 @@
+
+<div class="bg-white border-3 border-borde1 rounded-lg relative h-screen md:h-[calc(100vh-(4rem+24px))] z-10 p-2 grid grid-rows-[auto_1fr]">
+    <!-- Encabezado -->
+    <div class="flex items-center gap-3">
+        <img src="svg/back-icon.svg" class="w-6 h-6 cursor-pointer" onclick="history.back()">
+        <p class="text-4xl font-semibold text-azulPotente mx-auto md:text-5xl">Gestionar</p>
+    </div>
+
+    <!-- Contenedor principal: lista de chats + chat abierto -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 h-full min-h-0 mt-2">
+
+        <!-- Columna izquierda: lista de chats -->
+        <div class="overflow-y-auto flex flex-col gap-2 pr-1">
+
+            <!-- Más chats -->
+            @for (report of reports; track $index){
+                <div class="border-3 border-borde1 rounded-lg p-2 grid grid-cols-[auto_1fr_auto] grid-rows-[auto_auto] items-center cursor-pointer" (click)="ifOpen=!ifOpen" >
+                    <div class="w-16 h-16 md:w-20 md:h-20 bg-gray-100 overflow-hidden rounded-full shadow row-span-2 mr-1">
+                        <img src="{{report.reportable?.image?.url}}" alt="" class="w-full h-full object-cover" />
+                    </div>
+                    <p class="text-azulPotente font-semibold text-[0.9em] mt-1 md:text-[1.2em]">
+                        {{getReportableTitle(report)}}
+                    </p>
+                    <div class="row-span-2 flex flex-col justify-between items-end h-full self-stretch text-sm text-textosNoNegro">
+                        <p>hoy</p>
+                        <p>23:25</p>
+                    </div>
+                    <p class="text-textosNoNegro text-[0.8em] md:text-[1em]">Motivo: {{report.reason?.motivo}}</p>
+                </div>
+            }
+        </div>
+
+        <!-- Columna derecha: chat abierto -->
+        <div class="hidden md:block bg-gray-100 rounded-lg p-4 h-full overflow-y-auto">
+            @if (ifOpen) {
+                <app-open-reporte></app-open-reporte>
+            }
+        </div>
+    </div>
+</div>

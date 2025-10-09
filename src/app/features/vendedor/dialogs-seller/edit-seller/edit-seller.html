@@ -1,0 +1,117 @@
+<div class="bg-white p-6 sm:p-8 rounded-lg shadow-md w-170 max-w-sm relative border border-gray-200 overflow-y-auto max-h-[90vh]">
+  <button class="p-0.1 rounded cursor-pointer" appClosedialog>
+    <img src="/svg/back-icon.svg" alt="">
+  </button>
+
+  <!-- Foto de perfil de la tienda -->
+  <div class="flex justify-center mb-6">
+    <div class="relative w-32 h-32">
+      <div class="relative w-32 h-32 rounded-full overflow-hidden border border-borde1 my-3 mx-auto">
+        <button class="bg-gray-400 rounded-full px-3 absolute top-3 left-5" (click)="onResetImage()">X</button>
+        <img *ngIf="!imagePreview" [src]="user_edit.image?.url" class="w-full h-full object-cover rounded-full">
+        <img *ngIf="imagePreview" [src]="imagePreview" class="w-full h-full object-cover rounded-full">
+      </div>
+      
+      <!-- Botón para editar -->
+      <div class="absolute bottom-2 right-2">
+        <label class="cursor-pointer">
+          <img src="/svg/edit.svg" alt="Editar" class="w-8 h-8 rounded-full bg-white p-1 shadow-md" />
+          <input type="file" accept="image/*" class="hidden" (change)="onImageSelected($event)" />
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Formulario -->
+  <form class="space-y-5">
+    <!-- ============ DATOS DE USUARIO ============ -->
+    <h3 class="text-gray-800 font-semibold">Datos del Usuario</h3>
+
+    <!-- Primer Nombre -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 pb-0.5">
+        Primer Nombre:
+      </label>
+      <input type="text" [(ngModel)]="user_edit!.primer_nombre" name="primer_nombre" class="inputs_registro w-full"/>
+    </div>
+
+    <!-- Segundo Nombre -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 pb-0.5">
+        Segundo Nombre:
+      </label>
+      <input type="text" [(ngModel)]="user_edit!.segundo_nombre" name="segundo_nombre" class="inputs_registro w-full" />
+    </div>
+
+    <!-- Primer Apellido -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 pb-0.5">
+        Primer Apellido:
+      </label>
+      <input type="text" [(ngModel)]="user_edit!.primer_apellido" name="primer_apellido" class="inputs_registro w-full" />
+    </div>
+
+    <!-- Segundo Apellido -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 pb-0.5">
+        Segundo Apellido:
+      </label>
+      <input type="text" [(ngModel)]="user_edit!.segundo_apellido" name="segundo_apellido" class="inputs_registro w-full" />
+    </div>
+
+    <!-- Email -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 pb-0.5">
+        Email:
+      </label>
+      <input type="email" [(ngModel)]="user_edit!.email" name="email" class="inputs_registro w-full" />
+    </div>
+
+    <!-- ============ DATOS DE LA TIENDA ============ -->
+    <h3 class="text-gray-800 font-semibold pt-4">Datos de la Tienda</h3>
+
+    <!-- Nombre de la Tienda -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 pb-0.5">
+        Nombre de la Tienda:
+      </label>
+      <input type="text" [(ngModel)]="user_edit.seller!.nombre_tienda" name="nombre_tienda" class="inputs_registro w-full" />
+    </div>
+
+    <!-- Descripción -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 pb-0.5">
+        Descripción:
+      </label>
+      <!-- ✅ CORREGIDO: Cambié user por user_edit -->
+      <textarea [(ngModel)]="user_edit.seller!.descripcion" name="descripcion" class="inputs_registro w-full"></textarea>
+    </div>
+
+    <!-- Dirección -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 pb-0.5">
+        Dirección:
+      </label>
+      <!-- ✅ CORREGIDO: Cambié user por user_edit -->
+      <input type="text" [(ngModel)]="user_edit!.seller!.coordinate!.direccion" name="direccion" class="inputs_registro w-full" />
+    </div>
+
+    <!-- Botones -->
+    <div class="flex justify-center items-center space-x-4 pt-4">
+      <button class="btn_negative" appClosedialog type="button" [disabled]="isLoading">
+        Cancelar
+      </button>
+      <button class="btn_positive" type="button" (click)="saveChanges()" [disabled]="isLoading">
+        {{ isLoading ? 'Guardando...' : 'Guardar' }}
+      </button>
+    </div>
+
+    <!-- Mensajes -->
+    <div *ngIf="showSuccessMessage" class="text-green-600 text-sm pt-2">
+      ¡Perfil actualizado con éxito!
+    </div>
+    <div *ngIf="showErrorMessage" class="text-red-600 text-sm pt-2">
+      Hubo un error al actualizar el perfil.
+    </div>
+  </form>
+</div>

@@ -1,0 +1,73 @@
+<div class=" p-4 rounded-md border border-gray-400 bg-white font-sans">
+  <form (ngSubmit)="onSubmit(comment_user.value);" #commentForm="ngForm">
+    <button class="rounded-lg w-10 h-10 border-0 flex items-center justify-center" appClosedialog>
+      <img src="svg/back-icon.svg" alt="atras" class="w-15 h-15">
+    </button>
+    <!-- Encabezado -->
+    <div class="flex items-center justify-center flex-wrap">
+
+      <p class="text-2xl ml-4">Calificar</p>
+      <!-- Estrellas: contenedor relativo con espacio reservado -->
+      <div class="relative flex flex-col items-center w-full">
+        <div class="flex space-x-1">
+          @for (star of [1,2,3,4,5]; track $index) {
+          <span class="text-[2.5em] cursor-pointer" [class.text-yellow-400]="(rating ?? 0) >= star"
+            [class.text-blue-900]="(rating ?? 0) < star" (click)="setRating(star)">
+            &#9733;
+          </span>
+          }
+        </div>
+
+        <!-- hidden model -->
+        <input type="hidden" name="valor_estrella" [(ngModel)]="rating" #valor_estrella="ngModel" required>
+
+        <!-- contenedor reservado (altura fija) -->
+        <div class="h-6 w-full"></div>
+
+        <!-- mensaje absolute: no altera el layout -->
+        <div class="absolute bottom-0 left-1 w-full pointer-events-none">
+          @if ((valor_estrella.invalid && (valor_estrella.touched || commentForm.submitted))
+          || (commentForm.submitted && (rating === null || rating === 0))) {
+          <div class="text-red-500 text-sm pointer-events-auto">
+            Este campo es obligatorio
+          </div>
+          }
+        </div>
+      </div>
+
+
+    </div>
+
+    <!-- padre relativo para que el error sea absolute dentro de su espacio -->
+    <div class="relative w-full">
+      <textarea placeholder="Deja un comentario aquí.." name="comment_user"
+        class="w-full h-[120px] border border-gray-400 rounded-lg bg-white resize-none p-3 focus:outline-none focus:border-[#144467]"
+        [class.border-red-500]="comment_user.invalid && (comment_user.touched || commentForm.submitted)" required
+        #comment_user="ngModel" ngModel></textarea>
+
+      <!-- espacio reservado (ocupado siempre por el contenedor, pero vacío) -->
+      <div class="h-6"></div>
+
+      <!-- mensaje absolute: no empuja el layout -->
+      <div class="absolute bottom-0 left-0 w-full">
+        @if (comment_user.invalid && (comment_user.touched || commentForm.submitted)) {
+        <div class="text-red-500 text-sm">
+          El este campo es obligatorio
+        </div>
+        }
+      </div>
+    </div>
+
+
+    <!-- Botones -->
+    <div class="flex justify-end space-x-4">
+      <button type="button" class="w-32 h-12 btn_negative" appClosedialog>
+        Cancelar
+      </button>
+      <button type="submit" class="w-32 h-12 btn_positive">
+        Calificar
+      </button>
+
+    </div>
+  </form>
+</div>

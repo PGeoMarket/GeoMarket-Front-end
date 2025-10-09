@@ -11,22 +11,23 @@
   <!-- Opciones de categoría -->
   <div class="mt-4">
     <label class="block ml-30 mb-4">
-      <input type="checkbox" class="mr-2" [value]="1"  (change)="onCategoryChange($event.target.checked, 1)">> Electrodomesticos
+      <input type="checkbox" class="mr-2" [value]="1"  (change)="onCategoryChange($event.target.checked, 1)"> Electrodomesticos
     </label>
     <label class="block ml-30 mb-4">
-      <input type="checkbox" class="mr-2" [value]="2"  (change)="onCategoryChange($event.target.checked, 2)">> Alimentos
+      <input type="checkbox" class="mr-2" [value]="2"  (change)="onCategoryChange($event.target.checked, 2)"> Alimentos
     </label>
     <label class="block ml-30 mb-4">
-      <input type="checkbox" class="mr-2" [value]="3"  (change)="onCategoryChange($event.target.checked, 3)">> Entretenimiento
+      <input type="checkbox" class="mr-2" [value]="3"  (change)="onCategoryChange($event.target.checked, 3)"> Entretenimiento
     </label>
     <label class="block ml-30 mb-6">
-      <input type="checkbox" class="mr-2" [value]="4"  (change)="onCategoryChange($event.target.checked, 4)">> Muebles
+      <input type="checkbox" class="mr-2" [value]="4"  (change)="onCategoryChange($event.target.checked, 4)"> Muebles
     </label>
   </div>
 
   <!-- Botón de acción -->
   <div class="flex justify-end mt-2em  mr-37">
-    <button (click)="applyFilter()" class="bg-[#063E67] text-white w-[6.5em] h-[2.5em] rounded-md hover:bg-[#0369a1]">
+    <button (click)="applyFilter()" class="bg-[#063E67] text-white w-[6.5em] h-[2.5em] rounded-md 
+    hover:bg-[#0369a1]" appClosedialog>
       Aceptar
     </button>
   </div>
