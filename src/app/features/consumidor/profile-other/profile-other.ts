@@ -15,33 +15,33 @@ import { PublicationDTO } from '../../../core/services/publication-service';
   styleUrl: './profile-other.css'
 })
 export class ProfileOther {
-   @Input() publication_detail!: PublicationDTO | null;
+  @Input() publication_detail!: PublicationDTO | null;
   tab: string = "catalogo";
   repeat = Array.from({ length: 16 });
   seller_id!: number;
   seller!: SellerDTO;
 
 
-  constructor(private route: ActivatedRoute, private publicationService: PublicationService, private sellerService: SellerService, private userService:UserService) { }
+  constructor(private route: ActivatedRoute, private publicationService: PublicationService, private sellerService: SellerService, private userService: UserService) { }
   dialogManager = inject(DialogManager);
-  
+
   ngOnInit(): void {
     this.seller_id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadSellerProfile();
     this.loadPublicationsOther();
   }
-  
+
   loadSellerProfile() {
     this.sellerService.getByIdSeller(this.seller_id)
       .subscribe({
         next: data => this.seller = data,
         error: error => console.error("No se pudo traer a seller", error),
         complete: () => console.log("Vendedor traido correctamente")
-        
+
       });
 
-      console.log(this.seller);
-      
+    console.log(this.seller);
+
   }
 
   loadPublicationsOther() {
@@ -54,7 +54,7 @@ export class ProfileOther {
     return this.seller?this.seller.user_id : null;
   }
 
-    onOpenMap() {
+  onOpenMap() {
     this.dialogManager.openDialog('map', {
       data: { mode: 'create' }
     })
@@ -67,14 +67,14 @@ export class ProfileOther {
       this.menuAbierto = true;
     }
 
-    cerrarMenus() {
-      this.menuAbierto = false;
-    }
-  onReport() {
-  if (!this.userService.isLoggedIn()) {
-    this.dialogManager.openDialog('login', { data: { mode: 'create' } });
-    return;
+  cerrarMenus() {
+    this.menuAbierto = false;
   }
+  onReport(): void {
+    if (!this.userService.isLoggedIn()) {
+      this.dialogManager.openDialog('login', { data: { mode: 'create' } });
+      return;
+    }
 
   const currentUser = this.userService.getCurrentUser();
   const reportUser = this.user_seller_id();
