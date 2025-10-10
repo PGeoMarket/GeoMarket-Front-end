@@ -15,33 +15,33 @@ import { PublicationDTO } from '../../../core/services/publication-service';
   styleUrl: './profile-other.css'
 })
 export class ProfileOther {
-  @Input() publication_detail!: PublicationDTO | null;
+   @Input() publication_detail!: PublicationDTO | null;
   tab: string = "catalogo";
   repeat = Array.from({ length: 16 });
   seller_id!: number;
   seller!: SellerDTO;
 
 
-  constructor(private route: ActivatedRoute, private publicationService: PublicationService, private sellerService: SellerService, private userService: UserService) { }
+  constructor(private route: ActivatedRoute, private publicationService: PublicationService, private sellerService: SellerService, private userService:UserService) { }
   dialogManager = inject(DialogManager);
-
+  
   ngOnInit(): void {
     this.seller_id = Number(this.route.snapshot.paramMap.get('id'));
     this.loadSellerProfile();
     this.loadPublicationsOther();
   }
-
+  
   loadSellerProfile() {
     this.sellerService.getByIdSeller(this.seller_id)
       .subscribe({
         next: data => this.seller = data,
         error: error => console.error("No se pudo traer a seller", error),
         complete: () => console.log("Vendedor traido correctamente")
-
+        
       });
 
-    console.log(this.seller);
-
+      console.log(this.seller);
+      
   }
 
   loadPublicationsOther() {
@@ -50,53 +50,46 @@ export class ProfileOther {
     this.publicationService.sendFilter(filtersSeller);
   }
 
-  onOpenMap() {
+  user_seller_id(): number | null {
+    return this.seller?this.seller.user_id : null;
+  }
+
+    onOpenMap() {
     this.dialogManager.openDialog('map', {
       data: { mode: 'create' }
     })
   }
 
-  menuAbierto: boolean = false;
-  abrirMenu(event: MouseEvent) {
-    event.stopPropagation(); // evita que cierre de inmediato
-    //this.editarIndex = this.editarIndex === index ? null : index;
-    this.menuAbierto = true;
-  }
-
-  cerrarMenus() {
-    this.menuAbierto = false;
-  }
-  onReport(): void {
-    if (!this.userService.isLoggedIn()) {
-      this.dialogManager.openDialog('login', { data: { mode: 'create' } });
-      return;
+    menuAbierto: boolean = false;
+    abrirMenu(event: MouseEvent) {
+      event.stopPropagation(); // evita que cierre de inmediato
+      //this.editarIndex = this.editarIndex === index ? null : index;
+      this.menuAbierto = true;
     }
 
-    const currentUser = this.userService.getCurrentUser();
-
-    const sellerId = this.publication_detail?.seller_id || this.seller_id;
-
-    if (!sellerId) {
-      console.error("No se encontró el ID del vendedor a reportar.");
-      alert("No se pudo identificar el usuario a reportar.");
-      return;
+    cerrarMenus() {
+      this.menuAbierto = false;
     }
+  onReport() {
+  if (!this.userService.isLoggedIn()) {
+    this.dialogManager.openDialog('login', { data: { mode: 'create' } });
+    return;
+  }
 
-    if (currentUser?.id === sellerId) {
+  const currentUser = this.userService.getCurrentUser();
+  const reportUser = this.user_seller_id();
+  // Evitar que el usuario se reporte a sí mismo
+  if (currentUser?.id === reportUser) {
       alert("No puedes reportarte a ti mismo.");
       return;
     }
-    console.log("📌 Reportando al vendedor con ID:", sellerId);
 
-    this.dialogManager.openDialog('report', {
-      data: {
-        reporter_id: currentUser?.id, // quien reporta
-        reported_user_id: sellerId    // el usuario o vendedor reportado
-      },
-      onClose: (res) => console.log('Reporte cerrado con:', res)
-    });
-  }
-
-
-
+  this.dialogManager.openDialog('report', {
+    data: {
+      user_id: currentUser?.id, // quien reporta
+      seller_id: reportUser // perfil a reportar
+    },
+    onClose: (res) => console.log('Reporte cerrado con:', res)
+  });
+}
 }
