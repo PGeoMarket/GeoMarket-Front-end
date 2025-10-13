@@ -7,10 +7,11 @@ import { SellerDTO, SellerService } from '../../../core/services/seller-service'
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { UserService } from '../../../core/services/user-service';
 import { PublicationDTO } from '../../../core/services/publication-service';
+import { CommentsProfile } from "../../vendedor/comments-profile/comments-profile";
 
 @Component({
   selector: 'app-profile-other',
-  imports: [CommonModule, Publications],
+  imports: [CommonModule, Publications, CommentsProfile],
   templateUrl: './profile-other.html',
   styleUrl: './profile-other.css'
 })
