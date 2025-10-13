@@ -92,7 +92,7 @@
         <!-- Comentarios dinámicos -->
         @if (tab=="comentarios") {
         <div class="flex-1 overflow-y-auto pr-2">
-            <app-comments-profile></app-comments-profile>
+            <app-comments-profile [useCurrentUserSeller]="true"></app-comments-profile>
         </div>
         }
     </div>
