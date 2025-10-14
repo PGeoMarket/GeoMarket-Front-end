@@ -22,19 +22,20 @@ export class Publications implements OnInit {
 
   ngOnInit(): void {
 
-    this.loadPublications();
-
+    //Publicaciones con filtros, si no hay filtros simplemente se cargan todos
     this.publicationService.filterChanged$
       .subscribe(filters => {
         this.loadFiltredPublications(filters);
       });
 
+    //Recargar publicaciones
     this.publicationService.reload_publicationChanged$
       .subscribe((isReload_publication) => {
         if (isReload_publication) {
           this.loadPublications();
         }
       })
+
   }
 
   loadPublications() {
