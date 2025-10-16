@@ -1,6 +1,6 @@
 <!-- src/app/pages/chats/chats.html -->
 
-<div class="bg-white border-3 border-borde1 rounded-lg relative h-screen md:h-[calc(100vh-(4rem+24px))] z-10 p-2 grid grid-rows-[auto_1fr]">
+<div class="bg-white border-3 border-borde1 rounded-lg relative h-screen md:h-[calc(100vh-(4rem+24px))] z-10 p-4 grid grid-rows-[auto_1fr]">
   <!-- Encabezado -->
   <div class="flex items-center gap-3">
     <img src="svg/back-icon.svg" class="w-9 h-9 cursor-pointer" (click)="goBack()">
@@ -58,7 +58,7 @@
     </div>
 
     <!-- Columna derecha: chat abierto -->
-    <div class="bg-gray-100 rounded-lg p-4 h-full overflow-y-auto"
+    <div class="bg-gray-100 rounded-lg h-full overflow-y-auto"
          [class.col-span-1]="ifOpen && isMobile()">
       @if (ifOpen) {
         <app-open-chat (closeChat)="closeChat()"></app-open-chat>
