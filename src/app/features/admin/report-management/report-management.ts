@@ -14,7 +14,7 @@ import { UserDTO } from '../../../core/services/user-service';
 export class ReportManagement implements OnInit{
 
   ifOpen : boolean= false;
-
+  selectedReport: ReportDTO | null = null;
   reports?:ReportDTO[]
 
   constructor(private reportService:ReportService,private http:HttpClient){}
@@ -40,5 +40,19 @@ export class ReportManagement implements OnInit{
   return '';
 }
 
+  openReport(report: ReportDTO) {
+    // Si clickeas el mismo reporte, cierra
+    if (this.selectedReport?.id === report.id && this.ifOpen) {
+      this.ifOpen = false;
+      this.selectedReport = null;
+      return;
+    }
+    
+    // Si clickeas otro reporte, abre ese
+    this.selectedReport = report;
+    console.log(this.selectedReport);
+    
+    this.ifOpen = true;
+  }
 
 }
