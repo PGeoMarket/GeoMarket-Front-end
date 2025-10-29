@@ -1,20 +1,19 @@
 <div class="relative inline-block text-left z-50 bg-blancoSucio">
   <div class="w-[300px] md:w-[420px]">
-    <div class="bg-white rounded shadow-sm max-h-60 overflow-auto">
-      <ul *ngIf="history$ | async as history; else noHistory" class="divide-y">
+    <div class="bg-white rounded shadow-sm max-h-60 overflow-y-auto">
+      <ul *ngIf="history$ | async as history; else noHistory" class="divide-y divide-borde2">
         <li
           *ngFor="let entry of slice(history)"
-          class="flex items-center justify-between px-3 py-2 hover:bg-gray-50 cursor-pointer"
+          class="flex items-center justify-between px-3 py-2 hover:bg-gray-50 cursor-pointer none"
           (click)="use(entry)"
         >
-          <div class="flex-1">
-            <div class="text-sm text-gray-800 truncate">{{ entry.query }}</div>
-            <div class="text-xs text-gray-400">{{ entry.at | date:'short' }}</div>
+          <div class="flex-1 overflow-x-hidden">
+            <div class="text-text-base text-gray-800 truncate">{{ entry.query }}</div>
+            <div class="text-sm text-gray-400">{{ entry.at | date:'short' }}</div>
           </div>
           <button
             class="ml-3 text-xl font-bold text-borde2 px-2"
-            (click)="remove(entry, $event)"
-          >
+            (click)="remove(entry, $event)">
             x
           </button>
         </li>
@@ -33,9 +32,9 @@
       class="mt-1 flex items-center justify-between text-xs text-gray-500"
     >
       <div class="flex items-center gap-3">
-        <button class="underline" (click)="toggleShowAll($event)">
+<!--         <button class="underline" (click)="toggleShowAll($event)">
           {{ showAll ? 'Ver menos' : 'Ver todas' }}
-        </button>
+        </button> -->
         <button class="underline text-red-500" (click)="clearAll($event)">
           Borrar todo
         </button>
