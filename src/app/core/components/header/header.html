@@ -10,13 +10,13 @@
     </div>
 
     <!-- input y lupa -->
-    <div class="flex-1 flex justify-center">
-      <form class="flex items-center" (ngSubmit)="searchPublicationByName(searchPublication.value)"
+    <div class="flex-1 flex justify-center z-50">
+      <form class="flex items-center" autocomplete="off" (ngSubmit)="searchPublicationByName(searchPublication.value)"
         #searchForm="ngForm">
 
         <div class="relative max-w-[200px]">
           <input type="text" name="searchPublication" placeholder="Busca aquí" #searchPublication="ngModel" ngModel
-            required
+            required (focus)="onFocusSearch()" (blur)="onBlurSearch()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
             class="w-full py-2 pl-4 pr-10 border-2 border-[#cfd8dc] rounded-lg text-base text-[#153047] bg-white placeholder-[#b0bec5] focus:outline-none focus:border-[#4f8cff] transition" />
         </div>
 
@@ -24,7 +24,16 @@
           <img src="/svg/lupa.svg" alt="" class="cursor-pointer ml-2" />
         </button>
       </form>
+
+      @if (showHistory) {
+      <!-- historial -->
+      <div class="absolute top-15">
+        <app-search-history></app-search-history>
+      </div>
+      }
     </div>
+
+
 
     <!-- tema y menú -->
     <div>
