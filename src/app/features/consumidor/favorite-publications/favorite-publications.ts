@@ -18,7 +18,6 @@ export class FavoritePublications {
   publications!: PublicationDTO[];
   publication_selected!: PublicationDTO | null;
   isAbierto: boolean = false;
-  dialogManager = inject(DialogManager);
 
 
   abrirFiltros(event: MouseEvent) {
