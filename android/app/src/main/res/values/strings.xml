@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">GeoMarket</string>
+    <string name="title_activity_main">GeoMarket</string>
+    <string name="package_name">com.geomarketsena.miapp</string>
+    <string name="custom_url_scheme">com.geomarketsena.miapp</string>
+</resources>
