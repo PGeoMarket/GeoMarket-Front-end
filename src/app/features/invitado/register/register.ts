@@ -26,6 +26,7 @@ export class Register implements OnInit {
     segundo_nombre: "",
     primer_apellido: "",
     segundo_apellido: "",
+    telefono: "",
     email: "",
     password: "",
     password_confirmation: "",
