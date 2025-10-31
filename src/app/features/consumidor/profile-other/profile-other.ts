@@ -25,24 +25,25 @@ export class ProfileOther {
 
   constructor(private route: ActivatedRoute, private publicationService: PublicationService, private sellerService: SellerService, private userService:UserService) { }
   dialogManager = inject(DialogManager);
-  
+
   ngOnInit(): void {
     this.seller_id = Number(this.route.snapshot.paramMap.get('id'));
+    
     this.loadSellerProfile();
     this.loadPublicationsOther();
   }
-  
+
   loadSellerProfile() {
     this.sellerService.getByIdSeller(this.seller_id)
       .subscribe({
         next: data => this.seller = data,
         error: error => console.error("No se pudo traer a seller", error),
         complete: () => console.log("Vendedor traido correctamente")
-        
+
       });
 
       console.log(this.seller);
-      
+
   }
 
   loadPublicationsOther() {
