@@ -1,0 +1,6 @@
+/* Si usas Tailwind, puedes dejar este archivo vacío o adaptarlo. */
+/* Aquí dejo reglas muy básicas en caso de que no uses Tailwind en parte del proyecto */
+:host { display: block; }
+ul { list-style: none; margin: 0; padding: 0; }
+li { user-select: none; }
+button { background: transparent; border: none; cursor: pointer; }
