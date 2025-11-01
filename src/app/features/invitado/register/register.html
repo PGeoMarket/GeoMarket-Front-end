@@ -22,10 +22,10 @@
     <!-- Mensajes simples -->
     <div class="mb-4">
       @if (showSuccessMessage) {
-        <div class="text-azulSecundario">Usuario registrado correctamente. Redirigiendo al login...</div>
+      <div class="text-azulSecundario">Usuario registrado correctamente. Redirigiendo al login...</div>
       }
       @if (showErrorMessage) {
-         <div class="text-azulSecundario">Error al registrar usuario</div>
+      <div class="text-azulSecundario">Error al registrar usuario</div>
       }
     </div>
 
@@ -77,27 +77,28 @@
             [class.border-gray-300]="segundoApellido.valid || !segundoApellido.touched" />
         </div>
 
-        @if (registerUser.role_id==2) {
         <!-- Campo Teléfono -->
-        <!--         <div>
-          <input 
-            type="tel" 
-            name="telefono" 
-            
-            placeholder="Teléfono" 
-            class="w-full px-4 py-3 border rounded-lg "
-            #telefono="ngModel" ngModel
-            [(ngModel)]="telefono"
-            [class.border-red-500]="telefono.invalid && (telefono.touched || registerForm.submitted)"
-            [class.border-gray-300]="telefono.valid || (!telefono.touched && !registerForm.submitted)"
-            required />
-          @if (telefono.invalid && (telefono.touched || registerForm.submitted)) {
-            <div class="text-red-500 text-sm mt-1">
-              El teléfono es obligatorio
-            </div>
+        @if (registerUser.role_id==2) {
+        <div>
+          <input type="tel" name="telefono" placeholder="Telefono*" class="w-full px-4 py-3 border rounded-lg "
+            #telefonoInput="ngModel" [(ngModel)]="registerUser.telefono"
+            [class.border-red-500]="telefonoInput.invalid && (telefonoInput.touched || registerForm.submitted)"
+            [class.border-gray-300]="telefonoInput.valid || (!telefonoInput.touched && !registerForm.submitted)"
+            required minlength="10" maxlength="10" pattern="[0-9]{10}" />
+          @if (telefonoInput.invalid && (telefonoInput.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            @if (telefonoInput.errors?.['required']) {
+            El teléfono es obligatorio
+            }
+            @if (telefonoInput.errors?.['minlength'] || telefonoInput.errors?.['maxlength'] || telefonoInput.errors?.['pattern']) {
+            El teléfono debe tener exactamente 10 dígitos
+            }
+          </div>
           }
-        </div> -->
+        </div>
+        }
 
+        @if (registerUser.role_id==2) {
         <!-- Campo Nombre de la Tienda -->
         <div>
           <input type="text" name="nombre_tienda" [(ngModel)]="registerUser.nombre_tienda"
@@ -125,9 +126,7 @@
           }
         </div>
 
-
         <!-- Logica de api para lat y long -->
-
 
         <!-- Campo Direccion de la Tienda -->
         <div>
@@ -141,7 +140,6 @@
           </div>
           }
         </div>
-
         }
 
         <!-- Campo Email -->
