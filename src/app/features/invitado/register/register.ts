@@ -21,6 +21,7 @@ export class Register implements OnInit {
 
   dialogManager = inject(DialogManager)
 
+  // Inicializar con todos los campos básicos
   registerUser: RegisterDTO = {
     primer_nombre: "",
     segundo_nombre: "",
@@ -30,50 +31,61 @@ export class Register implements OnInit {
     email: "",
     password: "",
     password_confirmation: "",
+    role_id: 3 // valor por defecto
   }
 
   ngOnInit(): void {
     this.asignateRol();
-    console.log(this.registerUser.role_id);
+    console.log('Role ID inicial:', this.registerUser.role_id);
   }
 
   asignateRol() {
     this.registerService.rol_Changed$
       .subscribe(rol => {
+        console.log('Cambiando rol a:', rol);
+        
+        // Preservar los datos ya ingresados
+        const currentData = { ...this.registerUser };
+
         if (rol == 'vendedor') {
           this.registerUser = {
-            ...this.registerUser,
-            nombre_tienda: "",
-            descripcion: "",
-            latitud: 0,
-            longitud: 0,
-            direccion: "",
+            ...currentData, // Mantener todos los datos existentes
+            nombre_tienda: currentData.nombre_tienda || "",
+            descripcion: currentData.descripcion || "",
+            latitud: currentData.latitud || 0,
+            longitud: currentData.longitud || 0,
+            direccion: currentData.direccion || "",
             role_id: 2
           }
-        }
-
-        if (rol == 'consumidor') {
+        } else if (rol == 'consumidor') {
+          // Remover campos específicos de vendedor cuando se cambia a consumidor
+          const { nombre_tienda, descripcion, latitud, longitud, direccion, ...consumerData } = currentData;
           this.registerUser = {
-            ...this.registerUser,
+            ...consumerData,
             role_id: 3
           }
         }
 
-        console.log(rol);
+        console.log('Datos después del cambio de rol:', this.registerUser);
       });
   }
 
   sendForm(form: NgForm) {
-    if (form.invalid) return;
+    if (form.invalid) {
+      console.log('Formulario inválido');
+      return;
+    }
 
     this.showSuccessMessage = false;
     this.showErrorMessage = false;
     this.emailTaken = false;
 
+    console.log('Enviando datos:', this.registerUser);
+
     this.registerService.create(this.registerUser)
       .subscribe({
         next: data => {
-          console.log(data);
+          console.log('Respuesta del servidor:', data);
           this.showSuccessMessage = true;
           
           // Redirigir después de 2 segundos
@@ -82,8 +94,8 @@ export class Register implements OnInit {
           }, 2000);
         },
         error: error => {
-          console.error('No se pudo crear al usuario ', error);
-          console.log(this.registerUser);
+          console.error('Error al crear usuario:', error);
+          console.log('Datos enviados:', this.registerUser);
           this.showErrorMessage = true;
           
           if (error.status === 422 && error.error?.errors?.email) {
