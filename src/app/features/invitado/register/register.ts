@@ -29,7 +29,7 @@ export class Register implements OnInit {
     segundo_nombre: "",
     primer_apellido: "",
     segundo_apellido: "",
-    telefono: 0, 
+    telefonos:[], 
     email: "",
     password: "",
     password_confirmation: "",
@@ -46,12 +46,12 @@ export class Register implements OnInit {
       .subscribe(rol => {
         console.log('Cambiando rol a:', rol);
         
-
+        // Preservar los datos ya ingresados
         const currentData = { ...this.registerUser };
 
         if (rol == 'vendedor') {
           this.registerUser = {
-            ...currentData, 
+            ...currentData, // Mantener todos los datos existentes
             nombre_tienda: currentData.nombre_tienda || "",
             descripcion: currentData.descripcion || "",
             latitud: currentData.latitud || 0,
@@ -63,13 +63,13 @@ export class Register implements OnInit {
           this.telefonoPrincipal = '';
           this.telefonoSecundario = '';
         } else if (rol == 'consumidor') {
- 
+          // Remover campos específicos de vendedor cuando se cambia a consumidor
           const { nombre_tienda, descripcion, latitud, longitud, direccion, ...consumerData } = currentData;
           this.registerUser = {
             ...consumerData,
             role_id: 3
           }
-   
+          // Limpiar teléfonos cuando cambia a consumidor
           this.telefonoPrincipal = '';
           this.telefonoSecundario = '';
         }
@@ -78,13 +78,13 @@ export class Register implements OnInit {
       });
   }
 
-
+  // Función para formatear teléfono (remover caracteres no numéricos)
   formatPhone(event: any, type: 'principal' | 'secundario') {
     const input = event.target;
-    let value = input.value.replace(/\D/g, ''); 
+    let value = input.value.replace(/\D/g, ''); // Remover caracteres no numéricos
     
     if (value.length > 10) {
-      value = value.substring(0, 10);
+      value = value.substring(0, 10); // Limitar a 10 dígitos
     }
     
     if (type === 'principal') {
@@ -96,15 +96,16 @@ export class Register implements OnInit {
     input.value = value;
   }
 
-  
+  // Función para construir el array de teléfonos
   buildPhoneArray(): number[] {
     const phones: number[] = [];
     
-
+    // Agregar teléfono principal si existe
     if (this.telefonoPrincipal && this.telefonoPrincipal.length === 10) {
       phones.push(Number(this.telefonoPrincipal));
     }
-
+    
+    // Agregar teléfono secundario si existe
     if (this.telefonoSecundario && this.telefonoSecundario.length === 10) {
       phones.push(Number(this.telefonoSecundario));
     }
@@ -134,7 +135,7 @@ export class Register implements OnInit {
     // Si es vendedor, reemplazar telefono por el array
     if (this.registerUser.role_id === 2) {
       // @ts-ignore - Temporalmente ignoramos el error de tipo
-      dataToSend.telefono = this.buildPhoneArray();
+      dataToSend.telefonos = this.buildPhoneArray();
     }
 
     console.log('Enviando datos:', dataToSend);

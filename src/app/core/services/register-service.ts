@@ -18,7 +18,7 @@ export interface RegisterDTO {
   //Vendedor
   nombre_tienda?: string;
   descripcion?: string;
- telefono: number | number[];
+  telefonos: number[];
   latitud?: number;
   longitud?: number;
   direccion?: string;
