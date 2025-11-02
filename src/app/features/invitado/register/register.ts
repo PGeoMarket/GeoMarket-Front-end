@@ -17,17 +17,19 @@ export class Register implements OnInit {
   showSuccessMessage: boolean = false;
   showErrorMessage: boolean = false;
 
+  telefonoPrincipal: string = '';
+  telefonoSecundario: string = '';
+
   constructor(private registerService: RegisterService) { }
 
   dialogManager = inject(DialogManager)
 
-  // Inicializar con todos los campos básicos
   registerUser: RegisterDTO = {
     primer_nombre: "",
     segundo_nombre: "",
     primer_apellido: "",
     segundo_apellido: "",
-    telefono: "",
+    telefono: 0, 
     email: "",
     password: "",
     password_confirmation: "",
@@ -44,12 +46,12 @@ export class Register implements OnInit {
       .subscribe(rol => {
         console.log('Cambiando rol a:', rol);
         
-        // Preservar los datos ya ingresados
+
         const currentData = { ...this.registerUser };
 
         if (rol == 'vendedor') {
           this.registerUser = {
-            ...currentData, // Mantener todos los datos existentes
+            ...currentData, 
             nombre_tienda: currentData.nombre_tienda || "",
             descripcion: currentData.descripcion || "",
             latitud: currentData.latitud || 0,
@@ -57,17 +59,57 @@ export class Register implements OnInit {
             direccion: currentData.direccion || "",
             role_id: 2
           }
+          // Reiniciar teléfonos cuando cambia a vendedor
+          this.telefonoPrincipal = '';
+          this.telefonoSecundario = '';
         } else if (rol == 'consumidor') {
-          // Remover campos específicos de vendedor cuando se cambia a consumidor
+ 
           const { nombre_tienda, descripcion, latitud, longitud, direccion, ...consumerData } = currentData;
           this.registerUser = {
             ...consumerData,
             role_id: 3
           }
+   
+          this.telefonoPrincipal = '';
+          this.telefonoSecundario = '';
         }
 
         console.log('Datos después del cambio de rol:', this.registerUser);
       });
+  }
+
+
+  formatPhone(event: any, type: 'principal' | 'secundario') {
+    const input = event.target;
+    let value = input.value.replace(/\D/g, ''); 
+    
+    if (value.length > 10) {
+      value = value.substring(0, 10);
+    }
+    
+    if (type === 'principal') {
+      this.telefonoPrincipal = value;
+    } else {
+      this.telefonoSecundario = value;
+    }
+    
+    input.value = value;
+  }
+
+  
+  buildPhoneArray(): number[] {
+    const phones: number[] = [];
+    
+
+    if (this.telefonoPrincipal && this.telefonoPrincipal.length === 10) {
+      phones.push(Number(this.telefonoPrincipal));
+    }
+
+    if (this.telefonoSecundario && this.telefonoSecundario.length === 10) {
+      phones.push(Number(this.telefonoSecundario));
+    }
+    
+    return phones;
   }
 
   sendForm(form: NgForm) {
@@ -76,13 +118,29 @@ export class Register implements OnInit {
       return;
     }
 
+    // Validar teléfono principal para vendedor
+    if (this.registerUser.role_id === 2 && (!this.telefonoPrincipal || this.telefonoPrincipal.length !== 10)) {
+      console.log('Teléfono principal inválido para vendedor');
+      return;
+    }
+
     this.showSuccessMessage = false;
     this.showErrorMessage = false;
     this.emailTaken = false;
 
-    console.log('Enviando datos:', this.registerUser);
+    // Preparar datos para enviar
+    const dataToSend = { ...this.registerUser };
 
-    this.registerService.create(this.registerUser)
+    // Si es vendedor, reemplazar telefono por el array
+    if (this.registerUser.role_id === 2) {
+      // @ts-ignore - Temporalmente ignoramos el error de tipo
+      dataToSend.telefono = this.buildPhoneArray();
+    }
+
+    console.log('Enviando datos:', dataToSend);
+
+    // @ts-ignore - Temporalmente ignoramos el error de tipo
+    this.registerService.create(dataToSend)
       .subscribe({
         next: data => {
           console.log('Respuesta del servidor:', data);
@@ -95,7 +153,7 @@ export class Register implements OnInit {
         },
         error: error => {
           console.error('Error al crear usuario:', error);
-          console.log('Datos enviados:', this.registerUser);
+          console.log('Datos enviados:', dataToSend);
           this.showErrorMessage = true;
           
           if (error.status === 422 && error.error?.errors?.email) {
