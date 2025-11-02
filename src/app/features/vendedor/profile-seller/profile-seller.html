@@ -37,8 +37,14 @@
             <input type="email" value="{{user?.email}}" disabled
                 class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
-            <label class="text-gray-700 text-sm">Teléfono</label>
-            <input type="tel" [value]="user?.seller?.phones?.[0]?.numero_telefono" disabled
+            <!-- Teléfono Principal -->
+            <label class="text-gray-700 text-sm">Teléfono Principal</label>
+            <input type="tel" [value]="user?.seller?.phones?.[0]?.numero_telefono"
+                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+
+            <!-- Teléfono Secundario (Nuevo campo añadido) -->
+            <label class="text-gray-700 text-sm">Teléfono Secundario</label>
+            <input type="tel" [value]="user?.seller?.phones?.[1]?.numero_telefono"
                 class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
             <label class="text-gray-700 text-sm">Dirección</label>

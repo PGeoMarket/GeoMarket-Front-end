@@ -10,7 +10,6 @@ export interface RegisterDTO {
   segundo_nombre: string;
   primer_apellido: string;
   segundo_apellido: string;
-  telefono: string;
   email: EmailValidator | string;
   password: string;
   password_confirmation: string;
@@ -19,6 +18,7 @@ export interface RegisterDTO {
   //Vendedor
   nombre_tienda?: string;
   descripcion?: string;
+  telefonos: number[];
   latitud?: number;
   longitud?: number;
   direccion?: string;

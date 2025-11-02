@@ -17,17 +17,19 @@ export class Register implements OnInit {
   showSuccessMessage: boolean = false;
   showErrorMessage: boolean = false;
 
+  telefonoPrincipal: string = '';
+  telefonoSecundario: string = '';
+
   constructor(private registerService: RegisterService) { }
 
   dialogManager = inject(DialogManager)
 
-  // Inicializar con todos los campos básicos
   registerUser: RegisterDTO = {
     primer_nombre: "",
     segundo_nombre: "",
     primer_apellido: "",
     segundo_apellido: "",
-    telefono: "",
+    telefonos:[], 
     email: "",
     password: "",
     password_confirmation: "",
@@ -57,6 +59,9 @@ export class Register implements OnInit {
             direccion: currentData.direccion || "",
             role_id: 2
           }
+          // Reiniciar teléfonos cuando cambia a vendedor
+          this.telefonoPrincipal = '';
+          this.telefonoSecundario = '';
         } else if (rol == 'consumidor') {
           // Remover campos específicos de vendedor cuando se cambia a consumidor
           const { nombre_tienda, descripcion, latitud, longitud, direccion, ...consumerData } = currentData;
@@ -64,10 +69,48 @@ export class Register implements OnInit {
             ...consumerData,
             role_id: 3
           }
+          // Limpiar teléfonos cuando cambia a consumidor
+          this.telefonoPrincipal = '';
+          this.telefonoSecundario = '';
         }
 
         console.log('Datos después del cambio de rol:', this.registerUser);
       });
+  }
+
+  // Función para formatear teléfono (remover caracteres no numéricos)
+  formatPhone(event: any, type: 'principal' | 'secundario') {
+    const input = event.target;
+    let value = input.value.replace(/\D/g, ''); // Remover caracteres no numéricos
+    
+    if (value.length > 10) {
+      value = value.substring(0, 10); // Limitar a 10 dígitos
+    }
+    
+    if (type === 'principal') {
+      this.telefonoPrincipal = value;
+    } else {
+      this.telefonoSecundario = value;
+    }
+    
+    input.value = value;
+  }
+
+  // Función para construir el array de teléfonos
+  buildPhoneArray(): number[] {
+    const phones: number[] = [];
+    
+    // Agregar teléfono principal si existe
+    if (this.telefonoPrincipal && this.telefonoPrincipal.length === 10) {
+      phones.push(Number(this.telefonoPrincipal));
+    }
+    
+    // Agregar teléfono secundario si existe
+    if (this.telefonoSecundario && this.telefonoSecundario.length === 10) {
+      phones.push(Number(this.telefonoSecundario));
+    }
+    
+    return phones;
   }
 
   sendForm(form: NgForm) {
@@ -76,13 +119,29 @@ export class Register implements OnInit {
       return;
     }
 
+    // Validar teléfono principal para vendedor
+    if (this.registerUser.role_id === 2 && (!this.telefonoPrincipal || this.telefonoPrincipal.length !== 10)) {
+      console.log('Teléfono principal inválido para vendedor');
+      return;
+    }
+
     this.showSuccessMessage = false;
     this.showErrorMessage = false;
     this.emailTaken = false;
 
-    console.log('Enviando datos:', this.registerUser);
+    // Preparar datos para enviar
+    const dataToSend = { ...this.registerUser };
 
-    this.registerService.create(this.registerUser)
+    // Si es vendedor, reemplazar telefono por el array
+    if (this.registerUser.role_id === 2) {
+      // @ts-ignore - Temporalmente ignoramos el error de tipo
+      dataToSend.telefonos = this.buildPhoneArray();
+    }
+
+    console.log('Enviando datos:', dataToSend);
+
+    // @ts-ignore - Temporalmente ignoramos el error de tipo
+    this.registerService.create(dataToSend)
       .subscribe({
         next: data => {
           console.log('Respuesta del servidor:', data);
@@ -95,7 +154,7 @@ export class Register implements OnInit {
         },
         error: error => {
           console.error('Error al crear usuario:', error);
-          console.log('Datos enviados:', this.registerUser);
+          console.log('Datos enviados:', dataToSend);
           this.showErrorMessage = true;
           
           if (error.status === 422 && error.error?.errors?.email) {
