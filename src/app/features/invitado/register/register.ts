@@ -17,6 +17,9 @@ export class Register implements OnInit {
   showSuccessMessage: boolean = false;
   showErrorMessage: boolean = false;
 
+  telefonoPrincipal: string = '';
+  telefonoSecundario: string = '';
+
   constructor(private registerService: RegisterService) { }
 
   dialogManager = inject(DialogManager)
@@ -26,53 +29,122 @@ export class Register implements OnInit {
     segundo_nombre: "",
     primer_apellido: "",
     segundo_apellido: "",
+    telefonos:[], 
     email: "",
     password: "",
     password_confirmation: "",
+    role_id: 3 // valor por defecto
   }
 
   ngOnInit(): void {
     this.asignateRol();
-    console.log(this.registerUser.role_id);
+    console.log('Role ID inicial:', this.registerUser.role_id);
   }
 
   asignateRol() {
     this.registerService.rol_Changed$
       .subscribe(rol => {
+        console.log('Cambiando rol a:', rol);
+        
+        // Preservar los datos ya ingresados
+        const currentData = { ...this.registerUser };
+
         if (rol == 'vendedor') {
           this.registerUser = {
-            ...this.registerUser,
-            nombre_tienda: "",
-            descripcion: "",
-            latitud: 0,
-            longitud: 0,
-            direccion: "",
+            ...currentData, // Mantener todos los datos existentes
+            nombre_tienda: currentData.nombre_tienda || "",
+            descripcion: currentData.descripcion || "",
+            latitud: currentData.latitud || 0,
+            longitud: currentData.longitud || 0,
+            direccion: currentData.direccion || "",
             role_id: 2
           }
-        }
-
-        if (rol == 'consumidor') {
+          // Reiniciar teléfonos cuando cambia a vendedor
+          this.telefonoPrincipal = '';
+          this.telefonoSecundario = '';
+        } else if (rol == 'consumidor') {
+          // Remover campos específicos de vendedor cuando se cambia a consumidor
+          const { nombre_tienda, descripcion, latitud, longitud, direccion, ...consumerData } = currentData;
           this.registerUser = {
-            ...this.registerUser,
+            ...consumerData,
             role_id: 3
           }
+          // Limpiar teléfonos cuando cambia a consumidor
+          this.telefonoPrincipal = '';
+          this.telefonoSecundario = '';
         }
 
-        console.log(rol);
+        console.log('Datos después del cambio de rol:', this.registerUser);
       });
   }
 
+  // Función para formatear teléfono (remover caracteres no numéricos)
+  formatPhone(event: any, type: 'principal' | 'secundario') {
+    const input = event.target;
+    let value = input.value.replace(/\D/g, ''); // Remover caracteres no numéricos
+    
+    if (value.length > 10) {
+      value = value.substring(0, 10); // Limitar a 10 dígitos
+    }
+    
+    if (type === 'principal') {
+      this.telefonoPrincipal = value;
+    } else {
+      this.telefonoSecundario = value;
+    }
+    
+    input.value = value;
+  }
+
+  // Función para construir el array de teléfonos
+  buildPhoneArray(): number[] {
+    const phones: number[] = [];
+    
+    // Agregar teléfono principal si existe
+    if (this.telefonoPrincipal && this.telefonoPrincipal.length === 10) {
+      phones.push(Number(this.telefonoPrincipal));
+    }
+    
+    // Agregar teléfono secundario si existe
+    if (this.telefonoSecundario && this.telefonoSecundario.length === 10) {
+      phones.push(Number(this.telefonoSecundario));
+    }
+    
+    return phones;
+  }
+
   sendForm(form: NgForm) {
-    if (form.invalid) return;
+    if (form.invalid) {
+      console.log('Formulario inválido');
+      return;
+    }
+
+    // Validar teléfono principal para vendedor
+    if (this.registerUser.role_id === 2 && (!this.telefonoPrincipal || this.telefonoPrincipal.length !== 10)) {
+      console.log('Teléfono principal inválido para vendedor');
+      return;
+    }
 
     this.showSuccessMessage = false;
     this.showErrorMessage = false;
     this.emailTaken = false;
 
-    this.registerService.create(this.registerUser)
+    // Preparar datos para enviar
+    const dataToSend = { ...this.registerUser };
+
+    // Si es vendedor, reemplazar telefono por el array
+    if (this.registerUser.role_id === 2) {
+      // @ts-ignore - Temporalmente ignoramos el error de tipo
+      dataToSend.telefonos = this.buildPhoneArray();
+    }
+
+    console.log('Enviando datos:', dataToSend);
+
+    // @ts-ignore - Temporalmente ignoramos el error de tipo
+    this.registerService.create(dataToSend)
       .subscribe({
         next: data => {
-          console.log(data);
+          console.log('Respuesta del servidor:', data);
           this.showSuccessMessage = true;
           
           // Redirigir después de 2 segundos
@@ -81,8 +153,8 @@ export class Register implements OnInit {
           }, 2000);
         },
         error: error => {
-          console.error('No se pudo crear al usuario ', error);
-          console.log(this.registerUser);
+          console.error('Error al crear usuario:', error);
+          console.log('Datos enviados:', dataToSend);
           this.showErrorMessage = true;
           
           if (error.status === 422 && error.error?.errors?.email) {

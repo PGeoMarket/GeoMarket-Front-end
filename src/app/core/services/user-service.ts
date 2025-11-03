@@ -26,6 +26,7 @@ export interface UserDTO {
   image?: ImageDTO | null;
   imagen?: File;
   coordinate?: CoordinateDTO | null;
+  
 }
 
 export interface CoordinateDTO {

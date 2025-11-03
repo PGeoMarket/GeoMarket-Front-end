@@ -22,10 +22,10 @@
     <!-- Mensajes simples -->
     <div class="mb-4">
       @if (showSuccessMessage) {
-        <div class="text-azulSecundario">Usuario registrado correctamente. Redirigiendo al login...</div>
+      <div class="text-azulSecundario">Usuario registrado correctamente. Redirigiendo al login...</div>
       }
       @if (showErrorMessage) {
-         <div class="text-azulSecundario">Error al registrar usuario</div>
+      <div class="text-azulSecundario">Error al registrar usuario</div>
       }
     </div>
 
@@ -77,27 +77,49 @@
             [class.border-gray-300]="segundoApellido.valid || !segundoApellido.touched" />
         </div>
 
-        @if (registerUser.role_id==2) {
-        <!-- Campo Teléfono -->
-        <!--         <div>
-          <input 
-            type="tel" 
-            name="telefono" 
-            
-            placeholder="Teléfono" 
-            class="w-full px-4 py-3 border rounded-lg "
-            #telefono="ngModel" ngModel
-            [(ngModel)]="telefono"
-            [class.border-red-500]="telefono.invalid && (telefono.touched || registerForm.submitted)"
-            [class.border-gray-300]="telefono.valid || (!telefono.touched && !registerForm.submitted)"
-            required />
-          @if (telefono.invalid && (telefono.touched || registerForm.submitted)) {
-            <div class="text-red-500 text-sm mt-1">
-              El teléfono es obligatorio
-            </div>
+        <!-- Campos de Teléfono (solo para vendedor) -->
+        @if (registerUser.role_id == 2) {
+        <!-- Teléfono Principal -->
+        <div>
+          <input type="tel" name="telefono_principal" placeholder="Telefono*" 
+            class="w-full px-4 py-3 border rounded-lg" #telefonoPrincipalInput="ngModel" 
+            [(ngModel)]="telefonoPrincipal"
+            [class.border-red-500]="telefonoPrincipalInput.invalid && (telefonoPrincipalInput.touched || registerForm.submitted)"
+            [class.border-gray-300]="telefonoPrincipalInput.valid || (!telefonoPrincipalInput.touched && !registerForm.submitted)"
+            required minlength="10" maxlength="10" pattern="(3[0-9]{9})" 
+            (input)="formatPhone($event, 'principal')" />
+          @if (telefonoPrincipalInput.invalid && (telefonoPrincipalInput.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            @if (telefonoPrincipalInput.errors?.['required']) {
+            El teléfono principal es obligatorio
+            }
+            @if (telefonoPrincipalInput.errors?.['minlength'] || telefonoPrincipalInput.errors?.['maxlength'] || telefonoPrincipalInput.errors?.['pattern']) {
+            El telefono debe comenzar con 3 y tener 10 digitos
+            }
+          </div>
           }
-        </div> -->
+        </div>
 
+        <!-- Teléfono Secundario (Opcional) -->
+        <div>
+          <input type="tel" name="telefono_secundario" placeholder="Telefono" 
+            class="w-full px-4 py-3 border rounded-lg" #telefonoSecundarioInput="ngModel" 
+            [(ngModel)]="telefonoSecundario"
+            [class.border-red-500]="telefonoSecundarioInput.invalid && (telefonoSecundarioInput.touched || registerForm.submitted)"
+            [class.border-gray-300]="telefonoSecundarioInput.valid || (!telefonoSecundarioInput.touched && !registerForm.submitted)"
+            minlength="10" maxlength="10" pattern="(3[0-9]{9})"
+            (input)="formatPhone($event, 'secundario')" />
+          @if (telefonoSecundarioInput.invalid && (telefonoSecundarioInput.touched || registerForm.submitted)) {
+          <div class="text-red-500 text-sm mt-1">
+            @if (telefonoSecundarioInput.errors?.['minlength'] || telefonoSecundarioInput.errors?.['maxlength'] || telefonoSecundarioInput.errors?.['pattern']) {
+            El telefono debe comenzar con 3 y tener 10 digitos
+            }
+          </div>
+          }
+        </div>
+        }
+
+        @if (registerUser.role_id == 2) {
         <!-- Campo Nombre de la Tienda -->
         <div>
           <input type="text" name="nombre_tienda" [(ngModel)]="registerUser.nombre_tienda"
@@ -125,9 +147,7 @@
           }
         </div>
 
-
         <!-- Logica de api para lat y long -->
-
 
         <!-- Campo Direccion de la Tienda -->
         <div>
@@ -141,7 +161,6 @@
           </div>
           }
         </div>
-
         }
 
         <!-- Campo Email -->
