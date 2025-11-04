@@ -53,7 +53,7 @@ export class SellerService extends CrudService<SellerDTO> {
   }
 
   getByIdSeller(id: number): Observable<SellerDTO> {
-    return this.http.get<SellerDTO>(`${this.API_URL}/${this.endpoint}/${id}?included=image,user,coordinate,phones`);
+    return this.http.get<SellerDTO>(`${this.API_URL}/${this.endpoint}/${id}?included=image,user,user.image,coordinate,phones`);
   }
 
   updateSeller(sellerId: number, data: Partial<SellerDTO>): Observable<SellerDTO> {

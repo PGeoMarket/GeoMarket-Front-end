@@ -16,7 +16,7 @@ import { CommentsProfile } from "../../vendedor/comments-profile/comments-profil
   styleUrl: './profile-other.css'
 })
 export class ProfileOther {
-   @Input() publication_detail!: PublicationDTO | null;
+  @Input() publication_detail!: PublicationDTO | null;
   tab: string = "catalogo";
   repeat = Array.from({ length: 16 });
   seller_id!: number;
@@ -28,7 +28,7 @@ export class ProfileOther {
 
   ngOnInit(): void {
     this.seller_id = Number(this.route.snapshot.paramMap.get('id'));
-    
+
     this.loadSellerProfile();
     this.loadPublicationsOther();
   }
