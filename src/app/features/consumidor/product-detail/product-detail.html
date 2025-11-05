@@ -67,7 +67,7 @@
     <div class="bg-gray-300 rounded-xl p-4 flex items-center space-x-4 cursor-pointer"
         [routerLink]="['/ProfileOther', seller_product_detail.id]">
         <img class="w-10 h-10 rounded-full"
-            [src]=" seller_product_detail.image?.url ? seller_product_detail.image?.url : 'svg/profile.svg'" alt="foto">
+            [src]=" seller_product_detail.user.image?.url || 'svg/profile.svg'" alt="foto">
         <p class="font-medium">{{seller_product_detail.nombre_tienda}}</p>
     </div>
 
