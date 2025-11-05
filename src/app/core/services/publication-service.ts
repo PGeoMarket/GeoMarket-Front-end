@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { CrudService } from "./crud-service";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
+import { CategoryDTO } from "./category-service";
 
 export interface PublicationDTO {
   id?: number;
@@ -16,6 +17,7 @@ export interface PublicationDTO {
   imagen?: File;
   created_at?: string;
   updated_at?: string;
+  category?: CategoryDTO
 }
 
 export interface ImageDTO {
@@ -43,12 +45,12 @@ export class PublicationService extends CrudService<PublicationDTO> {
 
   getAllPublication(): Observable<PublicationDTO[]> {
     return this.http.get<PublicationDTO[]>(
-      `${this.API_URL}/${this.endpoint}?included=image`);
+      `${this.API_URL}/${this.endpoint}?included=image,category`);
   }
 
   getByIdPublication(id: number): Observable<PublicationDTO> {
     return this.http.get<PublicationDTO>(
-      `${this.API_URL}/${this.endpoint}/${id}?included=image`);
+      `${this.API_URL}/${this.endpoint}/${id}?included=image,category`);
   }
 
   getCommentsByIdPublication(id: number): Observable<PublicationDTO> {
@@ -58,7 +60,7 @@ export class PublicationService extends CrudService<PublicationDTO> {
 
   getFilterPublication(filters: string): Observable<PublicationDTO[]> {
     return this.http.get<PublicationDTO[]>(
-      `${this.API_URL}/${this.endpoint}?included=image${filters}`);
+      `${this.API_URL}/${this.endpoint}?included=image${filters}, category`);
   }
 
   override create(data: Partial<PublicationDTO>): Observable<PublicationDTO> {

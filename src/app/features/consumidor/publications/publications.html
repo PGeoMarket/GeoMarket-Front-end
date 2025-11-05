@@ -25,6 +25,10 @@
             <!-- {{-- Titulo --}} -->
             <p class="text-[20px] h-full md:text-[26px] overflow-hidden line-clamp-2 text-ellipsis text-nowrap">
                 {{publication.titulo}}</p>
+
+                <!-- Categoria -->
+                <p class="pubicationCategory">{{publication.category?.categoria}}</p>
+
             <!-- {{-- Precio --}} -->
             <span class="text-[20px] md:text-[30px]">{{publication.precio | currency:'COP':'symbol':'1.0-0'}}</span>
         </div>
