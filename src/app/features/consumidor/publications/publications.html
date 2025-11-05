@@ -12,7 +12,7 @@
             <!--  {{-- Estrellas: cada img es un tipo de estrella --}} -->
             <div class="m-2 flex">
             @for (star of [1,2,3,4,5]; track $index) {
-            <span class="text-3xl" [class.text-yellow-400]="star <= publication.puntuacion_promedio!"
+            <span class="md:text-3xl text-2xl" [class.text-yellow-400]="star <= publication.puntuacion_promedio!"
               [class.text-blue-900]="star > publication.puntuacion_promedio!">
               &#9733;
             </span>
@@ -25,6 +25,10 @@
             <!-- {{-- Titulo --}} -->
             <p class="text-[20px] h-full md:text-[26px] overflow-hidden line-clamp-2 text-ellipsis text-nowrap">
                 {{publication.titulo}}</p>
+
+                <!-- Categoria -->
+                <p class="pubicationCategory">{{publication.category?.categoria}}</p>
+
             <!-- {{-- Precio --}} -->
             <span class="text-[20px] md:text-[30px]">{{publication.precio | currency:'COP':'symbol':'1.0-0'}}</span>
         </div>
@@ -37,8 +41,8 @@
     [class.translate-x-0]="open" [class.translate-x-full]="!open">
     @if (publication_selected) {
     <div class="h-full w-full">
-        <app-product-detail 
-            [publication_detail]="publication_selected" 
+        <app-product-detail
+            [publication_detail]="publication_selected"
             (close)="closePublicationDetail()"> <!-- Agregar output event -->
         </app-product-detail>
     </div>
