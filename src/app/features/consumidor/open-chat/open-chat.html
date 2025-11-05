@@ -6,7 +6,7 @@
     <!-- Header -->
     <div class="flex items-center gap-3 border-b border-borde2 rounded-t-lg p-2">
       <!-- Botón de volver -->
-      <img src="svg/back-icon.svg" class="cursor-pointer w-6 h-6" (click)="onClose()">
+      <img src="svg/back-icon.svg" class="cursor-pointer w-6 h-6 md:hidden" (click)="onClose()">
       
       @if (currentChat$ | async; as chat) {
             @if (userRole=='Vendedor') {
