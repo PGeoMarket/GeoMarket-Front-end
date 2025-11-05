@@ -78,7 +78,7 @@
         <div class="flex gap-2 mb-4">
             <button [ngClass]="tab === 'catalogo' ? 'bg-[#06406A] text-white' : 'bg-gray-200 text-gray-700'"
                 class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
-                (click)="tab = 'catalogo'; loadPublicationsOwn()">
+                (click)="tab = 'catalogo'">
                 Catálogo
             </button>
 
@@ -91,7 +91,7 @@
         <!-- Catálogo grid con scroll -->
         @if (tab=="catalogo" || !tab) {
         <div class="overflow-auto">
-            <app-publications></app-publications>
+            <app-edit-publication></app-edit-publication>
         </div>
         }
 
