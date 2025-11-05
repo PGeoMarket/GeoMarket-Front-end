@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+
+/* Ajustes suaves para la caja padre */
+:host > div {
+  /* Si quieres reducir aún más la caja, modifica el valor de max-height aquí */
+  max-height: calc(100vh - 6rem);
+  box-sizing: border-box;
+}
