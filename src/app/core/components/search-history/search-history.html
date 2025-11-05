@@ -1,0 +1,47 @@
+<div class="relative inline-block text-left z-50 bg-blancoSucio">
+  <div class="w-[300px] md:w-[420px]">
+    <div class="bg-white rounded shadow-sm max-h-60 overflow-y-auto">
+      <ul *ngIf="history$ | async as history; else noHistory" class="divide-y divide-borde2">
+        <li
+          *ngFor="let entry of slice(history)"
+          class="flex items-center justify-between px-3 py-2 hover:bg-gray-50 cursor-pointer none"
+          (click)="use(entry)"
+        >
+          <div class="flex-1 overflow-x-hidden">
+            <div class="text-text-base text-gray-800 truncate">{{ entry.query }}</div>
+            <div class="text-sm text-gray-400">{{ entry.at | date:'short' }}</div>
+          </div>
+          <button
+            class="ml-3 text-xl font-bold text-borde2 px-2"
+            (click)="remove(entry, $event)">
+            x
+          </button>
+        </li>
+      </ul>
+
+      <ng-template #noHistory>
+        <div class="px-3 py-2 text-sm text-gray-500">
+          Sin búsquedas recientes
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Este bloque solo aparece si history tiene al menos 1 elemento -->
+    <div
+      *ngIf="(history$ | async)!.length > 0"
+      class="mt-1 flex items-center justify-between text-xs text-gray-500"
+    >
+      <div class="flex items-center gap-3">
+<!--         <button class="underline" (click)="toggleShowAll($event)">
+          {{ showAll ? 'Ver menos' : 'Ver todas' }}
+        </button> -->
+        <button class="underline text-red-500" (click)="clearAll($event)">
+          Borrar todo
+        </button>
+      </div>
+      <div class="text-right pr-2 text-xs text-gray-400">
+        <span *ngIf="history$ | async as h">{{ h.length }} búsquedas</span>
+      </div>
+    </div>
+  </div>
+</div>

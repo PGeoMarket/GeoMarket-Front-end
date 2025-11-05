@@ -37,8 +37,14 @@
             <input type="email" value="{{user?.email}}" disabled
                 class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
-            <label class="text-gray-700 text-sm">Teléfono</label>
-            <input type="tel" [value]="user?.seller?.phones?.[0]?.numero_telefono" disabled
+            <!-- Teléfono Principal -->
+            <label class="text-gray-700 text-sm">Teléfono Principal</label>
+            <input type="tel" [value]="user?.seller?.phones?.[0]?.numero_telefono"
+                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+
+            <!-- Teléfono Secundario (Nuevo campo añadido) -->
+            <label class="text-gray-700 text-sm">Teléfono Secundario</label>
+            <input type="tel" [value]="user?.seller?.phones?.[1]?.numero_telefono"
                 class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
 
             <label class="text-gray-700 text-sm">Dirección</label>
@@ -72,7 +78,7 @@
         <div class="flex gap-2 mb-4">
             <button [ngClass]="tab === 'catalogo' ? 'bg-[#06406A] text-white' : 'bg-gray-200 text-gray-700'"
                 class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
-                (click)="tab = 'catalogo'">
+                (click)="tab = 'catalogo'; loadPublicationsOwn()">
                 Catálogo
             </button>
 
@@ -85,7 +91,7 @@
         <!-- Catálogo grid con scroll -->
         @if (tab=="catalogo" || !tab) {
         <div class="overflow-auto">
-            <app-edit-publication></app-edit-publication>
+            <app-publications></app-publications>
         </div>
         }
 

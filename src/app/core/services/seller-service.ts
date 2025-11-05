@@ -32,10 +32,12 @@ export interface SellerDTO {
 }
 
 export interface UserBySellerDTO {
-    primer_nombre: string;
+  primer_nombre: string;
   segundo_nombre?: string | null;
   primer_apellido: string;
   segundo_apellido?: string | null;
+  image?: ImageDTO;
+
 }
 
 
@@ -51,15 +53,15 @@ export class SellerService extends CrudService<SellerDTO> {
   }
 
   getByIdSeller(id: number): Observable<SellerDTO> {
-    return this.http.get<SellerDTO>(`${this.API_URL}/${this.endpoint}/${id}?included=image,user,coordinate,phones`);
+    return this.http.get<SellerDTO>(`${this.API_URL}/${this.endpoint}/${id}?included=image,user,user.image,coordinate,phones`);
   }
 
   updateSeller(sellerId: number, data: Partial<SellerDTO>): Observable<SellerDTO> {
     const formData = new FormData();
-    
+
     if (data.nombre_tienda) formData.append('nombre_tienda', data.nombre_tienda);
     if (data.descripcion) formData.append('descripcion', data.descripcion);
-    
+
     // Si tienes coordenadas
     if (data.coordinate?.direccion) {
       formData.append('direccion', data.coordinate.direccion);
@@ -70,11 +72,11 @@ export class SellerService extends CrudService<SellerDTO> {
     if (data.coordinate?.longitud) {
       formData.append('longitud', data.coordinate.longitud.toString());
     }
-    
+
     formData.append('_method', 'PUT');
-    
+
     return this.http.post<SellerDTO>(
-      `${this.API_URL}/${this.endpoint}/${sellerId}`, 
+      `${this.API_URL}/${this.endpoint}/${sellerId}`,
       formData
     );
   }

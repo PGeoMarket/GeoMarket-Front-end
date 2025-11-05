@@ -3,6 +3,7 @@ import { PublicationDTO, PublicationService } from '../../../core/services/publi
 import { CommonModule } from '@angular/common';
 import { ProductDetail } from '../product-detail/product-detail';
 import { UserService } from '../../../core/services/user-service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-publications',
@@ -18,28 +19,41 @@ export class Publications implements OnInit {
   publications_temp!: PublicationDTO[];
   publication_selected!: PublicationDTO | null;
   @Input() isFrom_favorites: boolean = false;
-  constructor(protected publicationService: PublicationService, private userService: UserService) { }
+  seller_id: number = 0;
+  constructor(protected publicationService: PublicationService, private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
-    //Publicaciones con filtros, si no hay filtros simplemente se cargan todos
-    this.publicationService.filterChanged$
-      .subscribe(filters => {
-        this.loadFiltredPublications(filters);
-      });
+    this.seller_id = Number(this.route.snapshot.paramMap.get('id'));
+
+    if (this.seller_id) {
+      this.loadSellerPublications();
+
+      return;
+    }
 
     //Recargar publicaciones
     this.publicationService.reload_publicationChanged$
       .subscribe((isReload_publication) => {
         if (isReload_publication) {
           this.loadPublications();
+          return;
         }
       })
 
+   //Publicaciones con filtros, si no hay filtros simplemente se cargan todos
+    this.publicationService.filterChanged$
+      .subscribe(filters => {
+        this.loadFiltredPublications(filters);
+
+        return;
+      });
+
+    this.loadPublications();
   }
 
   loadPublications() {
-    if (!this.isFrom_favorites) {
+    if (!this.isFrom_favorites && !this.seller_id) {
       this.publicationService.getAllPublication()
         .subscribe({
           next: data => this.publications = data,
@@ -49,14 +63,20 @@ export class Publications implements OnInit {
       return;
     }
 
+    if (this.seller_id) {
+
+    }
+
     this.userService.getFavorites().subscribe({
       next: data => {
-            this.publications = data
-            this.publications_temp = data
-          },
+        this.publications = data
+        this.publications_temp = data
+      },
       error: error => console.error('No se pudo obtener las publicaciones: ' + error),
       complete: () => console.log('Publicaciones obtenidas correctamente')
     });
+
+
   }
 
   loadFiltredPublications(filters: string) {
@@ -76,6 +96,23 @@ export class Publications implements OnInit {
       return;
     }
     this.loadFavoriteFiltredPublications(filters);
+
+  }
+
+  loadSellerPublications() {
+    // si no hay scope definido, obtenemos todo
+    if (!this.seller_id) {
+      this.loadPublications();
+      return;
+    }
+
+    this.publicationService.getFilterPublication(`&filter[seller_id]=${this.seller_id}`) // Usar el parámetro filters
+      .subscribe({
+        next: data => { this.publications = data },
+        error: error => console.error('Error a publications filtradas: ' + error),
+        complete: () => console.log('publications filtradas:' + this.publications.length)
+      });
+    return;
 
   }
 
