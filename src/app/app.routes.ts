@@ -21,7 +21,7 @@ export const routes: Routes = [
     {path: 'home', component: Home},
     {path:'add-product',component:AddProduct},
     {path:'edit-product',component:EditProduct},
-    {path:'profile-seller',component:ProfileSeller},
+    {path:'profile-seller/:id',component:ProfileSeller},
     {path:'favorite-publications',component:FavoritePublications},
     {path:'ProfileOther/:id',component:ProfileOther},
     {path:'faq',component:Faq},
