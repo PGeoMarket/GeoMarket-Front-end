@@ -3,7 +3,6 @@
   <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-md mx-auto relative max-h-screen overflow-y-auto">
     <!-- Botones de navegación -->
     <div class="absolute top-4 left-4 right-4 flex justify-between" appClosedialog>
-
       <button class="rounded-md border border-white cursor-pointer" appClosedialog>
         <img src="svg/back-icon.svg" alt="">
       </button>
@@ -147,8 +146,6 @@
           }
         </div>
 
-        <!-- Logica de api para lat y long -->
-
         <!-- Campo Direccion de la Tienda -->
         <div>
           <input type="text" name="direccion" [(ngModel)]="registerUser.direccion" placeholder="Direccion de la Tienda*"
@@ -160,6 +157,44 @@
             El direccion de la tienda es obligatorio
           </div>
           }
+        </div>
+
+        <!-- Ubicación Automática -->
+        <div class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-sm text-gray-600">Ubicación</label>
+            @if (locationLoading) {
+              <span class="text-xs text-blue-500">Obteniendo ubicación...</span>
+            }
+            @if (locationError) {
+              <span class="text-xs text-red-500">No se pudo obtener ubicación</span>
+            }
+          </div>
+          
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="border border-gray-300 rounded p-2">
+              <span class="text-gray-500">Latitud:</span>
+              <span class="ml-1">{{ registerUser.latitud?.toFixed(6) || 'No disponible' }}</span>
+            </div>
+            <div class="border border-gray-300 rounded p-2">
+              <span class="text-gray-500">Longitud:</span>
+              <span class="ml-1">{{ registerUser.longitud?.toFixed(6) || 'No disponible' }}</span>
+            </div>
+          </div>
+
+          <!-- Botón para obtener ubicación manualmente -->
+          <button type="button" 
+                  (click)="getCurrentLocation()"
+                  class="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+            Actualizar Ubicación Automática
+          </button>
+
+          <!-- Botón para seleccionar en mapa -->
+          <button type="button" 
+                  (click)="openMapDialog()"
+                  class="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+            Seleccionar en Mapa
+          </button>
         </div>
         }
 

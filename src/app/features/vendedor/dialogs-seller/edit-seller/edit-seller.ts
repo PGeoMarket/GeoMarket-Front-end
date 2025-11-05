@@ -27,7 +27,7 @@ export class EditSeller implements OnInit {
 
   constructor(
     private userService: UserService,
-    private sellerService: SellerService // 👈 INYECTAR
+    private sellerService: SellerService
   ) {}
 
   ngOnInit(): void {

@@ -41,19 +41,19 @@ export class Publications implements OnInit {
         }
       })
 
-    //Publicaciones con filtros, si no hay filtros simplemente se cargan todos
-
-    this.loadPublications();
-
+   //Publicaciones con filtros, si no hay filtros simplemente se cargan todos
     this.publicationService.filterChanged$
       .subscribe(filters => {
         this.loadFiltredPublications(filters);
+
+        return;
       });
 
+    this.loadPublications();
   }
 
   loadPublications() {
-    if (!this.isFrom_favorites&&!this.seller_id) {
+    if (!this.isFrom_favorites && !this.seller_id) {
       this.publicationService.getAllPublication()
         .subscribe({
           next: data => this.publications = data,
@@ -69,9 +69,9 @@ export class Publications implements OnInit {
 
     this.userService.getFavorites().subscribe({
       next: data => {
-            this.publications = data
-            this.publications_temp = data
-          },
+        this.publications = data
+        this.publications_temp = data
+      },
       error: error => console.error('No se pudo obtener las publicaciones: ' + error),
       complete: () => console.log('Publicaciones obtenidas correctamente')
     });
@@ -99,20 +99,20 @@ export class Publications implements OnInit {
 
   }
 
-    loadSellerPublications() {
+  loadSellerPublications() {
     // si no hay scope definido, obtenemos todo
     if (!this.seller_id) {
       this.loadPublications();
       return;
     }
 
-      this.publicationService.getFilterPublication(`&filter[seller_id]=${this.seller_id}`) // Usar el parámetro filters
-        .subscribe({
-          next: data => { this.publications = data },
-          error: error => console.error('Error a publications filtradas: ' + error),
-          complete: () => console.log('publications filtradas:' + this.publications.length)
-        });
-      return;
+    this.publicationService.getFilterPublication(`&filter[seller_id]=${this.seller_id}`) // Usar el parámetro filters
+      .subscribe({
+        next: data => { this.publications = data },
+        error: error => console.error('Error a publications filtradas: ' + error),
+        complete: () => console.log('publications filtradas:' + this.publications.length)
+      });
+    return;
 
   }
 
