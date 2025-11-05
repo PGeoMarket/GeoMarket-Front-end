@@ -5,13 +5,11 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { UserDTO, UserService } from '../../../core/services/user-service';
 import { CommentsProfile } from "../comments-profile/comments-profile";
 import { EditPublication } from '../edit-publication/edit-publication';
-import { Publications } from '../../consumidor/publications/publications';
-
 
 
 @Component({
   selector: 'app-profile-seller',
-  imports: [CommonModule, Publications, CommentsProfile],
+  imports: [CommonModule, CommentsProfile, EditPublication],
   templateUrl: './profile-seller.html',
   styleUrl: './profile-seller.css'
 })

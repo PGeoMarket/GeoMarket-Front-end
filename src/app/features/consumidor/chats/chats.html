@@ -55,13 +55,29 @@
       </div>
     </div>
 
-    <!-- Columna derecha: chat abierto (NO renderiza nada si ifOpen === false) -->
-    <div class="min-h-0 flex flex-col">
-      @if (ifOpen) {
-        <div class="bg-gray-100 rounded-lg md:h-full h-[720px] overflow-hidden min-h-0 flex flex-col">
-          <app-open-chat (closeChat)="closeChat()" class="flex-1 h-full"></app-open-chat>
-        </div>
-      }
+    <!-- Columna derecha: chat abierto para desktop/tablet -->
+<div class="min-h-0 flex flex-col" [class.hidden]="isMobile() && ifOpen">
+  @if (ifOpen) {
+    <div class="bg-gray-100 rounded-lg md:h-full overflow-hidden min-h-0 flex flex-col">
+      <app-open-chat (closeChat)="closeChat()" class="flex-1 h-full"></app-open-chat>
     </div>
+  }
+</div>
+
+<!-- Versión Mobile fullscreen -->
+<div *ngIf="ifOpen && isMobile()" 
+     class="fixed inset-0 z-50 bg-white flex flex-col overflow-hidden">
+
+  <!-- Header del chat fullscreen -->
+  <div class="flex items-center gap-3 p-4 border-b border-gray-300 flex-shrink-0 bg-white">
+    <img src="svg/back-icon.svg" class="w-9 h-9 cursor-pointer" (click)="closeChat()">
+    <p class="text-3xl font-semibold text-azulPotente mx-auto">Chats</p>
+  </div>
+
+  <!-- Contenido desplazable -->
+  <div class="flex-1 overflow-y-auto min-h-0 bg-gray-100">
+    <app-open-chat (closeChat)="closeChat()" class="flex-1 h-full"></app-open-chat>
+  </div>
+</div>
   </div>
 </div>
