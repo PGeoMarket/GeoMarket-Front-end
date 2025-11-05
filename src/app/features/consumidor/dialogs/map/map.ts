@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Closedialog } from '../../../../core/dialogs/closedialog';
 import { Loader } from '@googlemaps/js-api-loader'; 
 import { DialogManager } from '../../../../core/dialogs/dialog-manager';
-import { HttpClient } from '@angular/common/http';
+import { MapService } from '../../../../core/services/map-service';
 
 @Component({
   selector: 'app-map',
@@ -14,13 +14,17 @@ import { HttpClient } from '@angular/common/http';
 export class Map implements OnInit {
 
   private dialogManager = inject(DialogManager);
-  private http = inject(HttpClient);
+  private mapService = inject(MapService);
 
-  private latitud: number = 0;
-  private longitud: number = 0;
+  latitud: number = 0;
+  longitud: number = 0;
   private marker: any;
 
   ngOnInit(): void {
+    this.loadMap();
+  }
+
+  private loadMap(): void {
     const loader = new Loader({
       apiKey: 'AIzaSyCsUAYxDmKFKoEMdFBGKcOzP152pyU6RYo', 
       version: 'weekly'
@@ -30,46 +34,45 @@ export class Map implements OnInit {
       const mapElement = document.getElementById('gmap_canvas');
       if (!mapElement) return;
 
+      // Cargar ubicación guardada
+      const savedLocation = this.mapService.getLocation();
+      const initialLat = savedLocation?.latitud || 3.0082918;
+      const initialLng = savedLocation?.longitud || -76.5055133;
+
+      this.latitud = initialLat;
+      this.longitud = initialLng;
+
       const map = new google.maps.Map(mapElement, {
-        center: { lat: 3.0082918, lng: -76.5055133 },
+        center: { lat: initialLat, lng: initialLng },
         zoom: 15,
       });
 
-      // Crear marcador draggable
+      // Crear marcador
       this.marker = new google.maps.Marker({
-        position: { lat: 3.0082918, lng: -76.5055133 },
+        position: { lat: initialLat, lng: initialLng },
         map: map,
         draggable: true,
       });
 
-      // Actualizar coordenadas cuando se mueva el marcador
-      google.maps.event.addListener(this.marker, 'position_changed', () => {
+      // Actualizar coordenadas
+      google.maps.event.addListener(this.marker, 'dragend', () => {
         this.latitud = this.marker.getPosition().lat();
         this.longitud = this.marker.getPosition().lng();
       });
 
-      // Mover marcador cuando se haga click en el mapa
+      // Mover marcador al hacer click
       google.maps.event.addListener(map, 'click', (event: any) => {
         this.marker.setPosition(event.latLng);
+        this.latitud = event.latLng.lat();
+        this.longitud = event.latLng.lng();
       });
     });
   }
 
   OnConfirmar() {
-    this.http.post('http://127.0.0.1:8000/api/cordinates', {
-      latitud: this.latitud,
-      longitud: this.longitud,
-      direccion: 'Santander de Quilichao',
-      coordinateable_id: 5, // aquí pones el id del vendedor autenticado
-      coordinateable_type: 'App\\Models\\Seller'
-    }).subscribe({
-      next: (res) => {
-        console.log('Coordenada guardada correctamente:', res);
-        this.dialogManager.closeDialog();
-      },
-      error: (err) => {
-        console.error('Error al guardar coordenada:', err);
-      }
-    });
+    // Solo guardar en localStorage - el register enviará todo
+    this.mapService.saveLocation(this.latitud, this.longitud);
+    console.log('Ubicación guardada en localStorage:', this.latitud, this.longitud);
+    this.dialogManager.closeDialog();
   }
 }
