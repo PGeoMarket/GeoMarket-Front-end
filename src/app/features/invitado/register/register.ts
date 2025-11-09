@@ -35,7 +35,7 @@ export class Register implements OnInit {
     segundo_nombre: "",
     primer_apellido: "",
     segundo_apellido: "",
-    telefonos: [], 
+    telefonos:[], 
     email: "",
     password: "",
     password_confirmation: "",
@@ -66,7 +66,6 @@ export class Register implements OnInit {
           this.telefonoPrincipal = '';
           this.telefonoSecundario = '';
           
-          // Obtener ubicación automáticamente para vendedor
           this.getCurrentLocation();
         } else if (rol == 'consumidor') {
           const { nombre_tienda, descripcion, latitud, longitud, direccion, ...consumerData } = currentData;
@@ -80,7 +79,6 @@ export class Register implements OnInit {
       });
   }
 
-  // Obtener ubicación actual del usuario
   getCurrentLocation() {
     if (navigator.geolocation) {
       this.locationLoading = true;
@@ -88,20 +86,15 @@ export class Register implements OnInit {
       
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // Éxito - obtener coordenadas
           this.registerUser.latitud = position.coords.latitude;
           this.registerUser.longitud = position.coords.longitude;
           this.locationLoading = false;
-          
-          console.log('Ubicación obtenida:', this.registerUser.latitud, this.registerUser.longitud);
         },
         (error) => {
-          // Error - usar ubicación por defecto
           console.error('Error obteniendo ubicación:', error);
           this.locationLoading = false;
           this.locationError = true;
           
-          // Ubicación por defecto (Santander de Quilichao)
           this.registerUser.latitud = 3.0082918;
           this.registerUser.longitud = -76.5055133;
         },
@@ -114,32 +107,25 @@ export class Register implements OnInit {
     } else {
       console.log('Geolocalización no soportada');
       this.locationError = true;
-      // Ubicación por defecto
       this.registerUser.latitud = 3.0082918;
       this.registerUser.longitud = -76.5055133;
     }
   }
 
-  // Método para abrir mapa y seleccionar ubicación manualmente
   openMapDialog() {
     this.dialogManager.openDialog('map', {
       data: { mode: 'select' }
     });
     
-    // Escuchar cambios en localStorage cuando se cierre el mapa
     const checkLocation = setInterval(() => {
       const savedLocation = this.mapService.getLocation();
       if (savedLocation && savedLocation.latitud && savedLocation.longitud) {
         this.registerUser.latitud = savedLocation.latitud;
         this.registerUser.longitud = savedLocation.longitud;
-        console.log('Ubicación actualizada desde mapa:', savedLocation);
-        
-        // Limpiar el intervalo una vez que tenemos la ubicación
         clearInterval(checkLocation);
       }
-    }, 500); // Revisar cada 500ms
+    }, 500);
     
-    // Limpiar el intervalo después de 10 segundos por seguridad
     setTimeout(() => {
       clearInterval(checkLocation);
     }, 10000);
@@ -182,13 +168,11 @@ export class Register implements OnInit {
       return;
     }
 
-    // Validar ubicación para vendedor
     if (this.registerUser.role_id === 2 && (!this.registerUser.latitud || !this.registerUser.longitud)) {
       console.log('Ubicación no disponible para vendedor');
       return;
     }
 
-    // Validar teléfono para vendedor
     if (this.registerUser.role_id === 2 && (!this.telefonoPrincipal || this.telefonoPrincipal.length !== 10)) {
       console.log('Teléfono principal inválido para vendedor');
       return;
@@ -211,12 +195,10 @@ export class Register implements OnInit {
     this.registerService.create(dataToSend)
       .subscribe({
         next: data => {
-          console.log('Usuario registrado correctamente:', data);
-          this.showSuccessMessage = true;
-          
-          setTimeout(() => {
-            this.onLogin()
-          }, 2000);
+          this.dialogManager.closeDialog();
+          this.dialogManager.openDialog('login', {
+            data: { mode: 'create' }
+          });
         },
         error: error => {
           console.error('Error al registrar usuario:', error);
@@ -225,14 +207,11 @@ export class Register implements OnInit {
           if (error.status === 422 && error.error?.errors?.email) {
             this.emailTaken = true;
           }
+
+          setTimeout(() => {
+            this.showErrorMessage = false;
+          }, 3000);
         },
       })
-  }
-  
-  onLogin(){
-    this.dialogManager.closeDialog()
-    this.dialogManager.openDialog('login',{
-      data:{mode:'create'}
-    })
   }
 }

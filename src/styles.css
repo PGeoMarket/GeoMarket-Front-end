@@ -46,6 +46,10 @@
     @apply h-auto w-auto;
 }
 
+.pubicationCategory {
+  @apply text-azulSecundario bg-background w-fit text-sm md:text-base rounded-l p-0.5
+}
+
 .filtros {
     @apply border-1 border-borde1 p-[10px];
 }
