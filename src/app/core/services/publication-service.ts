@@ -60,7 +60,7 @@ export class PublicationService extends CrudService<PublicationDTO> {
 
   getFilterPublication(filters: string): Observable<PublicationDTO[]> {
     return this.http.get<PublicationDTO[]>(
-      `${this.API_URL}/${this.endpoint}?included=image${filters}, category`);
+      `${this.API_URL}/${this.endpoint}?included=image,category${filters}`);
   }
 
   override create(data: Partial<PublicationDTO>): Observable<PublicationDTO> {

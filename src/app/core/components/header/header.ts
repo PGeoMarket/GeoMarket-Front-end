@@ -93,7 +93,7 @@ onBlurSearch() {
     this.publicationService.sendFilter('&filter[titulo]=' + encodeURIComponent(normalized));
 
     console.log(this.userService.getSearchHistory());
-    
+
   }
 
   /**
