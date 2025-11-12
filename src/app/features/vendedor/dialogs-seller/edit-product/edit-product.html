@@ -1,9 +1,27 @@
 @if (product) {
 
 <form (ngSubmit)="onSubmit()" #editForm="ngForm">
-  <div class="border border-borde2 bg-blancoSucio rounded-[20px] p-3 max-h-[calc(105vh-4rem)] md:max-h-[calc(120vh-4rem)] mx-2 flex flex-col">
+  <div
+    class="border border-borde2 bg-blancoSucio rounded-[20px] p-3 max-h-[calc(105vh-4rem)] md:max-h-[calc(120vh-4rem)] mx-2 flex flex-col">
 
     <h1 class="text-azulPotente text-[30px] md:text-[48px] font-medium text-center w-full">Editando Producto</h1>
+
+    <div class="flex justify-end gap-2 mr-5">
+
+      <label class="inline-flex items-center cursor-pointer">
+        <span class="ms-3 text-sm font-medium text-gray-900 mx-1">Ocultar</span>
+
+        <input type="checkbox" class="sr-only peer" [ngModel]="product.visibilidad === 0"
+          (ngModelChange)="product.visibilidad = $event ? 0 : 1" name="productHidden">
+
+        <div
+          class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-2 peer-focus:ring-blue-300 dark:peer-focus:ring-azulPotente dark:bg-borde1 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600">
+        </div>
+      </label>
+
+
+
+    </div>
 
     <!-- Zona central: ocupa el espacio disponible y solo ella hace scroll -->
     <div class="flex-1 min-h-0 overflow-auto">
@@ -56,8 +74,8 @@
           </div>
 
           <textarea name="productDescription"
-            class="bg-white border border-borde2 rounded-md w-full md:h-[full] resize-none p-1" placeholder="Descripcion"
-            [(ngModel)]="product.descripcion"></textarea>
+            class="bg-white border border-borde2 rounded-md w-full md:h-[full] resize-none p-1"
+            placeholder="Descripcion" [(ngModel)]="product.descripcion"></textarea>
         </div>
 
       </div>

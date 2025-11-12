@@ -39,7 +39,7 @@ export class EditProduct implements OnInit {
       this.publicationService.update(this.id, payload).
         subscribe({
           next: (data) => {
-            console.log('Actualización exitosa', data);
+            console.log('Actualización exitosaaaa', payload);
             this.onCloseDialog({ saved: true, publication: data ?? this.product });
           },
           error: (err) => {
@@ -90,8 +90,13 @@ export class EditProduct implements OnInit {
       return;
     }
 
-    
+
     // fallback: cerrar con el manager (no dispara onClose callback)
     this.dialogManager.closeDialog();
+  }
+
+  isVisibilidad() {
+    if (this.product?.visibilidad == 1) this.product!.visibilidad = 0;
+    if (this.product?.visibilidad == 0) this.product!.visibilidad = 1;
   }
 }
