@@ -1,54 +1,64 @@
 <form (ngSubmit)="onSubmit()" #productForm="ngForm">
-  <div class="border-1 border-borde2 bg-blancoSucio rounded-[20px] p-3 h-[calc(100vh-(4rem+24px))] flex flex-col">
-    <div class="flex justify-end gap-2">
-      <button type="button" class="btn_negative" appClosedialog>Cancelar</button>
-      <input type="submit" value="Publicar" class="btn_azulPotente disabled:opacity-50 disabled:cursor-not-allowed"
-        [disabled]="!productForm.valid || !imageFile">
-    </div>
-    <div class="h-full grid grid-rows-[40%_60%] overflow-scroll md:grid-cols-2 md:grid-rows-none">
+  <div class="border border-borde2 bg-blancoSucio rounded-[20px] p-3 max-h-[calc(105vh-4rem)] md:max-h-[calc(120vh-4rem)] mx-2 flex flex-col">
+    <!-- Zona central: ocupa el espacio disponible y solo ella hace scroll -->
+    <div class="flex-1 min-h-0 overflow-auto">
+      <div class="h-full grid grid-rows-[40%_60%] md:grid-cols-2 md:grid-rows-none gap-4">
 
-      <!-- Imagen -->
-      <div class="grid grid-rows-[80%_20%]">
-        <!-- Como antes no estaba lo agregue de forma basica el boton de quitar imagen-->
-        <div class="border-1 border-borde1 rounded-2xl my-3 w-fit h-auto md:max-h-[500px] mx-auto">
-          <button class="btn_negative absolute" (click)="onResetImage()">X</button > 
-          <img *ngIf="!imagePreview" src="/svg/imagePreviewDefault.svg" class="h-full rounded-[14px]">
-          <img *ngIf="imagePreview" [src]="imagePreview" class="h-full rounded-[14px]">
-        </div>
-        <div class="mx-auto">
-          <label for="upload" class="cursor-pointer px-4 py-2 btn_azulPotente transition">
-            Cargar imagen 
-          <input type="file" id="upload" class="hidden" accept="image/*" (change)="onImageSelected($event)" name="image" required #image="ngModel" ngModel>  
+        <!-- Imagen -->
+        <div class="flex flex-col items-center justify-start min-h-0">
+          <!-- Contenedor de la imagen con altura fija -->
+          <div class="border border-borde1 rounded-2xl my-3 w-full md:w-[600px] h-[400px] md:h-[500px] mx-auto bg-cover bg-center relative overflow-hidden">
+            <button type="button" class="btn_negative absolute top-2 right-2" (click)="onResetImage()">X</button>
 
-          </label>
-        </div>
-      </div>
+            <img *ngIf="!imagePreview" src="/svg/imagePreviewDefault.svg" alt="Vista previa por defecto"
+              class="h-full w-full object-cover rounded-[14px]">
+            <img *ngIf="imagePreview" [src]="imagePreview" alt="Vista previa seleccionada"
+              class="h-full w-full object-cover rounded-[14px]">
+          </div>
 
-      <!-- Inputs -->
-      <div class="grid grid-rows-[auto_1fr] md:p-5">
-        <div class="flex flex-col h-fit space-y-4">
-          <input type="text" name="productName" class="inputs_registro" placeholder="Nombre del producto" required [(ngModel)]="product.titulo">
-
-          <input type="number" name="productPrice" class="inputs_registro" placeholder="Precio del producto" required [(ngModel)]="product.precio">
-
-          <div>
-            <label class="text-textosNoNegro">Categoria</label>
-            <select name="productCategory"
-              class="bg-[#EDEDED] border-1 border-borde2 p-1 rounded-md mb-3 text-textosNoNegro" required
-              [(ngModel)]="product.category_id">
-              <option [value]="1">Electrodomesticos</option>
-              <option [value]="2">Alimentos</option>
-              <option [value]="3">Entretenimiento</option>
-              <option [value]="4">Muebles</option>
-            </select>
+          <div class="mx-auto mt-2">
+            <label for="upload" class="cursor-pointer px-4 py-2 btn_azulPotente transition inline-flex items-center">
+              Cargar imagen
+              <input type="file" id="upload" class="hidden" accept="image/*" (change)="onImageSelected($event)"
+                name="image" #image="ngModel" ngModel>
+            </label>
           </div>
         </div>
-        <div>
-          <textarea name="productDescription" class="bg-white border-1 border-borde2 p-1 rounded-md w-full h-full"
+
+        <!-- Inputs -->
+        <div class="grid grid-rows-[auto_1fr] md:p-5">
+          <div class="flex flex-col h-fit space-y-4">
+            <input type="text" name="productName" class="inputs_registro" placeholder="Nombre del producto" required
+              [(ngModel)]="product.titulo">
+
+            <input type="number" name="productPrice" class="inputs_registro" placeholder="Precio del producto" required
+              [(ngModel)]="product.precio">
+
+            <div>
+              <label class="text-textosNoNegro">Categoria</label>
+              <select name="productCategory"
+                class="bg-[#EDEDED] border border-borde2 p-1 rounded-md mb-3 text-textosNoNegro" required
+                [(ngModel)]="product.category_id">
+                <option [value]="1">Electrodomesticos</option>
+                <option [value]="2">Alimentos</option>
+                <option [value]="3">Entretenimiento</option>
+                <option [value]="4">Muebles</option>
+              </select>
+            </div>
+          </div>
+
+          <textarea name="productDescription" class="bg-white border border-borde2 rounded-md w-full md:h-[full] resize-none"
             placeholder="Descripcion" [(ngModel)]="product.descripcion" required></textarea>
         </div>
       </div>
+    </div>
 
+    <!-- Footer con botones: siempre abajo -->
+    <div class="flex justify-end gap-2 mt-3">
+      <button type="button" class="btn_negative" appClosedialog>Cancelar</button>
+      <input type="submit" value="Publicar"
+        class="btn_azulPotente disabled:opacity-50 disabled:cursor-not-allowed"
+        [disabled]="!productForm.valid || !imageFile">
     </div>
   </div>
 </form>
