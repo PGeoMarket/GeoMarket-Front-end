@@ -3,6 +3,7 @@ import { CrudService } from "./crud-service";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { CategoryDTO } from "./category-service";
+import { SellerDTO } from "./seller-service";
 
 export interface PublicationDTO {
   id?: number;
@@ -17,7 +18,8 @@ export interface PublicationDTO {
   imagen?: File;
   created_at?: string;
   updated_at?: string;
-  category?: CategoryDTO
+  category?: CategoryDTO;
+  seller?: SellerDTO;
 }
 
 export interface ImageDTO {
