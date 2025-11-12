@@ -94,7 +94,10 @@ override update(id: number, data: Partial<PublicationDTO>): Observable<Publicati
   if (data.descripcion) formData.append('descripcion', data.descripcion);
   if (data.seller_id) formData.append('seller_id', data.seller_id.toString());
   if (data.category_id) formData.append('category_id', data.category_id.toString());
-  if (data.visibilidad) formData.append('visibilidad', data.visibilidad.toString());
+ if (data.visibilidad !== undefined && data.visibilidad !== null) {
+  formData.append('visibilidad', data.visibilidad.toString());
+}
+
   if (data.imagen) formData.append('imagen', data.imagen);
 
   // <-- Método override necesario para multipart + "PUT"
