@@ -14,25 +14,11 @@ export interface CoordinateDTO {
   providedIn: 'root'
 })
 export class MapService extends CrudService<CoordinateDTO> {
-  protected override endpoint = 'coordinates'; // Cambié a coordinates
+  protected override endpoint = 'coordinates';
 
   constructor(http: HttpClient) {
     super(http);
   }
 
-  // Guardar en localStorage para el register
-  saveLocation(latitud: number, longitud: number) {
-    const locationData = {
-      latitud: latitud,
-      longitud: longitud,
-      direccion: 'Santander de Quilichao'
-    };
-    localStorage.setItem('userLocation', JSON.stringify(locationData));
-  }
-
-  // Obtener del localStorage
-  getLocation() {
-    const data = localStorage.getItem('userLocation');
-    return data ? JSON.parse(data) : null;
-  }
+  // Solo métodos para API, sin localStorage
 }

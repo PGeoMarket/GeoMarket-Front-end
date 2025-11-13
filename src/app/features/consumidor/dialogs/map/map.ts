@@ -2,7 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { Closedialog } from '../../../../core/dialogs/closedialog';
 import { Loader } from '@googlemaps/js-api-loader'; 
 import { DialogManager } from '../../../../core/dialogs/dialog-manager';
-import { MapService } from '../../../../core/services/map-service';
+import { UserService } from '../../../../core/services/user-service';
 
 @Component({
   selector: 'app-map',
@@ -14,7 +14,7 @@ import { MapService } from '../../../../core/services/map-service';
 export class Map implements OnInit {
 
   private dialogManager = inject(DialogManager);
-  private mapService = inject(MapService);
+  private userService = inject(UserService);
 
   latitud: number = 0;
   longitud: number = 0;
@@ -34,8 +34,7 @@ export class Map implements OnInit {
       const mapElement = document.getElementById('gmap_canvas');
       if (!mapElement) return;
 
-      // Cargar ubicación guardada
-      const savedLocation = this.mapService.getLocation();
+      const savedLocation = this.userService.getTemporaryLocation();
       const initialLat = savedLocation?.latitud || 3.0082918;
       const initialLng = savedLocation?.longitud || -76.5055133;
 
@@ -47,20 +46,17 @@ export class Map implements OnInit {
         zoom: 15,
       });
 
-      // Crear marcador
       this.marker = new google.maps.Marker({
         position: { lat: initialLat, lng: initialLng },
         map: map,
         draggable: true,
       });
 
-      // Actualizar coordenadas
       google.maps.event.addListener(this.marker, 'dragend', () => {
         this.latitud = this.marker.getPosition().lat();
         this.longitud = this.marker.getPosition().lng();
       });
 
-      // Mover marcador al hacer click
       google.maps.event.addListener(map, 'click', (event: any) => {
         this.marker.setPosition(event.latLng);
         this.latitud = event.latLng.lat();
@@ -70,9 +66,9 @@ export class Map implements OnInit {
   }
 
   OnConfirmar() {
-    // Solo guardar en localStorage - el register enviará todo
-    this.mapService.saveLocation(this.latitud, this.longitud);
-    console.log('Ubicación guardada en localStorage:', this.latitud, this.longitud);
+    // Guardar y cerrar inmediatamente
+    this.userService.saveTemporaryLocation(this.latitud, this.longitud);
+    console.log('Ubicación guardada y cerrando diálogo:', this.latitud, this.longitud);
     this.dialogManager.closeDialog();
   }
 }

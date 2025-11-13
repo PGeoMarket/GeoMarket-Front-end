@@ -4,7 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { Closedialog } from "../../../core/dialogs/closedialog";
 import { RegisterDTO, RegisterService } from '../../../core/services/register-service';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
-import { MapService } from '../../../core/services/map-service';
+import { UserService } from '../../../core/services/user-service';
 
 @Component({
   selector: 'app-register',
@@ -25,7 +25,7 @@ export class Register implements OnInit {
 
   constructor(
     private registerService: RegisterService,
-    private mapService: MapService
+    private userService: UserService
   ) { }
 
   dialogManager = inject(DialogManager)
@@ -113,22 +113,36 @@ export class Register implements OnInit {
   }
 
   openMapDialog() {
+    console.log('Abriendo diálogo del mapa para selección manual');
+    
+    // Limpiar cualquier ubicación temporal previa
+    this.userService.clearTemporaryLocation();
+    
     this.dialogManager.openDialog('map', {
       data: { mode: 'select' }
     });
+
+    // Verificar inmediatamente después de que se cierre (cada 100ms por 5 segundos)
+    let checks = 0;
+    const maxChecks = 50; // 5 segundos máximo
     
     const checkLocation = setInterval(() => {
-      const savedLocation = this.mapService.getLocation();
+      checks++;
+      const savedLocation = this.userService.getTemporaryLocation();
+      
       if (savedLocation && savedLocation.latitud && savedLocation.longitud) {
+        console.log('Ubicación manual actualizada:', savedLocation.latitud, savedLocation.longitud);
         this.registerUser.latitud = savedLocation.latitud;
         this.registerUser.longitud = savedLocation.longitud;
+        this.userService.clearTemporaryLocation();
         clearInterval(checkLocation);
       }
-    }, 500);
-    
-    setTimeout(() => {
-      clearInterval(checkLocation);
-    }, 10000);
+      
+      if (checks >= maxChecks) {
+        console.log('Tiempo máximo de espera alcanzado');
+        clearInterval(checkLocation);
+      }
+    }, 100);
   }
 
   formatPhone(event: any, type: 'principal' | 'secundario') {
@@ -211,7 +225,7 @@ export class Register implements OnInit {
           setTimeout(() => {
             this.showErrorMessage = false;
           }, 3000);
-        },
-      })
+        }
+      });
   }
 }
