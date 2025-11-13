@@ -15,8 +15,8 @@ export class FilterByPrice {
   selectedIds: number[] = [];
   scope_min: string = '&filter[precio_min]=';
   scope_max: string = '&filter[precio_max]=';
-  min_price: number = 0;
-  max_price: number = 0;
+  min_price!: number;
+  max_price!: number;
 
   constructor (private publicationService: PublicationService) {}
 
