@@ -29,7 +29,6 @@ export class OpenReporte implements OnInit, OnDestroy {
 
   private dialogManager = inject(DialogManager);
   private sellerService = inject(SellerService);
-
   private clickListener?: any;
 
   ngOnInit(): void {
@@ -56,27 +55,28 @@ export class OpenReporte implements OnInit, OnDestroy {
       console.warn('⚠️ No se encontró el ID del seller reportado.');
     }
 
+    // ✅ Usamos un safe log para evitar congelar la pantalla
+    safeLog('📦 Report completo recibido:', this.report);
+
     // 🟢 Escucha global para cerrar menús si haces clic fuera
-    this.clickListener = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
+    if (!this.clickListener) {
+      this.clickListener = (event: MouseEvent) => {
+        const target = event.target as HTMLElement;
+        const dentroDeMenu =
+          target.closest('.menu-boton') ||
+          target.closest('.menu-general');
 
-      const dentroDeMenu =
-        target.closest('.menu-boton') ||
-        target.closest('.menu-general');
+        if (!dentroDeMenu) {
+          this.cerrarBoton();
+          this.cerrarMenus();
+        }
+      };
 
-      if (!dentroDeMenu) {
-        this.cerrarBoton();
-        this.cerrarMenus();
-      }
-    };
-
-    document.addEventListener('click', this.clickListener);
-
-    console.log('📦 Report completo recibido:', JSON.stringify(this.report, null, 2));
+      document.addEventListener('click', this.clickListener);
+    }
   }
 
   ngOnDestroy(): void {
-    // 🔴 Limpia el listener al destruir el componente
     if (this.clickListener) {
       document.removeEventListener('click', this.clickListener);
     }
@@ -101,7 +101,7 @@ export class OpenReporte implements OnInit, OnDestroy {
   abrirMenu(event: MouseEvent) {
     event.stopPropagation();
     this.menuAbierto = true;
-    this.cerrarBoton(); // cerrar el otro si está abierto
+    this.cerrarBoton();
   }
 
   cerrarMenus() {
@@ -111,7 +111,7 @@ export class OpenReporte implements OnInit, OnDestroy {
   abrirBoton(event: MouseEvent) {
     event.stopPropagation();
     this.menuBoton = true;
-    this.cerrarMenus(); // cerrar el otro si está abierto
+    this.cerrarMenus();
   }
 
   cerrarBoton() {
@@ -120,8 +120,25 @@ export class OpenReporte implements OnInit, OnDestroy {
 
   OnSuspender() {
     this.dialogManager.openDialog('reason', { data: { mode: 'create' } });
-    // 🟢 Cerramos ambos menús al seleccionar una acción
     this.cerrarBoton();
     this.cerrarMenus();
+  }
+}
+
+/** 🧰 Función segura para hacer console.log sin congelar la app */
+function safeLog(label: string, value: any) {
+  try {
+    const seen = new WeakSet();
+    const safeValue = JSON.parse(JSON.stringify(value, (key, val) => {
+      if (typeof val === 'object' && val !== null) {
+        if (seen.has(val)) return '[Circular]';
+        seen.add(val);
+      }
+      return val;
+    }));
+    console.log(label, safeValue);
+  } catch (err) {
+    console.warn('⚠️ No se pudo hacer log seguro del objeto:', err);
+    console.log(label, value);
   }
 }

@@ -9,50 +9,67 @@ import { UserDTO } from '../../../core/services/user-service';
   selector: 'app-report-management',
   imports: [OpenReporte],
   templateUrl: './report-management.html',
-  styleUrl: './report-management.css'
+  styleUrls: ['./report-management.css']  // ✅ corregido (antes estaba mal escrito)
 })
-export class ReportManagement implements OnInit{
+export class ReportManagement implements OnInit {
 
-  ifOpen : boolean= false;
+  ifOpen: boolean = false;
   selectedReport: ReportDTO | null = null;
-  reports?:ReportDTO[]
+  reports: ReportDTO[] = [];
 
-  constructor(private reportService:ReportService,private http:HttpClient){}
+  constructor(
+    private reportService: ReportService,
+    private http: HttpClient
+  ) {}
 
   ngOnInit(): void {
-      this.reportService.getReportWithReportable().subscribe({
-        next:data=>{console.log('reportes ok',data.length);
-          this.reports=data;
-        },
-        error:err=>{console.log('reportes no',err);
-        }
-      })
+    this.reportService.getReportWithReportable().subscribe({
+      next: (data) => {
+        console.log('✅ Reportes cargados correctamente:', data.length);
+        this.reports = data || [];
+      },
+      error: (err) => {
+        console.error('❌ Error al cargar reportes:', err);
+      }
+    });
   }
 
+  /** 
+   * Devuelve un título legible según el tipo de reporte.
+   * Se agregan validaciones para evitar errores cuando reportable es null.
+   */
   getReportableTitle(report: ReportDTO): string {
-  if (report.reportable_type.includes('Publication')) {
-    return (report.reportable as PublicationDTO).titulo;
-  }
-  if (report.reportable_type.includes('User')) {
-    const user = report.reportable as UserDTO;
-    return `${user.primer_nombre} ${user.primer_apellido}`;
-  }
-  return '';
-}
+    if (!report || !report.reportable_type || !report.reportable) {
+      return '—'; // si no hay datos, muestra guion
+    }
 
+    if (report.reportable_type.includes('Publication')) {
+      const publication = report.reportable as PublicationDTO;
+      return publication?.titulo ?? '—';
+    }
+
+    if (report.reportable_type.includes('User')) {
+      const user = report.reportable as UserDTO;
+      return `${user?.primer_nombre ?? ''} ${user?.primer_apellido ?? ''}`.trim() || '—';
+    }
+
+    return '—';
+  }
+
+  /** 
+   * Abre o cierra el reporte seleccionado 
+   */
   openReport(report: ReportDTO) {
-    // Si clickeas el mismo reporte, cierra
     if (this.selectedReport?.id === report.id && this.ifOpen) {
+      // Si haces clic sobre el mismo reporte, cierra el panel
       this.ifOpen = false;
       this.selectedReport = null;
       return;
     }
-    
-    // Si clickeas otro reporte, abre ese
+
+    // Si haces clic en otro reporte, abre ese
     this.selectedReport = report;
-    console.log(this.selectedReport);
-    
+    console.log('🟢 Report seleccionado:', this.selectedReport);
     this.ifOpen = true;
   }
-
 }
