@@ -6,10 +6,11 @@ import { CommonModule, NgStyle } from '@angular/common';
 import { ProductDetail } from '../../consumidor/product-detail/product-detail';
 import { UserService } from '../../../core/services/user-service';
 import { EditProduct } from '../dialogs-seller/edit-product/edit-product';
+import { Filters } from '../../consumidor/filters/filters';
 
 @Component({
   selector: 'app-edit-publication',
-  imports: [EditProduct, Closedialog, NgStyle, CommonModule, ProductDetail],
+  imports: [EditProduct, Closedialog, NgStyle, CommonModule, ProductDetail, Filters],
   templateUrl: './edit-publication.html',
   styleUrl: './edit-publication.css'
 })
@@ -17,6 +18,7 @@ export class EditPublication implements OnInit {
   publications!: PublicationDTO[];
   selectedPublication!: PublicationDTO;
   publication_selected!: PublicationDTO | null;
+  isAbierto: boolean = false;
 
   private dialogManager = inject(DialogManager);
 
@@ -83,12 +85,6 @@ export class EditPublication implements OnInit {
 
   }
 
-  cerrarMenus() {
-    this.editarIndex = null;
-  }
-
-
-
   open: boolean = false;
 
   private closeTimeout: any; // declara esto junto a las propiedades de la clase
@@ -117,5 +113,16 @@ export class EditPublication implements OnInit {
       this.publication_selected = null;
       this.closeTimeout = undefined;
     }, 300);
+  }
+
+
+  //Filtros
+    abrirFiltros(event: MouseEvent) {
+    event.stopPropagation(); // evita que cierre de inmediato
+    this.isAbierto = true;
+  }
+
+  cerrarMenus() {
+    this.isAbierto = false;
   }
 }

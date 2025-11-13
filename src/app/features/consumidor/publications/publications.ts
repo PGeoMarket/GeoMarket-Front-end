@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ProductDetail } from '../product-detail/product-detail';
 import { UserService } from '../../../core/services/user-service';
 import { ActivatedRoute } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-publications',
@@ -18,7 +19,7 @@ export class Publications implements OnInit {
   publications!: PublicationDTO[];
   publications_temp!: PublicationDTO[];
   publication_selected!: PublicationDTO | null;
-  @Input() isFrom_favorites: boolean = false;
+  @Input() isFrom_cache: boolean = false;
   seller_id: number = 0;
   constructor(protected publicationService: PublicationService, private userService: UserService, private route: ActivatedRoute) { }
 
@@ -28,6 +29,14 @@ export class Publications implements OnInit {
 
     if (this.seller_id) {
       this.loadSellerPublications();
+      if (this.isFrom_cache) {
+        this.publicationService.filterChanged$
+          .subscribe(filters => {
+            this.loadCacheFiltredPublications(filters);
+
+
+          });
+      }
 
       return;
     }
@@ -53,7 +62,7 @@ export class Publications implements OnInit {
   }
 
   loadPublications() {
-    if (!this.isFrom_favorites && !this.seller_id) {
+    if (!this.isFrom_cache && !this.seller_id) {
       this.publicationService.getAllPublication()
         .subscribe({
           next: data => this.publications = data,
@@ -86,11 +95,11 @@ export class Publications implements OnInit {
       return;
     }
 
-    if (!this.isFrom_favorites) {
+    if (!this.isFrom_cache) {
 
 
       /* Para category */
-      if (!filters.indexOf('&filter[category_id]=')&& !!filters.indexOf('&filter[titulo]=')) {
+      if (!!filters.indexOf('&filter[category_id]=') && !!filters.indexOf('&filter[titulo]=')) {
         this.publications = [];
         let filters_array: string[] = filters.split("&");
 
@@ -119,7 +128,7 @@ export class Publications implements OnInit {
 
     }
 
-    this.loadFavoriteFiltredPublications(filters);
+    this.loadCacheFiltredPublications(filters);
 
   }
 
@@ -130,7 +139,7 @@ export class Publications implements OnInit {
       return;
     }
 
-    this.publicationService.getFilterPublication(`&filter[seller_id]=${this.seller_id}`) // Usar el parámetro filters
+    this.publicationService.getFilterPublication(`&filter0his.seller_id}`) // Usar el parámetro filters
       .subscribe({
         next: data => { this.publications = data },
         error: error => console.error('Error a publications filtradas: ' + error),
@@ -140,22 +149,68 @@ export class Publications implements OnInit {
 
   }
 
-  loadFavoriteFiltredPublications(filters: string) {
-    let filters_split = filters.split("&filter[category_id]="); //21 es la longitud de "&filter[seller_id]=" al inicio, para
+  loadCacheFiltredPublications(filters: string) {
     let filtrado: PublicationDTO[] = [];
+    this.publications = filtrado;
 
-    this.publications_temp.filter(pub => {
-      filters_split.forEach(f => {
-        if (f != "") {
-          if (pub.category_id == Number(f)) {
-            filtrado.push(pub);
+    // Verificar si hay filtro de categoría Y NO hay filtro de título
+    const hasCategoryFilter = filters.includes('&filter[category_id]=');
+    const hasTitleFilter = filters.includes('&filter[titulo]=');
+    const hasMinPriceFilter = filters.includes('&filter[precio_min]=');
+    const hasMaxPriceFilter = filters.includes('&filter[precio_max]=');
+
+    /* Para category */
+    if (hasCategoryFilter && !hasTitleFilter) {
+      let filters_split = filters.split("&filter[category_id]=");
+
+      console.log(filters_split);
+
+      this.publications_temp.forEach(pub => {
+        filters_split.forEach(f => {
+          if (f !== "") {
+            // Extraer solo el número de la categoría (puede haber más parámetros después)
+            const categoryId = f.split('&')[0];
+            if (pub.category_id == Number(categoryId)) {
+              filtrado.push(pub);
+            }
           }
+        });
+      });
+
+      this.publications = [...new Set(filtrado)]; // Eliminar duplicados
+      return;
+    }
+
+    /* Para precios */
+    if ((hasMinPriceFilter || hasMaxPriceFilter) && !hasTitleFilter) {
+      let min_price = 0;
+      let max_price = Number.MAX_SAFE_INTEGER;
+
+      // Extraer valores de precio
+      if (hasMinPriceFilter) {
+        const minMatch = filters.match(/&filter\[precio_min\]=(\d+)/);
+        if (minMatch) min_price = parseInt(minMatch[1]);
+      }
+
+      if (hasMaxPriceFilter) {
+        const maxMatch = filters.match(/&filter\[precio_max\]=(\d+)/);
+        if (maxMatch) max_price = parseInt(maxMatch[1]);
+      }
+
+      console.log(`${min_price} > ${max_price}`);
+
+      this.publications_temp.forEach(pub => {
+        if (pub.precio! >= min_price && pub.precio! <= max_price) {
+          filtrado.push(pub);
         }
       });
 
-    });
+      this.publications = filtrado;
+      return;
+    }
 
-    this.publications = filtrado;
+    // Caso por defecto si no aplican los filtros anteriores
+    this.publications = [...this.publications_temp];
   }
 
   //Logica a de abrir product-detail

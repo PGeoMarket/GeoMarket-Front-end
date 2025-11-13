@@ -1,35 +1,21 @@
 <div
   class="border border-gray-300 rounded-xl p-2 md:p-4 flex flex-col md:flex-row gap-4 md:gap-6 bg-white shadow h-auto md:h-[calc(100vh-80px)]"
->
+  (click)="cerrarReport()">
   <!-- Perfil vendedor -->
   <div
-    class="w-full md:w-[370px] flex-shrink-0 flex flex-col border border-gray-300 rounded-xl p-4 md:p-6 bg-white relative mb-2 md:mb-0 overflow-hidden overflow-y-auto"
-  >
+    class="w-full md:w-[370px] flex-shrink-0 flex flex-col border border-gray-300 rounded-xl p-4 md:p-6 bg-white relative mb-2 md:mb-0 overflow-hidden overflow-y-auto">
     <div options="false" class="absolute top-2 right-2 z-10">
-      <button
-        (click)="abrirMenu($event)"
-        class="bg-gray-100 rounded-full w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none"
-      >
-        <svg
-          class="w-5 h-5 cursor-pointer"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          viewBox="0 0 24 24"
-        >
+      <button (click)="abrirReport($event)"
+        class="bg-gray-100 rounded-full w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
+        <svg class="w-5 h-5 cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <circle cx="12" cy="12" r="1.5" />
           <circle cx="12" cy="6" r="1.5" />
           <circle cx="12" cy="18" r="1.5" />
         </svg>
       </button>
       @if (menuAbierto) {
-      <div
-        class="mt-1 bg-white border rounded shadow px-2 py-1 text-xs absolute min-w-[80px] z-10 right-[10%]"
-      >
-        <button
-          class="block text-red-500 hover:underline w-full text-left cursor-pointer"
-          (click)="onReport()"
-        >
+      <div class="mt-1 bg-white border rounded shadow px-2 py-1 text-xs absolute min-w-[80px] z-10 right-[10%]">
+        <button class="block text-red-500 hover:underline w-full text-left cursor-pointer" (click)="onReport()">
           Reportar
         </button>
       </div>
@@ -38,22 +24,14 @@
 
     <!-- icono perfil -->
     <div class="relative flex flex-col items-center mb-4 mt-2">
-      <div
-        class="rounded-full w-24 h-24 flex items-center justify-center mb-2 relative"
-      >
-        <img
-          [src]="seller.user.image?.url || '/svg/profile.svg'"
-          alt="Avatar"
-          class="object-cover rounded-full w-24 h-24"
-        />
+      <div class="rounded-full w-24 h-24 flex items-center justify-center mb-2 relative">
+        <img [src]="seller.user.image?.url || '/svg/profile.svg'" alt="Avatar"
+          class="object-cover rounded-full w-24 h-24" />
       </div>
       <div class="m-2 flex bottom-0">
         @for (star of [1,2,3,4,5]; track $index) {
-        <span
-          class="text-3xl"
-          [class.text-yellow-400]="star <= seller.puntuacion_promedio!"
-          [class.text-blue-900]="star > seller.puntuacion_promedio!"
-        >
+        <span class="text-3xl" [class.text-yellow-400]="star <= seller.puntuacion_promedio!"
+          [class.text-blue-900]="star > seller.puntuacion_promedio!">
           &#9733;
         </span>
         }
@@ -62,59 +40,35 @@
     <!-- Info -->
     <form class="w-full flex flex-col gap-3">
       <label class="text-gray-700 text-sm">Nombre</label>
-      <input
-        type="text"
-        value="{{ seller.user.primer_nombre }} {{ seller.user.segundo_nombre }}"
-        disabled
-        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base"
-      />
+      <input type="text" value="{{ seller.user.primer_nombre }} {{ seller.user.segundo_nombre }}" disabled
+        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base" />
 
       <label class="text-gray-700 text-sm">Negocio</label>
-      <input
-        type="text"
-        value="{{ seller.nombre_tienda }}"
-        disabled
-        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base"
-      />
+      <input type="text" value="{{ seller.nombre_tienda }}" disabled
+        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base" />
 
       <label class="text-gray-700 text-sm">Teléfono</label>
       @for (telefono of seller.phones; track $index) {
-      <input
-        type="tel"
-        [value]="telefono.numero_telefono"
-        disabled
-        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base"
-      />
+      <input type="tel" [value]="telefono.numero_telefono" disabled
+        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base" />
       }
 
       <label class="text-gray-700 text-sm">Dirección</label>
-      <input
-        type="text"
-        [value]="seller.coordinate?.direccion"
-        disabled
-        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base"
-      />
-      <textarea
-        [value]="seller.descripcion"
-        disabled
-        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base h-[100px] max-h-[500px] resize-none"
-      ></textarea>
+      <input type="text" [value]="seller.coordinate?.direccion" disabled
+        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base" />
+      <textarea [value]="seller.descripcion" disabled
+        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base h-[100px] max-h-[500px] resize-none"></textarea>
     </form>
 
     <!-- Mapa, botón y estrellas -->
     <div class="mt-6 w-full mb-8 z-0">
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1992.160176789594!2d-76.48352223851431!3d3.0082367277367377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e307f3134b20a77%3A0xcb8ce9e4a1c72448!2sSENA%20Regional%20Cauca!5e0!3m2!1ses-419!2sco!4v1750977951386!5m2!1ses-419!2sco"
-        class="w-full h-full"
-        allowfullscreen
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-      >
+        class="w-full h-full" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
       </iframe>
       <button
         class="absolute left-2 bg-[#06406A] text-white rounded-md px-4 py-1 text-base font-semibold shadow hover:bg-[#05345a] cursor-pointer"
-        (click)="onOpenMap()"
-      >
+        (click)="onOpenMap()">
         Ver ubicación
       </button>
     </div>
@@ -124,37 +78,36 @@
   <div class="flex-1 flex flex-col min-w-0 min-h-0">
     <!-- Tabs -->
     <div class="flex gap-2 mb-4 flex-shrink-0">
-      <button
-        [ngClass]="tab === 'catalogo' ? 'btn_azulPotente' : 'btn_negative'"
+      <button [ngClass]="tab === 'catalogo' ? 'btn_azulPotente' : 'btn_negative'"
         class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
-        (click)="tab = 'catalogo'"
-      >
+        (click)="tab = 'catalogo'">
         Catálogo
       </button>
 
-      <button
-        [ngClass]="tab === 'comentarios' ? 'btn_azulPotente' : 'btn_negative'"
+      <button [ngClass]="tab === 'comentarios' ? 'btn_azulPotente' : 'btn_negative'"
         class="px-5 py-2 rounded-md text-base font-semibold shadow focus:outline-none cursor-pointer"
-        (click)="tab = 'comentarios'"
-      >
+        (click)="tab = 'comentarios'">
         Comentarios
       </button>
     </div>
+
     <!-- Contenido -->
     <div class="flex-1 min-h-0">
       <!-- Catálogo grid con scroll -->
       @if (tab=="catalogo" || !tab) {
-      <div class="h-full overflow-x-hidden">
-        <app-publications></app-publications
-        ><!-- Falta la pantalla productos -->
+      <div class="h-full overflow-x-hidden" (click)="cerrarFiltros()">
+
+        <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event"
+          class="w-full mx-[10%]"></app-filters>
+        <app-publications [isFrom_cache]="true"></app-publications>
+
+        <!-- Falta la pantalla productos -->
       </div>
       }
       <!-- Comentarios -->
       @if (tab=="comentarios") {
       <div class="h-full overflow-y-auto pr-2">
-        <app-comments-profile
-          [seller_id]="seller_id"
-        ></app-comments-profile>
+        <app-comments-profile [seller_id]="seller_id"></app-comments-profile>
       </div>
       }
     </div>

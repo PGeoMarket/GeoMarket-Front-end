@@ -8,22 +8,23 @@ import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { UserService } from '../../../core/services/user-service';
 import { PublicationDTO } from '../../../core/services/publication-service';
 import { CommentsProfile } from "../../vendedor/comments-profile/comments-profile";
+import { Filters } from '../filters/filters';
 
 @Component({
   selector: 'app-profile-other',
-  imports: [CommonModule, Publications, CommentsProfile],
+  imports: [CommonModule, Publications, CommentsProfile, Filters],
   templateUrl: './profile-other.html',
   styleUrl: './profile-other.css'
 })
 export class ProfileOther {
   @Input() publication_detail!: PublicationDTO | null;
   tab: string = "catalogo";
-  repeat = Array.from({ length: 16 });
   seller_id!: number;
   seller!: SellerDTO;
+  isAbierto: boolean = false;
 
 
-  constructor(private route: ActivatedRoute, private publicationService: PublicationService, private sellerService: SellerService, private userService:UserService) { }
+  constructor(private route: ActivatedRoute, private publicationService: PublicationService, private sellerService: SellerService, private userService: UserService) { }
   dialogManager = inject(DialogManager);
 
   ngOnInit(): void {
@@ -42,7 +43,7 @@ export class ProfileOther {
 
       });
 
-      console.log(this.seller);
+    console.log(this.seller);
 
   }
 
@@ -53,45 +54,55 @@ export class ProfileOther {
   }
 
   user_seller_id(): number | null {
-    return this.seller?this.seller.user_id : null;
+    return this.seller ? this.seller.user_id : null;
   }
 
-    onOpenMap() {
+  onOpenMap() {
     this.dialogManager.openDialog('map', {
       data: { mode: 'create' }
     })
   }
 
-    menuAbierto: boolean = false;
-    abrirMenu(event: MouseEvent) {
-      event.stopPropagation(); // evita que cierre de inmediato
-      //this.editarIndex = this.editarIndex === index ? null : index;
-      this.menuAbierto = true;
-    }
-
-    cerrarMenus() {
-      this.menuAbierto = false;
-    }
-  onReport() {
-  if (!this.userService.isLoggedIn()) {
-    this.dialogManager.openDialog('login', { data: { mode: 'create' } });
-    return;
+  menuAbierto: boolean = false;
+  abrirReport(event: MouseEvent) {
+    event.stopPropagation(); // evita que cierre de inmediato
+    //this.editarIndex = this.editarIndex === index ? null : index;
+    this.menuAbierto = true;
   }
 
-  const currentUser = this.userService.getCurrentUser();
-  const reportUser = this.user_seller_id();
-  // Evitar que el usuario se reporte a sí mismo
-  if (currentUser?.id === reportUser) {
+  cerrarReport() {
+    this.menuAbierto = false;
+  }
+  onReport() {
+    if (!this.userService.isLoggedIn()) {
+      this.dialogManager.openDialog('login', { data: { mode: 'create' } });
+      return;
+    }
+
+    const currentUser = this.userService.getCurrentUser();
+    const reportUser = this.user_seller_id();
+    // Evitar que el usuario se reporte a sí mismo
+    if (currentUser?.id === reportUser) {
       alert("No puedes reportarte a ti mismo.");
       return;
     }
 
-  this.dialogManager.openDialog('report', {
-    data: {
-      user_id: currentUser?.id, // quien reporta
-      seller_id: reportUser // perfil a reportar
-    },
-    onClose: (res) => console.log('Reporte cerrado con:', res)
-  });
-}
+    this.dialogManager.openDialog('report', {
+      data: {
+        user_id: currentUser?.id, // quien reporta
+        seller_id: reportUser // perfil a reportar
+      },
+      onClose: (res) => console.log('Reporte cerrado con:', res)
+    });
+  }
+
+    //Filtros
+  abrirFiltros(event: MouseEvent) {
+    event.stopPropagation(); // evita que cierre de inmediato
+    this.isAbierto = true;
+  }
+
+  cerrarFiltros() {
+    this.isAbierto = false;
+  }
 }
