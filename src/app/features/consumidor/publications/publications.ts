@@ -41,7 +41,7 @@ export class Publications implements OnInit {
         }
       })
 
-   //Publicaciones con filtros, si no hay filtros simplemente se cargan todos
+    //Publicaciones con filtros, si no hay filtros simplemente se cargan todos
     this.publicationService.filterChanged$
       .subscribe(filters => {
         this.loadFiltredPublications(filters);
@@ -86,15 +86,39 @@ export class Publications implements OnInit {
       return;
     }
 
-    if (!this.isFrom_favorites) {
+    if (!this.isFrom_favorites && !!filters.indexOf('&filter[titulo]=')) {
+
+
+      /* Para category */
+      if (!filters.indexOf('&filter[category_id]=')) {
+        this.publications = [];
+        let filters_array: string[] = filters.split("&");
+
+        filters_array.forEach(filter_array => {
+
+          if (filter_array != '') { //el primer elemento vacio xddd
+            this.publicationService.getFilterPublication("&" + filter_array) // Usar el parámetro filters
+              .subscribe({
+                next: data => { this.publications = [...this.publications, ...data] },
+                error: error => console.error('Error a publications filtradas: ' + error),
+                complete: () => console.log('publications filtradas:' + this.publications.length)
+              });
+          }
+        });
+
+        return;
+      }
+
+      /* Para precios */
       this.publicationService.getFilterPublication(filters) // Usar el parámetro filters
         .subscribe({
           next: data => { this.publications = data },
           error: error => console.error('Error a publications filtradas: ' + error),
           complete: () => console.log('publications filtradas:' + this.publications.length)
         });
-      return;
+
     }
+
     this.loadFavoriteFiltredPublications(filters);
 
   }

@@ -9,7 +9,7 @@ export interface PublicationDTO {
   titulo: string;
   precio: number | null;
   descripcion?: string;
-  visibilidad?: boolean;
+  visibilidad: number;
   seller_id?: number;
   category_id?: number;
   puntuacion_promedio?: number,
@@ -60,7 +60,7 @@ export class PublicationService extends CrudService<PublicationDTO> {
 
   getFilterPublication(filters: string): Observable<PublicationDTO[]> {
     return this.http.get<PublicationDTO[]>(
-      `${this.API_URL}/${this.endpoint}?included=image${filters}, category`);
+      `${this.API_URL}/${this.endpoint}?included=image,category${filters}`);
   }
 
   override create(data: Partial<PublicationDTO>): Observable<PublicationDTO> {
@@ -74,6 +74,7 @@ export class PublicationService extends CrudService<PublicationDTO> {
     if (data.descripcion) formData.append('descripcion', data.descripcion);
     if (data.seller_id) formData.append('seller_id', data.seller_id.toString());
     if (data.category_id) formData.append('category_id', data.category_id.toString());
+  if (data.visibilidad) formData.append('visibilidad', data.visibilidad.toString());
     if (data.imagen) formData.append('imagen', data.imagen);
 
     return this.http.post<PublicationDTO>(
@@ -93,6 +94,10 @@ override update(id: number, data: Partial<PublicationDTO>): Observable<Publicati
   if (data.descripcion) formData.append('descripcion', data.descripcion);
   if (data.seller_id) formData.append('seller_id', data.seller_id.toString());
   if (data.category_id) formData.append('category_id', data.category_id.toString());
+ if (data.visibilidad !== undefined && data.visibilidad !== null) {
+  formData.append('visibilidad', data.visibilidad.toString());
+}
+
   if (data.imagen) formData.append('imagen', data.imagen);
 
   // <-- Método override necesario para multipart + "PUT"

@@ -20,6 +20,7 @@ export class AddProduct implements OnInit{
     titulo: "",
     precio: null as number | null,
     descripcion: "",
+    visibilidad: 1
   }
 
   user!: UserDTO;
@@ -41,7 +42,7 @@ ngOnInit(): void {
   }
 
   console.log(this.user.seller!.id);
-  
+
 }
 
   onImageSelected(event: Event) {

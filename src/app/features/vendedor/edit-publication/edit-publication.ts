@@ -42,9 +42,6 @@ export class EditPublication implements OnInit {
       error: error => console.error('No se pudo obtener las publicaciones: ' + error),
       complete: () => console.log('Publicaciones obtenidas correctamente')
     }); */
-
-    console.log(this.publications);
-
   }
 
   onEditProduct(publication: PublicationDTO) {
@@ -53,7 +50,7 @@ export class EditPublication implements OnInit {
     this.dialogManager.openDialog('edit-product', {
       data: { publication: this.selectedPublication },
       onClose: (res) => {
-        console.log('cerrado con', res);
+        console.log('cerrado con edit-product', res);
         this.loadOwnPublications();
       }
     });

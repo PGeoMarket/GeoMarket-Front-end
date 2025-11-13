@@ -36,6 +36,8 @@ export class FilterByCategory {
       selectedId => this.filters += (this.scope + selectedId)
     )
   this.publicationService.sendFilter(this.filters);
+  console.log(this.filters);
+
   }
 
 }
