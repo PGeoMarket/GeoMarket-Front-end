@@ -86,11 +86,11 @@ export class Publications implements OnInit {
       return;
     }
 
-    if (!this.isFrom_favorites && !!filters.indexOf('&filter[titulo]=')) {
+    if (!this.isFrom_favorites) {
 
 
       /* Para category */
-      if (!filters.indexOf('&filter[category_id]=')) {
+      if (!filters.indexOf('&filter[category_id]=')&& !!filters.indexOf('&filter[titulo]=')) {
         this.publications = [];
         let filters_array: string[] = filters.split("&");
 

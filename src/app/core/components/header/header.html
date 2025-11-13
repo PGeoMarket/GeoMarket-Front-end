@@ -5,7 +5,7 @@
     class="bg-[#f8fafc] border-b border-[#e5e7eb] px-4 py-2 flex items-center justify-between fixed w-full h-16 z-40">
     <!-- logo y nombre -->
     <div class="flex items-center mr-3" routerLink="home" (click)="searchPublicationByName('')">
-      <img src="/svg/logo.svg" alt="GeoMarket Logo" class="cursor-pointer" />
+      <img src="/svg/logo.svg" alt="GeoMarket Logo" class="cursor-pointer" (click)="searchPublicationByName('')" />
       <img src="/svg/geomarket.svg" alt="" class="cursor-pointer hidden md:block" />
     </div>
 
