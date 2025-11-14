@@ -62,19 +62,19 @@
       <input type="email" [(ngModel)]="user_edit!.email" name="email" class="inputs_registro w-full" />
     </div>
 
-    <!-- Teléfono Principal -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Teléfono Principal:</label>
-      <input type="tel" [(ngModel)]="user_edit!.seller!.phones[0]" name="telefono_principal"
-        class="inputs_registro w-full" />
-    </div>
+   <!-- Teléfono Principal -->
+<div>
+  <label class="block text-sm font-medium text-gray-700 pb-0.5">Teléfono Principal:</label>
+  <input type="tel" [(ngModel)]="telefonoPrincipal" name="telefono_principal"
+    class="inputs_registro w-full" />
+</div>
 
-    <!-- Teléfono Secundario -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Teléfono Secundario:</label>
-      <input type="tel" [(ngModel)]="user_edit!.seller!.phones[1]" name="telefono_secundario"
-        class="inputs_registro w-full" />
-    </div>
+<!-- Teléfono Secundario -->
+<div>
+  <label class="block text-sm font-medium text-gray-700 pb-0.5">Teléfono Secundario:</label>
+  <input type="tel" [(ngModel)]="telefonoSecundario" name="telefono_secundario"
+    class="inputs_registro w-full" />
+</div>
 
     <!-- ============ DATOS DE LA TIENDA ============ -->
     <h3 class="text-gray-800 font-semibold pt-4">Datos de la Tienda</h3>
