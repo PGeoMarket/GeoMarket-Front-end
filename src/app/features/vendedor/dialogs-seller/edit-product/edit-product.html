@@ -30,8 +30,7 @@
         <!-- Imagen -->
         <div class="flex flex-col items-center justify-start min-h-0">
           <!-- Contenedor de la imagen con altura fija -->
-          <div
-            class="border border-borde1 rounded-2xl my-3 w-full md:w-[600px] h-[400px] md:h-[500px] mx-auto bg-cover bg-center relative overflow-hidden">
+          <div             class="border border-borde1 rounded-2xl my-3 w-full max-w-[400px] md:max-w-[500px] h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px] mx-auto bg-cover bg-center relative overflow-hidden">
             <button type="button" class="btn_negative absolute top-2 right-2" (click)="onResetImage()">X</button>
 
             @if (!imagePreview) {
