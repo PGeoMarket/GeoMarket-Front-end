@@ -3,6 +3,7 @@ import { CrudService } from "./crud-service";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { CategoryDTO } from "./category-service";
+import { SellerDTO } from "./seller-service";
 
 export interface PublicationDTO {
   id?: number;
@@ -17,7 +18,8 @@ export interface PublicationDTO {
   imagen?: File;
   created_at?: string;
   updated_at?: string;
-  category?: CategoryDTO
+  category?: CategoryDTO;
+  seller?: SellerDTO;
 }
 
 export interface ImageDTO {
@@ -74,7 +76,7 @@ export class PublicationService extends CrudService<PublicationDTO> {
     if (data.descripcion) formData.append('descripcion', data.descripcion);
     if (data.seller_id) formData.append('seller_id', data.seller_id.toString());
     if (data.category_id) formData.append('category_id', data.category_id.toString());
-  if (data.visibilidad) formData.append('visibilidad', data.visibilidad.toString());
+    if (data.visibilidad) formData.append('visibilidad', data.visibilidad.toString());
     if (data.imagen) formData.append('imagen', data.imagen);
 
     return this.http.post<PublicationDTO>(
@@ -83,29 +85,29 @@ export class PublicationService extends CrudService<PublicationDTO> {
     );
   }
 
-override update(id: number, data: Partial<PublicationDTO>): Observable<PublicationDTO> {
-  const formData = new FormData();
+  override update(id: number, data: Partial<PublicationDTO>): Observable<PublicationDTO> {
+    const formData = new FormData();
 
-  // Campos obligatorios
-  formData.append('titulo', data.titulo ?? '');
-  formData.append('precio', data.precio != null ? data.precio.toString() : '');
+    // Campos obligatorios
+    formData.append('titulo', data.titulo ?? '');
+    formData.append('precio', data.precio != null ? data.precio.toString() : '');
 
-  // Campos opcionales
-  if (data.descripcion) formData.append('descripcion', data.descripcion);
-  if (data.seller_id) formData.append('seller_id', data.seller_id.toString());
-  if (data.category_id) formData.append('category_id', data.category_id.toString());
- if (data.visibilidad !== undefined && data.visibilidad !== null) {
-  formData.append('visibilidad', data.visibilidad.toString());
-}
+    // Campos opcionales
+    if (data.descripcion) formData.append('descripcion', data.descripcion);
+    if (data.seller_id) formData.append('seller_id', data.seller_id.toString());
+    if (data.category_id) formData.append('category_id', data.category_id.toString());
+    if (data.visibilidad !== undefined && data.visibilidad !== null) {
+      formData.append('visibilidad', data.visibilidad.toString());
+    }
 
-  if (data.imagen) formData.append('imagen', data.imagen);
+    if (data.imagen) formData.append('imagen', data.imagen);
 
-  // <-- Método override necesario para multipart + "PUT"
-  formData.append('_method', 'PUT');
+    // <-- Método override necesario para multipart + "PUT"
+    formData.append('_method', 'PUT');
 
-  // Enviar como POST (Laravel interpretará _method=PUT)
-  return this.http.post<PublicationDTO>(`${this.API_URL}/${this.endpoint}/${id}`, formData);
-}
+    // Enviar como POST (Laravel interpretará _method=PUT)
+    return this.http.post<PublicationDTO>(`${this.API_URL}/${this.endpoint}/${id}`, formData);
+  }
 
 
   // Método para emitir filtros

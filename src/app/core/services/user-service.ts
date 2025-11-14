@@ -26,7 +26,7 @@ export interface UserDTO {
   image?: ImageDTO | null;
   imagen?: File;
   coordinate?: CoordinateDTO | null;
-  
+
 }
 
 export interface CoordinateDTO {
@@ -184,7 +184,7 @@ export class UserService extends CrudService<UserDTO> {
   getFavorites(): Observable<PublicationDTO[]> {
     const user = this.getCurrentUser();
     let userId = user?.id;
-    return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites`);
+    return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites?included=image,category`);
   }
 
   changeFavorites(publication_id: number) {

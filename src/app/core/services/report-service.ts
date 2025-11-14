@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { PublicationDTO } from './publication-service';
 import { Observable } from 'rxjs';
 import { UserDTO } from './user-service';
+import { SellerDTO } from './seller-service';
 
 export interface ReportDTO {
   id: number;
@@ -13,7 +14,7 @@ export interface ReportDTO {
   reason_id: number;
   descripcion_adicional: string | null;
   estado: number;
-  reportable?: UserDTO | PublicationDTO;
+  reportable?: UserDTO | PublicationDTO | SellerDTO;
   reason?: ReasonDTO;
 }
 export interface ReasonDTO {
@@ -34,7 +35,7 @@ export class ReportService extends CrudService<ReportDTO>{
   } 
   
   getReportWithReportable():Observable<ReportDTO[]>{
-    return this.http.get<ReportDTO[]>(`${this.API_URL}/${this.endpoint}?included=reason,reportable.image`)
+    return this.http.get<ReportDTO[]>(`${this.API_URL}/${this.endpoint}?included=reason,reportable.seller,reportable.image`)
   }
 
  
