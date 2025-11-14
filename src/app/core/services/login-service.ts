@@ -4,6 +4,7 @@ import { CrudService } from './crud-service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { UserDTO, UserService} from './user-service';
+import { PushNotificationService } from './push-notification-service';
 
 export interface loginDTO {
   email: EmailValidator | string;
@@ -22,7 +23,7 @@ export interface LoginResponse {
 export class LoginService extends CrudService<loginDTO> {
   protected override endpoint = 'login';
 
-  constructor(http: HttpClient, private userService: UserService) {
+  constructor(http: HttpClient, private userService: UserService,private pushService: PushNotificationService) {
     super(http);
   }
 
@@ -45,7 +46,11 @@ export class LoginService extends CrudService<loginDTO> {
   logout(): Observable<any> {
     return this.http.post(`${this.API_URL}/logout`, {})
       .pipe(
-        tap(() => {
+        tap(async () => {
+          // 👇 AGREGAR: Desregistrar push notifications
+          await this.pushService.unregister();
+          
+          // Limpiar datos locales
           localStorage.removeItem('token');
           this.userService.clearUserData();
         })

@@ -12,7 +12,8 @@
         <!-- icono perfil -->
         <div class="flex flex-col items-center mb-4 mt-2">
             <div class="relative w-32 h-32 rounded-full overflow-hidden border border-borde1 my-3 mx-auto">
-                <img [src]="user?.image?.url || '/svg/profile.svg'" alt="Avatar" class="w-full h-full object-cover rounded-full">
+                <img [src]="user?.image?.url || '/svg/profile.svg'" alt="Avatar"
+                    class="w-full h-full object-cover rounded-full">
             </div>
             <div class="m-2 flex bottom-0">
                 @for (star of [1,2,3,4,5]; track $index) {
@@ -59,7 +60,7 @@
         <div class="flex items-end gap-2 mt-6 w-full mb-8">
             <div class="relative">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1992.160176789594!2d-76.48352223851431!3d3.0082367277367377!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e307f3134b20a77%3A0xcb8ce9e4a1c72448!2sSENA%20Regional%20Cauca!5e0!3m2!1ses-419!2sco!4v1750977951386!5m2!1ses-419!2sco"
+                    src="https://www.google.com/maps?q={{user?.seller?.coordinate?.latitud}},{{user?.seller?.coordinate?.longitud}}&z=15&output=embed"
                     class="w-full h-full" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
                 <button

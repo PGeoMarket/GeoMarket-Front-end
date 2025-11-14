@@ -6,22 +6,17 @@ interface ComponentType<T> {
   new (...args: any[]): T;
 }
 
-/**
- * Servicio central para manejar diálogos en la app.
- * Usa `Dialog` (basado en Angular CDK Overlay) y
- * mantiene un registro de componentes por nombre.
- */
 @Injectable({ providedIn: 'root' })
 export class DialogManager {
   private dialog = inject(Dialog);
 
-  // Registro interno de componentes que se pueden abrir como diálogos
+  // Registro interno de componentes
   private componentRegistry = new Map<string, ComponentType<any>>();
 
   /** Registrar un componente individual */
   registerComponent<T>(name: string, component: ComponentType<T>) {
     this.componentRegistry.set(name, component);
-    return this; // permite chaining
+    return this;
   }
 
   /** Registrar múltiples componentes de golpe */
@@ -38,7 +33,7 @@ export class DialogManager {
     disableClose?: boolean;
     width?: string;
     height?: string;
-    onClose?: (result?: any) => void; // <-- agregado
+    onClose?: (result?: any) => void;
   }): DialogRef | null {
     const component = this.componentRegistry.get(componentName);
 
@@ -56,14 +51,29 @@ export class DialogManager {
     disableClose?: boolean;
     width?: string;
     height?: string;
-    onClose?: (result?: any) => void; // <-- agregado
+    onClose?: (result?: any) => void;
   }): DialogRef {
     return this.dialog.openDialog(component, config);
   }
 
-  /** Cerrar el diálogo activo */
+  /** Cierra el diálogo activo (último abierto) */
   closeDialog() {
     this.dialog.closeDialog();
+  }
+
+  /** Cierra todos los diálogos activos */
+  closeAllDialogs() {
+    this.dialog.closeAllDialogs();
+  }
+
+  /** Obtiene el número de diálogos activos */
+  getDialogCount(): number {
+    return this.dialog.getDialogCount();
+  }
+
+  /** Obtiene la referencia del diálogo activo */
+  getActiveDialog(): DialogRef | null {
+    return this.dialog.getActiveDialog();
   }
 
   /** Obtener lista de nombres registrados */
