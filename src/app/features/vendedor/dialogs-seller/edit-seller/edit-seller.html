@@ -86,12 +86,6 @@
         class="inputs_registro w-full" />
     </div>
 
-    <!-- Descripción -->
-    <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Descripción:</label>
-      <textarea [(ngModel)]="user_edit!.seller!.descripcion" name="descripcion"
-        class="inputs_registro w-full"></textarea>
-    </div>
 
     <!-- Dirección -->
     <div>
@@ -99,6 +93,15 @@
       <input type="text" [(ngModel)]="user_edit!.seller!.coordinate!.direccion" name="direccion"
         class="inputs_registro w-full" />
     </div>
+    
+    <!-- Descripción -->
+    <div>
+      <label class="block text-sm font-medium text-gray-700 pb-0.5">Descripción:</label>
+      <textarea [(ngModel)]="user_edit!.seller!.descripcion" name="descripcion"
+        class="inputs_registro w-full"></textarea>
+    </div>
+
+    
 
     <!-- Botones -->
     <div class="flex justify-center items-center space-x-4 pt-4">
