@@ -2,6 +2,7 @@
 
 # Carpeta Android (mantenimiento local)
 android/
+/android
 
 # Compiled output
 /dist
