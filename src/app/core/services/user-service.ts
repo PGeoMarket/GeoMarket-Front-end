@@ -246,7 +246,7 @@ export class UserService extends CrudService<UserDTO> {
     const user = this.getCurrentUser();
     let user_id = user?.id;
     return this.http
-      .get<any>(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image`)
+      .get<any>(`${this.API_URL}/${this.endpoint}/${user_id}?included=seller.publications.image,seller.publications.category`)
       .pipe(
         map((response: any) => {
           return response?.user?.seller?.publications ?? [];
