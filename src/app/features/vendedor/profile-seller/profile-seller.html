@@ -12,7 +12,8 @@
         <!-- icono perfil -->
         <div class="flex flex-col items-center mb-4 mt-2">
             <div class="relative w-32 h-32 rounded-full overflow-hidden border border-borde1 my-3 mx-auto">
-                <img [src]="user?.image?.url || '/svg/profile.svg'" alt="Avatar" class="w-full h-full object-cover rounded-full">
+                <img [src]="user?.image?.url || '/svg/profile.svg'" alt="Avatar"
+                    class="w-full h-full object-cover rounded-full">
             </div>
             <div class="m-2 flex bottom-0">
                 @for (star of [1,2,3,4,5]; track $index) {

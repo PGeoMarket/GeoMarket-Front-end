@@ -33,11 +33,8 @@ export class Publications implements OnInit {
         this.publicationService.filterChanged$
           .subscribe(filters => {
             this.loadCacheFiltredPublications(filters);
-
-
           });
       }
-
       return;
     }
 
@@ -54,7 +51,6 @@ export class Publications implements OnInit {
     this.publicationService.filterChanged$
       .subscribe(filters => {
         this.loadFiltredPublications(filters);
-
         return;
       });
 
@@ -73,7 +69,8 @@ export class Publications implements OnInit {
     }
 
     if (this.seller_id) {
-
+      // Este caso ya se maneja en loadSellerPublications
+      return;
     }
 
     this.userService.getFavorites().subscribe({
@@ -82,10 +79,8 @@ export class Publications implements OnInit {
         this.publications_temp = data
       },
       error: error => console.error('No se pudo obtener las publicaciones: ' + error),
-      complete: () => console.log('Publicaciones obtenidas correctamente')
+      complete: () => console.log('Publicaciones obtenidas correctamente')
     });
-
-
   }
 
   loadFiltredPublications(filters: string) {
@@ -96,17 +91,14 @@ export class Publications implements OnInit {
     }
 
     if (!this.isFrom_cache) {
-
-
       /* Para category */
       if (!!filters.indexOf('&filter[category_id]=') && !!filters.indexOf('&filter[titulo]=')) {
         this.publications = [];
         let filters_array: string[] = filters.split("&");
 
         filters_array.forEach(filter_array => {
-
-          if (filter_array != '') { //el primer elemento vacio xddd
-            this.publicationService.getFilterPublication("&" + filter_array) // Usar el parámetro filters
+          if (filter_array != '') {
+            this.publicationService.getFilterPublication("&" + filter_array)
               .subscribe({
                 next: data => { this.publications = [...this.publications, ...data] },
                 error: error => console.error('Error a publications filtradas: ' + error),
@@ -114,22 +106,19 @@ export class Publications implements OnInit {
               });
           }
         });
-
         return;
       }
 
       /* Para precios */
-      this.publicationService.getFilterPublication(filters) // Usar el parámetro filters
+      this.publicationService.getFilterPublication(filters)
         .subscribe({
           next: data => { this.publications = data },
           error: error => console.error('Error a publications filtradas: ' + error),
           complete: () => console.log('publications filtradas:' + this.publications.length)
         });
-
+    } else {
+      this.loadCacheFiltredPublications(filters);
     }
-
-    this.loadCacheFiltredPublications(filters);
-
   }
 
   loadSellerPublications() {
@@ -139,14 +128,16 @@ export class Publications implements OnInit {
       return;
     }
 
-    this.publicationService.getFilterPublication(`&filter0his.seller_id}`) // Usar el parámetro filters
+    this.publicationService.getFilterPublication(`&filter[seller_id]=${this.seller_id}`)
       .subscribe({
-        next: data => { this.publications = data },
+        next: data => { 
+          this.publications = data;
+          this.publications_temp = data; // AQUÍ ESTABA EL ERROR - FALTABA ESTA ASIGNACIÓN
+        },
         error: error => console.error('Error a publications filtradas: ' + error),
         complete: () => console.log('publications filtradas:' + this.publications.length)
       });
     return;
-
   }
 
   loadCacheFiltredPublications(filters: string) {
@@ -168,7 +159,6 @@ export class Publications implements OnInit {
       this.publications_temp.forEach(pub => {
         filters_split.forEach(f => {
           if (f !== "") {
-            // Extraer solo el número de la categoría (puede haber más parámetros después)
             const categoryId = f.split('&')[0];
             if (pub.category_id == Number(categoryId)) {
               filtrado.push(pub);
@@ -177,7 +167,7 @@ export class Publications implements OnInit {
         });
       });
 
-      this.publications = [...new Set(filtrado)]; // Eliminar duplicados
+      this.publications = [...new Set(filtrado)];
       return;
     }
 
@@ -186,7 +176,6 @@ export class Publications implements OnInit {
       let min_price = 0;
       let max_price = Number.MAX_SAFE_INTEGER;
 
-      // Extraer valores de precio
       if (hasMinPriceFilter) {
         const minMatch = filters.match(/&filter\[precio_min\]=(\d+)/);
         if (minMatch) min_price = parseInt(minMatch[1]);
@@ -216,10 +205,9 @@ export class Publications implements OnInit {
   //Logica a de abrir product-detail
   open: boolean = false;
 
-  private closeTimeout: any; // declara esto junto a las propiedades de la clase
+  private closeTimeout: any;
 
   openProductDetail(publication: PublicationDTO) {
-    // si hay un timeout de cierre pendiente, lo cancelamos (evita race conditions)
     if (this.closeTimeout) {
       clearTimeout(this.closeTimeout);
       this.closeTimeout = undefined;
@@ -232,17 +220,12 @@ export class Publications implements OnInit {
   }
 
   closePublicationDetail() {
-    // iniciar la animación (cambia la clase)
     this.open = false;
 
-    // esperar a que termine la transición CSS (Tailwind duration-300 = 300ms)
-    // y entonces limpiar publication_selected para que el contenido se quite después de animar
     if (this.closeTimeout) clearTimeout(this.closeTimeout);
     this.closeTimeout = setTimeout(() => {
       this.publication_selected = null;
       this.closeTimeout = undefined;
     }, 300);
   }
-
-
 }

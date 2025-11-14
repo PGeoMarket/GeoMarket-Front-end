@@ -1,7 +1,8 @@
-<section class="flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 md:pt-[0px] overflow-x-hidden "
-  (click)="cerrarMenus()">
   <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event"
     class="w-full mx-[10%] z-50"></app-filters>
+
+<section class="flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 md:pt-[0px] overflow-x-hidden "
+  (click)="cerrarMenus()">
 
   @if (publications) {
   @for (publication of publications; track $index) {

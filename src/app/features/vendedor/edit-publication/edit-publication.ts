@@ -18,6 +18,7 @@ export class EditPublication implements OnInit {
   publications!: PublicationDTO[];
   selectedPublication!: PublicationDTO;
   publication_selected!: PublicationDTO | null;
+  publications_temp!: PublicationDTO[];
   isAbierto: boolean = false;
 
   private dialogManager = inject(DialogManager);
@@ -25,25 +26,39 @@ export class EditPublication implements OnInit {
   constructor(private publicationService: PublicationService, private userService: UserService) { }
 
   ngOnInit(): void {
+
+
+    this.publicationService.filterChanged$
+      .subscribe(filters => {
+        this.loadCacheFiltredPublications(filters);
+        return;
+
+      });
+
     this.loadOwnPublications();
     this.publicationService.reload_publicationChanged$
       .subscribe(() => {
         this.loadOwnPublications();
+        return;
+
       })
   }
 
   loadOwnPublications() {
     this.userService.getOwnPublications().subscribe({
-      next: data => this.publications = data,
+      next: data => {
+        this.publications = data;
+        this.publications_temp = data; // AQUÍ ESTABA EL ERROR - FALTABA ESTA ASIGNACIÓN
+      },
       error: error => console.error('No se pudo obtener las publicaciones: ' + error),
       complete: () => console.log('Publicaciones obtenidas correctamente')
     });
 
-/*     this.publicationService.getAllPublication().subscribe({
-      next: data => this.publications = data,
-      error: error => console.error('No se pudo obtener las publicaciones: ' + error),
-      complete: () => console.log('Publicaciones obtenidas correctamente')
-    }); */
+    /*     this.publicationService.getAllPublication().subscribe({
+          next: data => this.publications = data,
+          error: error => console.error('No se pudo obtener las publicaciones: ' + error),
+          complete: () => console.log('Publicaciones obtenidas correctamente')
+        }); */
   }
 
   onEditProduct(publication: PublicationDTO) {
@@ -73,6 +88,70 @@ export class EditPublication implements OnInit {
         // opcional: mostrar mensaje de error
       }
     })
+  }
+
+
+  //filtros
+  loadCacheFiltredPublications(filters: string) {
+    let filtrado: PublicationDTO[] = [];
+    this.publications = filtrado;
+
+    // Verificar si hay filtro de categoría Y NO hay filtro de título
+    const hasCategoryFilter = filters.includes('&filter[category_id]=');
+    const hasTitleFilter = filters.includes('&filter[titulo]=');
+    const hasMinPriceFilter = filters.includes('&filter[precio_min]=');
+    const hasMaxPriceFilter = filters.includes('&filter[precio_max]=');
+
+    /* Para category */
+    if (hasCategoryFilter && !hasTitleFilter) {
+      let filters_split = filters.split("&filter[category_id]=");
+
+      console.log(filters_split);
+
+      this.publications_temp.forEach(pub => {
+        filters_split.forEach(f => {
+          if (f !== "") {
+            const categoryId = f.split('&')[0];
+            if (pub.category_id == Number(categoryId)) {
+              filtrado.push(pub);
+            }
+          }
+        });
+      });
+
+      this.publications = [...new Set(filtrado)];
+      return;
+    }
+
+    /* Para precios */
+    if ((hasMinPriceFilter || hasMaxPriceFilter) && !hasTitleFilter) {
+      let min_price = 0;
+      let max_price = Number.MAX_SAFE_INTEGER;
+
+      if (hasMinPriceFilter) {
+        const minMatch = filters.match(/&filter\[precio_min\]=(\d+)/);
+        if (minMatch) min_price = parseInt(minMatch[1]);
+      }
+
+      if (hasMaxPriceFilter) {
+        const maxMatch = filters.match(/&filter\[precio_max\]=(\d+)/);
+        if (maxMatch) max_price = parseInt(maxMatch[1]);
+      }
+
+      console.log(`${min_price} > ${max_price}`);
+
+      this.publications_temp.forEach(pub => {
+        if (pub.precio! >= min_price && pub.precio! <= max_price) {
+          filtrado.push(pub);
+        }
+      });
+
+      this.publications = filtrado;
+      return;
+    }
+
+    // Caso por defecto si no aplican los filtros anteriores
+    this.publications = [...this.publications_temp];
   }
 
   //CHATGPT:
@@ -117,7 +196,7 @@ export class EditPublication implements OnInit {
 
 
   //Filtros
-    abrirFiltros(event: MouseEvent) {
+  abrirFiltros(event: MouseEvent) {
     event.stopPropagation(); // evita que cierre de inmediato
     this.isAbierto = true;
   }
