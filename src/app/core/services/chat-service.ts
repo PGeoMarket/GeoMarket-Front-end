@@ -34,6 +34,9 @@ export interface ChatDTO {
     primer_nombre: string;
     primer_apellido: string;
   };
+  latest_message?:{
+    text:string;
+  };
   other_participant_name?: string;
   other_participant_image_url?: string;
   publication_image_url?: string;

@@ -46,10 +46,15 @@
               <p>{{ chat.updated_at | date:'shortTime' }}</p>
             </div>
 
+            <div>
             <!-- Nombre del otro participante -->
-            <p class="text-textosNoNegro text-[0.8em] md:text-[1em]">
-              {{ chat.other_participant_name }}
+              <p class="text-textosNoNegro text-[0.8em] md:text-[1em]">
+                {{ chat.other_participant_name }}
+              </p>
+              <p class="text-borde2 text-[0.8em] md:text-[1em]">
+              Ultimo mensaje: {{ chat.latest_message?.text }}
             </p>
+            </div>
           </div>
         }
       </div>
