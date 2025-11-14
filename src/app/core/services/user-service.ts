@@ -107,6 +107,52 @@ export class UserService extends CrudService<UserDTO> {
     }
   }
 
+  // NUEVO: Guardar ubicación temporal en localStorage (para registro)
+  saveTemporaryLocation(latitud: number, longitud: number): void {
+    const locationData = {
+      latitud: latitud,
+      longitud: longitud,
+      direccion: 'Santander de Quilichao',
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem('temporary_user_location', JSON.stringify(locationData));
+  }
+
+  // NUEVO: Obtener ubicación temporal del localStorage
+  getTemporaryLocation(): { latitud: number; longitud: number; direccion: string } | null {
+    const data = localStorage.getItem('temporary_user_location');
+    return data ? JSON.parse(data) : null;
+  }
+
+  // NUEVO: Limpiar ubicación temporal
+  clearTemporaryLocation(): void {
+    localStorage.removeItem('temporary_user_location');
+  }
+
+  // NUEVO: Guardar ubicación del usuario actual
+  saveUserLocation(latitud: number, longitud: number, direccion: string): void {
+    const user = this.getCurrentUser();
+    if (!user) return;
+
+    const locationData = {
+      latitud: latitud,
+      longitud: longitud,
+      direccion: direccion,
+      userId: user.id,
+      timestamp: new Date().toISOString()
+    };
+    localStorage.setItem(`user_location_${user.id}`, JSON.stringify(locationData));
+  }
+
+  // NUEVO: Obtener ubicación del usuario actual
+  getUserLocation(): { latitud: number; longitud: number; direccion: string } | null {
+    const user = this.getCurrentUser();
+    if (!user) return null;
+
+    const data = localStorage.getItem(`user_location_${user.id}`);
+    return data ? JSON.parse(data) : null;
+  }
+
   addSearch(query: string, max = 20): void {
     if (!query) return;
     const now = new Date().toISOString();
