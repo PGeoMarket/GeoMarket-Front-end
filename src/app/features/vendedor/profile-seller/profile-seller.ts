@@ -39,7 +39,6 @@ export class ProfileSeller implements OnInit {
       onClose: (res) => {
         console.log('cerrado con', res);
         this.updateCoordinate(res.coordinate);
-
         
       }
         

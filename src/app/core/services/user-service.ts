@@ -108,11 +108,11 @@ export class UserService extends CrudService<UserDTO> {
   }
 
   // NUEVO: Guardar ubicación temporal en localStorage (para registro)
-  saveTemporaryLocation(latitud: number, longitud: number): void {
+  saveTemporaryLocation(latitud: number, longitud: number, direccion: string): void {
     const locationData = {
       latitud: latitud,
       longitud: longitud,
-      direccion: 'Santander de Quilichao',
+      direccion: direccion,
       timestamp: new Date().toISOString()
     };
     localStorage.setItem('temporary_user_location', JSON.stringify(locationData));
@@ -187,6 +187,7 @@ export class UserService extends CrudService<UserDTO> {
     localStorage.setItem('user_data', JSON.stringify(user));
     this.currentUserSubject.next(user);
     this.loadSearchHistoryFromStorage();
+    
   }
 
   clearUserData(): void {

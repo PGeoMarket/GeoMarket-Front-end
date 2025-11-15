@@ -7,7 +7,7 @@
         <div class="z-50">
             <div class="text-azulSecundario cursor-pointer flex items-center" (click)="openMapDialog()">
                 <img src="svg/location.svg" class="mr-2" alt="">
-                Santander de Quilichao
+                {{user_coordinate.direccion || 'Seleccionar ubicación'}}
             </div>
             <!--             <div  class="b-gray-500/50 h-full w-full fixed top-0 left-0 select-none">
                 @include('components.mapa')  componente de mapa aqui
