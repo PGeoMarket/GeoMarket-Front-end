@@ -63,6 +63,6 @@ export class App implements OnInit {
   // Quitar después de 3 segundos
   setTimeout(() => {
     banner.remove();
-  }, 3000);
+  }, 2000);
 }
 }
