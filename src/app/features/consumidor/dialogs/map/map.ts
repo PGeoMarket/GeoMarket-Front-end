@@ -3,6 +3,7 @@ import { Closedialog } from '../../../../core/dialogs/closedialog';
 import { Loader } from '@googlemaps/js-api-loader'; 
 import { DialogManager } from '../../../../core/dialogs/dialog-manager';
 import { UserService } from '../../../../core/services/user-service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-map',
@@ -22,6 +23,7 @@ export class Map implements OnInit {
 
   ngOnInit(): void {
     this.loadMap();
+    
   }
 
   private loadMap(): void {
@@ -71,4 +73,46 @@ export class Map implements OnInit {
     console.log('Ubicación guardada y cerrando diálogo:', this.latitud, this.longitud);
     this.dialogManager.closeDialog();
   }
+
+  //byron o jaun, no c
+
+
+  //deepseek
+
+  constructor(private http: HttpClient) {
+  }
+
+  getAddressFromCoordsHttp() {
+  const apiKey = 'AIzaSyCsUAYxDmKFKoEMdFBGKcOzP152pyU6RYo';
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.latitud},${this.longitud}&key=${apiKey}`;
+  
+  return this.http.get(url).toPromise()
+    .then((response: any) => {
+      if (response.status === 'OK' && response.results[0]) {
+        return this.extractAddressComponentsFromHttp(response.results[0]);
+      }
+      throw new Error('No se encontraron resultados');
+    });
+}
+
+private extractAddressComponentsFromHttp(result: any) {
+  let department = '';
+  let municipality = '';
+
+  for (let component of result.address_components) {
+    if (component.types.includes('administrative_area_level_1')) {
+      department = component.long_name;
+    }
+    if (component.types.includes('locality') || component.types.includes('administrative_area_level_2')) {
+      municipality = component.long_name;
+    }
+  }
+
+  return {
+    department,
+    municipality,
+    fullAddress: result.formatted_address
+  };
+}
+
 }

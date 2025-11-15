@@ -22,6 +22,7 @@ import { Report } from "../../features/consumidor/dialogs/report/report";
 import { EditConsumer } from "../../features/consumidor/edit-consumer/edit-consumer";
 import { SubmitFaq } from "../../features/consumidor/dialogs/submit-faq/submit-faq";
 import { EditSeller } from "../../features/vendedor/dialogs-seller/edit-seller/edit-seller";
+import { MapSeller } from "../../features/vendedor/dialogs-seller/map-seller/map-seller";
 
 /**
  * Diccionario de diálogos disponibles en la app.
@@ -35,6 +36,7 @@ export const DIALOG_COMPONENTS = {
   'add-product': AddProduct,
   'edit-product': EditProduct,
   'edit-seller': EditSeller,
+  'map-seller': MapSeller,
 
   // Consumidor
   // 

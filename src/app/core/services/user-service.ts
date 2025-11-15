@@ -25,14 +25,14 @@ export interface UserDTO {
   seller?: SellerDTO;
   image?: ImageDTO | null;
   imagen?: File;
-  coordinate?: CoordinateDTO | null;
+  coordinate: CoordinateDTO | null;
 
 }
 
 export interface CoordinateDTO {
   id: number;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
   latitud: number;
   longitud: number;
   direccion: string;

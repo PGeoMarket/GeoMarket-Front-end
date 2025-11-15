@@ -59,13 +59,10 @@
         <!-- Mapa, botón y estrellas -->
         <div class="flex items-end gap-2 mt-6 w-full mb-8">
             <div class="relative">
-                <iframe
-                    src="https://www.google.com/maps?q={{user?.seller?.coordinate?.latitud}},{{user?.seller?.coordinate?.longitud}}&z=15&output=embed"
-                    class="w-full h-full" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+                <app-mini-map [coordinate]="coordinate"></app-mini-map>
                 <button
                     class="absolute left-2  bg-[#06406A] text-white rounded-md px-4 py-1 text-base font-semibold shadow hover:bg-[#05345a] cursor-pointer"
-                    (click)="onOpenMap()">
+                    (click)="openMapSellerDialog()">
                     Editar ubicación
                 </button>
             </div>
