@@ -15,12 +15,12 @@ export class Home {
   isAbierto: boolean = false;
   dialogManager = inject(DialogManager);
   user: UserDTO | null = null;
-  user_coordinate!: CoordinateDTO;
+  user_coordinate!: CoordinateDTO|null;
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
     this.getUserData();
-    this.user_coordinate = this.userService.getTemporaryLocation()!;    
+    this.user_coordinate = this.userService.getTemporaryLocation()||null;    
 
   }
 
