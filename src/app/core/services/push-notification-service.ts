@@ -10,8 +10,7 @@ import { Router } from '@angular/router';
 })
 export class PushNotificationService extends CrudService<any> {
 
-  protected override endpoint = 'device-token'; // No se usa mucho pero es requerido
-
+  protected override endpoint = 'device-token';
   private deviceId: string | null = null;
 
   constructor(
@@ -21,18 +20,13 @@ export class PushNotificationService extends CrudService<any> {
     super(http);
   }
 
-  /**
-   * Inicializar notificaciones push
-   */
   async init(userId: number): Promise<void> {
-    // Solo en dispositivos móviles
     if (!Capacitor.isNativePlatform()) {
       console.log('⚠️ Push notifications solo disponibles en móvil');
       return;
     }
 
     try {
-      // 1. Pedir permisos
       let permStatus = await PushNotifications.checkPermissions();
       
       if (permStatus.receive === 'prompt') {
@@ -40,16 +34,17 @@ export class PushNotificationService extends CrudService<any> {
       }
       
       if (permStatus.receive !== 'granted') {
-        console.error('❌ Permisos de notificaciones denegados');
+        console.error('❌ Permisos denegados');
         return;
       }
 
       console.log('✅ Permisos concedidos');
-
-      // 2. Registrar con FCM
+      
+      // Generar deviceId ANTES de registrar
+      this.deviceId = this.getOrCreateDeviceId(userId);
+      console.log('🔑 Device ID:', this.deviceId);
+      
       await PushNotifications.register();
-
-      // 3. Configurar listeners
       this.setupListeners(userId);
 
     } catch (error) {
@@ -57,37 +52,24 @@ export class PushNotificationService extends CrudService<any> {
     }
   }
 
-  /**
-   * Configurar listeners de notificaciones
-   */
   private setupListeners(userId: number): void {
     
-    // Token recibido de FCM
     PushNotifications.addListener('registration', async (token: Token) => {
-      console.log('📲 FCM Token recibido:', token.value);
-      
-      // Generar device ID único
-      this.deviceId = `user-${userId}-${Date.now()}`;
-      
-      // Registrar en backend
+      console.log('📲 FCM Token:', token.value);
       await this.registerDevice(userId, token.value);
     });
 
-    // Error al registrar
     PushNotifications.addListener('registrationError', (error: any) => {
-      console.error('❌ Error en registro FCM:', error);
+      console.error('❌ Error FCM:', error);
     });
 
-    // Notificación recibida (app en primer plano)
     PushNotifications.addListener(
       'pushNotificationReceived',
       (notification: PushNotificationSchema) => {
-        console.log('📩 Notificación recibida (foreground):', notification);
-        // Aquí puedes mostrar un toast o alert personalizado
+        console.log('📩 Notificación recibida:', notification);
       }
     );
 
-    // Notificación tocada (abre la app)
     PushNotifications.addListener(
       'pushNotificationActionPerformed',
       (notification: ActionPerformed) => {
@@ -95,19 +77,14 @@ export class PushNotificationService extends CrudService<any> {
         
         const data = notification.notification.data;
         if (data && data.chat_id) {
-          // Navegar al chat
-          this.router.navigate(['/chats']);
+          this.router.navigate(['/chats', data.chat_id]);
         }
       }
     );
   }
 
-  /**
-   * Registrar dispositivo en backend
-   */
   private async registerDevice(userId: number, fcmToken: string): Promise<void> {
     try {
-      // Usa this.API_URL heredado de CrudService
       const response = await this.http.post<any>(
         `${this.API_URL}/device-token`,
         {
@@ -117,32 +94,54 @@ export class PushNotificationService extends CrudService<any> {
         }
       ).toPromise();
 
-      console.log('✅ Dispositivo registrado en backend:', response);
+      console.log('✅ Registrado en backend');
 
     } catch (error) {
-      console.error('❌ Error registrando dispositivo:', error);
+      console.error('❌ Error registrando:', error);
+    }
+  }
+
+  async unregister(): Promise<void> {
+    if (!this.deviceId || !Capacitor.isNativePlatform()) {
+      return;
+    }
+
+    try {
+      await this.http.delete(
+        `${this.API_URL}/device-token?device_id=${this.deviceId}`
+      ).toPromise();
+
+      console.log('✅ Desregistrado');
+      
+      // Limpiar localStorage también
+      localStorage.removeItem('device_unique_id');
+      this.deviceId = null;
+
+    } catch (error) {
+      console.error('❌ Error desregistrando:', error);
     }
   }
 
   /**
-   * Desregistrar dispositivo (logout)
+   * Generar o recuperar device ID persistente
    */
-  async unregister(): Promise<void> {
-  if (!this.deviceId || !Capacitor.isNativePlatform()) {
-    return;
+  private getOrCreateDeviceId(userId: number): string {
+    // Intentar obtener ID existente
+    let persistentId = localStorage.getItem('device_unique_id');
+    
+    if (!persistentId) {
+      // Crear uno nuevo que persista entre sesiones
+      const timestamp = Date.now();
+      const random = Math.random().toString(36).substring(2, 9);
+      persistentId = `user-${userId}-device-${timestamp}-${random}`;
+      
+      // Guardar para futuras sesiones
+      localStorage.setItem('device_unique_id', persistentId);
+      console.log('🆕 Nuevo device ID creado');
+    } else {
+      console.log('♻️ Device ID existente recuperado');
+    }
+    
+    return persistentId;
   }
-
-  try {
-    // Envía device_id como query param
-    await this.http.delete(
-      `${this.API_URL}/device-token?device_id=${this.deviceId}`
-    ).toPromise();
-
-    console.log('✅ Dispositivo desregistrado');
-    this.deviceId = null;
-
-  } catch (error) {
-    console.error('❌ Error desregistrando dispositivo:', error);
-  }
-}
 }
