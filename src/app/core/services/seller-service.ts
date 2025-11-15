@@ -48,6 +48,8 @@ export class SellerService extends CrudService<SellerDTO> {
 
   protected override endpoint = 'sellers';
 
+  private coordinate_string = 'coordinates'; 
+
   constructor(http: HttpClient) {
     super(http);
   }
@@ -57,34 +59,45 @@ export class SellerService extends CrudService<SellerDTO> {
   }
 
   updateSeller(sellerId: number, data: Partial<SellerDTO & { telefonos?: number[] }>): Observable<SellerDTO> {
-  const formData = new FormData();
+    const formData = new FormData();
 
-  if (data.nombre_tienda) formData.append('nombre_tienda', data.nombre_tienda);
-  if (data.descripcion) formData.append('descripcion', data.descripcion);
+    if (data.nombre_tienda) formData.append('nombre_tienda', data.nombre_tienda);
+    if (data.descripcion) formData.append('descripcion', data.descripcion);
 
-  // ✅ Agregar teléfonos al FormData
-  if (data.telefonos && data.telefonos.length > 0) {
-    data.telefonos.forEach((telefono, index) => {
-      formData.append(`telefonos[${index}]`, telefono.toString());
-    });
+    // ✅ Agregar teléfonos al FormData
+    if (data.telefonos && data.telefonos.length > 0) {
+      data.telefonos.forEach((telefono, index) => {
+        formData.append(`telefonos[${index}]`, telefono.toString());
+      });
+    }
+
+    // Si tienes coordenadas
+    if (data.coordinate?.direccion) {
+      formData.append('direccion', data.coordinate.direccion);
+    }
+    if (data.coordinate?.latitud) {
+      formData.append('latitud', data.coordinate.latitud.toString());
+    }
+    if (data.coordinate?.longitud) {
+      formData.append('longitud', data.coordinate.longitud.toString());
+    }
+
+    formData.append('_method', 'PUT');
+
+    return this.http.post<SellerDTO>(
+      `${this.API_URL}/${this.endpoint}/${sellerId}?included=image,user,user.image,coordinate,phones`,
+      formData
+    );
   }
 
-  // Si tienes coordenadas
-  if (data.coordinate?.direccion) {
-    formData.append('direccion', data.coordinate.direccion);
-  }
-  if (data.coordinate?.latitud) {
-    formData.append('latitud', data.coordinate.latitud.toString());
-  }
-  if (data.coordinate?.longitud) {
-    formData.append('longitud', data.coordinate.longitud.toString());
+    getCoordinateById(id: number): Observable<CoordinateDTO> {
+    return this.http.get<CoordinateDTO>(`${this.API_URL}/${this.coordinate_string}/${id}`);
+    
   }
 
-  formData.append('_method', 'PUT');
+  updateCoordinate(id: number, data: Partial<CoordinateDTO>): Observable<CoordinateDTO> {
+    return this.http.put<CoordinateDTO>(`${this.API_URL}/${this.coordinate_string}/${id}`, data);
+    
+  }
 
-  return this.http.post<SellerDTO>(
-    `${this.API_URL}/${this.endpoint}/${sellerId}?included=image,user,user.image,coordinate,phones`,
-    formData
-  );
-}
 }

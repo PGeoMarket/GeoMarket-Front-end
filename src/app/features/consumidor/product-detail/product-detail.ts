@@ -7,10 +7,11 @@ import { UserService } from '../../../core/services/user-service';
 import { SellerDTO, SellerService } from '../../../core/services/seller-service';
 import { Router, RouterLink } from '@angular/router'; 
 import { ChatService } from '../../../core/services/chat-service';
+import { MiniMap } from '../mini-map/mini-map';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [CommonModule, Comments, RouterLink],
+  imports: [CommonModule, Comments, RouterLink, MiniMap],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
