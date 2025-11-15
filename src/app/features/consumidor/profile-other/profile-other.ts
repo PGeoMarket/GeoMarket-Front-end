@@ -9,10 +9,11 @@ import { UserService } from '../../../core/services/user-service';
 import { PublicationDTO } from '../../../core/services/publication-service';
 import { CommentsProfile } from "../../vendedor/comments-profile/comments-profile";
 import { Filters } from '../filters/filters';
+import { MiniMap } from '../mini-map/mini-map';
 
 @Component({
   selector: 'app-profile-other',
-  imports: [CommonModule, Publications, CommentsProfile, Filters],
+  imports: [CommonModule, Publications, CommentsProfile, Filters, MiniMap],
   templateUrl: './profile-other.html',
   styleUrl: './profile-other.css'
 })
