@@ -4,7 +4,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { DialogManager } from '../../../../core/dialogs/dialog-manager';
 import { UserDTO, UserService } from '../../../../core/services/user-service';
 import { HttpClient } from '@angular/common/http';
-import { CoordinateDTO, ExtractedAddress, MapService } from '../../../../core/services/map-service';
+import { CoordinateMapServiceDTO, ExtractedAddress, MapService } from '../../../../core/services/map-service';
 
 @Component({
   selector: 'app-map',
@@ -18,7 +18,7 @@ export class Map implements OnInit {
   private dialogManager = inject(DialogManager);
   private userService = inject(UserService);
   user: UserDTO | null = null;
-  coordinate: CoordinateDTO | { latitud: number; longitud: number; direccion: string } = { latitud: 3.0082918, longitud: -76.5055133, direccion: '' };
+  coordinate: CoordinateMapServiceDTO | { latitud: number; longitud: number; direccion: string } = { latitud: 3.0082918, longitud: -76.5055133, direccion: '' };
   openStreetMap_result: any;
   private marker: any;
 

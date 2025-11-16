@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { CrudService } from './crud-service';
 import { lastValueFrom } from 'rxjs';
 
-export interface CoordinateDTO {
+export interface CoordinateMapServiceDTO {
   latitud: number;
   longitud: number;
   direccion: string;
@@ -52,7 +52,7 @@ export interface ExtractedAddress {
 @Injectable({
   providedIn: 'root'
 })
-export class MapService extends CrudService<CoordinateDTO> {
+export class MapService extends CrudService<CoordinateMapServiceDTO> {
   protected override endpoint = 'coordinates';
 
   constructor(http: HttpClient) {

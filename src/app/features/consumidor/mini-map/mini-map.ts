@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { CoordinateDTO } from '../../../core/services/map-service';
+import { CoordinateMapServiceDTO } from '../../../core/services/map-service';
 
 @Component({
   selector: 'app-mini-map',
@@ -8,7 +8,7 @@ import { CoordinateDTO } from '../../../core/services/map-service';
   styleUrl: './mini-map.css'
 })
 export class MiniMap implements OnChanges {
-  @Input() coordinate: CoordinateDTO | { latitud: number; longitud: number } = { latitud: 0, longitud: 0 };
+  @Input() coordinate: CoordinateMapServiceDTO | { latitud: number; longitud: number } = { latitud: 0, longitud: 0 };
   safeUrl: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer) {
