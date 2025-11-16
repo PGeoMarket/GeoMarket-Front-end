@@ -5,6 +5,7 @@ import { ProductDetail } from '../product-detail/product-detail';
 import { UserService } from '../../../core/services/user-service';
 import { ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs';
+import { CoordinateMapServiceDTO } from '../../../core/services/map-service';
 
 @Component({
   selector: 'app-publications',
@@ -55,7 +56,18 @@ export class Publications implements OnInit {
       });
 
     this.loadPublications();
+
+    //Publicaciones con filtros, si no hay filtros simplemente se cargan todos
+    this.publicationService.filter_locationChanged$
+      .subscribe(coordinate => {
+        this.loadLocationPublications(coordinate)
+        return;
+      });
+
+    this.loadPublications();
   }
+
+
 
   loadPublications() {
     if (!this.isFrom_cache && !this.seller_id) {
@@ -130,7 +142,7 @@ export class Publications implements OnInit {
 
     this.publicationService.getFilterPublication(`&filter[seller_id]=${this.seller_id}`)
       .subscribe({
-        next: data => { 
+        next: data => {
           this.publications = data;
           this.publications_temp = data; // AQUÍ ESTABA EL ERROR - FALTABA ESTA ASIGNACIÓN
         },
@@ -200,6 +212,21 @@ export class Publications implements OnInit {
 
     // Caso por defecto si no aplican los filtros anteriores
     this.publications = [...this.publications_temp];
+  }
+
+  loadLocationPublications(coordinate: CoordinateMapServiceDTO) {
+    this.publicationService.getPublicationsByLocation(coordinate)
+      .subscribe({
+        next: data => {
+          this.publications = data;
+          console.log(data);
+          
+        },
+        error: error => console.error('Error a publications filtradas: ' + error),
+        complete: () => console.log('publications filtradas:' + this.publications.length)
+      });
+    return;
+    
   }
 
   //Logica a de abrir product-detail

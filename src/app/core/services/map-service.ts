@@ -6,6 +6,7 @@ import { lastValueFrom } from 'rxjs';
 export interface CoordinateMapServiceDTO {
   latitud: number;
   longitud: number;
+  distancia?: number;
   direccion: string;
   coordinateable_id?: number;
   coordinateable_type?: string;
