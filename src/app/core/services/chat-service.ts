@@ -3,6 +3,11 @@ import { CrudService } from './crud-service';
 import * as Ably from 'ably';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Capacitor } from '@capacitor/core';
+import { PushNotifications, Token, ActionPerformed, PushNotificationSchema } from '@capacitor/push-notifications';
+import { Router } from '@angular/router';
+
+
 
 export interface ChatDTO {
   id: number;
@@ -85,8 +90,9 @@ export class ChatService extends CrudService<ChatDTO>{
   private chatsListSubject = new BehaviorSubject<ChatDTO[]>([]);
   public chatsList$ = this.chatsListSubject.asObservable();
 
-  constructor(http:HttpClient) {
+  constructor(http:HttpClient,private router: Router) {
     super(http);
+    
     this.initializeAbly()
   }
 
@@ -185,6 +191,9 @@ export class ChatService extends CrudService<ChatDTO>{
     this.currentChannel.subscribe('new-message', (message) => {
       console.log('📨 Mensaje recibido via Ably:', message.data);
       this.addMessageToList(message.data);
+      if (!Capacitor.isNativePlatform()) {
+      this.handleWebNotification(message.data, chat);
+    }
     });
 
     // Cargar mensajes existentes
@@ -279,4 +288,36 @@ export class ChatService extends CrudService<ChatDTO>{
     }
   }
   
+  private handleWebNotification(message: any, chat: ChatDTO): void {
+  const currentUser = JSON.parse(localStorage.getItem('user_data') || '{}');
+  
+  // Solo notificar si NO es mensaje propio
+  if (message.sender_id !== currentUser.id) {
+    const senderName = message.sender?.primer_nombre + ' ' + message.sender?.primer_apellido;
+    
+    // Emitir evento para banner (siempre)
+    window.dispatchEvent(new CustomEvent('inAppNotification', {
+      detail: {
+        title: senderName,
+        body: message.text,
+        chat_id: chat.id
+      }
+    }));
+    
+    // Si el navegador está minimizado/en otra pestaña, mostrar notificación nativa
+    if (document.hidden && Notification.permission === 'granted') {
+      const notification = new Notification(senderName, {
+        body: message.text,
+        icon: '/assets/icon/favicon.png',
+        tag: 'chat-' + chat.id
+      });
+
+      notification.onclick = () => {
+        window.focus();
+        this.router.navigate(['/chats', chat.id]);
+        notification.close();
+      };
+    }
+  }
+  }
 }
