@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { CategoryDTO } from "./category-service";
 import { SellerDTO } from "./seller-service";
+import { CoordinateMapServiceDTO } from "./map-service";
 
 export interface PublicationDTO {
   id?: number;
@@ -38,8 +39,10 @@ export class PublicationService extends CrudService<PublicationDTO> {
   // Subject para comunicar filtros
   private filterSubject = new BehaviorSubject<string>('');
   private reload_publicationSubject = new BehaviorSubject<boolean>(false);
+  private filter_locationSubject = new BehaviorSubject<CoordinateMapServiceDTO>({ latitud: 0, longitud: 0, direccion: '' });
   filterChanged$ = this.filterSubject.asObservable();
   reload_publicationChanged$ = this.reload_publicationSubject.asObservable();
+  filter_locationChanged$ = this.filter_locationSubject.asObservable();
 
   constructor(http: HttpClient) {
     super(http);
@@ -110,9 +113,24 @@ export class PublicationService extends CrudService<PublicationDTO> {
   }
 
 
+  //Obtener publicaciones por ubicacion:
+  getPublicationsByLocation(coodinate: CoordinateMapServiceDTO): Observable<PublicationDTO[]> {
+
+    if (!coodinate.distancia) {
+      return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}?sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}&included=image,category`)
+    } else {
+      return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}?sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}&filter[max_distance]=${coodinate.distancia}&included=image,category`);
+    }
+
+  }
+
   // Método para emitir filtros
   sendFilter(filters: string) {
     this.filterSubject.next(filters);
+  }
+
+  sendFilterLocation(coordinate: CoordinateMapServiceDTO) {
+    this.filter_locationSubject.next(coordinate);
   }
 
   reloadPublication(reload_publication: boolean) {

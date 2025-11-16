@@ -3,7 +3,7 @@ import { Publications } from '../publications/publications';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { Filters } from '../filters/filters';
 import { UserDTO, UserService } from '../../../core/services/user-service';
-import { CoordinateDTO } from '../../../core/services/map-service';
+import { CoordinateMapServiceDTO } from '../../../core/services/map-service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +15,7 @@ export class Home {
   isAbierto: boolean = false;
   dialogManager = inject(DialogManager);
   user: UserDTO | null = null;
-  user_coordinate!: CoordinateDTO|null;
+  user_coordinate!: CoordinateMapServiceDTO|null;
   constructor(private userService: UserService) {}
 
   ngOnInit(): void {
