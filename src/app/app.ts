@@ -41,5 +41,28 @@ export class App implements OnInit {
         console.log('👤 Usuario deslogueado');
       }
     });
+
+    window.addEventListener('inAppNotification', (event: any) => {
+    // Mostrar un div flotante durante 3 segundos
+    this.showBanner(event.detail);
+    });
   }
+  showBanner(data: any) {
+  // Crear div temporal con el mensaje
+  const banner = document.createElement('div');
+  banner.innerHTML = `
+    <div style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); 
+                background: #4690FF; color: white; padding: 10px 20px; 
+                border-radius: 8px; z-index: 9999; box-shadow: 0 4px 9px rgba(0,0,0,0.3);">
+      <strong>${data.title}</strong><br>
+      ${data.body}
+    </div>
+  `;
+  document.body.appendChild(banner);
+  
+  // Quitar después de 3 segundos
+  setTimeout(() => {
+    banner.remove();
+  }, 2000);
+}
 }

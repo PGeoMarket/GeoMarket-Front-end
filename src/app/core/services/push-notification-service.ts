@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { PushNotifications, Token, ActionPerformed, PushNotificationSchema } from '@capacitor/push-notifications';
 import { Capacitor } from '@capacitor/core';
 import { Router } from '@angular/router';
+import { LocalNotifications } from '@capacitor/local-notifications'; 
 
 @Injectable({
   providedIn: 'root'
@@ -63,12 +64,19 @@ export class PushNotificationService extends CrudService<any> {
       console.error('❌ Error FCM:', error);
     });
 
-    PushNotifications.addListener(
-      'pushNotificationReceived',
-      (notification: PushNotificationSchema) => {
-        console.log('📩 Notificación recibida:', notification);
-      }
-    );
+  PushNotifications.addListener(
+  'pushNotificationReceived',
+  (notification: PushNotificationSchema) => {
+    console.log('📩 Nuevo mensaje:', notification);
+    
+    // Emitir evento simple
+    window.dispatchEvent(new CustomEvent('inAppNotification', {
+      detail: {
+        title: notification.title,
+        body: notification.body,      }
+    }));
+  }
+);
 
     PushNotifications.addListener(
       'pushNotificationActionPerformed',
@@ -77,7 +85,7 @@ export class PushNotificationService extends CrudService<any> {
         
         const data = notification.notification.data;
         if (data && data.chat_id) {
-          this.router.navigate(['/chats', data.chat_id]);
+          this.router.navigate(['/chats']);
         }
       }
     );

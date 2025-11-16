@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Closedialog } from "../../../../core/dialogs/closedialog";
 import { FormsModule } from '@angular/forms';
 import { ReportService } from '../../../../core/services/report-service';
+import { DialogManager } from '../../../../core/dialogs/dialog-manager';
 
 @Component({
   selector: 'app-report',
@@ -17,12 +18,15 @@ export class Report implements OnInit {
   reason_id: number | null = null;
   descripcion_adicional: string = "";
 
-  constructor(private reportService: ReportService) { }
+  constructor(
+    private reportService: ReportService,
+    private dialogManager: DialogManager
+  ) { }
 
   ngOnInit(): void {
     console.log("publication_id:", this.publication_id);
     console.log("user_id:", this.user_id);
-     console.log("user_seller_id:", this.seller_id);
+    console.log("user_seller_id:", this.seller_id);
   }
 
   onSubmit(): void {
@@ -43,6 +47,7 @@ export class Report implements OnInit {
       this.reportService.reportPublication(this.publication_id, payload).subscribe({
         next: res => {
           console.log("Reporte de publicación enviado:", res);
+          this.dialogManager.closeDialog();
           alert("Reporte de publicación enviado con éxito ✅");
         },
         error: err => {
@@ -55,6 +60,7 @@ export class Report implements OnInit {
       this.reportService.reportUser(this.seller_id, payload).subscribe({
         next: res => {
           console.log("Reporte de perfil enviado:", res);
+          this.dialogManager.closeDialog();
           alert("Reporte del perfil enviado con éxito ✅");
         },
         error: err => {
