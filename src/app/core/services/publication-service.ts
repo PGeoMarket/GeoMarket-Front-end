@@ -116,34 +116,26 @@ export class PublicationService extends CrudService<PublicationDTO> {
   //Obtener publicaciones por ubicacion:
   getPublicationsByLocation(coodinate: CoordinateMapServiceDTO, seller_id?: number): Observable<PublicationDTO[]> {
 
-  const location_url = `${this.API_URL}/${this.endpoint}?included=image,category&sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}`
+    const location_url = `${this.API_URL}/${this.endpoint}?included=image,category&sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}`
 
     if (!coodinate.distancia) {
-      if (!seller_id) {
-        return this.http.get<PublicationDTO[]>(`${location_url}`)
-      } else {
-          return this.http.get<PublicationDTO[]>(`${location_url}&filter[seller_id]=${seller_id}`)
-        }
-      } else {
-        if (!seller_id) {
-          return this.http.get<PublicationDTO[]>(`${location_url}&filter[max_distance]=${coodinate.distancia}`);
-        } else {
-          return this.http.get<PublicationDTO[]>(`${location_url}&filter[max_distance]=${coodinate.distancia}&filter[seller_id]=${seller_id}`);
-        }
-      }
-
+      return this.http.get<PublicationDTO[]>(`${location_url}`)
+    } else {
+      return this.http.get<PublicationDTO[]>(`${location_url}&filter[max_distance]=${coodinate.distancia}`);
     }
 
-    // Método para emitir filtros
-    sendFilter(filters: string) {
-      this.filterSubject.next(filters);
-    }
-
-    sendFilterLocation(coordinate: CoordinateMapServiceDTO) {
-      this.filter_locationSubject.next(coordinate);
-    }
-
-    reloadPublication(reload_publication: boolean) {
-      this.reload_publicationSubject.next(reload_publication);
-    }
   }
+
+  // Método para emitir filtros
+  sendFilter(filters: string) {
+    this.filterSubject.next(filters);
+  }
+
+  sendFilterLocation(coordinate: CoordinateMapServiceDTO) {
+    this.filter_locationSubject.next(coordinate);
+  }
+
+  reloadPublication(reload_publication: boolean) {
+    this.reload_publicationSubject.next(reload_publication);
+  }
+}
