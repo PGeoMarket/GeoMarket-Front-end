@@ -114,26 +114,36 @@ export class PublicationService extends CrudService<PublicationDTO> {
 
 
   //Obtener publicaciones por ubicacion:
-  getPublicationsByLocation(coodinate: CoordinateMapServiceDTO): Observable<PublicationDTO[]> {
+  getPublicationsByLocation(coodinate: CoordinateMapServiceDTO, seller_id?: number): Observable<PublicationDTO[]> {
+
+  const location_url = `${this.API_URL}/${this.endpoint}?included=image,category&sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}`
 
     if (!coodinate.distancia) {
-      return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}?sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}&included=image,category`)
-    } else {
-      return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}?sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}&filter[max_distance]=${coodinate.distancia}&included=image,category`);
+      if (!seller_id) {
+        return this.http.get<PublicationDTO[]>(`${location_url}`)
+      } else {
+          return this.http.get<PublicationDTO[]>(`${location_url}&filter[seller_id]=${seller_id}`)
+        }
+      } else {
+        if (!seller_id) {
+          return this.http.get<PublicationDTO[]>(`${location_url}&filter[max_distance]=${coodinate.distancia}`);
+        } else {
+          return this.http.get<PublicationDTO[]>(`${location_url}&filter[max_distance]=${coodinate.distancia}&filter[seller_id]=${seller_id}`);
+        }
+      }
+
     }
 
-  }
+    // Método para emitir filtros
+    sendFilter(filters: string) {
+      this.filterSubject.next(filters);
+    }
 
-  // Método para emitir filtros
-  sendFilter(filters: string) {
-    this.filterSubject.next(filters);
-  }
+    sendFilterLocation(coordinate: CoordinateMapServiceDTO) {
+      this.filter_locationSubject.next(coordinate);
+    }
 
-  sendFilterLocation(coordinate: CoordinateMapServiceDTO) {
-    this.filter_locationSubject.next(coordinate);
+    reloadPublication(reload_publication: boolean) {
+      this.reload_publicationSubject.next(reload_publication);
+    }
   }
-
-  reloadPublication(reload_publication: boolean) {
-    this.reload_publicationSubject.next(reload_publication);
-  }
-}

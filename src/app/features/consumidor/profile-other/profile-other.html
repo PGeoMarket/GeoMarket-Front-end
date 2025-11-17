@@ -96,7 +96,7 @@
       @if (tab=="catalogo" || !tab) {
       <div class="h-full overflow-x-hidden" (click)="cerrarFiltros()">
 
-        <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event"
+        <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event" [fromProfile]="true"
           class="w-full mx-[10%]"></app-filters>
         <app-publications [isFrom_cache]="true"></app-publications>
 
