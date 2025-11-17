@@ -76,34 +76,38 @@ export class AddProduct implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit() {
-    if (this.loadingSubject.value) return;
+onSubmit() {
+  if (this.loadingSubject.value) return;
 
-    if (this.product && this.imageFile) {
-      this.loadingSubject.next(true);
+  if (this.product && this.imageFile) {
+    this.loadingSubject.next(true);
 
-      const payload: PublicationDTO = {
-        ...this.product,
-        imagen: this.imageFile
-      };
+    const payload: PublicationDTO = {
+      ...this.product,
+      imagen: this.imageFile
+    };
 
-      this.publicationService.create(payload)
-        .pipe(
-          takeUntil(this.destroy$),
-          finalize(() => this.loadingSubject.next(false))
-        )
-        .subscribe({
-          next: (data) => {
-            console.log('Creación exitosa', data);
-            this.publicationService.reloadPublication(true);
+    this.publicationService.create(payload)
+      .pipe(
+        takeUntil(this.destroy$),
+        finalize(() => this.loadingSubject.next(false))
+      )
+      .subscribe({
+        next: (data) => {
+          console.log('✅ Publicación creada', data);
+          this.publicationService.reloadPublication(true);
+          
+          // Pequeño delay para que el usuario vea el mensaje de éxito
+          setTimeout(() => {
             this.dialogManager.closeDialog();
-          },
-          error: (err) => {
-            console.error('Error al crear', err);
-          }
-        });
-    }
+          }, 500);
+        },
+        error: (err) => {
+          console.error('Error al crear', err);
+        }
+      });
   }
+}
 
 
 }
