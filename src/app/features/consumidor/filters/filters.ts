@@ -9,6 +9,7 @@ import { DialogManager } from '../../../core/dialogs/dialog-manager';
 })
 export class Filters {
   @Input() isAbierto: boolean = false;
+  @Input() fromProfile: boolean = false;
   @Output() isAbiertoChange = new EventEmitter<boolean>(); // <-- agregado
   dialogManager = inject(DialogManager);
 

@@ -116,10 +116,12 @@ export class PublicationService extends CrudService<PublicationDTO> {
   //Obtener publicaciones por ubicacion:
   getPublicationsByLocation(coodinate: CoordinateMapServiceDTO): Observable<PublicationDTO[]> {
 
+    const location_url = `${this.API_URL}/${this.endpoint}?included=image,category&sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}`
+
     if (!coodinate.distancia) {
-      return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}?sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}&included=image,category`)
+      return this.http.get<PublicationDTO[]>(`${location_url}`)
     } else {
-      return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}?sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}&filter[max_distance]=${coodinate.distancia}&included=image,category`);
+      return this.http.get<PublicationDTO[]>(`${location_url}&filter[max_distance]=${coodinate.distancia}`);
     }
 
   }

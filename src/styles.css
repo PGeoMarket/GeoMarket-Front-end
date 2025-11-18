@@ -25,7 +25,7 @@
 }
 
 .btn_azulPotente{
-    @apply bg-azulPotente text-white px-2 py-0.5 text-sm md:text-base rounded-md border border-azulPotente min-w-[100px] text-center;
+    @apply bg-azulPotente disabled:opacity-50 text-white px-2 py-0.5 text-sm md:text-base rounded-md border border-azulPotente min-w-[100px] text-center;
 }
 
 .inputs_registro {

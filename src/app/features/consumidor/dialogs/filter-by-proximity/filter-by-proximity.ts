@@ -32,4 +32,26 @@ export class FilterByProximity implements OnInit {
     
   }
 
+    openMapDialog() {
+    console.log('Abriendo diálogo del mapa para selección manual');
+
+    // Limpiar cualquier ubicación temporal previa
+    //this.userService.clearTemporaryLocation();
+
+    this.dialogManager.openDialog('map', {
+      data: { mode: 'select' },
+      onClose: (res) => {
+        console.log('cerrado con', res);
+        
+        //Actualizar la ubicación del usuario si se seleccionó una nueva
+        this.coordinate = this.userService.getTemporaryLocation()!;
+        
+        console.log("a", this.userService.getTemporaryLocation());
+        
+      }
+    });
+
+  }
+
+
 }

@@ -1,31 +1,35 @@
-<!-- CERCANÍA -->
 <div class="w-[22.5em] md:w-[25.37em] h-[fit] p-5 bg-white border border-gray-400 rounded-xl">
-  
+
   <!-- Botón para volver atrás -->
   <button class="rounded-md border border-white">
     <img src="svg/back-icon.svg" alt="" appClosedialog>
   </button>
+
+  @if (coordinate) {
+  <!-- CERCANÍA -->
 
   <!-- Título de la sección -->
   <h2 class="text-azulPotente text-[2em] md:text-[35px] font-medium text-center w-full">Filtrar por cercania</h2>
 
   <!-- Opciones de cercanía -->
   <div class="mt-4">
-    <label class="block ml-10 md:ml:30 mb-4 text-[22px] w-full">
+    <label class="block ml-10 md:ml:30 mb-4 text-[22px]">
       <input type="radio" class="mr-2 size-4" name="filtro" (click)="filtro_seleccionado='cerca'"> Cerca de mí
     </label>
-<!--     <label class="block ml-10 md:ml:30 mb-4 text-[22px]">
+    <!--     <label class="block ml-10 md:ml:30 mb-4 text-[22px]">
       <input type="checkbox" class="mr-2 size-4"> Todos los lugares
     </label> -->
-    <label class="block ml-10 md:ml:30 mb-4 text-[22px] w-full">
-      <input type="radio" class="mr-2 size-4" name="filtro" (click)="filtro_seleccionado='personalizado'"> Con distancia personalizada
+    <label class="block ml-10 md:ml:30 mb-4 text-[22px]">
+      <input type="radio" class="mr-2 size-4" name="filtro" (click)="filtro_seleccionado='personalizado'"> Con distancia
+      personalizada
     </label>
 
     @if (filtro_seleccionado == 'personalizado') {
-          <!-- Campo para ingresar la distancia -->
+    <!-- Campo para ingresar la distancia -->
     <label class="block ml-10 md:ml:30 mb-4 text-center">
-      <input type="text" placeholder="Ingrese radio" [(ngModel)]="coordinate.distancia" 
-      class="bg-[#f6f6f6] w-[200px] p-2 rounded-md border border-[#c2c2c2] text-center placeholder-[#c2c2c2]" required>
+      <input type="text" placeholder="Ingrese radio" [(ngModel)]="coordinate.distancia"
+        class="bg-[#f6f6f6] w-[200px] p-2 rounded-md border border-[#c2c2c2] text-center placeholder-[#c2c2c2]"
+        required>
       <p class="inline ml-2 md:ml:2 mb-4 text-[22px]">Km</p>
     </label>
     }
@@ -38,4 +42,14 @@
       Aceptar
     </button>
   </div>
+  } @else {
+
+  <h1 class="text-azulPotente text-[2em] md:text-[35px] font-medium text-center w-full">Necesitas tener una ubicacion
+    para usar este filtro</h1>
+    <button type="submit" (click)="openMapDialog()" class="bg-[#063E67] text-white h-[2.5em] rounded-md 
+    hover:bg-[#0369a1] text-[20px] disabled:bg-borde1 active:bg-[#063E67] flex items-center justify-self-center px-1 my-5">
+    {{coordinate || 'Seleccionar ubicación'}}
+    </button>
+
+  }
 </div>

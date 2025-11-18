@@ -4,6 +4,7 @@ import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { CrudService } from './crud-service';
 import { ImageDTO, PublicationDTO } from './publication-service';
 import { SellerDTO } from './seller-service';
+import { CoordinateMapServiceDTO } from './map-service';
 
 export interface UserDTO {
   id: number;
@@ -187,7 +188,7 @@ export class UserService extends CrudService<UserDTO> {
     localStorage.setItem('user_data', JSON.stringify(user));
     this.currentUserSubject.next(user);
     this.loadSearchHistoryFromStorage();
-    
+
   }
 
   clearUserData(): void {
@@ -231,7 +232,22 @@ export class UserService extends CrudService<UserDTO> {
   getFavorites(): Observable<PublicationDTO[]> {
     const user = this.getCurrentUser();
     let userId = user?.id;
-    return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites?included=image,category`);
+    return this.http.get<PublicationDTO[]>(`${this.API_URL}/${this.endpoint}/${userId}/favorites`);
+  }
+
+  //Obtener publicaciones por ubicacion:
+  getFavoritesByLocation(coodinate: CoordinateMapServiceDTO): Observable<PublicationDTO[]> {
+    const user = this.getCurrentUser();
+    let userId = user?.id;
+
+    const location_url = `${this.API_URL}/${this.endpoint}/${userId}/favorites?sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}`
+
+    if (!coodinate.distancia) {
+      return this.http.get<PublicationDTO[]>(`${location_url}`)
+    } else {
+      return this.http.get<PublicationDTO[]>(`${location_url}&filter[max_distance]=${coodinate.distancia}`);
+    }
+
   }
 
   changeFavorites(publication_id: number) {
@@ -276,7 +292,7 @@ export class UserService extends CrudService<UserDTO> {
     formData.append('primer_apellido', data.primer_apellido ?? '');
     formData.append('segundo_apellido', data.segundo_apellido ?? '');
     formData.append('email', data.email ?? '');
-    formData.append('imagen', data.imagen  ?? '');
+    formData.append('imagen', data.imagen ?? '');
     formData.append('_method', 'PUT');
     if (data.role_id !== undefined && data.role_id !== null) {
       formData.append('role_id', data.role_id.toString());
