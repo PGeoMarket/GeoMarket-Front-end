@@ -114,7 +114,7 @@ export class PublicationService extends CrudService<PublicationDTO> {
 
 
   //Obtener publicaciones por ubicacion:
-  getPublicationsByLocation(coodinate: CoordinateMapServiceDTO, seller_id?: number): Observable<PublicationDTO[]> {
+  getPublicationsByLocation(coodinate: CoordinateMapServiceDTO): Observable<PublicationDTO[]> {
 
     const location_url = `${this.API_URL}/${this.endpoint}?included=image,category&sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}`
 

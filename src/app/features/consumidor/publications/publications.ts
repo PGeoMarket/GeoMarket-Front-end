@@ -215,18 +215,37 @@ export class Publications implements OnInit {
   }
 
   loadLocationPublications(coordinate: CoordinateMapServiceDTO) {
-    this.publicationService.getPublicationsByLocation(coordinate)
+
+    //En este caso isFrom_cache sirve para publicaciones favoritas, en caso que isFrom_cache venga de otra parte se tendrá que cambiar.
+    if (!this.isFrom_cache) {
+      this.publicationService.getPublicationsByLocation(coordinate)
+        .subscribe({
+          next: data => {
+            this.publications = data;
+            console.log(data);
+
+          },
+          error: error => console.error('Error a publications filtradas: ' + error),
+          complete: () => console.log('publications filtradas:' + this.publications.length)
+        });
+      return;
+    }
+console.log('a');
+
+    this.userService.getFavoritesByLocation(coordinate)
       .subscribe({
         next: data => {
           this.publications = data;
           console.log(data);
-          
+
         },
-        error: error => console.error('Error a publications filtradas: ' + error),
-        complete: () => console.log('publications filtradas:' + this.publications.length)
+        error: error => console.error('Error a favoritepublications filtradas: ' + error),
+        complete: () => console.log('favoritepublications filtradas:' + this.publications.length)
       });
     return;
-    
+
+
+
   }
 
   //Logica a de abrir product-detail
