@@ -19,6 +19,7 @@ import { MiniMap } from '../mini-map/mini-map';
 })
 export class ProfileOther {
   @Input() publication_detail!: PublicationDTO | null;
+  url_button!: string;
   tab: string = "catalogo";
   seller_id!: number;
   seller!: SellerDTO;
@@ -56,12 +57,6 @@ export class ProfileOther {
 
   user_seller_id(): number | null {
     return this.seller ? this.seller.user_id : null;
-  }
-
-  onOpenMap() {
-    this.dialogManager.openDialog('map', {
-      data: { mode: 'create' }
-    })
   }
 
   menuAbierto: boolean = false;
@@ -106,4 +101,15 @@ export class ProfileOther {
   cerrarFiltros() {
     this.isAbierto = false;
   }
+
+   /* boton con url de google maps */
+  onUrlReceived(url: string) {
+  this.url_button = url;
+}
+  redirecToGoogleMaps () {
+
+    window.location.href = this.url_button
+  }
+
+
 }

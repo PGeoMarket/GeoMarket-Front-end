@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CoordinateMapServiceDTO } from '../../../core/services/map-service';
 
@@ -9,6 +9,7 @@ import { CoordinateMapServiceDTO } from '../../../core/services/map-service';
 })
 export class MiniMap implements OnChanges {
   @Input() coordinate: CoordinateMapServiceDTO | { latitud: number; longitud: number } = { latitud: 0, longitud: 0 };
+  @Output() give_url = new EventEmitter<string>();
   safeUrl: SafeResourceUrl;
 
   constructor(private sanitizer: DomSanitizer) {
@@ -25,6 +26,10 @@ export class MiniMap implements OnChanges {
 
   loadMapWithCoordinates(lat: number, lng: number) {
     const mapUrl = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+  const browserUrl = `https://www.google.com/maps?q=${lat},${lng}&z=15`;
     this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(mapUrl);
+
+    this.give_url.emit(browserUrl);
   }
+
 }
