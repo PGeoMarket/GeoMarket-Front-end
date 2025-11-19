@@ -48,7 +48,7 @@
 
   <!-- Categoria -->
   <p class="pubicationCategory text-base md:text-lg">{{publication_detail.category?.categoria}}</p>
-  
+
   <!-- Descripción -->
   <div class="bg-gray-100 rounded-lg p-4 md:p-5">
     <h3 class="font-semibold mb-2 text-lg md:text-xl">Descripción</h3>
@@ -72,9 +72,9 @@
 
   <!-- Botones y mapa -->
   <div class="space-y-4 md:space-y-5">
-    <button class="bg-[#144467] text-white w-full h-10 md:h-12 rounded-lg font-medium text-base md:text-lg">Ver ubicación</button>
+    <button class="bg-[#144467] text-white w-full h-10 md:h-12 rounded-lg font-medium text-base md:text-lg" (click)="redirecToGoogleMaps()">Ver ubicación</button>
     <div class="w-full aspect-square rounded-lg overflow-hidden">
-      <app-mini-map [coordinate]="seller_product_detail.coordinate!"></app-mini-map>
+      <app-mini-map [coordinate]="seller_product_detail.coordinate!" (give_url)="onUrlReceived($event)"></app-mini-map>
     </div>
   </div>
 

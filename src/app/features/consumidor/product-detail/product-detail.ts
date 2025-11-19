@@ -5,7 +5,7 @@ import { Comments } from '../comments/comments';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { UserService } from '../../../core/services/user-service';
 import { SellerDTO, SellerService } from '../../../core/services/seller-service';
-import { Router, RouterLink } from '@angular/router'; 
+import { Router, RouterLink } from '@angular/router';
 import { ChatService } from '../../../core/services/chat-service';
 import { MiniMap } from '../mini-map/mini-map';
 
@@ -15,32 +15,33 @@ import { MiniMap } from '../mini-map/mini-map';
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css'
 })
-export class ProductDetail implements OnInit{
+export class ProductDetail implements OnInit {
 
   @Input() publication_detail!: PublicationDTO | null;
   @Output() close = new EventEmitter<void>();
   seller_product_detail!: SellerDTO;
+  url_button!: string;
   favorito!: boolean;
 
   private dialogManager = inject(DialogManager);
 
-  constructor (private userService: UserService, private sellerService: SellerService,private chatService: ChatService, private router: Router ) {}
+  constructor(private userService: UserService, private sellerService: SellerService, private chatService: ChatService, private router: Router) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {
 
     this.publicationsFavorite()
 
     this.sellerService.getByIdSeller(this.publication_detail?.seller_id!)
-    .subscribe({
-      next: data => this.seller_product_detail = data,
-      error: error => console.error("No se pudo traer a seller", error),
-      complete: () => console.log("Vendedor traido correctamente")
-      
-    });
+      .subscribe({
+        next: data => this.seller_product_detail = data,
+        error: error => console.error("No se pudo traer a seller", error),
+        complete: () => console.log("Vendedor traido correctamente")
+
+      });
 
     this.favorito = this.isFavorite();
     console.log(this.favorito + " en ngOnInit");
-    
+
   }
 
   menuAbierto: boolean = false;
@@ -55,7 +56,7 @@ export class ProductDetail implements OnInit{
   }
 
   removePublicationDetail() {
-    this.close.emit(); // Emitir evento al padre  
+    this.close.emit(); // Emitir evento al padre
     // NO modifiques this.publication_detail ni this.open aquí
   }
 
@@ -69,34 +70,34 @@ export class ProductDetail implements OnInit{
     }
 
     this.userService.changeFavorites(this.publication_detail?.id!)
-    .subscribe({
-      next: data=> console.log(data)
-    });
+      .subscribe({
+        next: data => console.log(data)
+      });
     this.favorito = !this.favorito
-    
+
     this.userService.reloadFavoritePublications(true);
-    
+
   }
 
-  publicationsFavorite () {
+  publicationsFavorite() {
     this.userService.getFavorites()
-    .subscribe({
-      next: data => {
-        data.forEach(p => {
-          if (this.publication_detail!.id == p.id ) {
-            this.favorito = true;
-            return;
-          }
-        });
-        
-      }
-    })
+      .subscribe({
+        next: data => {
+          data.forEach(p => {
+            if (this.publication_detail!.id == p.id) {
+              this.favorito = true;
+              return;
+            }
+          });
+
+        }
+      })
   }
 
   isFavorite(): boolean {
     let favoritos: PublicationDTO[] = [];
-    console.log(this.favorito+ " antes de llamar a getFavorites");
-    
+    console.log(this.favorito + " antes de llamar a getFavorites");
+
     this.userService.getFavorites().subscribe({
       next: data => {
         favoritos = data;
@@ -104,16 +105,25 @@ export class ProductDetail implements OnInit{
       error: error => console.error("No se pudo traer las favoritas", error),
       complete: () => console.log("Favoritas traidas correctamente")
     });
-    if (favoritos.some(pub => pub.id === this.publication_detail?.id) ) {
+    if (favoritos.some(pub => pub.id === this.publication_detail?.id)) {
       console.log(this.favorito + " dentro de isFavorite");
-      
+
       return true;
     }
     console.log(this.favorito + " dentro de isFavorite");
     console.log(favoritos);
-    
+
     return false;
 
+  }
+
+  /* boton con url de google maps */
+  onUrlReceived(url: string) {
+  this.url_button = url;
+}
+  redirecToGoogleMaps () {
+
+    window.location.href = this.url_button
   }
 
   onChat() {
@@ -131,10 +141,10 @@ export class ProductDetail implements OnInit{
         next: (response) => {
           if (response.success) {
             console.log('✅ Chat creado/encontrado:', response.chat);
-            
+
             // Conectar a Ably
             this.chatService.connectToChat(response.chat);
-            
+
             // Navegar a la pantalla de chats
             this.router.navigate(['chats']);
           }
@@ -161,8 +171,8 @@ export class ProductDetail implements OnInit{
     });
   } */
 
-    onReport(){
-     if (!this.userService.isLoggedIn()) {
+  onReport() {
+    if (!this.userService.isLoggedIn()) {
       this.dialogManager.openDialog('login', {
         data: { mode: 'create' }
       });
@@ -170,7 +180,7 @@ export class ProductDetail implements OnInit{
       return;
     }
 
-     const user = this.userService.getCurrentUser();
+    const user = this.userService.getCurrentUser();
     this.dialogManager.openDialog('report', {
       data: { publication_id: this.publication_detail?.id, user_id: user?.id },
       onClose: (res) => {
@@ -181,6 +191,6 @@ export class ProductDetail implements OnInit{
 
   }
 
-  
+
 }
 
