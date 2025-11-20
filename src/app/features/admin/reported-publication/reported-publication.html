@@ -1,0 +1,111 @@
+@if (publication_detail) {
+
+<div
+  class="border border-gray-500 bg-white w-full overflow-y-auto overflow-x-hidden max-w-sm md:max-w-2xl h-full rounded-md font-sans p-4 md:p-6 space-y-4 md:space-y-6">
+
+  <!-- Header con botones -->
+  <div class="flex justify-between items-center">
+    <button class="rounded-lg w-10 h-10 md:w-12 md:h-12 border-0 flex items-center justify-center"
+      (click)="removePublicationDetail()">
+      <img src="svg/back-icon.svg" alt="atras" class="w-15 h-15 md:w-18 md:h-18">
+    </button>
+
+    <div class="relative">
+      <button (click)="abrirBoton($event)"
+        class="bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
+        <svg class="w-5 h-5 cursor-pointer" fill="none" stroke="currentColor" stroke-width="2"
+          viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="1.5" />
+          <circle cx="12" cy="6" r="1.5" />
+          <circle cx="12" cy="18" r="1.5" />
+        </svg>
+      </button>
+
+      <div [hidden]="!menuBoton"
+        class="mt-1 bg-white border rounded shadow px-3 py-2 text-sm absolute right-0 min-w-[100px] z-10"
+        (click)="$event.stopPropagation()">
+
+        <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer mb-1"
+          (click)="OnSuspender()">Suspender</button>
+        <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer"
+          (click)="OnBloquear()">Bloquear</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Título -->
+  <h2 class="text-2xl md:text-3xl font-semibold">{{publication_detail.titulo}}</h2>
+
+  <!-- Imagen -->
+  <div [ngStyle]="{'background-image': 'url(' + publication_detail.image!.url + ')'}"
+    class="border border-gray-500 w-full aspect-square rounded-md bg-cover bg-center"></div>
+
+  <!-- Precio + Favorito -->
+  <div class="flex justify-between items-center">
+    <p class="text-gray-500 text-xl md:text-2xl font-semibold">
+      {{publication_detail.precio | currency: 'COP'}}
+    </p>
+
+    <button class="bg-transparent" (click)="changeFavoritePublication()">
+      <img [src]="favorito ? 'svg/favoritesoscuro_relleno.svg' : 'svg/favoritesoscuro_vacio.svg'"
+        alt="corazon" class="w-10 h-10 md:w-12 md:h-12 fav-icon">
+    </button>
+  </div>
+
+  <!-- Estrellas -->
+  <div class="m-2 flex">
+    @for (star of [1,2,3,4,5]; track $index) {
+    <span class="text-3xl md:text-4xl"
+      [class.text-yellow-400]="star <= publication_detail.puntuacion_promedio!"
+      [class.text-blue-900]="star > publication_detail.puntuacion_promedio!">
+      ★
+    </span>
+    }
+  </div>
+
+  <!-- Categoría -->
+  <p class="pubicationCategory text-base md:text-lg">{{publication_detail.category?.categoria}}</p>
+
+  <!-- Descripción -->
+  <div class="bg-gray-100 rounded-lg p-4 md:p-5">
+    <h3 class="font-semibold mb-2 text-lg md:text-xl">Descripción</h3>
+    <p class="text-sm md:text-base text-gray-700 leading-relaxed">
+      {{publication_detail.descripcion}}
+    </p>
+  </div>
+
+  <!-- Chat -->
+  @if (publication_detail.seller_id) {
+  <button class="bg-azulSecundario text-white w-full h-10 md:h-12 rounded-lg font-medium text-base md:text-lg"
+    (click)="onChat()">
+    Mandar mensaje
+  </button>
+  }
+
+  <!-- Seller -->
+  <div class="bg-gray-300 rounded-xl p-4 md:p-5 flex items-center space-x-4 cursor-pointer"
+    [routerLink]="['/ProfileOther', seller_product_detail.id]">
+    <img class="w-10 h-10 md:w-12 md:h-12 rounded-full"
+      [src]="seller_product_detail.user.image?.url || 'svg/profile.svg'" alt="foto">
+    <p class="font-medium text-base md:text-lg">{{seller_product_detail.nombre_tienda}}</p>
+  </div>
+
+  <!-- Ubicación -->
+  <div class="space-y-4 md:space-y-5">
+    <button class="bg-[#144467] text-white w-full h-10 md:h-12 rounded-lg font-medium text-base md:text-lg">
+      Ver ubicación
+    </button>
+
+    <div class="w-full aspect-square rounded-lg overflow-hidden">
+      <app-mini-map [coordinate]="seller_product_detail.coordinate!"></app-mini-map>
+    </div>
+  </div>
+
+  <!-- Comentarios -->
+  <div class="mt-5 md:mt-6">
+    <app-comments [publication_id]="publication_detail.id!" [seller_id]="publication_detail.seller_id!"></app-comments>
+  </div>
+
+</div>
+
+}
