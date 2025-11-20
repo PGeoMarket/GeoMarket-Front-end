@@ -1,10 +1,14 @@
 <div class="grid grid-rows-[auto_1fr] h-full min-h-0">
 
-  <!-- Header -->
-  <div class="grid border-b border-borde2 rounded-lg p-2 md:p-4 grid-cols-[auto_1fr] md:grid-cols-[auto_auto_1fr] gap-2">
+  <!-- 🟦 HEADER -->
+  <div
+    class="grid border-b border-borde2 rounded-lg p-2 md:p-4 grid-cols-[auto_1fr] md:grid-cols-[auto_auto_1fr] gap-2"
+    [hidden]="mostrarPanelUsuario">
+    
     <div class="w-16 h-16 md:w-20 md:h-20 bg-gray-100 overflow-hidden rounded-full shadow row-span-2">
       <img [src]="reportedPublication?.image?.url || '/img/florhuila.png'" 
-           alt="imagen" class="w-full h-full object-cover" />
+           alt="imagen"
+           class="w-full h-full object-cover" />
     </div>
 
     <div class="flex flex-col justify-center">
@@ -21,39 +25,47 @@
       <p class="text-sm text-textosNoNegro">#{{ report?.id || '—' }}</p>
     </div>
 
-    <div class="col-span-2 md:col-span-1 md:col-start-3 md:row-start-1 md:row-span-2 flex justify-end items-center gap-2 md:gap-4">
+    <div
+      class="col-span-2 md:col-span-1 md:col-start-3 md:row-start-1 md:row-span-2 flex justify-end items-center gap-2 md:gap-4">
       <button class="btn_negative text-sm md:text-base px-3 py-1 md:px-4 md:py-2">Rechazar</button>
       <button class="btn_negative text-sm md:text-base px-3 py-1 md:px-4 md:py-2">Aceptar</button>
     </div>
   </div>
 
-  <!-- Cuerpo principal -->
-  <div class="flex flex-col lg:flex-row gap-4 p-4 overflow-auto min-h-0">
 
-    <!-- Panel Izquierdo -->
+  <!-- ⛔ PANEL DE PUBLICACIÓN O SELLER -->
+  <div [hidden]="!mostrarPaneles" class="flex flex-col lg:flex-row gap-4 p-4 overflow-auto min-h-0">
+
+    <!-- Panel Izquierdo: Información del Seller -->
     <div class="flex-1 bg-white p-4 md:p-6 shadow-md border border-gray-200 rounded-lg overflow-y-auto">
-
       <div class="flex justify-end mb-4">
         <div class="relative">
           <button (click)="abrirBoton($event)"
             class="bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
-            <svg class="w-5 h-5 cursor-pointer" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-5 h-5 cursor-pointer" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="1.5" />
               <circle cx="12" cy="6" r="1.5" />
               <circle cx="12" cy="18" r="1.5" />
             </svg>
           </button>
-          <div [hidden]="!menuBoton" class="mt-1 bg-white border rounded shadow px-3 py-2 text-sm absolute right-0 min-w-[100px] z-10">
-            <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer mb-1" (click)="OnSuspender()">Suspender</button>
-            <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer mb-1" (click)="OnSuspender()">Bloquear</button>
-            <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer" (click)="OnSuspender()">Advertir</button>
+
+          <div [hidden]="!menuBoton"
+            class="mt-1 bg-white border rounded shadow px-3 py-2 text-sm absolute right-0 min-w-[100px] z-10">
+            <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer mb-1"
+              (click)="OnSuspender()">Suspender</button>
+            <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer mb-1"
+              (click)="OnSuspender()">Bloquear</button>
+            <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer"
+              (click)="OnSuspender()">Advertir</button>
           </div>
         </div>
       </div>
 
       <div class="flex justify-center mb-6">
         <div class="relative w-24 h-24 md:w-32 md:h-32">
-          <img [src]="userSellerData?.image?.url || '/svg/profile.svg'" alt="Foto de perfil"
+          <img [src]="userSellerData?.image?.url || '/svg/profile.svg'" 
+               alt="Foto de perfil"
                class="w-full h-full rounded-full object-cover bg-blue-900 border-2 border-gray-200" />
         </div>
       </div>
@@ -67,17 +79,16 @@
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Nombre:</label>
-          <input type="text" class="inputs_registro w-full" readonly 
-                 [value]="sellerData ? (userSellerData?.primer_nombre + ' ' + userSellerData?.primer_apellido) : '—'">
+          <input type="text" class="inputs_registro w-full" readonly
+            [value]="userSellerData ? (userSellerData?.primer_nombre + ' ' + userSellerData?.primer_apellido) : '—'">
         </div>
 
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Número:</label>
-          <input type="text" class="inputs_registro w-full" readonly 
-                 [value]="sellerData?.phones?.[0]?.numero_telefono || '—'">
+          <input type="text" class="inputs_registro w-full" readonly
+            [value]="sellerData?.phones?.[0]?.numero_telefono || '—'">
         </div>
 
-        <!-- 🟢 Corrección: ahora muestra el correo si está disponible -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-1">Correo:</label>
           <input type="text" class="inputs_registro w-full" readonly 
@@ -86,69 +97,76 @@
       </div>
     </div>
 
-    <!-- Panel Derecho -->
-    <div class="flex-1 bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden flex flex-col">
-      <div class="overflow-y-auto flex-grow p-4 md:p-6">
+    <!-- ⭐ PRODUCT DETAIL (ya corregido) -->
+    <div class="flex-1 bg-white border border-gray-300 rounded-lg shadow-md overflow-hidden flex flex-col p-2">
+      <div class="overflow-y-auto flex-grow">
 
-        <div class="flex justify-end mb-4">
-          <div class="relative">
-            <button (click)="abrirMenu($event)"
-              class="bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <circle cx="12" cy="12" r="1.5" />
-                <circle cx="12" cy="6" r="1.5" />
-                <circle cx="12" cy="18" r="1.5" />
-              </svg>
-            </button>
-            <div [hidden]="!menuAbierto" class="mt-1 bg-white border rounded shadow px-3 py-2 text-sm absolute right-0 min-w-[100px] z-10">
-              <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer mb-1" (click)="OnSuspender()">Suspender</button>
-              <button class="block text-red-500 hover:underline w-full text-left cursor-pointer">Bloquear</button>
-            </div>
-          </div>
-        </div>
-
-        <h2 class="text-xl md:text-2xl font-semibold mb-4">
-          {{ reportedPublication?.titulo || 'Sin título' }}
-        </h2>
-
-        <img [src]="reportedPublication?.image?.url || '/svg/harinadetrigo.svg'"
-             class="border border-gray-300 w-full h-48 md:h-64 rounded-md mb-4 object-cover">
-
-        <div class="flex justify-between items-center mb-4">
-          <p class="text-gray-700 text-xl md:text-2xl font-semibold">
-            {{ reportedPublication?.precio ? ('$' + reportedPublication?.precio) : '—' }}
-          </p>
-        </div>
-
-        <div class="bg-gray-100 p-4 rounded-lg mb-4">
-          <h2 class="font-semibold mb-2 text-gray-700">Descripción</h2>
-          <p class="text-gray-600 text-sm md:text-base">
-            {{ reportedPublication?.descripcion || 'Sin descripción disponible.' }}
-          </p>
-        </div>
-
-        <div class="flex items-center p-3 bg-gray-100 rounded-xl mb-4">
-          <img class="w-10 h-10 md:w-12 md:h-12 rounded-full"
-               [src]="sellerData?.image?.url || '/svg/userProfiel.svg'" alt="foto">
-          <p class="ml-3 md:ml-4 font-medium text-gray-700">
-            {{ userSellerData?.primer_nombre || '' }} {{ userSellerData?.primer_apellido || '' }}
-          </p>
-        </div>
-
-        <div class="mb-4">
-          <button class="btn_azulPotente w-full mb-3">Ver ubicación</button>
-          <iframe class="w-full h-48 md:h-64 rounded-lg border border-gray-300"
-            [src]="'https://www.google.com/maps?q=' + 
-              (reportedSeller?.coordinate?.latitud || reportedPublication?.seller?.coordinate?.latitud || 0) + ',' + 
-              (reportedSeller?.coordinate?.longitud || reportedPublication?.seller?.coordinate?.longitud || 0) + '&z=15&output=embed'"
-            allowfullscreen loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-          </iframe>
-          <button class="btn_azulPotente w-full mt-3">Mandar mensaje</button>
-        </div>
+        <!-- FIX DEFINITIVO -->
+        <app-product-detail 
+            [publication_detail]="reportedPublication || null">
+        </app-product-detail>
 
       </div>
     </div>
-
   </div>
+
+
+
+  <!-- 🟣 PANEL DE USUARIO REPORTADO -->
+  <div [hidden]="!mostrarPanelUsuario" class="flex justify-center items-center p-6">
+    <div class="bg-white border border-gray-200 rounded-lg shadow-md p-6 w-full max-w-md">
+      
+      <div class="flex justify-end mb-4">
+        <div class="relative">
+          <button (click)="abrirBoton($event)"
+            class="bg-gray-100 rounded-full w-8 h-8 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
+            <svg class="w-5 h-5 cursor-pointer" fill="none" stroke="currentColor" stroke-width="2"
+              viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="1.5" />
+              <circle cx="12" cy="6" r="1.5" />
+              <circle cx="12" cy="18" r="1.5" />
+            </svg>
+          </button>
+
+          <div [hidden]="!menuBoton"
+            class="mt-1 bg-white border rounded shadow px-3 py-2 text-sm absolute right-0 min-w-[100px] z-10">
+            <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer mb-1"
+              (click)="OnSuspender()">Suspender</button>
+            <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer mb-1"
+              (click)="OnSuspender()">Bloquear</button>
+            <button class="block text-[#06406A] hover:underline w-full text-left cursor-pointer"
+              (click)="OnSuspender()">Advertir</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center mb-4">
+        <img [src]="reportedUser?.image?.url || '/svg/profile.svg'" 
+             class="w-24 h-24 rounded-full object-cover border-2 border-gray-300" 
+             alt="Foto del usuario reportado" />
+      </div>
+
+      <h2 class="text-xl font-semibold text-center text-azulPotente mb-2">
+        {{ reportedUser?.primer_nombre || '—' }} {{ reportedUser?.primer_apellido || '' }}
+      </h2>
+
+      <p class="text-center text-gray-600 mb-4">
+        {{ reportedUser?.email || 'Sin correo' }}
+      </p>
+
+      <p class="text-center text-red-600 font-medium mb-4">
+        Motivo: {{ report?.descripcion_adicional || report?.reason?.motivo || 'No hay descripción' }}
+      </p>
+
+      <p class="text-center text-sm text-gray-500 mb-4">
+        Reporte #{{ report?.id || '—' }}
+      </p>
+
+      <div class="flex justify-center gap-3">
+        <button class="btn_negative px-4 py-2" (click)="OnSuspender()">Suspender</button>
+        <button class="btn_negative px-4 py-2" (click)="OnSuspender()">Bloquear</button>
+      </div>
+    </div>
+  </div>
+
 </div>

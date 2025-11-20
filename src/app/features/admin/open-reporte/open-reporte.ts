@@ -6,11 +6,12 @@ import { PublicationDTO } from '../../../core/services/publication-service';
 import { SellerDTO, SellerService } from '../../../core/services/seller-service';
 import { DatePipe } from '@angular/common';
 import { UserDTO } from '../../../core/services/user-service';
+import { ProductDetail } from '../../consumidor/product-detail/product-detail';
 
 @Component({
   selector: 'app-open-reporte',
   standalone: true,
-  imports: [Closedialog, DatePipe],
+  imports: [Closedialog, DatePipe, ProductDetail],
   templateUrl: './open-reporte.html',
   styleUrls: ['./open-reporte.css']
 })
@@ -18,47 +19,141 @@ export class OpenReporte implements OnInit, OnDestroy {
 
   @Input() report: ReportDTO | null = null;
 
+  // Datos del reporte
   reportedPublication: PublicationDTO | null = null;
   reportedSeller: SellerDTO | null = null;
-  sellerData: SellerDTO | null = null; 
-  sellerId: number | null = null;
-  userSellerData: any | null = null;
+  reportedUser: UserDTO | null = null;
 
+  // Datos cargados desde API
+  sellerData: SellerDTO | null = null;
+  userSellerData: any | null = null;
+  sellerId: number | null = null;
+
+  // Control de UI
   menuAbierto = false;
   menuBoton = false;
+  mostrarPaneles = false;
+  mostrarPanelUsuario = false;
 
+  // Servicios
   private dialogManager = inject(DialogManager);
   private sellerService = inject(SellerService);
   private clickListener?: any;
 
   ngOnInit(): void {
-    console.log('📄 Report recibido:', this.report);
-
-    if (!this.report) return;
+    console.log('═══════════════════════════════════════');
+    console.log('🔍 INICIANDO ANÁLISIS DE REPORTE');
+    console.log('═══════════════════════════════════════');
+    
+    if (!this.report) {
+      console.error('❌ No hay reporte');
+      return;
+    }
 
     const type = this.report.reportable_type ?? '';
-    console.log('📘 Tipo reportable:', type);
+    console.log('📌 Tipo de reporte:', type);
+    console.log('📌 ID reportado:', this.report.reportable_id);
 
+    // 🟢 REPORTE DE PUBLICACIÓN
     if (type.includes('Publication')) {
+      console.log('✅ Detectado: PUBLICACIÓN REPORTADA');
+      
       this.reportedPublication = this.report.reportable as PublicationDTO;
       this.sellerId = this.reportedPublication?.seller?.id ?? null;
-    }
-
-    if (type.includes('Seller')) {
+      
+      this.mostrarPaneles = true;
+      this.mostrarPanelUsuario = false;
+      
+      console.log('   └─ Seller ID de la publicación:', this.sellerId);
+      
+      if (this.sellerId) {
+        this.loadSellerData(this.sellerId);
+      }
+    } 
+    
+    // 🟡 REPORTE DE SELLER (tienda)
+    else if (type.includes('Seller')) {
+      console.log('✅ Detectado: SELLER/TIENDA REPORTADA');
+      
       this.reportedSeller = this.report.reportable as SellerDTO;
       this.sellerId = this.reportedSeller?.id ?? null;
+      
+      this.mostrarPaneles = true;
+      this.mostrarPanelUsuario = false;
+      
+      console.log('   └─ Seller ID:', this.sellerId);
+      
+      if (this.sellerId) {
+        this.loadSellerData(this.sellerId);
+      }
+    } 
+    
+    // 🔴 REPORTE DE USUARIO (perfil personal)
+    else if (type.includes('User')) {
+      console.log('✅ Detectado: USUARIO/PERFIL REPORTADO');
+      
+      // ⭐ CLAVE: Asignar el usuario directamente desde reportable
+      this.reportedUser = this.report.reportable as UserDTO;
+      
+      // ⭐ NO cargamos seller para usuarios reportados
+      this.sellerId = null;
+      this.sellerData = null;
+      this.userSellerData = null;
+      
+      // ⭐ Mostrar solo el panel de usuario
+      this.mostrarPaneles = false;
+      this.mostrarPanelUsuario = true;
+      
+      console.log('   └─ Usuario reportado:');
+      console.log('      • ID:', this.reportedUser?.id);
+      console.log('      • Nombre:', this.reportedUser?.primer_nombre, this.reportedUser?.primer_apellido);
+      console.log('      • Email:', this.reportedUser?.email);
+      console.log('      • Imagen:', this.reportedUser?.image?.url || 'Sin imagen');
+      
+      console.log('   └─ NO se cargará información de Seller');
+    }
+    
+    else {
+      console.warn('⚠️ TIPO DE REPORTE NO RECONOCIDO:', type);
     }
 
-    if (this.sellerId) {
-      this.loadSellerData(this.sellerId);
-    } else {
-      console.warn('⚠️ No se encontró el ID del seller reportado.');
+    console.log('───────────────────────────────────────');
+    console.log('📊 ESTADO FINAL:');
+    console.log('   • mostrarPaneles:', this.mostrarPaneles);
+    console.log('   • mostrarPanelUsuario:', this.mostrarPanelUsuario);
+    console.log('   • reportedUser:', !!this.reportedUser);
+    console.log('   • reportedPublication:', !!this.reportedPublication);
+    console.log('   • reportedSeller:', !!this.reportedSeller);
+    console.log('═══════════════════════════════════════');
+
+    this.setupGlobalClickListener();
+  }
+
+  ngOnDestroy(): void {
+    if (this.clickListener) {
+      document.removeEventListener('click', this.clickListener);
     }
+  }
 
-    // ✅ Usamos un safe log para evitar congelar la pantalla
-    safeLog('📦 Report completo recibido:', this.report);
+  loadSellerData(id: number) {
+    console.log('🔄 Cargando datos del Seller ID:', id);
+    
+    this.sellerService.getByIdSeller(id).subscribe({
+      next: (data: SellerDTO) => {
+        this.sellerData = data;
+        this.userSellerData = data.user;
 
-    // 🟢 Escucha global para cerrar menús si haces clic fuera
+        console.log('✅ Datos del seller cargados:');
+        console.log('   └─ Tienda:', this.sellerData?.nombre_tienda);
+        console.log('   └─ Propietario:', this.userSellerData?.primer_nombre, this.userSellerData?.primer_apellido);
+      },
+      error: (err: any) => {
+        console.error('❌ Error al cargar seller:', err);
+      }
+    });
+  }
+
+  private setupGlobalClickListener() {
     if (!this.clickListener) {
       this.clickListener = (event: MouseEvent) => {
         const target = event.target as HTMLElement;
@@ -74,28 +169,6 @@ export class OpenReporte implements OnInit, OnDestroy {
 
       document.addEventListener('click', this.clickListener);
     }
-  }
-
-  ngOnDestroy(): void {
-    if (this.clickListener) {
-      document.removeEventListener('click', this.clickListener);
-    }
-  }
-
-  // ✅ Cargar datos del seller y sus datos personales
-  loadSellerData(id: number) {
-    this.sellerService.getByIdSeller(id).subscribe({
-      next: (data) => {
-        this.sellerData = data;
-        this.userSellerData = data.user;
-
-        console.log('🟢 Datos completos del seller reportado:', this.sellerData);
-        console.log('👤 Datos personales del usuario del seller:', this.userSellerData);
-      },
-      error: (err) => {
-        console.error('❌ Error al cargar datos del seller:', err);
-      }
-    });
   }
 
   abrirMenu(event: MouseEvent) {
@@ -122,23 +195,5 @@ export class OpenReporte implements OnInit, OnDestroy {
     this.dialogManager.openDialog('reason', { data: { mode: 'create' } });
     this.cerrarBoton();
     this.cerrarMenus();
-  }
-}
-
-/** 🧰 Función segura para hacer console.log sin congelar la app */
-function safeLog(label: string, value: any) {
-  try {
-    const seen = new WeakSet();
-    const safeValue = JSON.parse(JSON.stringify(value, (key, val) => {
-      if (typeof val === 'object' && val !== null) {
-        if (seen.has(val)) return '[Circular]';
-        seen.add(val);
-      }
-      return val;
-    }));
-    console.log(label, safeValue);
-  } catch (err) {
-    console.warn('⚠️ No se pudo hacer log seguro del objeto:', err);
-    console.log(label, value);
   }
 }
