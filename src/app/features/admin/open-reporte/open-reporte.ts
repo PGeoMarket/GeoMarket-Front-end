@@ -1,4 +1,6 @@
-import { Component, inject, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component, inject, Input, OnInit, OnDestroy, OnChanges, SimpleChanges
+} from '@angular/core';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { Closedialog } from '../../../core/dialogs/closedialog';
 import { ReportDTO } from '../../../core/services/report-service';
@@ -6,59 +8,125 @@ import { PublicationDTO } from '../../../core/services/publication-service';
 import { SellerDTO, SellerService } from '../../../core/services/seller-service';
 import { DatePipe } from '@angular/common';
 import { UserDTO } from '../../../core/services/user-service';
+import { ReportedPublication } from '../reported-publication/reported-publication';
+import { RouterLink } from '@angular/router';
+
 
 @Component({
   selector: 'app-open-reporte',
   standalone: true,
-  imports: [Closedialog, DatePipe],
+  imports: [Closedialog, DatePipe, ReportedPublication, RouterLink],
   templateUrl: './open-reporte.html',
   styleUrls: ['./open-reporte.css']
 })
-export class OpenReporte implements OnInit, OnDestroy {
+export class OpenReporte implements OnInit, OnDestroy, OnChanges {
 
   @Input() report: ReportDTO | null = null;
 
+  // Datos del reporte
   reportedPublication: PublicationDTO | null = null;
   reportedSeller: SellerDTO | null = null;
-  sellerData: SellerDTO | null = null; 
-  sellerId: number | null = null;
-  userSellerData: any | null = null;
+  reportedUser: UserDTO | null = null;
 
+  // Datos API
+  sellerData: SellerDTO | null = null;
+  userSellerData: any | null = null;
+  sellerId: number | null = null;
+
+  // UI
   menuAbierto = false;
   menuBoton = false;
+  mostrarPaneles = false;
+  mostrarPanelUsuario = false;
 
+  // Servicios
   private dialogManager = inject(DialogManager);
   private sellerService = inject(SellerService);
   private clickListener?: any;
 
-  ngOnInit(): void {
-    console.log('📄 Report recibido:', this.report);
 
+  // 🔥🔥🔥 SE EJECUTA CADA VEZ QUE CAMBIA EL @Input (LA SOLUCIÓN)
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['report'] && !changes['report'].firstChange) {
+      this.resetData();
+      this.inicializarReporte();
+    }
+  }
+
+  ngOnInit(): void {
+    this.inicializarReporte();
+    this.setupGlobalClickListener();
+  }
+
+  ngOnDestroy(): void {
+    if (this.clickListener) {
+      document.removeEventListener('click', this.clickListener);
+    }
+  }
+
+  // 🔄 Limpia todas las variables antes de cargar un nuevo reporte
+  private resetData() {
+    this.reportedPublication = null;
+    this.reportedSeller = null;
+    this.reportedUser = null;
+
+    this.sellerData = null;
+    this.userSellerData = null;
+    this.sellerId = null;
+
+    this.mostrarPaneles = false;
+    this.mostrarPanelUsuario = false;
+
+    this.menuAbierto = false;
+    this.menuBoton = false;
+  }
+
+  // 🔎 Toda la lógica que antes estaba en ngOnInit — ahora reutilizable
+  private inicializarReporte() {
     if (!this.report) return;
 
     const type = this.report.reportable_type ?? '';
-    console.log('📘 Tipo reportable:', type);
 
+    // PUBLICACIÓN REPORTADA
     if (type.includes('Publication')) {
       this.reportedPublication = this.report.reportable as PublicationDTO;
       this.sellerId = this.reportedPublication?.seller?.id ?? null;
+      this.mostrarPaneles = true;
+      if (this.sellerId) this.loadSellerData(this.sellerId);
+      return;
     }
 
+    // SELLER REPORTADO
     if (type.includes('Seller')) {
       this.reportedSeller = this.report.reportable as SellerDTO;
       this.sellerId = this.reportedSeller?.id ?? null;
+      this.mostrarPaneles = true;
+      if (this.sellerId) this.loadSellerData(this.sellerId);
+      return;
     }
 
-    if (this.sellerId) {
-      this.loadSellerData(this.sellerId);
-    } else {
-      console.warn('⚠️ No se encontró el ID del seller reportado.');
+    // USUARIO REPORTADO
+    if (type.includes('User')) {
+      this.reportedUser = this.report.reportable as UserDTO;
+      this.mostrarPanelUsuario = true;
+      return;
     }
+  }
 
-    // ✅ Usamos un safe log para evitar congelar la pantalla
-    safeLog('📦 Report completo recibido:', this.report);
 
-    // 🟢 Escucha global para cerrar menús si haces clic fuera
+  // API
+  loadSellerData(id: number) {
+    this.sellerService.getByIdSeller(id).subscribe({
+      next: (data) => {
+        this.sellerData = data;
+        this.userSellerData = data.user;
+      }
+    });
+  }
+
+
+  // UI
+  private setupGlobalClickListener() {
     if (!this.clickListener) {
       this.clickListener = (event: MouseEvent) => {
         const target = event.target as HTMLElement;
@@ -74,28 +142,6 @@ export class OpenReporte implements OnInit, OnDestroy {
 
       document.addEventListener('click', this.clickListener);
     }
-  }
-
-  ngOnDestroy(): void {
-    if (this.clickListener) {
-      document.removeEventListener('click', this.clickListener);
-    }
-  }
-
-  // ✅ Cargar datos del seller y sus datos personales
-  loadSellerData(id: number) {
-    this.sellerService.getByIdSeller(id).subscribe({
-      next: (data) => {
-        this.sellerData = data;
-        this.userSellerData = data.user;
-
-        console.log('🟢 Datos completos del seller reportado:', this.sellerData);
-        console.log('👤 Datos personales del usuario del seller:', this.userSellerData);
-      },
-      error: (err) => {
-        console.error('❌ Error al cargar datos del seller:', err);
-      }
-    });
   }
 
   abrirMenu(event: MouseEvent) {
@@ -123,22 +169,10 @@ export class OpenReporte implements OnInit, OnDestroy {
     this.cerrarBoton();
     this.cerrarMenus();
   }
-}
 
-/** 🧰 Función segura para hacer console.log sin congelar la app */
-function safeLog(label: string, value: any) {
-  try {
-    const seen = new WeakSet();
-    const safeValue = JSON.parse(JSON.stringify(value, (key, val) => {
-      if (typeof val === 'object' && val !== null) {
-        if (seen.has(val)) return '[Circular]';
-        seen.add(val);
-      }
-      return val;
-    }));
-    console.log(label, safeValue);
-  } catch (err) {
-    console.warn('⚠️ No se pudo hacer log seguro del objeto:', err);
-    console.log(label, value);
+  OnBloquear() {
+    this.dialogManager.openDialog('reason', { data: { mode: 'create' } });
+    this.cerrarBoton();
+    this.cerrarMenus();
   }
 }
