@@ -2,7 +2,7 @@
 <h3 class="text-xl font-semibold">Comentarios</h3>
 
 
-@if (seller_id!=user_id) {
+@if (!isOwnPublication) {
 
   @if (!!ownComment) {
   <button (click)="onRatePublication()" 
