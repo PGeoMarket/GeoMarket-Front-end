@@ -15,6 +15,7 @@ export class Comments implements OnInit {
   comments!: CommentDTO[];
   user!: UserDTO;
   ownComment!: CommentDTO;
+  user_id: number = 0;
   @Input() publication_id!: number;
   @Input() seller_id!: number;
 
@@ -93,7 +94,10 @@ export class Comments implements OnInit {
   getUserData() {
     this.userService.getMe().subscribe();
     this.user = this.userService.getCurrentUser()!;
-    console.log(this.user);
+
+    if (!!this.user) {
+      this.user_id = this.user.id;
+    } 
   }
 
 }
