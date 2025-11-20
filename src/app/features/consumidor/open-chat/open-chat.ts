@@ -38,6 +38,19 @@ export class OpenChat {
   ngOnInit(): void {
   }
 
+  ngAfterViewInit() {
+    this.messages$.subscribe(() => {
+      setTimeout(() => this.scrollToBottom(), 50);
+    });
+  }
+
+  scrollToBottom() {
+    const container = document.getElementById('chatScroll');
+    if (container) {
+      container.scrollTop = container.scrollHeight;
+    }
+  }
+
   onClose() {
     this.chatService.disconnectFromCurrentChat();
     this.closeChat.emit();
