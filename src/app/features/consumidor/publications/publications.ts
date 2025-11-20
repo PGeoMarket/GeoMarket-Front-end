@@ -104,30 +104,36 @@ export class Publications implements OnInit {
 
     if (!this.isFrom_cache) {
       /* Para category */
-      if (!!filters.indexOf('&filter[category_id]=') && !!filters.indexOf('&filter[titulo]=')) {
-        this.publications = [];
-        let filters_array: string[] = filters.split("&");
+      if (!!filters.indexOf('&filter[category_id]=')) {
+        /* Para precios */
+        this.publicationService.getFilterPublication(filters)
+          .subscribe({
+            next: data => { this.publications = data },
+            error: error => console.error('Error a publications filtradas: ' + error),
+            complete: () => console.log('publications filtradas:' + this.publications.length)
+          });
 
-        filters_array.forEach(filter_array => {
-          if (filter_array != '') {
-            this.publicationService.getFilterPublication("&" + filter_array)
-              .subscribe({
-                next: data => { this.publications = [...this.publications, ...data] },
-                error: error => console.error('Error a publications filtradas: ' + error),
-                complete: () => console.log('publications filtradas:' + this.publications.length)
-              });
-          }
-        });
-        return;
+          return;
+
       }
 
-      /* Para precios */
-      this.publicationService.getFilterPublication(filters)
-        .subscribe({
-          next: data => { this.publications = data },
-          error: error => console.error('Error a publications filtradas: ' + error),
-          complete: () => console.log('publications filtradas:' + this.publications.length)
-        });
+      this.publications = [];
+      let filters_array: string[] = filters.split("&");
+
+      filters_array.forEach(filter_array => {
+        if (filter_array != '') {
+          this.publicationService.getFilterPublication("&" + filter_array)
+            .subscribe({
+              next: data => { this.publications = [...this.publications, ...data] },
+              error: error => console.error('Error a publications filtradas: ' + error),
+              complete: () => console.log('publications filtradas:' + this.publications.length)
+            });
+        }
+      });
+
+      return;
+
+
     } else {
       this.loadCacheFiltredPublications(filters);
     }
@@ -230,7 +236,7 @@ export class Publications implements OnInit {
         });
       return;
     }
-console.log('a');
+    console.log('a');
 
     this.userService.getFavoritesByLocation(coordinate)
       .subscribe({
