@@ -14,7 +14,9 @@ export class RatePublication implements OnInit {
   submit_comment!: CommentDTO;
   @Input() publication_id!: number;
   @Input() user_id!: number;
+  @Input() ownComment!: CommentDTO;
   rating: number | null = null;
+  own_texto: string = "";
 
   constructor(private commentService: CommentService) { }
 
@@ -23,7 +25,10 @@ export class RatePublication implements OnInit {
   ngOnInit(): void {
 
     console.log(this.publication_id);
-
+    if (!!this.ownComment) {
+      this.setRating(this.ownComment.valor_estrella!)
+      this.own_texto = this.ownComment.texto!
+    }
   }
 
   setRating(value: number) {
@@ -33,7 +38,7 @@ export class RatePublication implements OnInit {
 
   onSubmit(comment_user: string) {
     if (!comment_user || !this.rating) return;
-    
+
     this.submit_comment = {
       ...this.submit_comment,
       publication_id: this.publication_id,
@@ -41,21 +46,39 @@ export class RatePublication implements OnInit {
       texto: comment_user,
       valor_estrella: this.rating!, //falta pantalla
     }
-    this.commentService.create(this.submit_comment)
-      .subscribe({
-        next: data => {
-          console.log(data);
-          this.onCloseDialog({ saved: true, comment_user: data ?? this.submit_comment });
-        },
-        error: error => console.error('Error al crear comentario', error, this.submit_comment),
-        complete: () => {
-          console.log('Comentario hecho con extio');
 
-        },
-      })
+    if (!!!this.ownComment) {
+      this.commentService.create(this.submit_comment)
+        .subscribe({
+          next: data => {
+            console.log(data);
+            this.onCloseDialog({ saved: true, comment_user: data ?? this.submit_comment });
+          },
+          error: error => console.error('Error al crear comentario', error, this.submit_comment),
+          complete: () => {
+            console.log('Comentario hecho con extio');
+
+          },
+        });
+
+    } else {
+      this.commentService.update(this.ownComment.id!, this.submit_comment)
+        .subscribe({
+          next: data => {
+            console.log(data);
+            this.onCloseDialog({ saved: true, comment_user: data ?? this.submit_comment });
+          },
+          error: error => console.error('Error al crear comentario', error, this.submit_comment),
+          complete: () => {
+            console.log('Comentario hecho con extio');
+
+          },
+        });
+    }
+
   }
 
-    onCloseDialog(result?: any) {
+  onCloseDialog(result?: any) {
     // si el método _close fue inyectado al componente (por openDialog),
     // úsalo — eso cierra el overlay y ejecuta el callback onClose del llamador.
     const maybeClose = (this as any)._close;

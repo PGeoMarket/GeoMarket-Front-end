@@ -13,7 +13,8 @@ import { UserDTO, UserService } from '../../../core/services/user-service';
 })
 export class Comments implements OnInit {
   comments!: CommentDTO[];
-  user!: UserDTO[];
+  user!: UserDTO;
+  ownComment!: CommentDTO;
   @Input() publication_id!: number;
   @Input() seller_id!: number;
 
@@ -23,9 +24,8 @@ export class Comments implements OnInit {
   constructor(private commentService: CommentService, private userService: UserService) { }
 
   ngOnInit(): void {
-
+    this.getUserData();
     this.loadComments();
-
   }
 
   loadComments() {
@@ -34,26 +34,24 @@ export class Comments implements OnInit {
     this.commentService.getCommentByPublication(this.publication_id)
       .subscribe({
         next: data => {
-          this.comments = data                    
+          this.comments = data
         },
         error: error => console.error('Error al cargar  comentarios', error),
-        complete: () => { console.log('Cantidad de comentarios cargados correctamente: ' + this.comments.length) },
+        complete: () => {
+          console.log('Cantidad de comentarios cargados correctamente: ' + this.comments.length)
+          this.checkUserComments();
+
+        },
 
       })
-      console.log(this.comments)
-      
-/* 
-      this.comments.forEach((comment, index)=> {
-        this.userService.getById(comment.user_id)
-        .subscribe({
-          next: data => {
-            
-            
-          }
-        })
-        
-      }) */
-      
+
+  }
+
+  //si el user ya tiene comment
+  checkUserComments() {
+    this.ownComment = this.comments.find(comment => comment.user.id === this.user.id)!;
+    console.log(this.ownComment);
+
   }
 
   onRatePublication() {
@@ -65,10 +63,8 @@ export class Comments implements OnInit {
       return;
     }
 
-    //
-    const user = this.userService.getCurrentUser();
     this.dialogManager.openDialog('rate-publication', {
-      data: { publication_id: this.publication_id, user_id: user?.id },
+      data: { publication_id: this.publication_id, user_id: this.user?.id, ownComment: this.ownComment },
       onClose: (res) => {
         console.log('cerrado con', res);
         this.loadComments();
@@ -76,6 +72,28 @@ export class Comments implements OnInit {
 
     });
 
+  }
+
+  removeOwnComment() {
+    this.commentService.delete(this.ownComment.id!)
+      .subscribe({
+        next: data => {
+          console.log(data);
+        },
+        error: error => console.error('Error al eliminar comentario', error),
+        complete: () => {
+          console.log('Comentario eliminado con extio');
+          this.loadComments();
+        },
+      });
+
+
+  }
+
+  getUserData() {
+    this.userService.getMe().subscribe();
+    this.user = this.userService.getCurrentUser()!;
+    console.log(this.user);
   }
 
 }

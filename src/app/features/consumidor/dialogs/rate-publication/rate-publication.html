@@ -43,7 +43,7 @@
       <textarea placeholder="Deja un comentario aquí.." name="comment_user"
         class="w-full h-[120px] border border-gray-400 rounded-lg bg-white resize-none p-3 focus:outline-none focus:border-[#144467]"
         [class.border-red-500]="comment_user.invalid && (comment_user.touched || commentForm.submitted)" required
-        #comment_user="ngModel" ngModel></textarea>
+        #comment_user="ngModel" [(ngModel)]="own_texto"></textarea>
 
       <!-- espacio reservado (ocupado siempre por el contenedor, pero vacío) -->
       <div class="h-6"></div>
@@ -61,9 +61,11 @@
 
     <!-- Botones -->
     <div class="flex justify-end space-x-4">
+
       <button type="button" class="w-32 h-12 btn_negative" appClosedialog>
         Cancelar
       </button>
+
       <button type="submit" class="w-32 h-12 btn_positive">
         Calificar
       </button>

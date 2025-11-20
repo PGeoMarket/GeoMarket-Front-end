@@ -2,8 +2,20 @@
 <h3 class="text-xl font-semibold">Comentarios</h3>
 
 
-<button (click)="onRatePublication()"
+@if (seller_id!=user.seller?.id) {
+
+  @if (!!ownComment) {
+  <button (click)="onRatePublication()" 
+  class="bg-azulPotente text-white w-full h-10 rounded-lg font-medium">Editar comentario</button>
+  <button (click)="removeOwnComment()" 
+  class="bg-red-500 text-white w-full h-10 rounded-lg my-2 font-medium">Eliminar comentario</button>
+  } @else {
+  <button (click)="onRatePublication()" 
   class="bg-azulPotente text-white w-full h-10 rounded-lg font-medium">Comentar</button>
+
+  }
+
+}
 
 <div class="space-y-2 overflow-y-scroll overflow-x-hidden h-[200px] my-2.5">
   @if (comments.length) {
@@ -13,10 +25,10 @@
     <div class="flex items-start space-x-3">
 
       @if (comment.user.image?.url) {
-        <img class="w-8 h-8 rounded-full flex-shrink-0" [src]="comment.user.image?.url" alt="">
+      <img class="w-8 h-8 rounded-full flex-shrink-0" [src]="comment.user.image?.url" alt="">
 
       } @else {
-        <img class="w-8 h-8 rounded-full flex-shrink-0" src="/svg/profile.svg" alt="">
+      <img class="w-8 h-8 rounded-full flex-shrink-0" src="/svg/profile.svg" alt="">
 
       }
       <!-- agregado min-w-0 para que el hijo flex pueda encogerse -->
