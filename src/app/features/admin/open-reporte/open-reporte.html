@@ -54,7 +54,7 @@
             <button class="block text-[#ff0101] hover:underline w-full text-left cursor-pointer mb-1"
               (click)="OnBloquear()">Bloquear</button>
             <button class="block text-[#08a705] hover:underline w-full text-left cursor-pointer mb-1"
-            [routerLink]="['/ProfileOther', reportedUser?.id]">Ver perfil del usuario</button>
+            [routerLink]="['/ProfileOther', reportedPublication?.seller?.id]">Ver perfil del usuario</button>
           </div>
         </div>
       </div>
@@ -127,7 +127,7 @@
             <button class="block text-[#ff0101] hover:underline w-full text-left cursor-pointer mb-1"
               (click)="OnBloquear()">Bloquear</button>
             <button class="block text-[#08a705] hover:underline w-full text-left cursor-pointer mb-1"
-            [routerLink]="['/ProfileOther', reportedUser?.id]">Ver perfil del usuario</button>
+            [routerLink]="['/ProfileOther', reportedUser?.seller?.id]">Ver perfil del usuario</button>
           </div>
         </div>
       </div>
