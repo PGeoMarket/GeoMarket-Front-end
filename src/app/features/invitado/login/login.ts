@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Closedialog } from "../../../core/dialogs/closedialog";
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { DialogManager } from '../../../core/dialogs/dialog-manager';
 import { loginDTO, LoginService } from '../../../core/services/login-service';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +21,12 @@ export class Login {
 
   showSuccessMessage: boolean = false;
   showErrorMessage: boolean = false;
+  errorMessage: string = '';
+  isLoading: boolean = false;
   
   dialogManager = inject(DialogManager);
+
+  constructor(private loginService: LoginService, private router: Router) { }
 
   onRegisterAs() {
     this.dialogManager.openDialog('register-as', {
@@ -29,13 +34,13 @@ export class Login {
     });
   }
 
-  constructor(private loginService: LoginService, private router: Router) { }
-
-  onSubmit(form: any) {
-    if (form.invalid) return;
+  onSubmit(form: NgForm) {
+    if (form.invalid || this.isLoading) return;
 
     this.showSuccessMessage = false;
     this.showErrorMessage = false;
+    this.errorMessage = '';
+    this.isLoading = true;
 
     this.loginService.login(this.login).subscribe({
       next: (response) => {
@@ -46,22 +51,39 @@ export class Login {
         
         this.showSuccessMessage = true;
         
-        // Ocultar mensaje después de 2 segundos
+        // Ocultar mensaje después de 1 segundo y navegar
         setTimeout(() => {
           this.showSuccessMessage = false;
           this.router.navigateByUrl('/home');
           this.dialogManager.closeDialog();
-        }, 1000);
+        }, 2000);
       },
-      error: (err: any) => {
+      error: (err: HttpErrorResponse) => {
         console.error('❌ Error en login', err);
+        console.error('err.error:', err.error);
+        console.error('err.error.message:', err.error?.message);
+        
+        this.isLoading = false;
         this.showErrorMessage = true;
         
-        // Ocultar mensaje de error después de 3 segundos
+        // Extraer mensaje del error
+        this.errorMessage = this.extractErrorMessage(err);
+        
+        console.log('Mensaje mostrado:', this.errorMessage);
+        
+        // Ocultar mensaje de error después de 8 segundos
         setTimeout(() => {
           this.showErrorMessage = false;
         }, 3000);
+      },
+      complete: () => {
+        this.isLoading = false;
       }
     });
+  }
+
+  private extractErrorMessage(err: HttpErrorResponse): string {
+    // Capturar el mensaje que mande el backend
+    return err.error?.message || 'Error al iniciar sesión. Intenta nuevamente.';
   }
 }
