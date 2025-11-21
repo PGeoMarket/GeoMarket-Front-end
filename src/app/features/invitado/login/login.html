@@ -1,6 +1,6 @@
 <!-- login.component.html -->
-<div class="flex items-center justify-center min-h-screen">
-    <div class="bg-white shadow-lg rounded-xl p-12 max-full max-w-full mx-auto relative">
+<div class="flex items-center justify-center min-h-screen px-4">
+    <div class="bg-white shadow-lg rounded-xl p-13 w-full max-w-[360px] mx-auto relative">
 
         <!-- Botón volver con ícono -->
         <div class="absolute w-auto top-3 left-4 right-3 flex justify-between" appClosedialog>
@@ -20,13 +20,13 @@
             </div>
         </div>
 
-        <!-- Mensajes simples -->
-        <div class="mb-4">
+        <!-- Mensajes -->
+        <div class="mb-4 text-center">
             @if (showSuccessMessage) {
-                <div class="text-azulSecundario">Inicio de sesión exitoso</div>
+                <div class="text-azulSecundario text-[12px]">Inicio de sesión exitoso</div>
             }
             @if (showErrorMessage) {
-                <div class="text-red-500 text-[12px]">Las credenciales son incorrectas</div>
+                <div class="text-red-500 text-[12px]">{{ errorMessage }}</div>
             }
         </div>
 
@@ -39,7 +39,7 @@
                     class="w-full px-4 py-1 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 border-borde2 placeholder-gray-300"
                     #email="ngModel" [class.border-red-500]="email.invalid && (email.touched || loginForm.submitted)"
                     [class.border-gray-300]="email.valid || (!email.touched && !loginForm.submitted)" required email
-                    autofocus />
+                    autofocus [disabled]="isLoading" />
                 @if (email.invalid && (email.touched || loginForm.submitted)) {
                 <div class="text-red-500 text-sm mt-1">
                     @if (email.errors?.['required']) {
@@ -59,7 +59,7 @@
                     #password="ngModel"
                     [class.border-red-500]="password.invalid && (password.touched || loginForm.submitted)"
                     [class.border-gray-300]="password.valid || (!password.touched && !loginForm.submitted)" required
-                    minlength="8" />
+                    minlength="8" [disabled]="isLoading" />
                 @if (password.invalid && (password.touched || loginForm.submitted)) {
                 <div class="text-red-500 text-sm mt-1">
                     @if (password.errors?.['required']) {
@@ -74,8 +74,10 @@
 
             <!-- Botones -->
             <div class="flex justify-center gap-1 flex-nowrap">
-                <button type="button" class="btn_negative" (click)="onRegisterAs()" appClosedialog>Registrarse</button>
-                <button type="submit" class="btn_positive">Iniciar sesión</button>
+                <button type="button" class="btn_negative" (click)="onRegisterAs()" appClosedialog [disabled]="isLoading">Registrarse</button>
+                <button type="submit" class="btn_positive" [disabled]="isLoading">
+                    {{ isLoading ? 'Cargando...' : 'Iniciar sesión' }}
+                </button>
             </div>
 
             <!-- Líneas separadoras -->
@@ -86,7 +88,7 @@
 
             <!-- Recuperar contraseña -->
             <div class="mt-4 text-center text-[15px]">
-                <button type="button" class="text-blue-500 hover:underline">
+                <button type="button" class="text-blue-500 hover:underline" [disabled]="isLoading">
                     Recuperar Contraseña
                 </button>
             </div>
