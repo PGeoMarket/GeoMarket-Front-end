@@ -56,7 +56,7 @@ export class Login {
           this.showSuccessMessage = false;
           this.router.navigateByUrl('/home');
           this.dialogManager.closeDialog();
-        }, 1000);
+        }, 5000);
       },
       error: (err: HttpErrorResponse) => {
         console.error('❌ Error en login', err);
@@ -74,7 +74,7 @@ export class Login {
         // Ocultar mensaje de error después de 8 segundos
         setTimeout(() => {
           this.showErrorMessage = false;
-        }, 8000);
+        }, 5000);
       },
       complete: () => {
         this.isLoading = false;
