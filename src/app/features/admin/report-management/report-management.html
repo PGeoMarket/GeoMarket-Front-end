@@ -34,8 +34,8 @@
 
           <!-- Fecha y hora (placeholder) -->
           <div class="row-span-2 flex flex-col justify-between items-end h-full self-stretch text-sm text-textosNoNegro">
-            <p>hoy</p>
-            <p>23:25</p>
+            <p>{{ report.created_at| date:'shortDate' }}</p>
+            <p>{{ report.created_at| date:'shortTime' }}</p>
           </div>
 
           <!-- Motivo -->
