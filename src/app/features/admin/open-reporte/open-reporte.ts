@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { UserDTO } from '../../../core/services/user-service';
 import { ReportedPublication } from '../reported-publication/reported-publication';
 import { RouterLink } from '@angular/router';
+import { ReportService } from '../../../core/services/report-service';
 
 
 @Component({
@@ -80,6 +81,8 @@ export class OpenReporte implements OnInit, OnDestroy, OnChanges {
     this.menuAbierto = false;
     this.menuBoton = false;
   }
+
+private reportService = inject(ReportService);
 
   // 🔎 Toda la lógica que antes estaba en ngOnInit — ahora reutilizable
   private inicializarReporte() {
@@ -174,5 +177,28 @@ export class OpenReporte implements OnInit, OnDestroy, OnChanges {
     this.dialogManager.openDialog('reason', { data: { mode: 'create' } });
     this.cerrarBoton();
     this.cerrarMenus();
+  }
+  OnDecline(){
+     if (!this.report?.id) return;
+
+  const confirmar = confirm("¿Seguro que deseas rechazar / eliminar este reporte?");
+  if (!confirmar) return;
+
+  this.reportService.delete(this.report.id).subscribe({
+    next: (data) => {
+      console.log("Reporte eliminado:", data);
+
+      // Cerrar menús si estaban abiertos
+      this.cerrarMenus();
+      this.cerrarBoton();
+
+      // Recargar la vista
+      this.ngOnInit();
+    },
+    error: (err) => {
+      console.error("Error al eliminar el reporte:", err);
+      alert("No se pudo eliminar el reporte.");
+    }
+  });
   }
 }
