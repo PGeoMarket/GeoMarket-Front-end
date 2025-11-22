@@ -16,6 +16,8 @@ export interface ReportDTO {
   estado: number;
   reportable?: UserDTO | PublicationDTO | SellerDTO;
   reason?: ReasonDTO;
+  created_at?: string;
+  updated_at?: string;
 }
 export interface ReasonDTO {
   id: number;
