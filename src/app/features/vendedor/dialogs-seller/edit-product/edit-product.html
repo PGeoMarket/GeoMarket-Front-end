@@ -83,8 +83,10 @@
     <!-- Footer con botones: siempre abajo -->
     <div class="flex justify-end gap-2 mt-3">
       <button type="button" class="btn_negative" (click)="onCancel()" appClosedialog>Cancelar</button>
-      <input type="submit" value="Editar" class="btn_azulPotente disabled:opacity-50 disabled:cursor-not-allowed"
-        [disabled]="!editForm.valid">
+      <input type="submit"
+  [value]="loading ? 'Editando...' : 'Editar'"
+  class="btn_azulPotente disabled:opacity-50 disabled:cursor-not-allowed"
+  [disabled]="!editForm.valid || loading">
     </div>
 
   </div>

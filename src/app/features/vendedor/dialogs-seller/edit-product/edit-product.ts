@@ -16,7 +16,8 @@ import { PublicationDTO, PublicationService } from '../../../../core/services/pu
 export class EditProduct implements OnInit {
   @Input() publication!: PublicationDTO;    // Input desde el padre
   product?: PublicationDTO;                 // Inicializado en ngOnInit
-  id?: number;                           // Inicializado en ngOnInit
+  id?: number;
+  loading: boolean = false;                     // Inicializado en ngOnInit
 
   constructor(private publicationService: PublicationService) { }
   private dialogManager = inject(DialogManager)
@@ -31,20 +32,25 @@ export class EditProduct implements OnInit {
   }
 
   onSubmit() {
+    if (this.loading) return;
     if (this.id && this.product) {
+      this.loading = true;
+
       const payload: PublicationDTO = {
         ...this.product,
-        imagen: this.imageFile!
+        imagen: this.imageFile ? this.imageFile : undefined
       };
-      this.publicationService.update(this.id, payload).
-        subscribe({
+
+      this.publicationService.update(this.id, payload)
+        .subscribe({
           next: (data) => {
-            console.log('Actualización exitosaaaa', payload);
+            console.log('Actualización exitosa', payload);
+            this.loading = false;
             this.onCloseDialog({ saved: true, publication: data ?? this.product });
           },
           error: (err) => {
             console.error('Error al actualizar', err);
-            // opcional: mostrar mensaje de error
+            this.loading = false;
           }
         });
     }
@@ -65,7 +71,7 @@ export class EditProduct implements OnInit {
     }
   }
 
-    onResetImage() {
+  onResetImage() {
     this.imagePreview = null;
     this.imageFile = null;
     // Limpiar el input file
