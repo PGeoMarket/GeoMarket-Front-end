@@ -15,6 +15,7 @@ export class ReportManagement implements OnInit {
 
   ifOpen: boolean = false;
   selectedReport: ReportDTO | null = null;
+  
   reports: ReportDTO[] = [];
 
   constructor(
