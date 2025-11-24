@@ -2,58 +2,111 @@
 @import "tailwindcss";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
 
-    /* Colores */
-    --color-azulPotente: #063E67;
-    --color-azulSecundario: #4690FF;
-    --color-textosNoNegro: #393434;
-    --color-borde1: #C8C8C8;
-    --color-borde2: #B8B4B4;
-    --color-background: #F2F8FF;
-    --color-blancoSucio: #F7F7F7;
+  /* Colores */
+  --color-azulPotente: #063E67;
+  --color-azulSecundario: #4690FF;
+  --color-textosNoNegro: #393434;
+  --color-borde1: #C8C8C8;
+  --color-borde2: #B8B4B4;
+  --color-background: white;
+  --color-azulBlanco: #F2F8FF;
+  --color-blancoSucio: #F7F7F7;
+  /* Modo oscuro — nombres claros para Tailwind */
+  --color-darkAzulPotente: #0C324A;     /* Azul potente → más profundo */
+  --color-darkAzulSecundario: #6DA8FF;  /* Azul secundario → más claro y suave */
+  --color-darkTextosNoNegro: #D1D1D1;   /* Gris medio → gris claro para contraste */
+  --color-darkBorde1: #4D4D4D;          /* Gris claro → gris oscuro medio */
+  --color-darkBorde2: #3D3D3D;          /* Gris ligeramente más oscuro */
+  --color-darkBackground: #12181F;      /* Blanco → gris azulado muy oscuro */
+  --color-darkAzulBlanco: #1E2A36;      /* Azul muy claro → azul grisáceo oscuro */
+  --color-darkBlancoSucio: #1A1F24;     /* Blanco sucio → gris oscuro suave */
 
+}
+
+
+
+.backgroundColor {
+  @apply bg-background dark:bg-darkBackground
+}
+
+.navbar {
+  @apply bg-blancoSucio border-b border-borde1 px-4 py-2 flex items-center justify-between fixed w-full h-16 z-40
+  dark:bg-darkBlancoSucio dark:border-darkBorde1
+}
+
+.homeFiltersMap {
+  @apply fixed flex justify-between items-center bg-background mt-[-10px] px-[2%] py-1.5 z-39 w-full
+  bg-darkBackground
+}
+
+.searchInput {
+  @apply w-full py-2 pl-4 pr-10 border-2 border-[#cfd8dc] rounded-lg text-base text-textosNoNegro bg-background placeholder-[#b0bec5] focus:outline-none focus:border-[#4f8cff] transition
+  dark:bg-darkBackground dark:text-darkTextosNoNegro
+}
+.main {
+  @apply pt-18 bg-background dark:bg-darkBackground p-2 overflow-x-hidden
 }
 
 .btn_positive {
-    @apply bg-azulSecundario text-white px-2 py-0.5 text-sm md:text-base rounded-md border border-[#387FE9] min-w-[100px] text-center;
+  @apply bg-azulSecundario text-white px-2 py-0.5 text-sm md:text-base rounded-md border border-[#387FE9] min-w-[100px] text-center;
 }
 
 .btn_negative {
-    @apply bg-borde1 text-textosNoNegro px-2 py-0.5 text-sm md:text-base rounded-md border border-borde2 min-w-[100px] text-center;
+  @apply bg-borde1 text-textosNoNegro px-2 py-0.5 text-sm md:text-base rounded-md border border-borde2 min-w-[100px] text-center;
 }
 
-.btn_azulPotente{
-    @apply bg-azulPotente disabled:opacity-50 text-white px-2 py-0.5 text-sm md:text-base rounded-md border border-azulPotente min-w-[100px] text-center;
+.btn_azulPotente {
+  @apply bg-azulPotente disabled:opacity-50 text-white px-2 py-0.5 text-sm md:text-base rounded-md border border-azulPotente min-w-[100px] text-center;
 }
 
 .inputs_registro {
-  @apply w-full px-4 py-2 rounded-xl border text-[#393434] bg-[#F7F7F7] border-[#C8C8C8]
-         placeholder:text-[--color-borde2]
-         focus:outline-none
-         focus:invalid:border-red-600
-         focus:valid:border-blue-400;
+  @apply w-full px-4 py-2 rounded-xl border text-[#393434] bg-[#F7F7F7] border-[#C8C8C8] placeholder:text-[--color-borde2] focus:outline-none focus:invalid:border-red-600 focus:valid:border-blue-400;
 }
 
+.divPublications {
+  @apply cursor-pointer flex flex-col md:w-[256px] md:h-[412px] w-[165px] h-[300px] border-[2px] md:border-[3px] border-borde1 bg-blancoSucio px-[5px] pt-[10px] md:px-[10px] md:pt-[10px] rounded-lg
 
-
-.div_publicacion {
-    @apply cursor-pointer bg-white flex flex-col md:w-[256px] md:h-[412px] w-[165px] h-[300px] border-[2px] md:border-[3px] border-borde1 px-[5px] pt-[10px] md:px-[10px] md:pt-[10px] rounded-lg;
+  dark:bg-darkBlancoSucio dark:border-darkBorde2
 }
 
-.estrella {
-    @apply h-auto w-auto;
+.divPublications_Image {
+  @apply flex justify-end items-end select-none h-[65%] bg-cover bg-center border-[1px] border-borde2 rounded-md;
+
+  div {
+    @apply m-2 flex;
+
+    span {
+      @apply md:text-3xl text-2xl bg-transparent
+    }
+  }
 }
 
-.pubicationCategory {
-  @apply text-azulSecundario bg-background w-fit text-sm md:text-base rounded-l p-0.5
+.divPublications_Categoria {
+  @apply text-azulSecundario bg-azulBlanco w-fit text-sm md:text-base rounded-l p-0.5
+  dark:bg-darkAzulBlanco;
 }
 
-.filtros {
-    @apply border-1 border-borde1 p-[10px];
+.divPublications_TituloPrecioCategoria {
+  @apply flex flex-col font-medium h-[35%] justify-between text-textosNoNegro py-2
+  dark:text-darkTextosNoNegro;
+
 }
 
-.div_tituloPrecio {
-    @apply flex flex-col font-medium h-[35%] justify-between text-textosNoNegro py-2;
+.divPublications_Titulo {
+  @apply text-[20px] h-full md:text-[26px] overflow-hidden line-clamp-2 text-ellipsis text-nowrap;
+}
+
+.divPublications_Precio {
+  @apply text-[20px] md:text-[30px]
+}
+
+.section_Publications {
+  @apply flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12 md:pt-7 overflow-x-hidden;
+}
+
+.slideProductDetail {
+  @apply fixed top-16 right-1 h-[calc(100vh-4rem)] w-[280px] md:w-[320px] shadow-lg z-41 transition-transform duration-300 transform;
 }

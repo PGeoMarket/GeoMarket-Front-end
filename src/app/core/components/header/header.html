@@ -2,7 +2,7 @@
 <div>
   <!-- NAVBAR -->
   <nav
-    class="bg-[#f8fafc] border-b border-[#e5e7eb] px-4 py-2 flex items-center justify-between fixed w-full h-16 z-40">
+    class="navbar">
     <!-- logo y nombre -->
     <div class="flex items-center mr-3" routerLink="home" (click)="borrarFiltros($event)">
       <img src="/svg/logo.svg" alt="GeoMarket Logo" class="cursor-pointer" (click)="borrarFiltros($event)" />
@@ -17,7 +17,7 @@
         <div class="relative max-w-[200px]">
           <input type="text" name="searchPublication" placeholder="Busca aquí" #searchPublication="ngModel" ngModel
             required (focus)="onFocusSearch()" (blur)="onBlurSearch()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-            class="w-full py-2 pl-4 pr-10 border-2 border-[#cfd8dc] rounded-lg text-base text-[#153047] bg-white placeholder-[#b0bec5] focus:outline-none focus:border-[#4f8cff] transition" />
+            class="searchInput" />
         </div>
 
         <button type="submit" [disabled]="searchPublication.invalid">
