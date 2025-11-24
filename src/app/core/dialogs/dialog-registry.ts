@@ -11,7 +11,7 @@ import { SelectLocation } from "../../features/consumidor/dialogs/select-locatio
 import { AddProduct } from "../../features/vendedor/dialogs-seller/add-product/add-product";
 import { EditProduct } from "../../features/vendedor/dialogs-seller/edit-product/edit-product";
 import { Login } from "../../features/invitado/login/login";
-import { Reason } from "../../features/admin/reason/reason";
+import { Reason } from "../../features/admin/dialogs-admin/reason/reason";
 
 import { RatePublication } from "../../features/consumidor/dialogs/rate-publication/rate-publication";
 import { FilterByPrice } from "../../features/consumidor/dialogs/filter-by-price/filter-by-price";

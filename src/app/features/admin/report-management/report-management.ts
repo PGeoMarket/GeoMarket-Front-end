@@ -4,10 +4,12 @@ import { ReportDTO, ReportService } from '../../../core/services/report-service'
 import { HttpClient } from '@angular/common/http';
 import { PublicationDTO } from '../../../core/services/publication-service';
 import { UserDTO } from '../../../core/services/user-service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-report-management',
-  imports: [OpenReporte],
+  imports: [OpenReporte, CommonModule],
   templateUrl: './report-management.html',
   styleUrls: ['./report-management.css']
 })
@@ -15,6 +17,7 @@ export class ReportManagement implements OnInit {
 
   ifOpen: boolean = false;
   selectedReport: ReportDTO | null = null;
+  
   reports: ReportDTO[] = [];
 
   constructor(

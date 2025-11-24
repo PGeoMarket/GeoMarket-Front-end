@@ -10,6 +10,8 @@ import { DatePipe } from '@angular/common';
 import { UserDTO } from '../../../core/services/user-service';
 import { ReportedPublication } from '../reported-publication/reported-publication';
 import { RouterLink } from '@angular/router';
+import { AdminService } from '../../../core/services/admin-service';
+import { ReportService } from '../../../core/services/report-service';
 
 
 @Component({
@@ -22,6 +24,7 @@ import { RouterLink } from '@angular/router';
 export class OpenReporte implements OnInit, OnDestroy, OnChanges {
 
   @Input() report: ReportDTO | null = null;
+  constructor(private adminService: AdminService) { }
 
   // Datos del reporte
   reportedPublication: PublicationDTO | null = null;
@@ -81,6 +84,8 @@ export class OpenReporte implements OnInit, OnDestroy, OnChanges {
     this.menuBoton = false;
   }
 
+private reportService = inject(ReportService);
+
   // 🔎 Toda la lógica que antes estaba en ngOnInit — ahora reutilizable
   private inicializarReporte() {
     if (!this.report) return;
@@ -90,6 +95,9 @@ export class OpenReporte implements OnInit, OnDestroy, OnChanges {
     // PUBLICACIÓN REPORTADA
     if (type.includes('Publication')) {
       this.reportedPublication = this.report.reportable as PublicationDTO;
+      this.reportedSeller = this.reportedPublication.seller as SellerDTO;
+
+
       this.sellerId = this.reportedPublication?.seller?.id ?? null;
       this.mostrarPaneles = true;
       if (this.sellerId) this.loadSellerData(this.sellerId);
@@ -108,6 +116,7 @@ export class OpenReporte implements OnInit, OnDestroy, OnChanges {
     // USUARIO REPORTADO
     if (type.includes('User')) {
       this.reportedUser = this.report.reportable as UserDTO;
+      this.reportedSeller = this.reportedUser.seller as SellerDTO;
       this.mostrarPanelUsuario = true;
       return;
     }
@@ -165,14 +174,45 @@ export class OpenReporte implements OnInit, OnDestroy, OnChanges {
   }
 
   OnSuspender() {
-    this.dialogManager.openDialog('reason', { data: { mode: 'create' } });
+
+    this.dialogManager.openDialog('reason', { data: { seller: this.reportedSeller } });
     this.cerrarBoton();
     this.cerrarMenus();
   }
 
   OnBloquear() {
-    this.dialogManager.openDialog('reason', { data: { mode: 'create' } });
+    this.adminService.suspendedPermanent(this.reportedSeller?.user_id!)
+      .subscribe({
+        next: data => {
+          console.log(data);
+
+        }
+      });
+
     this.cerrarBoton();
     this.cerrarMenus();
+  }
+  OnDecline(){
+     if (!this.report?.id) return;
+
+  const confirmar = confirm("¿Seguro que deseas rechazar / eliminar este reporte?");
+  if (!confirmar) return;
+
+  this.reportService.delete(this.report.id).subscribe({
+    next: (data) => {
+      console.log("Reporte eliminado:", data);
+
+      // Cerrar menús si estaban abiertos
+      this.cerrarMenus();
+      this.cerrarBoton();
+
+      // Recargar la vista
+      this.ngOnInit();
+    },
+    error: (err) => {
+      console.error("Error al eliminar el reporte:", err);
+      alert("No se pudo eliminar el reporte.");
+    }
+  });
   }
 }

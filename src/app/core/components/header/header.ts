@@ -96,6 +96,10 @@ onBlurSearch() {
 
   }
 
+  borrarFiltros(event: MouseEvent) {
+    this.publicationService.sendFilter('');
+  }
+
   /**
    * Reutilizar una búsqueda desde el historial:
    *  - rellena el input, ejecuta la búsqueda y vuelve a guardar (actualiza timestamp).

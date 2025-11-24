@@ -3,7 +3,11 @@
 <ul class="nav">
     <li>
         <!-- Boton filtrar -->
-        <button class="btn_azulPotente cursor-pointer" (click)="abrirFiltros($event)">Filtrar</button>
+        <button class="btn_azulPotente cursor-pointer mr-1" (click)="abrirFiltros($event)">Filtrar</button>
+        @if (isFiltred) {
+        <button class="btn_negative cursor-pointer my-1" (click)="borrarFiltros($event)">Borrar filtros</button>
+        }
+
         <!-- Filtros -->
         @if (isAbierto) {
         <ul class="absolute bg-white text-textosNoNegro translate-x-2 translate-y-0 min-w-[200px] text-left">
