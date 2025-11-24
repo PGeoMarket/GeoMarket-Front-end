@@ -21,7 +21,7 @@ export class AdminService extends CrudService<suspendMessageDTO> {
   }
 
   suspendedTemporary(suspendObject: suspendMessageDTO, user_id: number) {
-    
+
     return this.http.post<any>(`${this.API_URL}/${this.endpoint}/${user_id}/suspend/temporary`, suspendObject);
 
   }
@@ -31,4 +31,8 @@ export class AdminService extends CrudService<suspendMessageDTO> {
 
   }
 
+  unsuspendUser(user_id: number) {
+    return this.http.post<any>(`${this.API_URL}/${this.endpoint}/${user_id}/unsuspend`, {});
+  }
+  
 }
