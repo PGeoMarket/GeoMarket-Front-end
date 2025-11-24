@@ -17,7 +17,7 @@
         <div class="relative max-w-[200px]">
           <input type="text" name="searchPublication" placeholder="Busca aquí" #searchPublication="ngModel" ngModel
             required (focus)="onFocusSearch()" (blur)="onBlurSearch()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
-            class="searchInput" />
+            class="searchInput bgColorBackground" />
         </div>
 
         <button type="submit" [disabled]="searchPublication.invalid">

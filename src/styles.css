@@ -28,8 +28,12 @@
 
 
 
-.backgroundColor {
+.bgColorBackground {
   @apply bg-background dark:bg-darkBackground
+}
+
+.bgColorBlancoSucio {
+  @apply bg-blancoSucio dark:bg-darkBlancoSucio
 }
 
 .navbar {
@@ -38,16 +42,16 @@
 }
 
 .homeFiltersMap {
-  @apply fixed flex justify-between items-center bg-background mt-[-10px] px-[2%] py-1.5 z-39 w-full
-  bg-darkBackground
+  @apply fixed flex justify-between items-center mt-[-10px] px-[2%] py-1.5 z-39 w-full
+
 }
 
 .searchInput {
-  @apply w-full py-2 pl-4 pr-10 border-2 border-[#cfd8dc] rounded-lg text-base text-textosNoNegro bg-background placeholder-[#b0bec5] focus:outline-none focus:border-[#4f8cff] transition
-  dark:bg-darkBackground dark:text-darkTextosNoNegro
+  @apply w-full py-2 pl-4 pr-10 border-2 border-borde1 rounded-lg text-base text-textosNoNegro placeholder-[#b0bec5] focus:outline-none focus:border-[#4f8cff] transition
+  dark:text-darkTextosNoNegro
 }
 .main {
-  @apply pt-18 bg-background dark:bg-darkBackground p-2 overflow-x-hidden
+  @apply pt-18 p-2 overflow-x-hidden
 }
 
 .btn_positive {
@@ -67,9 +71,9 @@
 }
 
 .divPublications {
-  @apply cursor-pointer flex flex-col md:w-[256px] md:h-[412px] w-[165px] h-[300px] border-[2px] md:border-[3px] border-borde1 bg-blancoSucio px-[5px] pt-[10px] md:px-[10px] md:pt-[10px] rounded-lg
+  @apply cursor-pointer flex flex-col md:w-[256px] md:h-[412px] w-[165px] h-[300px] border-[2px] md:border-[3px] border-borde1 px-[5px] pt-[10px] md:px-[10px] md:pt-[10px] rounded-lg
 
-  dark:bg-darkBlancoSucio dark:border-darkBorde2
+ dark:border-darkBorde2
 }
 
 .divPublications_Image {

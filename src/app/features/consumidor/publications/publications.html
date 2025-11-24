@@ -5,7 +5,7 @@
   @for (publication of publications; track $index) {
 
   <!-- Contenedor de publicacion -->
-  <div class="divPublications" (click)="openProductDetail(publication)">
+  <div class="divPublications bgColorBlancoSucio" (click)="openProductDetail(publication)">
     <!--  {{-- Imagen --}} -->
     <div [ngStyle]="{'background-image': 'url(' + publication.image!.url + ')'}"
     class="divPublications_Image">
