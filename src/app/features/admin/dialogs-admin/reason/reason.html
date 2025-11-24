@@ -1,4 +1,4 @@
-<div class="w-120 h-64 border border-gray-400 bg-white rounded-2xl p-6">
+<div class="border border-gray-400 bg-white rounded-2xl p-6">
     <!-- Botón para volver atrás -->
     <button class="rounded-md border border-white active:bg-[#dad8d8]">
         <img src="/svg/back-icon.svg" alt="" appClosedialog>
@@ -6,12 +6,16 @@
 
     <!-- Campo para escribir el motivo -->
        <div class="mx-2 mt-1">
+        <label for="">
+            Ingrese los dias de suspencion:
+            <input type="number" name="" id="" [(ngModel)]="suspendObject.days" required>
+        </label>
         <textarea id="motivo" placeholder="Motivo:" class="w-full h-30 border border-gray-400 rounded-lg bg-white resize-none p-3"></textarea>
     </div>
 
     <!-- Botón de acción -->
     <div class="flex justify-end mr-[2em] mt-4">
-        <button type="submit" class="btn_positive">
+        <button type="submit" class="btn_positive" [disabled]="suspendObject.days==0" (click)="suspendUser()">
             Enviar
         </button>
     </div>

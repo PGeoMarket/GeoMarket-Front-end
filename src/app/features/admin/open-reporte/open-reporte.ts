@@ -10,6 +10,7 @@ import { DatePipe } from '@angular/common';
 import { UserDTO } from '../../../core/services/user-service';
 import { ReportedPublication } from '../reported-publication/reported-publication';
 import { RouterLink } from '@angular/router';
+import { AdminService } from '../../../core/services/admin-service';
 import { ReportService } from '../../../core/services/report-service';
 
 
@@ -23,6 +24,7 @@ import { ReportService } from '../../../core/services/report-service';
 export class OpenReporte implements OnInit, OnDestroy, OnChanges {
 
   @Input() report: ReportDTO | null = null;
+  constructor(private adminService: AdminService) { }
 
   // Datos del reporte
   reportedPublication: PublicationDTO | null = null;
@@ -93,6 +95,9 @@ private reportService = inject(ReportService);
     // PUBLICACIÓN REPORTADA
     if (type.includes('Publication')) {
       this.reportedPublication = this.report.reportable as PublicationDTO;
+      this.reportedSeller = this.reportedPublication.seller as SellerDTO;
+
+
       this.sellerId = this.reportedPublication?.seller?.id ?? null;
       this.mostrarPaneles = true;
       if (this.sellerId) this.loadSellerData(this.sellerId);
@@ -111,6 +116,7 @@ private reportService = inject(ReportService);
     // USUARIO REPORTADO
     if (type.includes('User')) {
       this.reportedUser = this.report.reportable as UserDTO;
+      this.reportedSeller = this.reportedUser.seller as SellerDTO;
       this.mostrarPanelUsuario = true;
       return;
     }
@@ -168,13 +174,21 @@ private reportService = inject(ReportService);
   }
 
   OnSuspender() {
-    this.dialogManager.openDialog('reason', { data: { mode: 'create' } });
+
+    this.dialogManager.openDialog('reason', { data: { seller: this.reportedSeller } });
     this.cerrarBoton();
     this.cerrarMenus();
   }
 
   OnBloquear() {
-    this.dialogManager.openDialog('reason', { data: { mode: 'create' } });
+    this.adminService.suspendedPermanent(this.reportedSeller?.user_id!)
+      .subscribe({
+        next: data => {
+          console.log(data);
+
+        }
+      });
+
     this.cerrarBoton();
     this.cerrarMenus();
   }
