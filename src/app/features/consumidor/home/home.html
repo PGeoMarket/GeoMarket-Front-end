@@ -1,5 +1,5 @@
-<div class="flex justify-center w-full" (click)="cerrarMenus()">
-    <div class="fixed flex justify-between items-center bg-white my-[-8px] px-[2%] py-2 z-39 w-full">
+<div class="flex justify-center w-full mb-[15px]" (click)="cerrarMenus()">
+    <div class="fixed flex justify-between items-center bg-white mt-[-10px] px-[2%] py-1.5 z-39 w-full">
         <!-- Filtrar -->
         <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event"></app-filters>
 
@@ -9,9 +9,6 @@
                 <img src="svg/location.svg" class="mr-2" alt="">
                 {{user_coordinate?.direccion || 'Seleccionar ubicación'}}
             </div>
-            <!--             <div  class="b-gray-500/50 h-full w-full fixed top-0 left-0 select-none">
-                @include('components.mapa')  componente de mapa aqui
-            </div> -->
         </div>
     </div>
 
