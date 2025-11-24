@@ -17,7 +17,7 @@ export class FilterByCategory {
   scope: string = '&filter[category_id]=';
   filters: string = "";
 
-  constructor (private publicationService: PublicationService) {}
+  constructor(private publicationService: PublicationService) { }
 
   onCategoryChange(checked: boolean, categoryId: number) {
     if (checked) {
@@ -32,11 +32,11 @@ export class FilterByCategory {
 
   applyFilter() {
     this.filters = ""; // Limpiar filtros anteriores
-    this.selectedIds.forEach(
-      selectedId => this.filters += (this.scope + selectedId)
-    )
-  this.publicationService.sendFilter(this.filters);
-  console.log(this.filters);
+
+    this.filters += (this.scope + this.selectedIds)
+
+    this.publicationService.sendFilter(this.filters);
+    console.log(this.filters);
 
   }
 

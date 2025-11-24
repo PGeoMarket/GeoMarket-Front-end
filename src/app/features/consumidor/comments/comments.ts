@@ -96,7 +96,7 @@ export class Comments implements OnInit {
     this.user = this.userService.getCurrentUser()!;
     
     if (this.user) {
-      if (this.user.role?.nombre == "vendedor") {
+      if (this.user.role?.nombre == "Vendedor") {
         this.isOwnPublication = this.user.seller?.id == this.seller_id;
       }
     } 

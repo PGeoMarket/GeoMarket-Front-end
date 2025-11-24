@@ -103,33 +103,14 @@ export class Publications implements OnInit {
     }
 
     if (!this.isFrom_cache) {
-      /* Para category */
-      if (!!filters.indexOf('&filter[category_id]=')) {
-        /* Para precios */
-        this.publicationService.getFilterPublication(filters)
-          .subscribe({
-            next: data => { this.publications = data },
-            error: error => console.error('Error a publications filtradas: ' + error),
-            complete: () => console.log('publications filtradas:' + this.publications.length)
-          });
 
-          return;
-
-      }
-
-      this.publications = [];
-      let filters_array: string[] = filters.split("&");
-
-      filters_array.forEach(filter_array => {
-        if (filter_array != '') {
-          this.publicationService.getFilterPublication("&" + filter_array)
-            .subscribe({
-              next: data => { this.publications = [...this.publications, ...data] },
-              error: error => console.error('Error a publications filtradas: ' + error),
-              complete: () => console.log('publications filtradas:' + this.publications.length)
-            });
-        }
-      });
+      /* Para filtros */
+      this.publicationService.getFilterPublication(filters)
+        .subscribe({
+          next: data => { this.publications = data },
+          error: error => console.error('Error a publications filtradas: ' + error),
+          complete: () => console.log('publications filtradas:' + this.publications.length)
+        });
 
       return;
 
