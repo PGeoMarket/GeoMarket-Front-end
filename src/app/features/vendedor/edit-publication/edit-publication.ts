@@ -78,6 +78,10 @@ export class EditPublication implements OnInit {
   onDeleteProduct(id: number) {
     this.closePublicationDetail();
 
+    // 🔥 CONFIRMACIÓN ANTES DE ELIMINAR
+    const confirmar = confirm("¿Seguro que deseas eliminar esta publicación?");
+    if (!confirmar) return;
+
     this.publicationService.delete(id).subscribe({
       next: data => {
         console.log(data);
