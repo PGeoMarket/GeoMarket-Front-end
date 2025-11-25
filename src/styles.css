@@ -114,3 +114,7 @@
 .slideProductDetail {
   @apply fixed top-16 right-1 h-[calc(100vh-4rem)] w-[280px] md:w-[320px] shadow-lg z-41 transition-transform duration-300 transform;
 }
+
+.colorTextosNoNegro {
+  @apply text-textosNoNegro dark:text-darkTextosNoNegro
+}
