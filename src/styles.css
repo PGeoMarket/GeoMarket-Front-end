@@ -20,9 +20,9 @@
   --color-darkTextosNoNegro: #D1D1D1;   /* Gris medio → gris claro para contraste */
   --color-darkBorde1: #4D4D4D;          /* Gris claro → gris oscuro medio */
   --color-darkBorde2: #3D3D3D;          /* Gris ligeramente más oscuro */
-  --color-darkBackground: #1A1F24;      /* Blanco → gris azulado muy oscuro */
+  --color-darkBackground:  #393c3e;      /* Blanco → gris azulado muy oscuro */
   --color-darkAzulBlanco: #1E2A36;      /* Azul muy claro → azul grisáceo oscuro */
-  --color-darkBlancoSucio: #393c3e;     /* Blanco sucio → gris oscuro suave */
+  --color-darkBlancoSucio: #1A1F24;     /* Blanco sucio → gris oscuro suave */
 
 }
 
@@ -121,6 +121,10 @@
 
 .slideBar_Top{
 @apply bg-blancoSucio dark:bg-darkBlancoSucio
+}
+
+.slideBar_Bottom{
+  @apply bg-azulPotente dark:bg-darkBackground
 }
 
 holi{

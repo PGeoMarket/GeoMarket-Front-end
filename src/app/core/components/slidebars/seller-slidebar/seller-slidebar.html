@@ -1,5 +1,5 @@
 <!-- Sección superior (perfil) -->
-<div class="bgColorBlancoSucio flex flex-col items-center p-4">
+<div class="slideBar_Top flex flex-col items-center p-4">
     <img [src]="user?.image?.url || '/svg/profile.svg'" alt="Perfil" class="object-cover rounded-full w-30 h-30">
     <p class="text-azulPotente text-sm md:text-lg mt-2">{{user?.primer_nombre}} {{user?.segundo_nombre}}</p>
     <p class="text-[#4690FF] text-xs md:text-base">Vendedor</p>
@@ -10,7 +10,7 @@
 
 
 <!-- Menú -->
-<div class="bg-[#06406A] h-full overflow-y-auto">
+<div class="slideBar_Bottom h-full overflow-y-auto">
 
   <!-- Home -->
   <div class="flex items-center py-3 sm:py-3 md:py-2 lg:py-3 px-3 cursor-pointer" routerLink="home">
