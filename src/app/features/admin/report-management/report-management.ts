@@ -5,11 +5,12 @@ import { HttpClient } from '@angular/common/http';
 import { PublicationDTO } from '../../../core/services/publication-service';
 import { UserDTO } from '../../../core/services/user-service';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
+import { AdminService } from '../../../core/services/admin-service';
 
 @Component({
   selector: 'app-report-management',
-  imports: [OpenReporte, CommonModule],
+  imports: [OpenReporte, CommonModule, FormsModule],
   templateUrl: './report-management.html',
   styleUrls: ['./report-management.css']
 })
@@ -19,10 +20,11 @@ export class ReportManagement implements OnInit {
   selectedReport: ReportDTO | null = null;
   
   reports: ReportDTO[] = [];
+  unsuspendUserId: number | null = null;
 
   constructor(
     private reportService: ReportService,
-    private http: HttpClient
+    private adminService: AdminService
   ) {}
 
   ngOnInit(): void {
@@ -58,5 +60,27 @@ export class ReportManagement implements OnInit {
 
     this.selectedReport = report;
     this.ifOpen = true;
+  }
+
+  unsuspendUser() {
+    if (!this.unsuspendUserId) {
+      alert("Ingresa un ID válido.");
+      return;
+    }
+
+    const confirmar = confirm(`¿Quitar suspensión al usuario con ID ${this.unsuspendUserId}?`);
+    if (!confirmar) return;
+
+    this.adminService.unsuspendUser(this.unsuspendUserId).subscribe({
+      next: (data) => {
+        console.log("Suspensión removida:", data);
+        alert("Suspensión eliminada correctamente.");
+        this.unsuspendUserId = null;
+      },
+      error: (err) => {
+        console.error("Error al quitar suspensión", err);
+        alert("No se pudo quitar la suspensión.");
+      }
+    });
   }
 }

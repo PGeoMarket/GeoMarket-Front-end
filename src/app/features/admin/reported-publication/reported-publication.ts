@@ -16,6 +16,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ChatService } from '../../../core/services/chat-service';
 import { Comments } from '../../consumidor/comments/comments';
 import { MiniMap } from '../../consumidor/mini-map/mini-map';
+import { PublicationService } from '../../../core/services/publication-service';
 
 @Component({
   selector: 'reported-publication',
@@ -36,6 +37,7 @@ export class ReportedPublication implements OnInit {
   menuBoton = false;   // menú del botón de 3 puntos
 
   private dialogManager = inject(DialogManager);
+  private publicationService = inject(PublicationService);
 
   constructor(
     private userService: UserService,
@@ -96,6 +98,30 @@ export class ReportedPublication implements OnInit {
     this.cerrarBoton();
     this.cerrarMenus();
   }
+
+  OnDelete() {
+  if (!this.publication_detail?.id) return;
+
+  const confirmar = confirm("¿Seguro que deseas eliminar esta publicación?");
+  if (!confirmar) return;
+
+  this.publicationService.delete(this.publication_detail.id).subscribe({
+    next: () => {
+      console.log("Publicación eliminada exitosamente.");
+
+      // Cerrar menús
+      this.cerrarMenus();
+      this.cerrarBoton();
+
+      // Cerrar el detalle de publicación
+      this.removePublicationDetail();
+    },
+    error: (err) => {
+      console.error("Error al eliminar la publicación:", err);
+      alert("No se pudo eliminar la publicación.");
+    }
+  });
+}
 
   removePublicationDetail() {
     this.close.emit();
