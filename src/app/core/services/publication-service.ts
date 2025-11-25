@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { CrudService } from "./crud-service";
+import { CrudService, PaginatedResponse } from "./crud-service";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable } from "rxjs";
 import { CategoryDTO } from "./category-service";
@@ -48,9 +48,10 @@ export class PublicationService extends CrudService<PublicationDTO> {
     super(http);
   }
 
-  getAllPublication(): Observable<PublicationDTO[]> {
-    return this.http.get<PublicationDTO[]>(
-      `${this.API_URL}/${this.endpoint}?included=image,category`);
+  getAllPublication(page: number = 1): Observable<PaginatedResponse<PublicationDTO>> {
+    return this.http.get<PaginatedResponse<PublicationDTO>>(
+      `${this.API_URL}/${this.endpoint}?page=${page}&perPage=12&included=image,category`
+    );
   }
 
   getByIdPublication(id: number): Observable<PublicationDTO> {
@@ -63,9 +64,12 @@ export class PublicationService extends CrudService<PublicationDTO> {
       `${this.API_URL}/${this.endpoint}/${id}?included=comments`);
   }
 
-  getFilterPublication(filters: string): Observable<PublicationDTO[]> {
-    return this.http.get<PublicationDTO[]>(
-      `${this.API_URL}/${this.endpoint}?included=image,category${filters}`);
+  getFilterPublication(filters: string, page: number = 1): Observable<PaginatedResponse<PublicationDTO>> {
+    console.log(`${this.API_URL}/${this.endpoint}?page=${page}&perPage=12&included=image,category${filters}`);
+
+    return this.http.get<PaginatedResponse<PublicationDTO>>(
+      `${this.API_URL}/${this.endpoint}?page=${page}&perPage=12&included=image,category${filters}`
+    );
   }
 
   override create(data: Partial<PublicationDTO>): Observable<PublicationDTO> {
@@ -114,17 +118,15 @@ export class PublicationService extends CrudService<PublicationDTO> {
 
 
   //Obtener publicaciones por ubicacion:
-  getPublicationsByLocation(coodinate: CoordinateMapServiceDTO): Observable<PublicationDTO[]> {
+getPublicationsByLocation(coordinate: CoordinateMapServiceDTO, page: number = 1): Observable<PaginatedResponse<PublicationDTO>> {
+  const baseUrl = `${this.API_URL}/${this.endpoint}?page=${page}&perPage=12&included=image,category&sort=distance&filter[user_lat]=${coordinate.latitud}&filter[user_lon]=${coordinate.longitud}`;
 
-    const location_url = `${this.API_URL}/${this.endpoint}?included=image,category&sort=distance&filter[user_lat]=${coodinate.latitud}&filter[user_lon]=${coodinate.longitud}`
-
-    if (!coodinate.distancia) {
-      return this.http.get<PublicationDTO[]>(`${location_url}`)
-    } else {
-      return this.http.get<PublicationDTO[]>(`${location_url}&filter[max_distance]=${coodinate.distancia}`);
-    }
-
+  if (!coordinate.distancia) {
+    return this.http.get<PaginatedResponse<PublicationDTO>>(baseUrl);
+  } else {
+    return this.http.get<PaginatedResponse<PublicationDTO>>(`${baseUrl}&filter[max_distance]=${coordinate.distancia}`);
   }
+}
 
   // Método para emitir filtros
   sendFilter(filters: string) {

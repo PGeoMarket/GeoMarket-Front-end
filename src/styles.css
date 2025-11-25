@@ -51,7 +51,7 @@
   dark:text-darkTextosNoNegro
 }
 .main {
-  @apply pt-18 p-2 overflow-x-hidden
+  @apply pt-18 p-2 overflow-x-hidden h-full
 }
 
 .btn_positive {

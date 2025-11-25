@@ -6,6 +6,7 @@ import { UserService } from '../../../core/services/user-service';
 import { ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs';
 import { CoordinateMapServiceDTO } from '../../../core/services/map-service';
+import { PaginatedResponse } from '../../../core/services/crud-service';
 
 @Component({
   selector: 'app-publications',
@@ -20,12 +21,20 @@ export class Publications implements OnInit {
   publications!: PublicationDTO[];
   publications_temp!: PublicationDTO[];
   publication_selected!: PublicationDTO | null;
+
+  //Paginacion
+  currentPage: number = 1;
+  totalPages: number = 1;
+  // Variables para guardar el estado de filtros
+  private currentFilters: string = '';
+  private currentCoordinate: CoordinateMapServiceDTO | null = null;
+  private currentLoadType: 'normal' | 'filtered' | 'location' = 'normal';
+
   @Input() isFrom_cache: boolean = false;
   seller_id: number = 0;
   constructor(protected publicationService: PublicationService, private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-
     this.seller_id = Number(this.route.snapshot.paramMap.get('id'));
 
     if (this.seller_id) {
@@ -48,35 +57,36 @@ export class Publications implements OnInit {
         }
       })
 
-    //Publicaciones con filtros, si no hay filtros simplemente se cargan todos
+    //Publicaciones con filtros - agregar reset a página 1
     this.publicationService.filterChanged$
       .subscribe(filters => {
-        this.loadFiltredPublications(filters);
+        this.loadFiltredPublications(filters, 1); // ✅ Agregar página 1 aquí
         return;
       });
 
     this.loadPublications();
 
-    //Publicaciones con filtros, si no hay filtros simplemente se cargan todos
+    //Publicaciones por ubicación - agregar reset a página 1
     this.publicationService.filter_locationChanged$
       .subscribe(coordinate => {
-        this.loadLocationPublications(coordinate)
+        this.loadLocationPublications(coordinate, 1) // ✅ Agregar página 1 aquí
         return;
       });
-
-    this.loadPublications();
   }
 
 
 
-  loadPublications() {
+  loadPublications(page: number = 1) {
     if (!this.isFrom_cache && !this.seller_id) {
-      this.publicationService.getAllPublication()
-        .subscribe({
-          next: data => this.publications = data,
-          error: error => console.error('No se pudo obtener las publicaciones: ' + error),
-          complete: () => console.log('Publicaciones obtenidas correctamente')
-        });
+      this.publicationService.getAllPublication(page).subscribe({
+        next: (response: PaginatedResponse<PublicationDTO>) => {
+          this.publications = response.data; // ✅ response.data (el array)
+          this.totalPages = response.last_page; // ✅ response.last_page
+          this.currentPage = response.current_page;
+        }, // ✅ response.current_page
+        error: error => console.error('No se pudo obtener las publicaciones: ' + error),
+        complete: () => console.log('Publicaciones obtenidas correctamente')
+      });
       return;
     }
 
@@ -95,26 +105,28 @@ export class Publications implements OnInit {
     });
   }
 
-  loadFiltredPublications(filters: string) {
+  loadFiltredPublications(filters: string, page: number = 1) {
     // si no hay scope definido, obtenemos todo
     if (!filters) {
       this.loadPublications();
       return;
     }
 
+    // Guardar estado
+    this.currentFilters = filters;
+    this.currentLoadType = 'filtered';
+    this.currentPage = page; // Usar la página que viene como parámetro
+
     if (!this.isFrom_cache) {
-
-      /* Para filtros */
-      this.publicationService.getFilterPublication(filters)
+      this.publicationService.getFilterPublication(filters, page) // ✅ Agregar page aquí
         .subscribe({
-          next: data => { this.publications = data },
-          error: error => console.error('Error a publications filtradas: ' + error),
-          complete: () => console.log('publications filtradas:' + this.publications.length)
+          next: (response: PaginatedResponse<PublicationDTO>) => {
+            this.publications = response.data;
+            this.totalPages = response.last_page;
+            this.currentPage = response.current_page;
+          },
+          error: error => console.error('Error:', error)
         });
-
-      return;
-
-
     } else {
       this.loadCacheFiltredPublications(filters);
     }
@@ -129,12 +141,11 @@ export class Publications implements OnInit {
 
     this.publicationService.getFilterPublication(`&filter[seller_id]=${this.seller_id}`)
       .subscribe({
-        next: data => {
-          this.publications = data;
-          this.publications_temp = data; // AQUÍ ESTABA EL ERROR - FALTABA ESTA ASIGNACIÓN
+        next: (response: PaginatedResponse<PublicationDTO>) => {
+          this.publications = response.data; // ✅ response.data
+          this.totalPages = response.last_page; // ✅ response.last_page
         },
-        error: error => console.error('Error a publications filtradas: ' + error),
-        complete: () => console.log('publications filtradas:' + this.publications.length)
+        error: error => console.error('Error:', error)
       });
     return;
   }
@@ -201,38 +212,54 @@ export class Publications implements OnInit {
     this.publications = [...this.publications_temp];
   }
 
-  loadLocationPublications(coordinate: CoordinateMapServiceDTO) {
+  // En loadLocationPublications
+  loadLocationPublications(coordinate: CoordinateMapServiceDTO, page: number = 1) {
+    // Guardar estado
+    this.currentCoordinate = coordinate;
+    this.currentLoadType = 'location';
+    this.currentPage = page; // Usar la página que viene como parámetro
 
-    //En este caso isFrom_cache sirve para publicaciones favoritas, en caso que isFrom_cache venga de otra parte se tendrá que cambiar.
     if (!this.isFrom_cache) {
-      this.publicationService.getPublicationsByLocation(coordinate)
+      this.publicationService.getPublicationsByLocation(coordinate, page) // ✅ Agregar page aquí
+        .subscribe({
+          next: (response: PaginatedResponse<PublicationDTO>) => {
+            this.publications = response.data;
+            this.totalPages = response.last_page;
+            this.currentPage = response.current_page;
+          },
+          error: error => console.error('Error:', error)
+        });
+    } else {
+      this.userService.getFavoritesByLocation(coordinate)
         .subscribe({
           next: data => {
             this.publications = data;
-            console.log(data);
-
           },
-          error: error => console.error('Error a publications filtradas: ' + error),
-          complete: () => console.log('publications filtradas:' + this.publications.length)
+          error: error => console.error('Error:', error)
         });
-      return;
     }
-    console.log('a');
-
-    this.userService.getFavoritesByLocation(coordinate)
-      .subscribe({
-        next: data => {
-          this.publications = data;
-          console.log(data);
-
-        },
-        error: error => console.error('Error a favoritepublications filtradas: ' + error),
-        complete: () => console.log('favoritepublications filtradas:' + this.publications.length)
-      });
-    return;
+  }
 
 
+  //Paginacion
+  //Paginacion - Método para cambiar página
+  changePage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
 
+    // Usar el estado guardado para determinar qué cargar
+    switch (this.currentLoadType) {
+      case 'filtered':
+        this.loadFiltredPublications(this.currentFilters, page); // ✅ Usar el método principal
+        break;
+      case 'location':
+        if (this.currentCoordinate) {
+          this.loadLocationPublications(this.currentCoordinate, page); // ✅ Usar el método principal
+        }
+        break;
+      default:
+        this.loadPublications(page);
+        break;
+    }
   }
 
   //Logica a de abrir product-detail
