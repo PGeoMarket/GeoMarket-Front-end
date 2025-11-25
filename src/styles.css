@@ -12,7 +12,7 @@
   --color-borde1: #C8C8C8;
   --color-borde2: #B8B4B4;
   --color-background: white;
-  --color-azulBlanco: #F2F8FF;
+  --color-azulBlanco: #6fb4f51f;
   --color-blancoSucio: #F7F7F7;
   /* Modo oscuro — nombres claros para Tailwind */
   --color-darkAzulPotente: #0C324A;     /* Azul potente → más profundo */
@@ -20,9 +20,9 @@
   --color-darkTextosNoNegro: #D1D1D1;   /* Gris medio → gris claro para contraste */
   --color-darkBorde1: #4D4D4D;          /* Gris claro → gris oscuro medio */
   --color-darkBorde2: #3D3D3D;          /* Gris ligeramente más oscuro */
-  --color-darkBackground: #12181F;      /* Blanco → gris azulado muy oscuro */
+  --color-darkBackground: #1A1F24;      /* Blanco → gris azulado muy oscuro */
   --color-darkAzulBlanco: #1E2A36;      /* Azul muy claro → azul grisáceo oscuro */
-  --color-darkBlancoSucio: #1A1F24;     /* Blanco sucio → gris oscuro suave */
+  --color-darkBlancoSucio: #393c3e;     /* Blanco sucio → gris oscuro suave */
 
 }
 
@@ -117,4 +117,12 @@
 
 .colorTextosNoNegro {
   @apply text-textosNoNegro dark:text-darkTextosNoNegro
+}
+
+.slideBar_Top{
+@apply bg-blancoSucio dark:bg-darkBlancoSucio
+}
+
+holi{
+  color: #6fb4f51f;
 }
