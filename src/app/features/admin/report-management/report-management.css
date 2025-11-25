@@ -1,0 +1,4 @@
+
+.oscuro{
+   filter: invert(78%) sepia(35%) saturate(7111%) hue-rotate(62deg) brightness(116%) contrast(116%);
+}
