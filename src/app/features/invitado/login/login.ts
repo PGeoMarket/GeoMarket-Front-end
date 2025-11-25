@@ -44,7 +44,7 @@ export class Login {
 
     this.loginService.login(this.login).subscribe({
       next: (response) => {
-        console.log('✅ Login exitoso', response);
+        console.log('Login exitoso', response);
         console.log('Token:', this.loginService.getToken());
         console.log('Usuario:', response.user);
         console.log('Rol:', response.user.role!.nombre);
@@ -59,7 +59,7 @@ export class Login {
         }, 2000);
       },
       error: (err: HttpErrorResponse) => {
-        console.error('❌ Error en login', err);
+        console.error('Error en login', err);
         console.error('err.error:', err.error);
         console.error('err.error.message:', err.error?.message);
         
@@ -71,10 +71,10 @@ export class Login {
         
         console.log('Mensaje mostrado:', this.errorMessage);
         
-        // Ocultar mensaje de error después de 8 segundos
+       
         setTimeout(() => {
           this.showErrorMessage = false;
-        }, 3000);
+        }, 6000);
       },
       complete: () => {
         this.isLoading = false;
@@ -83,7 +83,7 @@ export class Login {
   }
 
   private extractErrorMessage(err: HttpErrorResponse): string {
-    // Capturar el mensaje que mande el backend
     return err.error?.message || 'Error al iniciar sesión. Intenta nuevamente.';
   }
+  
 }
