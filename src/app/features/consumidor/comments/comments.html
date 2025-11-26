@@ -21,7 +21,7 @@
   @if (comments.length) {
 
   @for (comment of comments; track $index) {
-  <div class="border border-gray-400 rounded-lg p-3">
+  <div class="border border-gray-400 comment_Bg rounded-lg p-3">
     <div class="flex items-start space-x-3">
 
       @if (comment.user.image?.url) {
@@ -34,7 +34,7 @@
       <!-- agregado min-w-0 para que el hijo flex pueda encogerse -->
       <div class="flex-1 min-w-0">
         <div class="flex justify-between items-center">
-          <span class="text-[#144467] font-bold text-sm">{{comment.user.primer_nombre}}</span>
+          <span class="nameInComment font-bold text-sm">{{comment.user.primer_nombre}}</span>
           <div>
             @for (star of [1,2,3,4,5]; track $index) {
             <span class="text-xl" [class.text-yellow-400]="star <= comment.valor_estrella!"
@@ -46,12 +46,12 @@
         </div>
 
         <!-- p con clases para romper palabras y respetar saltos de línea -->
-        <p class="text-sm mt-1 whitespace-pre-line break-words">
+        <p class="text-sm mt-1 whitespace-pre-line comment_Content break-words">
           {{ comment.texto }}
         </p>
 
         <!-- mejor usar un bloque alineado a la derecha en vez de float -->
-        <div class="text-xs text-gray-500 text-right mt-1">
+        <div class="text-xs comment_Content text-right mt-1">
           {{ comment.created_at | date }}
         </div>
       </div>
@@ -62,7 +62,7 @@
   }
 
   } @else {
-  <div class="border border-gray-300 rounded-lg p-4 my-2.5 text-center text-gray-600">
+  <div class="border border-gray-300 rounded-lg p-4 my-2.5 text-center comment_Content">
     <p class="font-medium text-sm">¡Sé el primero en comentar!</p>
     <p class="text-xs mt-1">Aún no hay comentarios</p>
   </div>

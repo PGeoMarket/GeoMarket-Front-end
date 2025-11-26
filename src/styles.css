@@ -171,3 +171,6 @@
  @apply text-azulPotente dark:text-azulSecundario
 }
 
+.map_Bg{
+  @apply bg-blancoSucio dark:bg-darkBlancoSucio
+}
