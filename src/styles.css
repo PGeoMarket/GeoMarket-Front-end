@@ -138,6 +138,11 @@
 .bg_descripcion{
   @apply  dark:bg-gray-300 
 }
+
+.filtros {
+    @apply border-1 border-borde1 p-[10px];
+}
+
 holi{
   color: #6fb4f51f;
 }
