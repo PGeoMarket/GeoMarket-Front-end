@@ -51,6 +51,10 @@ export class EditProduct implements OnInit {
           error: (err) => {
             console.error('Error al actualizar', err);
             this.loading = false;
+          },
+          complete: () => {
+            alert('Producto editado exitosamente');
+
           }
         });
     }
