@@ -51,7 +51,7 @@
   dark:text-darkTextosNoNegro
 }
 .main {
-  @apply pt-18 pb-[1rem] px-2 overflow-x-hidden 
+  @apply pt-18 pb-[1rem] px-2 overflow-x-hidden  bg-background dark:bg-darkBackground
 }
 
 .btn_positive {
@@ -142,3 +142,32 @@
 .filtros {
     @apply border-1 border-borde1 p-[10px];
 }
+.profileOther_Bg{
+@apply bg-background dark:bg-darkBackground
+}
+
+.profileOtherProfile_Bg{
+  @apply bg-background dark:bg-darkBlancoSucio
+}
+
+.inputProfileOther{
+@apply text-textosNoNegro bg-blancoSucio dark:text-darkTextosNoNegro dark:bg-darkBlancoSucio
+}
+
+.profileOther_textOnLabel{
+  @apply text-textosNoNegro dark:text-darkTextosNoNegro
+}
+
+.comment_Bg{
+@apply bg-blancoSucio dark:bg-darkBlancoSucio
+/* esta clase no está aplicada (es de los comentarios) */
+}
+
+.comment_Content{
+@apply text-textosNoNegro dark:text-darkTextosNoNegro
+}
+
+.nameInComment{
+ @apply text-azulPotente dark:text-azulSecundario
+}
+
