@@ -1,7 +1,7 @@
 @if (publication_detail) {
 
 <div
-  class="border border-gray-500 bg-white w-full overflow-y-auto overflow-x-hidden max-w-sm md:max-w-2xl h-full rounded-md font-sans p-4 md:p-6 space-y-4 md:space-y-6">
+  class="border border-gray-50 produc_Detail w-full overflow-y-auto overflow-x-hidden max-w-sm md:max-w-2xl h-full rounded-md font-sans p-4 md:p-6 space-y-4 md:space-y-6">
   <!-- Header con botones -->
   <div class="flex justify-between items-center">
     <button class="rounded-lg w-10 h-10 md:w-12 md:h-12 border-0 flex items-center justify-center" (click)="removePublicationDetail()">
@@ -29,7 +29,7 @@
 
   <!-- Precio y botón favorito -->
   <div class="flex justify-between items-center">
-    <p class="text-gray-500 text-xl md:text-2xl font-semibold">{{publication_detail.precio | currency: 'COP'}}</p>
+    <p class="produc_precio text-xl md:text-2xl font-semibold">{{publication_detail.precio | currency: 'COP'}}</p>
     <button class="bg-transparent" (click)="changeFavoritePublication()">
       <img [src]="favorito ? 'svg/favoritesoscuro_relleno.svg' : 'svg/favoritesoscuro_vacio.svg'" alt="corazon"
         class="w-10 h-10 md:w-12 md:h-12 fav-icon">
@@ -47,10 +47,10 @@
   </div>
 
   <!-- Categoria -->
-  <p class="pubicationCategory text-base md:text-lg">{{publication_detail.category?.categoria}}</p>
+  <p class="pubicationCategory produc_precio text-base md:text-lg">{{publication_detail.category?.categoria}}</p>
 
   <!-- Descripción -->
-  <div class="bg-gray-100 rounded-lg p-4 md:p-5">
+  <div class="bg_descripcion rounded-lg p-4 md:p-5">
     <h3 class="font-semibold mb-2 text-lg md:text-xl">Descripción</h3>
     <p class="text-sm md:text-base text-gray-700 leading-relaxed">
       {{publication_detail.descripcion}}
@@ -79,7 +79,7 @@
   </div>
 
   <!-- Comentarios -->
-  <div class="mt-5 md:mt-6">
+  <div class="mt-5 md:mt-6 produc_precio">
     <app-comments [publication_id]="publication_detail.id!" [seller_id]="publication_detail.seller_id!"></app-comments>
   </div>
 
