@@ -1,16 +1,16 @@
   <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event" [fromProfile]="true"
     class="w-full mx-[10%] z-50"></app-filters>
 
-<section class="flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 md:pt-[0px] overflow-x-hidden "
+<section class="section_Publications"
   (click)="cerrarMenus()">
 
   @if (publications) {
   @for (publication of publications; track $index) {
 
   <!-- {{-- Contenedor de publicacion --}} -->
-  <div class="div_publicacion relative" (click)="openProductDetail(publication)">
+  <div class="divPublications bgColorBlancoSucio relative" (click)="openProductDetail(publication)">
     <!-- {{-- tres puntitos --}} -->
-    <div class="absolute top-2 right-2 z-30">
+    <div class="absolute top-2 right-2 z-50">
       <button (click)="abrirMenu($index, $event); $event.stopPropagation();"
         class="bg-gray-100 rounded-full w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -37,8 +37,8 @@
 
 
     <!--  {{-- Imagen --}} -->
-    <div [ngStyle]="{'background-image': 'url(' + publication.image!.url + ')'}" class="flex w justify-end items-end  select-none
-            h-[65%] bg-cover bg-center border-[1px] border-borde2 rounded-md">
+    <div [ngStyle]="{'background-image': 'url(' + publication.image!.url + ')'}"
+    class="divPublications_Image">
       <!--  {{-- Estrellas: cada img es un tipo de estrella --}} -->
       <div class="m-2 flex">
         @for (star of [1,2,3,4,5]; track $index) {
@@ -51,23 +51,23 @@
     </div>
 
     <!-- {{-- Contenedor de titulo y precio --}} -->
-    <div class="div_tituloPrecio">
+    <div class="divPublications_TituloPrecioCategoria">
       <!-- {{-- Titulo --}} -->
-      <p class="text-[20px] h-full md:text-[26px] overflow-hidden line-clamp-2 text-ellipsis text-nowrap">
+      <p class="divPublications_Titulo">
         {{publication.titulo}}</p>
 
       <!-- Categoria -->
-      <p class="pubicationCategory">{{publication.category?.categoria}}</p>
+      <p class="divPublications_Categoria">{{publication.category?.categoria}}</p>
 
       <!-- {{-- Precio --}} -->
-      <span class="text-[20px] md:text-[30px]">{{publication.precio | currency:'COP':'symbol':'1.0-0'}}</span>
+      <span class="divPublications_Precio">{{publication.precio | currency:'COP':'symbol':'1.0-0'}}</span>
     </div>
   </div>
   }
   }
 </section>
 <div
-  class="fixed top-16 right-1 h-[calc(100vh-4rem)] w-[280px] md:w-[320px] shadow-lg z-41 transition-transform duration-300 transform"
+  class="slideProductDetail"
   [class.translate-x-0]="open" [class.translate-x-full]="!open">
   @if (publication_selected) {
   <div class="h-full w-full">
