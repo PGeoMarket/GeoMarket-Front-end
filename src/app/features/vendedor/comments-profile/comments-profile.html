@@ -9,7 +9,7 @@
   <!-- Lista de comentarios -->
   @for (comment of comments; track comment.id) {
     <div
-      class="flex items-center border rounded-lg bg-[var(--color-blancoSucio)] shadow px-2 py-1 relative border-[var(--color-borde1)]"
+      class="flex items-center border rounded-lg comment_Bg shadow px-2 py-1 relative border-[var(--color-borde1)]"
     >
       <!-- Avatar -->
       <img
@@ -20,13 +20,13 @@
 
       <!-- Datos -->
       <div class="flex-1">
-        <div class="font-medium text-xs text-[var(--color-azulPotente)]">
+        <div class="font-medium text-xs nameInComment">
           {{ comment.user?.primer_nombre }} {{ comment.user?.primer_apellido }}
         </div>
-        <div class="text-xs text-[var(--color-textosNoNegro)]">
+        <div class="text-xs comment_Content">
           {{ comment.texto }}
         </div>
-        <div class="text-[10px] text-[var(--color-borde2)]">
+        <div class="text-[10px] comment_Content">
           {{ comment.created_at | date: 'shortDate' }}
         </div>
       </div>
