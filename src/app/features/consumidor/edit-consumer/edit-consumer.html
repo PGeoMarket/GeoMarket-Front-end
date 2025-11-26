@@ -1,5 +1,5 @@
 <div
-  class="bg-white p-6 sm:p-8 rounded-lg shadow-md w-170 max-w-sm relative border border-gray-200 overflow-y-auto max-h-[90vh]">
+  class="bg-white dark:bg-darkBlancoSucio p-6 sm:p-8 rounded-lg shadow-md w-170 max-w-sm relative border border-gray-200 dark:border-gray-600 overflow-y-auto max-h-[90vh]">
 
   <button class="p-0.1 rounded cursor-pointer" appClosedialog>
     <img src="/svg/back-icon.svg" alt="Atrás">
@@ -27,42 +27,42 @@
   <!-- Formulario -->
   <form class="space-y-5" #editForm="ngForm">
     <div>
-      <label for="primer_nombre" class="block text-sm font-medium text-textosNoNegro pb-0.5">
+      <label for="primer_nombre" class="block text-sm font-medium text-textosNoNegro dark:text-darkTextosNoNegro  pb-0.5">
         Nombre:
       </label>
       <input id="primer_nombre" name="primer_nombre" [(ngModel)]="user_edit!.primer_nombre" type="text"
-        class="inputs_registro w-full" />
+        class="inputs_registro inputProfileOther w-full" />
     </div>
 
     <div>
-      <label for="segundo_nombre" class="block text-sm font-medium text-gray-700 pb-0.5">
+      <label for="segundo_nombre" class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro pb-0.5">
         Segundo Nombre:
       </label>
       <input id="segundo_nombre" name="segundo_nombre" [(ngModel)]="user_edit!.segundo_nombre" type="text"
-        class="inputs_registro w-full" />
+        class="inputs_registro inputProfileOther w-full" />
     </div>
 
     <div>
-      <label for="primer_apellido" class="block text-sm font-medium text-gray-700 pb-0.5">
+      <label for="primer_apellido" class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro pb-0.5">
         Apellido:
       </label>
       <input id="primer_apellido" name="primer_apellido" [(ngModel)]="user_edit!.primer_apellido" type="text"
-        class="inputs_registro w-full" />
+        class="inputs_registro inputProfileOther w-full" />
     </div>
 
     <div>
-      <label for="segundo_apellido" class="block text-sm font-medium text-gray-700 pb-0.5">
+      <label for="segundo_apellido" class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro pb-0.5">
         Segundo Apellido:
       </label>
       <input id="segundo_apellido" name="segundo_apellido" [(ngModel)]="user_edit!.segundo_apellido" type="text"
-        class="inputs_registro w-full" />
+        class="inputs_registro inputProfileOther w-full" />
     </div>
 
     <div>
-      <label for="email" class="block text-sm font-medium text-gray-700 pb-0.5">
+      <label for="email" class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro pb-0.5">
         Correo:
       </label>
-      <input id="email" name="email" [(ngModel)]="user_edit!.email" type="email" class="inputs_registro w-full" />
+      <input id="email" name="email" [(ngModel)]="user_edit!.email" type="email" class="inputs_registro inputProfileOther w-full" />
     </div>
 
     <div class="flex justify-center items-center space-x-4 pt-4">

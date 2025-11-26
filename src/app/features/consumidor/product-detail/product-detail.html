@@ -58,7 +58,7 @@
   </div>
 
   @if (publication_detail.seller_id) { <!-- aqui es si es user_id! = seller_id -->
-  <button class="bg-azulSecundario text-white w-full h-10 md:h-12 rounded-lg font-medium text-base md:text-lg" (click)="onChat()">Mandar
+  <button class="bg-azulSecundario text-white w-full h-10 md:h-12 rounded-lg font-medium text-base md:text-lg cursor-pointer" (click)="onChat()">Mandar
     mensaje</button>
 
   }
@@ -72,14 +72,14 @@
 
   <!-- Botones y mapa -->
   <div class="space-y-4 md:space-y-5">
-    <button class="bg-[#144467] text-white w-full h-10 md:h-12 rounded-lg font-medium text-base md:text-lg" (click)="redirecToGoogleMaps()">Ver ubicación</button>
+    <button class="bg-[#144467] text-white w-full h-10 md:h-12 rounded-lg font-medium text-base md:text-lg cursor-pointer" (click)="redirecToGoogleMaps()">Ver ubicación</button>
     <div class="w-full aspect-square rounded-lg overflow-hidden">
       <app-mini-map [coordinate]="seller_product_detail.coordinate!" (give_url)="onUrlReceived($event)"></app-mini-map>
     </div>
   </div>
 
   <!-- Comentarios -->
-  <div class="mt-5 md:mt-6 produc_precio">
+  <div class="mt-5 md:mt-6 produc_precio ">
     <app-comments [publication_id]="publication_detail.id!" [seller_id]="publication_detail.seller_id!"></app-comments>
   </div>
 

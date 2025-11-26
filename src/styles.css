@@ -139,6 +139,12 @@
   @apply  dark:bg-gray-300 
 }
 
+.edit_seller{
+  @apply bg-background dark:bg-darkBlancoSucio
+}
+holi{
+  color: #6fb4f51f;
+}
 .filtros {
     @apply border-1 border-borde1 p-[10px];
 }
@@ -160,7 +166,7 @@
 
 .comment_Bg{
 @apply bg-blancoSucio dark:bg-darkBlancoSucio
-/* esta clase no está aplicada (es de los comentarios) */
+
 }
 
 .comment_Content{
