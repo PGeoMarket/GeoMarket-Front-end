@@ -51,7 +51,7 @@
   dark:text-darkTextosNoNegro
 }
 .main {
-  @apply pt-18 p-2 overflow-x-hidden h-full
+  @apply pt-18 pb-[1rem] px-2 overflow-x-hidden 
 }
 
 .btn_positive {
@@ -108,7 +108,7 @@
 }
 
 .section_Publications {
-  @apply flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12 md:pt-7 overflow-x-hidden;
+  @apply flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12  overflow-x-hidden;
 }
 
 .slideProductDetail {
@@ -138,35 +138,7 @@
 .bg_descripcion{
   @apply  dark:bg-gray-300 
 }
-.profileOther_Bg{
-@apply bg-background dark:bg-darkBackground
-}
 
-.profileOtherProfile_Bg{
-  @apply bg-background dark:bg-darkBlancoSucio
-}
-
-.inputProfileOther{
-@apply text-textosNoNegro bg-blancoSucio dark:text-darkTextosNoNegro dark:bg-darkBlancoSucio
-}
-
-.profileOther_textOnLabel{
-  @apply text-textosNoNegro dark:text-darkTextosNoNegro
-}
-
-.comment_Bg{
-@apply bg-blancoSucio dark:bg-darkBlancoSucio
-/* esta clase no está aplicada (es de los comentarios) */
-}
-
-.comment_Content{
-@apply text-textosNoNegro dark:text-darkTextosNoNegro
-}
-
-.nameInComment{
- @apply text-azulPotente dark:text-azulSecundario
-}
-
-.main_color{
-  @apply bg-background dark:bg-darkBackground
+.filtros {
+    @apply border-1 border-borde1 p-[10px];
 }
