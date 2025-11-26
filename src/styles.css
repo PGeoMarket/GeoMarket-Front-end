@@ -127,6 +127,17 @@
   @apply bg-azulPotente dark:bg-darkBackground
 }
 
+.produc_Detail{
+  @apply bg-background dark:bg-darkBackground dark:text-textosNoNegro
+}
+
+.produc_precio{
+  @apply text-gray-500 dark:text-darkTextosNoNegro
+}
+
+.bg_descripcion{
+  @apply  dark:bg-gray-300 
+}
 holi{
   color: #6fb4f51f;
 }
