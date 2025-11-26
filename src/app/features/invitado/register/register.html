@@ -1,9 +1,9 @@
 <!-- register.component.html -->
 <div class="fixed inset-0 flex items-center justify-center z-50 p-4">
-  <div class="bg-white shadow-lg rounded-xl p-6 w-full max-w-md mx-auto relative max-h-screen overflow-y-auto">
+  <div class="bg-white dark:bg-darkBlancoSucio shadow-lg rounded-xl p-6 w-full max-w-md mx-auto relative max-h-screen overflow-y-auto">
     <!-- Botones de navegación -->
     <div class="absolute top-4 left-4 right-4 flex justify-between" appClosedialog>
-      <button class="rounded-md border border-white cursor-pointer" appClosedialog>
+      <button class="rounded-md  cursor-pointer" appClosedialog>
         <img src="svg/back-icon.svg" alt="">
       </button>
     </div>
@@ -35,7 +35,7 @@
         <!-- Campo Primer Nombre -->
         <div>
           <input type="text" name="primer_nombre" [(ngModel)]="registerUser.primer_nombre" placeholder="Primer Nombre*"
-            class="w-full px-4 py-3 border rounded-lg" #primerNombre="ngModel"
+            class="w-full px-4 py-3 border rounded-lg inputProfileOther" #primerNombre="ngModel"
             [class.border-red-500]="primerNombre.invalid && (primerNombre.touched || registerForm.submitted)"
             [class.border-gray-300]="primerNombre.valid || (!primerNombre.touched && !registerForm.submitted)" required
             autofocus />
@@ -49,7 +49,7 @@
         <!-- Campo Segundo Nombre -->
         <div>
           <input type="text" name="segundo_nombre" [(ngModel)]="registerUser.segundo_nombre"
-            placeholder="Segundo Nombre" class="w-full px-4 py-3 border rounded-lg" #segundoNombre="ngModel"
+            placeholder="Segundo Nombre" class="w-full px-4 py-3 border rounded-lg inputProfileOther" #segundoNombre="ngModel"
             [class.border-red-500]="segundoNombre.invalid && segundoNombre.touched"
             [class.border-gray-300]="segundoNombre.valid || !segundoNombre.touched" />
         </div>
@@ -57,7 +57,7 @@
         <!-- Campo Primer Apellido -->
         <div>
           <input type="text" name="primer_apellido" [(ngModel)]="registerUser.primer_apellido"
-            placeholder="Primer Apellido*" class="w-full px-4 py-3 border rounded-lg" #primerApellido="ngModel"
+            placeholder="Primer Apellido*" class="w-full px-4 py-3 border rounded-lg inputProfileOther" #primerApellido="ngModel"
             [class.border-red-500]="primerApellido.invalid && (primerApellido.touched || registerForm.submitted)"
             [class.border-gray-300]="primerApellido.valid || (!primerApellido.touched && !registerForm.submitted)"
             required />
@@ -71,7 +71,7 @@
         <!-- Campo Segundo Apellido -->
         <div>
           <input type="text" name="segundo_apellido" [(ngModel)]="registerUser.segundo_apellido"
-            placeholder="Segundo Apellido" class="w-full px-4 py-3 border rounded-lg" #segundoApellido="ngModel"
+            placeholder="Segundo Apellido" class="w-full px-4 py-3 border rounded-lg inputProfileOther" #segundoApellido="ngModel"
             [class.border-red-500]="segundoApellido.invalid && segundoApellido.touched"
             [class.border-gray-300]="segundoApellido.valid || !segundoApellido.touched" />
         </div>
@@ -81,7 +81,7 @@
         <!-- Teléfono Principal -->
         <div>
           <input type="tel" name="telefono_principal" placeholder="Telefono*" 
-            class="w-full px-4 py-3 border rounded-lg" #telefonoPrincipalInput="ngModel" 
+            class="w-full px-4 py-3 border rounded-lg inputProfileOther" #telefonoPrincipalInput="ngModel" 
             [(ngModel)]="telefonoPrincipal"
             [class.border-red-500]="telefonoPrincipalInput.invalid && (telefonoPrincipalInput.touched || registerForm.submitted)"
             [class.border-gray-300]="telefonoPrincipalInput.valid || (!telefonoPrincipalInput.touched && !registerForm.submitted)"
@@ -102,7 +102,7 @@
         <!-- Teléfono Secundario (Opcional) -->
         <div>
           <input type="tel" name="telefono_secundario" placeholder="Telefono" 
-            class="w-full px-4 py-3 border rounded-lg" #telefonoSecundarioInput="ngModel" 
+            class="w-full px-4 py-3 border rounded-lg inputProfileOther" #telefonoSecundarioInput="ngModel" 
             [(ngModel)]="telefonoSecundario"
             [class.border-red-500]="telefonoSecundarioInput.invalid && (telefonoSecundarioInput.touched || registerForm.submitted)"
             [class.border-gray-300]="telefonoSecundarioInput.valid || (!telefonoSecundarioInput.touched && !registerForm.submitted)"
@@ -122,7 +122,7 @@
         <!-- Campo Nombre de la Tienda -->
         <div>
           <input type="text" name="nombre_tienda" [(ngModel)]="registerUser.nombre_tienda"
-            placeholder="Nombre de la Tienda*" class="w-full px-4 py-3 border rounded-lg " #nombre_tienda="ngModel"
+            placeholder="Nombre de la Tienda*" class="w-full px-4 py-3 border rounded-lg inputProfileOther" #nombre_tienda="ngModel"
             [class.border-red-500]="nombre_tienda.invalid && (nombre_tienda.touched || registerForm.submitted)"
             [class.border-gray-300]="nombre_tienda.valid || (!nombre_tienda.touched && !registerForm.submitted)"
             required />
@@ -136,7 +136,7 @@
         <!-- Campo Descripcion de la Tienda -->
         <div>
           <input type="text" name="descripcion" [(ngModel)]="registerUser.descripcion"
-            placeholder="Descripcion de la Tienda*" class="w-full px-4 py-3 border rounded-lg " #descripcion="ngModel"
+            placeholder="Descripcion de la Tienda*" class="w-full px-4 py-3 border rounded-lg inputProfileOther" #descripcion="ngModel"
             [class.border-red-500]="descripcion.invalid && (descripcion.touched || registerForm.submitted)"
             [class.border-gray-300]="descripcion.valid || (!descripcion.touched && !registerForm.submitted)" required />
           @if (descripcion.invalid && (descripcion.touched || registerForm.submitted)) {
@@ -149,7 +149,7 @@
         <!-- Campo Direccion de la Tienda -->
         <div>
           <input type="text" name="direccion" [(ngModel)]="registerUser.direccion" placeholder="Direccion de la Tienda*"
-            class="w-full px-4 py-3 border rounded-lg " #direccion="ngModel"
+            class="w-full px-4 py-3 border rounded-lg inputProfileOther" #direccion="ngModel"
             [class.border-red-500]="direccion.invalid && (direccion.touched || registerForm.submitted)"
             [class.border-gray-300]="direccion.valid || (!direccion.touched && !registerForm.submitted)" required />
           @if (direccion.invalid && (direccion.touched || registerForm.submitted)) {
@@ -162,7 +162,7 @@
         <!-- Ubicación Automática -->
         <div class="mb-4">
           <div class="flex items-center justify-between mb-2">
-            <label class="text-sm text-gray-600">Ubicación</label>
+            <label class="text-sm text-gray-600 dark:text-darkTextosNoNegro">Ubicación</label>
             @if (locationLoading) {
               <span class="text-xs text-blue-500">Obteniendo ubicación...</span>
             }
@@ -170,8 +170,8 @@
               <span class="text-xs text-red-500">No se pudo obtener ubicación</span>
             }
           </div>
-          
-          <div class="grid grid-cols-2 gap-2 text-xs">
+           <!--
+         <div class="grid grid-cols-2 gap-2 text-xs">
             <div class="border border-gray-300 rounded p-2">
               <span class="text-gray-500">Latitud:</span>
               <span class="ml-1">{{ registerUser.latitud?.toFixed(6) || 'No disponible' }}</span>
@@ -181,18 +181,19 @@
               <span class="ml-1">{{ registerUser.longitud?.toFixed(6) || 'No disponible' }}</span>
             </div>
           </div>
+          -->
 
           <!-- Botón para obtener ubicación manualmente -->
           <button type="button" 
                   (click)="getCurrentLocation()"
-                  class="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                  class="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 inputProfileOther">
             Actualizar Ubicación Automática
           </button>
 
           <!-- Botón para seleccionar en mapa -->
           <button type="button" 
                   (click)="openMapDialog()"
-                  class="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50">
+                  class="w-full mt-2 px-4 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 inputProfileOther">
             Seleccionar en Mapa
           </button>
         </div>
@@ -201,7 +202,7 @@
         <!-- Campo Email -->
         <div>
           <input type="email" name="email" [(ngModel)]="registerUser.email" placeholder="Correo electrónico*"
-            class="w-full px-4 py-3 border rounded-lg " #email="ngModel"
+            class="w-full px-4 py-3 border rounded-lg inputProfileOther" #email="ngModel"
             [class.border-red-500]="email.invalid && (email.touched || registerForm.submitted)"
             [class.border-gray-300]="email.valid || (!email.touched && !registerForm.submitted)" required email />
           @if (email.invalid && (email.touched || registerForm.submitted)) {
@@ -224,7 +225,7 @@
         <!-- Campo Confirmar Email -->
         <div>
           <input type="email" name="email_confirmation" placeholder="Confirmar correo electrónico*"
-            class="w-full px-4 py-3 border rounded-lg " #emailConfirmation="ngModel" ngModel
+            class="w-full px-4 py-3 border rounded-lg inputProfileOther" #emailConfirmation="ngModel" ngModel
             [class.border-red-500]="(emailConfirmation.invalid && (emailConfirmation.touched || registerForm.submitted)) || (emailConfirmation.value && registerUser.email && emailConfirmation.value !== registerUser.email)"
             [class.border-gray-300]="emailConfirmation.valid && (!emailConfirmation.value || !registerUser.email || emailConfirmation.value === registerUser.email) || (!emailConfirmation.touched && !registerForm.submitted)"
             required email />
@@ -249,7 +250,7 @@
         <!-- Campo Contraseña -->
         <div>
           <input type="password" name="password" [(ngModel)]="registerUser.password" placeholder="Contraseña*"
-            class="w-full px-4 py-3 border rounded-lg" #password="ngModel"
+            class="w-full px-4 py-3 border rounded-lg inputProfileOther" #password="ngModel"
             [class.border-red-500]="password.invalid && (password.touched || registerForm.submitted)"
             [class.border-gray-300]="password.valid || (!password.touched && !registerForm.submitted)" required
             minlength="8" />
@@ -268,7 +269,7 @@
         <!-- Campo Confirmar Contraseña -->
         <div>
           <input type="password" name="password_confirmation" [(ngModel)]="registerUser.password_confirmation"
-            placeholder="Confirmar contraseña*" class="w-full px-4 py-3 border rounded-lg "
+            placeholder="Confirmar contraseña*" class="w-full px-4 py-3 border rounded-lg inputProfileOther"
             #passwordConfirmation="ngModel"
             [class.border-red-500]="(passwordConfirmation.invalid && (passwordConfirmation.touched || registerForm.submitted)) || (passwordConfirmation.value && registerUser.password && passwordConfirmation.value !== registerUser.password)"
             [class.border-gray-300]="passwordConfirmation.valid && (!passwordConfirmation.value || !registerUser.password || passwordConfirmation.value === registerUser.password) || (!passwordConfirmation.touched && !registerForm.submitted)"
@@ -287,7 +288,7 @@
         </div>
         <!-- Checkbox -->
         <div class="mt-4">
-          <div class="flex items-center text-xs text-gray-600 justify-center">
+          <div class="flex items-center text-xs text-gray-600 justify-center inputProfileOther">
             <input type="checkbox" id="terms" name="terms" class="mr-2" #terms="ngModel" ngModel required>
             <label for="terms">Acepto términos y condiciones</label>
           </div>
@@ -300,11 +301,11 @@
 
         <!-- Botones -->
         <div class="flex justify-center pt-3 gap-2">
-          <button type="button" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50" appClosedialog>
+          <button type="button" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 inputProfileOther cursor-pointer" appClosedialog>
             Cancelar
           </button>
           <button type="submit"
-            class="px-6 py-2 bg-[#06406A]  text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed">
+            class="px-6 py-2 bg-[#06406A]  text-white rounded-lg disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer">
             Registrarse
           </button>
         </div>
