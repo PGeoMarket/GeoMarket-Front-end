@@ -51,7 +51,7 @@
   dark:text-darkTextosNoNegro
 }
 .main {
-  @apply pt-18 p-2 overflow-x-hidden h-full bg-background dark:bg-darkBackground
+  @apply pt-18 pb-[1rem] px-2 overflow-x-hidden  bg-background dark:bg-darkBackground
 }
 
 .btn_positive {
@@ -108,7 +108,7 @@
 }
 
 .section_Publications {
-  @apply flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12 md:pt-7 overflow-x-hidden;
+  @apply flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12  overflow-x-hidden;
 }
 
 .slideProductDetail {
@@ -167,3 +167,6 @@
  @apply text-azulPotente dark:text-azulSecundario
 }
 
+.main_color{
+  @apply bg-background dark:bg-darkBackground
+}
