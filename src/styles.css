@@ -51,7 +51,7 @@
   dark:text-darkTextosNoNegro
 }
 .main {
-  @apply pt-18 p-2 overflow-x-hidden h-full
+  @apply pt-18 pb-[1rem] px-2 overflow-x-hidden 
 }
 
 .btn_positive {
@@ -108,7 +108,7 @@
 }
 
 .section_Publications {
-  @apply flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12 md:pt-7 overflow-x-hidden;
+  @apply flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12  overflow-x-hidden;
 }
 
 .slideProductDetail {
@@ -144,4 +144,7 @@
 }
 holi{
   color: #6fb4f51f;
+}
+.filtros {
+    @apply border-1 border-borde1 p-[10px];
 }
