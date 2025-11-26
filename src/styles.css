@@ -138,6 +138,10 @@
 .bg_descripcion{
   @apply  dark:bg-gray-300 
 }
+
+.edit_seller{
+  @apply bg-background dark:bg-darkBlancoSucio
+}
 holi{
   color: #6fb4f51f;
 }

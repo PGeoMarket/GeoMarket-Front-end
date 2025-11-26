@@ -1,5 +1,5 @@
 <div
-  class="bg-white p-6 sm:p-8 rounded-lg shadow-md w-170 max-w-sm relative border border-gray-200 overflow-y-auto max-h-[90vh]">
+  class="edit_seller p-6 sm:p-8 rounded-lg shadow-md w-170 max-w-sm relative border border-gray-200 overflow-y-auto max-h-[90vh]">
   <button class="p-0.1 rounded cursor-pointer" appClosedialog>
     <img src="/svg/back-icon.svg" alt="" />
   </button>
@@ -28,60 +28,60 @@
   <!-- Formulario -->
   <form class="space-y-5">
     <!-- ============ DATOS DE USUARIO ============ -->
-    <h3 class="text-gray-800 font-semibold">Datos del Usuario</h3>
+    <h3 class="text-gray-800 dark:text-darkTextosNoNegro font-semibold">Datos del Usuario</h3>
 
     <!-- Primer Nombre -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Primer Nombre:</label>
+      <label class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro  pb-0.5">Primer Nombre:</label>
       <input type="text" [(ngModel)]="user_edit!.primer_nombre" name="primer_nombre" class="inputs_registro w-full" />
     </div>
 
     <!-- Segundo Nombre -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Segundo Nombre:</label>
+      <label class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro  pb-0.5">Segundo Nombre:</label>
       <input type="text" [(ngModel)]="user_edit!.segundo_nombre" name="segundo_nombre" class="inputs_registro w-full" />
     </div>
 
     <!-- Primer Apellido -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Primer Apellido:</label>
+      <label class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro  pb-0.5">Primer Apellido:</label>
       <input type="text" [(ngModel)]="user_edit!.primer_apellido" name="primer_apellido"
         class="inputs_registro w-full" />
     </div>
 
     <!-- Segundo Apellido -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Segundo Apellido:</label>
+      <label class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro  pb-0.5">Segundo Apellido:</label>
       <input type="text" [(ngModel)]="user_edit!.segundo_apellido" name="segundo_apellido"
         class="inputs_registro w-full" />
     </div>
 
     <!-- Email -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Email:</label>
+      <label class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro  pb-0.5">Email:</label>
       <input type="email" [(ngModel)]="user_edit!.email" name="email" class="inputs_registro w-full" />
     </div>
 
    <!-- Teléfono Principal -->
 <div>
-  <label class="block text-sm font-medium text-gray-700 pb-0.5">Teléfono Principal:</label>
+  <label class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro  pb-0.5">Teléfono Principal:</label>
   <input type="tel" [(ngModel)]="telefonoPrincipal" name="telefono_principal"
     class="inputs_registro w-full" />
 </div>
 
 <!-- Teléfono Secundarioo -->
 <div>
-  <label class="block text-sm font-medium text-gray-700 pb-0.5">Teléfono Secundario:</label>
+  <label class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro  pb-0.5">Teléfono Secundario:</label>
   <input type="tel" [(ngModel)]="telefonoSecundario" name="telefono_secundario"
     class="inputs_registro w-full" />
 </div>
 
     <!-- ============ DATOS DE LA TIENDA ============ -->
-    <h3 class="text-gray-800 font-semibold pt-4">Datos de la Tienda</h3>
+    <h3 class="text-gray-800 dark:text-darkTextosNoNegro  font-semibold pt-4">Datos de la Tienda</h3>
 
     <!-- Nombre de la Tienda -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Nombre de la Tienda:</label>
+      <label class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro  pb-0.5">Nombre de la Tienda:</label>
       <input type="text" [(ngModel)]="user_edit!.seller!.nombre_tienda" name="nombre_tienda"
         class="inputs_registro w-full" />
     </div>
@@ -89,14 +89,14 @@
 
     <!-- Dirección -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Dirección:</label>
+      <label class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro  pb-0.5">Dirección:</label>
       <input type="text" [(ngModel)]="user_edit!.seller!.coordinate!.direccion" name="direccion"
         class="inputs_registro w-full" />
     </div>
     
     <!-- Descripción -->
     <div>
-      <label class="block text-sm font-medium text-gray-700 pb-0.5">Descripción:</label>
+      <label class="block text-sm font-medium text-gray-700 dark:text-darkTextosNoNegro  pb-0.5">Descripción:</label>
       <textarea [(ngModel)]="user_edit!.seller!.descripcion" name="descripcion"
         class="inputs_registro w-full"></textarea>
     </div>
