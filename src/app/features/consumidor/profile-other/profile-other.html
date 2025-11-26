@@ -1,9 +1,9 @@
 <div
-  class="border border-gray-300 rounded-xl p-2 md:p-4 flex flex-col md:flex-row gap-4 md:gap-6 bg-white shadow h-auto md:h-[calc(100vh-80px)]"
+  class="border border-gray-300 rounded-xl p-2 md:p-4 flex flex-col md:flex-row gap-4 md:gap-6 profileOther_Bg shadow h-auto md:h-[calc(100vh-80px)]"
   (click)="cerrarReport()">
   <!-- Perfil vendedor -->
   <div
-    class="w-full md:w-[370px] flex-shrink-0 flex flex-col border border-gray-300 rounded-xl p-4 md:p-6 bg-white relative mb-2 md:mb-0 overflow-hidden overflow-y-auto">
+    class="w-full md:w-[370px] flex-shrink-0 flex flex-col border border-gray-300 rounded-xl p-4 md:p-6 profileOtherProfile_Bg relative mb-2 md:mb-0 overflow-hidden overflow-y-auto">
     <div options="false" class="absolute top-2 right-2 z-10">
       <button (click)="abrirReport($event)"
         class="bg-gray-100 rounded-full w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-200 focus:outline-none">
@@ -39,26 +39,26 @@
     </div>
     <!-- Info -->
     <form class="w-full flex flex-col gap-3">
-      <label class="text-gray-700 text-sm">Nombre</label>
+      <label class="profileOther_textOnLabel text-sm">Nombre</label>
       <input type="text" value="{{ seller.user.primer_nombre }} {{ seller.user.segundo_nombre }}" disabled
-        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base" />
+        class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base" />
 
-      <label class="text-gray-700 text-sm">Negocio</label>
+      <label class="profileOther_textOnLabel text-sm">Negocio</label>
       <input type="text" value="{{ seller.nombre_tienda }}" disabled
-        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base" />
+        class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base" />
 
-      <label class="text-gray-700 text-sm">Teléfono</label>
+      <label class="profileOther_textOnLabel text-sm">Teléfono</label>
       @for (telefono of seller.phones; track $index) {
       <input type="tel" [value]="telefono.numero_telefono" disabled
-        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base" />
+        class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base" />
       }
 
-      <label class="text-gray-700 text-sm">Dirección</label>
+      <label class="profileOther_textOnLabel text-sm">Dirección</label>
       <input type="text" [value]="seller.coordinate?.direccion" disabled
-        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base" />
-      <label class="text-gray-700 text-sm">Descripción de la tienda:</label>
+        class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base" />
+      <label class="profileOther_textOnLabel text-sm">Descripción de la tienda:</label>
       <textarea [value]="seller.descripcion" disabled
-        class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base h-[100px] max-h-[500px] resize-none"></textarea>
+        class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base h-[100px] max-h-[500px] resize-none"></textarea>
     </form>
 
     <!-- Mapa, botón y estrellas -->
