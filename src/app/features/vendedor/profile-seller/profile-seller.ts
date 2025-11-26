@@ -7,11 +7,12 @@ import { CommentsProfile } from "../comments-profile/comments-profile";
 import { EditPublication } from '../edit-publication/edit-publication';
 import { CoordinateDTO } from '../../../core/services/user-service';
 import { MiniMap } from '../../consumidor/mini-map/mini-map';
+import { Filters } from '../../consumidor/filters/filters';
 
 
 @Component({
   selector: 'app-profile-seller',
-  imports: [CommonModule, CommentsProfile, EditPublication, MiniMap],
+  imports: [CommonModule, CommentsProfile, EditPublication, MiniMap, Filters],
   templateUrl: './profile-seller.html',
   styleUrl: './profile-seller.css'
 })
@@ -21,6 +22,7 @@ export class ProfileSeller implements OnInit {
   coordinate!: CoordinateDTO;
   title = 'google-maps';
 
+  isAbierto: boolean = false;
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
@@ -103,6 +105,14 @@ export class ProfileSeller implements OnInit {
     console.log(this.user);
   }
 
+  //Filtros
+  abrirFiltros(event: MouseEvent) {
+    event.stopPropagation(); // evita que cierre de inmediato
+    this.isAbierto = true;
+  }
 
+  cerrarMenus() {
+    this.isAbierto = false;
+  }
 
 }

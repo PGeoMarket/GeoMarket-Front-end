@@ -10,7 +10,7 @@ import { Filters } from '../../consumidor/filters/filters';
 
 @Component({
   selector: 'app-edit-publication',
-  imports: [EditProduct, Closedialog, NgStyle, CommonModule, ProductDetail, Filters],
+  imports: [EditProduct, Closedialog, NgStyle, CommonModule, ProductDetail],
   templateUrl: './edit-publication.html',
   styleUrl: './edit-publication.css'
 })
@@ -19,7 +19,7 @@ export class EditPublication implements OnInit {
   selectedPublication!: PublicationDTO;
   publication_selected!: PublicationDTO | null;
   publications_temp!: PublicationDTO[];
-  isAbierto: boolean = false;
+  isOpen: boolean = false;
 
   private dialogManager = inject(DialogManager);
 
@@ -165,7 +165,7 @@ export class EditPublication implements OnInit {
   abrirMenu(index: number, event: MouseEvent) {
     event.stopPropagation(); // evita que cierre de inmediato
     this.editarIndex = this.editarIndex === index ? null : index;
-
+    this.isOpen = !this.isOpen
   }
 
   open: boolean = false;
@@ -198,14 +198,4 @@ export class EditPublication implements OnInit {
     }, 300);
   }
 
-
-  //Filtros
-  abrirFiltros(event: MouseEvent) {
-    event.stopPropagation(); // evita que cierre de inmediato
-    this.isAbierto = true;
-  }
-
-  cerrarMenus() {
-    this.isAbierto = false;
-  }
 }
