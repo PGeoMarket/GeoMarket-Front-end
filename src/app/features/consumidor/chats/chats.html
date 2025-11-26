@@ -1,5 +1,6 @@
 <!-- src/app/pages/chats/chats.html -->
-<div class="bg-white border-3 border-borde1 rounded-lg relative max-h-screen md:h-[calc(100vh-(4rem+24px))] z-10 p-4 grid grid-rows-[auto_1fr] overflow-hidden box-border">
+<div class="bgColorBackground border-3 border-borde1 rounded-lg relative max-h-screen md:h-[calc(100vh-(4rem+24px))]
+z-10 p-4 grid grid-rows-[auto_1fr] overflow-hidden box-border">
   <!-- Encabezado -->
   <div class="flex items-center gap-3">
     <img src="svg/back-icon.svg" class="w-9 h-9 cursor-pointer" (click)="goBack()">
@@ -21,7 +22,7 @@
 
         <!-- Lista de chats reales -->
         @for (chat of chatsList$ | async; track chat.id) {
-          <div class="border-3 border-borde1 rounded-lg p-2 grid grid-cols-[auto_1fr_auto] grid-rows-[auto_auto] items-center cursor-pointer hover:bg-gray-50"
+          <div class="border-3 border-borde1 rounded-lg p-2 grid grid-cols-[auto_1fr_auto] grid-rows-[auto_auto] items-center cursor-pointer bgColorBlancoSucio hover:bg-gray-50"
                (click)="openChat(chat)">
             @if (userRole=='Vendedor') {
               <!-- Avatar -->
@@ -41,14 +42,14 @@
             </p>
 
             <!-- Fecha/hora -->
-            <div class="row-span-2 flex flex-col justify-between items-end h-full self-stretch text-sm text-textosNoNegro">
+            <div class="row-span-2 flex flex-col justify-between items-end h-full self-stretch text-sm colorTextosNoNegro">
               <p>{{ chat.updated_at | date:'shortDate' }}</p>
               <p>{{ chat.updated_at | date:'shortTime' }}</p>
             </div>
 
             <div>
             <!-- Nombre del otro participante -->
-              <p class="text-textosNoNegro text-[0.8em] md:text-[1em]">
+              <p class="colorTextosNoNegro text-[0.8em] md:text-[1em]">
                 {{ chat.other_participant_name }}
               </p>
               <p class="text-borde2 text-[0.8em] md:text-[1em]">

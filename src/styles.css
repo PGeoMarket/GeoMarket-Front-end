@@ -142,9 +142,7 @@
 .edit_seller{
   @apply bg-background dark:bg-darkBlancoSucio
 }
-holi{
-  color: #6fb4f51f;
-}
+
 .filtros {
     @apply border-1 border-borde1 p-[10px];
 }
