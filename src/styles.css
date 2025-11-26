@@ -51,7 +51,7 @@
   dark:text-darkTextosNoNegro
 }
 .main {
-  @apply pt-18 pb-[1rem] px-2 overflow-x-hidden  bg-background dark:bg-darkBackground
+  @apply pt-18 pb-[1rem] px-2 overflow-x-hidden h-[100vh] bg-background dark:bg-darkBackground
 }
 
 .btn_positive {
