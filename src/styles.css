@@ -51,7 +51,7 @@
   dark:text-darkTextosNoNegro
 }
 .main {
-  @apply pt-18 p-2 overflow-x-hidden h-full
+  @apply pt-18 p-2 overflow-x-hidden h-full bg-background dark:bg-darkBackground
 }
 
 .btn_positive {
@@ -167,6 +167,3 @@
  @apply text-azulPotente dark:text-azulSecundario
 }
 
-.main_color{
-  @apply bg-background dark:bg-darkBackground
-}
