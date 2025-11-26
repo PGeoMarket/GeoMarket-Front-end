@@ -138,6 +138,35 @@
 .bg_descripcion{
   @apply  dark:bg-gray-300 
 }
-holi{
-  color: #6fb4f51f;
+.profileOther_Bg{
+@apply bg-background dark:bg-darkBackground
+}
+
+.profileOtherProfile_Bg{
+  @apply bg-background dark:bg-darkBlancoSucio
+}
+
+.inputProfileOther{
+@apply text-textosNoNegro bg-blancoSucio dark:text-darkTextosNoNegro dark:bg-darkBlancoSucio
+}
+
+.profileOther_textOnLabel{
+  @apply text-textosNoNegro dark:text-darkTextosNoNegro
+}
+
+.comment_Bg{
+@apply bg-blancoSucio dark:bg-darkBlancoSucio
+/* esta clase no está aplicada (es de los comentarios) */
+}
+
+.comment_Content{
+@apply text-textosNoNegro dark:text-darkTextosNoNegro
+}
+
+.nameInComment{
+ @apply text-azulPotente dark:text-azulSecundario
+}
+
+.main_color{
+  @apply bg-background dark:bg-darkBackground
 }
