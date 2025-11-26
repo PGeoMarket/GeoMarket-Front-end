@@ -180,3 +180,7 @@ holi{
 .map_Bg{
   @apply bg-blancoSucio dark:bg-darkBlancoSucio
 }
+
+.textOnMap{
+  @apply text-azulPotente dark:text-azulSecundario
+}
