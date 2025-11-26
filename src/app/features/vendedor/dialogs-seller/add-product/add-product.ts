@@ -104,6 +104,10 @@ onSubmit() {
         },
         error: (err) => {
           console.error('Error al crear', err);
+        },
+        complete: () => {
+            alert('Producto creado exitosamente');
+
         }
       });
   }
