@@ -128,7 +128,7 @@
 }
 
 .produc_Detail{
-  @apply bg-background dark:bg-darkBackground dark:text-textosNoNegro
+  @apply bg-background   dark:bg-darkBackground dark:text-textosNoNegro dark:border-gray-600
 }
 
 .produc_precio{
