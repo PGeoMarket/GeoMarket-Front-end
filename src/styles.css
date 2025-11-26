@@ -51,7 +51,7 @@
   dark:text-darkTextosNoNegro
 }
 .main {
-  @apply pt-18 p-2 overflow-x-hidden
+  @apply pt-18 p-2 overflow-x-hidden h-full
 }
 
 .btn_positive {
@@ -127,6 +127,17 @@
   @apply bg-azulPotente dark:bg-darkBackground
 }
 
+.produc_Detail{
+  @apply bg-background   dark:bg-darkBackground dark:text-textosNoNegro dark:border-gray-600
+}
+
+.produc_precio{
+  @apply text-gray-500 dark:text-darkTextosNoNegro
+}
+
+.bg_descripcion{
+  @apply  dark:bg-gray-300 
+}
 .profileOther_Bg{
 @apply bg-background dark:bg-darkBackground
 }
