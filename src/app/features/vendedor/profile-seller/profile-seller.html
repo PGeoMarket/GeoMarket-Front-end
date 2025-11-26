@@ -1,8 +1,8 @@
 <div
-    class="border border-gray-300 rounded-xl p-2 md:p-4 flex flex-col md:flex-row gap-4 md:gap-6 bg-white shadow h-auto md:h-[calc(100vh-80px)] overflow-hidden overflow-y-auto">
+    class="border border-gray-300 rounded-xl p-2 md:p-4 flex flex-col md:flex-row gap-4 md:gap-6 profileOther_Bg shadow h-auto md:h-[calc(100vh-80px)] overflow-hidden overflow-y-auto">
     <!-- Perfil vendedor -->
     <div
-        class="w-full md:w-[370px] flex-shrink-0 flex flex-col border border-gray-300 rounded-xl p-4 md:p-6 bg-white relative mb-2 md:mb-0 md:overflow-auto">
+        class="w-full md:w-[370px] flex-shrink-0 flex flex-col border border-gray-300 rounded-xl p-4 md:p-6 profileOtherProfile_Bg relative mb-2 md:mb-0 md:overflow-auto">
         <!-- Botón editar datos -->
         <button
             class="absolute top-4 right-4 bg-gray-100 rounded-md px-4 py-1 text-sm text-gray-700 shadow hover:bg-gray-200 z-1 cursor-pointer"
@@ -26,34 +26,34 @@
         </div>
         <!-- Info -->
         <form class="w-full flex flex-col gap-3">
-            <label class="text-gray-700 text-sm">Nombre</label>
+            <label class="profileOther_textOnLabel text-sm">Nombre</label>
             <input type="text" value="{{user?.primer_nombre}} {{user?.segundo_nombre}}" disabled
-                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+                class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base">
 
-            <label class="text-gray-700 text-sm">Negocio</label>
+            <label class="profileOther_textOnLabel text-sm">Negocio</label>
             <input type="text" value="{{user?.seller?.nombre_tienda}}" disabled
-                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+                class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base">
 
-            <label class="text-gray-700 text-sm">Correo</label>
+            <label class="profileOther_textOnLabel text-sm">Correo</label>
             <input type="email" value="{{user?.email}}" disabled
-                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+                class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base">
 
             <!-- Teléfono Principal -->
-            <label class="text-gray-700 text-sm">Teléfono Principal</label>
+            <label class="profileOther_textOnLabel text-sm">Teléfono Principal</label>
             <input type="tel" [value]="user?.seller?.phones?.[0]?.numero_telefono"
-                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+                class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base">
 
             <!-- Teléfono Secundario (Nuevo campo añadido) -->
-            <label class="text-gray-700 text-sm">Teléfono Secundario</label>
+            <label class="profileOther_textOnLabel text-sm">Teléfono Secundario</label>
             <input type="tel" [value]="user?.seller?.phones?.[1]?.numero_telefono"
-                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
+                class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base">
 
-            <label class="text-gray-700 text-sm">Dirección</label>
+            <label class="profileOther_textOnLabel text-sm">Dirección</label>
             <input type="text" [value]="user?.seller?.coordinate?.direccion" disabled
-                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base">
-            <label class="text-gray-700 text-sm">Descripción de la tienda:</label>
+                class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base">
+            <label class="profileOther_textOnLabel text-sm">Descripción de la tienda:</label>
             <textarea [value]="user?.seller?.descripcion" disabled
-                class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 text-base h-[100px] max-h-[500px] resize-none"></textarea>
+                class="rounded-md border border-gray-300 px-3 py-1 inputProfileOther text-base h-[100px] max-h-[500px] resize-none"></textarea>
         </form>
 
         <!-- Mapa, botón y estrellas -->
