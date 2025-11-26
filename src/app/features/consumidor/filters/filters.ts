@@ -29,7 +29,6 @@ export class Filters implements OnInit {
     this.publicationService.filter_locationChanged$
       .subscribe(filters => {
         this.isFiltred = !!filters.latitud || !!filters.longitud;
-        console.log(filters, "desde cpprd");
 
       });
   }

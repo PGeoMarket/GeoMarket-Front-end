@@ -1,6 +1,6 @@
 <!-- src/app/pages/open-chat/open-chat.html -->
 
-<div class="bg-white border-3 border-borde1 rounded-lg relative h-full z-10">
+<div class="bgColorBlancoSucio border-3 border-borde1 rounded-lg relative h-full z-10">
   <div class="grid grid-rows-[auto_1fr_auto] h-full min-h-0">
     
     <!-- Header -->
@@ -29,7 +29,7 @@
           <p class="text-azulPotente font-semibold text-[1.2em] md:text-[1.6em]">
             {{ chat.publication?.titulo }}
           </p>
-          <p class="text-sm text-gray-600">
+          <p class="text-sm colorTextosNoNegro">
             {{ chat.other_participant_name }}
           </p>
         </div>
@@ -51,7 +51,7 @@
       
       <!-- Si no hay mensajes -->
       @if ((messages$ | async)?.length === 0) {
-        <div class="text-center text-gray-500 mt-10">
+        <div class="text-center colorTextosNoNegro mt-10">
           <p>No hay mensajes aún</p>
           <p class="text-sm">Sé el primero en enviar un mensaje</p>
         </div>
@@ -63,8 +63,8 @@
           <div class="max-w-[70%]"
                [class.bg-azulSecundario]="isMyMessage(message)"
                [class.text-white]="isMyMessage(message)"
-               [class.bg-gray-100]="!isMyMessage(message)"
-               [class.text-black]="!isMyMessage(message)"
+               [class.bgColorBackground]="!isMyMessage(message)"
+               [class.colorTextosNoNegro]="!isMyMessage(message)"
                class="px-4 py-2 rounded-lg">
             
             <!-- Nombre del remitente (solo si no es mío) -->
@@ -93,7 +93,7 @@
         [(ngModel)]="newMessageText"
         (keydown)="onKeyPress($event)"
         [disabled]="isSending"
-        class="flex-1 border border-borde1 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-azulPotente" 
+        class="flex-1 border border-borde1 rounded-md px-3 py-2 focus:outline-none focus:ring-2 colorTextosNoNegro focus:ring-azulPotente" 
         placeholder="Escribe aquí...">
       
       <button (click)="sendMessage()" [disabled]="!newMessageText.trim() || isSending">

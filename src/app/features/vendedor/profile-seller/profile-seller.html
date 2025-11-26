@@ -67,9 +67,8 @@
                 </button>
             </div>
         </div>
-
-
     </div>
+
     <!-- Catálogo y comentarios -->
     <div class="flex-1 flex flex-col min-w-0" x-data="{ tab: 'catalogo' }">
         <!-- Tabs -->
@@ -86,18 +85,26 @@
                 Comentarios
             </button>
         </div>
-        <!-- Catálogo grid con scroll -->
-        @if (tab=="catalogo" || !tab) {
-        <div class="overflow-auto">
-            <app-edit-publication></app-edit-publication>
-        </div>
-        }
 
-        <!-- Comentarios dinámicos -->
-        @if (tab=="comentarios") {
-        <div class="flex-1 overflow-y-auto pr-2">
-            <app-comments-profile [useCurrentUserSeller]="true"></app-comments-profile>
+        <!-- Contenido de las pestañas -->
+        <div class="flex-1 min-h-0 relative">
+            <!-- Catálogo grid con scroll -->
+            @if (tab=="catalogo" || !tab) {
+
+            <div class="h-full overflow-x-hidden" (click)="cerrarMenus()">
+                <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event" [fromProfile]="true"
+                    class="w-full mx-[10%]"></app-filters>
+
+                    <app-edit-publication></app-edit-publication>
+            </div>
+            }
+
+            <!-- Comentarios dinámicos -->
+            @if (tab=="comentarios") {
+            <div class="flex-1 overflow-y-auto pr-2">
+                <app-comments-profile [useCurrentUserSeller]="true"></app-comments-profile>
+            </div>
+            }
         </div>
-        }
     </div>
 </div>
