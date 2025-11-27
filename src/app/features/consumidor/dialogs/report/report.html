@@ -71,6 +71,7 @@
       <textarea id="mensaje" name="mensaje" [(ngModel)]="descripcion_adicional"
         placeholder="Especificar..."
         [disabled]="reason_id !== 9"
+        [class.opacity-50]="reason_id !== 9"
         class="w-full h-[5em] border border-borde2 rounded-xl p-3 resize-none 
                focus:outline-none focus:ring-2 focus:ring-azulSecundario focus:border-transparent"></textarea>
 

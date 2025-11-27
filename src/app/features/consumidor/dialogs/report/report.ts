@@ -17,7 +17,7 @@ export class Report implements OnInit {
   @Input() seller_id!: number;
   reason_id: number | null = null;
   descripcion_adicional: string = "";
-
+  especificar: boolean = false;
   constructor(
     private reportService: ReportService,
     private dialogManager: DialogManager

@@ -19,6 +19,7 @@ export class Register implements OnInit {
   showErrorMessage: boolean = false;
   locationLoading: boolean = false;
   locationError: boolean = false;
+  locationSuccess: boolean = false;
 
   telefonoPrincipal: string = '';
   telefonoSecundario: string = '';
@@ -83,12 +84,22 @@ export class Register implements OnInit {
     if (navigator.geolocation) {
       this.locationLoading = true;
       this.locationError = false;
+      this.locationSuccess = false;
       
       navigator.geolocation.getCurrentPosition(
         (position) => {
           this.registerUser.latitud = position.coords.latitude;
           this.registerUser.longitud = position.coords.longitude;
           this.locationLoading = false;
+          this.locationSuccess = true;
+          
+          console.log('✅ Ubicación obtenida exitosamente');
+          console.log('Latitud:', this.registerUser.latitud);
+          console.log('Longitud:', this.registerUser.longitud);
+          
+          setTimeout(() => {
+            this.locationSuccess = false;
+          }, 3000);
         },
         (error) => {
           console.error('Error obteniendo ubicación:', error);
@@ -97,6 +108,10 @@ export class Register implements OnInit {
           
           this.registerUser.latitud = 3.0082918;
           this.registerUser.longitud = -76.5055133;
+          
+          console.log('⚠️ Ubicación por defecto asignada (Cali)');
+          console.log('Latitud:', this.registerUser.latitud);
+          console.log('Longitud:', this.registerUser.longitud);
         },
         {
           enableHighAccuracy: true,
@@ -105,33 +120,37 @@ export class Register implements OnInit {
         }
       );
     } else {
-      console.log('Geolocalización no soportada');
+      console.log('⚠️ Geolocalización no soportada');
       this.locationError = true;
       this.registerUser.latitud = 3.0082918;
       this.registerUser.longitud = -76.5055133;
+      
+      console.log('Ubicación por defecto asignada');
+      console.log('Latitud:', this.registerUser.latitud);
+      console.log('Longitud:', this.registerUser.longitud);
     }
   }
 
   openMapDialog() {
     console.log('Abriendo diálogo del mapa para selección manual');
     
-    // Limpiar cualquier ubicación temporal previa
     this.userService.clearTemporaryLocation();
     
     this.dialogManager.openDialog('map', {
       data: { mode: 'select' }
     });
 
-    // Verificar inmediatamente después de que se cierre (cada 100ms por 5 segundos)
     let checks = 0;
-    const maxChecks = 50; // 5 segundos máximo
+    const maxChecks = 50;
     
     const checkLocation = setInterval(() => {
       checks++;
       const savedLocation = this.userService.getTemporaryLocation();
       
       if (savedLocation && savedLocation.latitud && savedLocation.longitud) {
-        console.log('Ubicación manual actualizada:', savedLocation.latitud, savedLocation.longitud);
+        console.log('✅ Ubicación manual actualizada');
+        console.log('Latitud:', savedLocation.latitud);
+        console.log('Longitud:', savedLocation.longitud);
         this.registerUser.latitud = savedLocation.latitud;
         this.registerUser.longitud = savedLocation.longitud;
         this.userService.clearTemporaryLocation();
