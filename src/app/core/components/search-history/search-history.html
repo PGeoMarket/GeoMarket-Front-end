@@ -1,15 +1,15 @@
-<div class="relative inline-block text-left z-50 bg-blancoSucio">
+<div class="relative inline-block text-left z-50 bgDialogs_general">
   <div class="w-[300px] md:w-[420px]">
-    <div class="bg-white rounded shadow-sm max-h-60 overflow-y-auto">
+    <div class="bgDialogs_general rounded shadow-sm max-h-60 overflow-y-auto">
       <ul *ngIf="history$ | async as history; else noHistory" class="divide-y divide-borde2">
         <li
           *ngFor="let entry of slice(history)"
-          class="flex items-center justify-between px-3 py-2 hover:bg-gray-50 cursor-pointer none"
+          class="flex items-center justify-between px-3 py-2 hover:bgDialogs_general cursor-pointer none"
           (click)="use(entry)"
         >
           <div class="flex-1 overflow-x-hidden">
-            <div class="text-text-base text-gray-800 truncate">{{ entry.query }}</div>
-            <div class="text-sm text-gray-400">{{ entry.at | date:'short' }}</div>
+            <div class="text-text-base textOnDialog truncate">{{ entry.query }}</div>
+            <div class="text-sm textOnDialog">{{ entry.at | date:'short' }}</div>
           </div>
           <button
             class="ml-3 text-xl font-bold text-borde2 px-2"

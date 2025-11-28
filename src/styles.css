@@ -15,14 +15,22 @@
   --color-azulBlanco: #6fb4f51f;
   --color-blancoSucio: #F7F7F7;
   /* Modo oscuro — nombres claros para Tailwind */
-  --color-darkAzulPotente: #0C324A;     /* Azul potente → más profundo */
-  --color-darkAzulSecundario: #6DA8FF;  /* Azul secundario → más claro y suave */
-  --color-darkTextosNoNegro: #D1D1D1;   /* Gris medio → gris claro para contraste */
-  --color-darkBorde1: #4D4D4D;          /* Gris claro → gris oscuro medio */
-  --color-darkBorde2: #3D3D3D;          /* Gris ligeramente más oscuro */
-  --color-darkBackground:  #393c3e;      /* Blanco → gris azulado muy oscuro */
-  --color-darkAzulBlanco: #1E2A36;      /* Azul muy claro → azul grisáceo oscuro */
-  --color-darkBlancoSucio: #1A1F24;     /* Blanco sucio → gris oscuro suave */
+  --color-darkAzulPotente: #0C324A;
+  /* Azul potente → más profundo */
+  --color-darkAzulSecundario: #6DA8FF;
+  /* Azul secundario → más claro y suave */
+  --color-darkTextosNoNegro: #D1D1D1;
+  /* Gris medio → gris claro para contraste */
+  --color-darkBorde1: #4D4D4D;
+  /* Gris claro → gris oscuro medio */
+  --color-darkBorde2: #3D3D3D;
+  /* Gris ligeramente más oscuro */
+  --color-darkBackground: #393c3e;
+  /* Blanco → gris azulado muy oscuro */
+  --color-darkAzulBlanco: #1E2A36;
+  /* Azul muy claro → azul grisáceo oscuro */
+  --color-darkBlancoSucio: #1A1F24;
+  /* Blanco sucio → gris oscuro suave */
 
 }
 
@@ -37,19 +45,17 @@
 }
 
 .navbar {
-  @apply bg-blancoSucio border-b border-borde1 px-4 py-2 flex items-center justify-between fixed w-full h-16 z-40
-  dark:bg-darkBlancoSucio dark:border-darkBorde1
+  @apply bg-blancoSucio border-b border-borde1 px-4 py-2 flex items-center justify-between fixed w-full h-16 z-40 dark:bg-darkBlancoSucio dark:border-darkBorde1
 }
 
 .homeFiltersMap {
   @apply fixed flex justify-between items-center mt-[-10px] px-[2%] py-1.5 z-39 w-full
-
 }
 
 .searchInput {
-  @apply w-full py-2 pl-4 pr-10 border-2 border-borde1 rounded-lg text-base text-textosNoNegro placeholder-[#b0bec5] focus:outline-none focus:border-[#4f8cff] transition
-  dark:text-darkTextosNoNegro
+  @apply w-full py-2 pl-4 pr-10 border-2 border-borde1 rounded-lg text-base text-textosNoNegro placeholder-[#b0bec5] focus:outline-none focus:border-[#4f8cff] transition dark:text-darkTextosNoNegro
 }
+
 .main {
   @apply pt-18 pb-[1rem] px-2 overflow-x-hidden h-[100vh] bg-background dark:bg-darkBackground
 }
@@ -71,9 +77,7 @@
 }
 
 .divPublications {
-  @apply cursor-pointer flex flex-col md:w-[256px] md:h-[412px] w-[165px] h-[300px] border-[2px] md:border-[3px] border-borde1 px-[5px] pt-[10px] md:px-[10px] md:pt-[10px] rounded-lg
-
- dark:border-darkBorde2
+  @apply cursor-pointer flex flex-col md:w-[256px] md:h-[412px] w-[165px] h-[300px] border-[2px] md:border-[3px] border-borde1 px-[5px] pt-[10px] md:px-[10px] md:pt-[10px] rounded-lg dark:border-darkBorde2
 }
 
 .divPublications_Image {
@@ -89,13 +93,11 @@
 }
 
 .divPublications_Categoria {
-  @apply text-azulSecundario bg-azulBlanco w-fit text-sm md:text-base rounded-l p-0.5
-  dark:bg-darkAzulBlanco;
+  @apply text-azulSecundario bg-azulBlanco w-fit text-sm md:text-base rounded-l p-0.5 dark:bg-darkAzulBlanco;
 }
 
 .divPublications_TituloPrecioCategoria {
-  @apply flex flex-col font-medium h-[35%] justify-between text-textosNoNegro py-2
-  dark:text-darkTextosNoNegro;
+  @apply flex flex-col font-medium h-[35%] justify-between text-textosNoNegro py-2 dark:text-darkTextosNoNegro;
 
 }
 
@@ -108,7 +110,7 @@
 }
 
 .section_Publications {
-  @apply flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12  overflow-x-hidden;
+  @apply flex flex-wrap md:m-10 justify-center gap-1 md:gap-4 pt-12 overflow-x-hidden;
 }
 
 .slideProductDetail {
@@ -119,67 +121,67 @@
   @apply text-textosNoNegro dark:text-darkTextosNoNegro
 }
 
-.slideBar_Top{
-@apply bg-blancoSucio dark:bg-darkBlancoSucio
+.slideBar_Top {
+  @apply bg-blancoSucio dark:bg-darkBlancoSucio
 }
 
-.slideBar_Bottom{
+.slideBar_Bottom {
   @apply bg-azulPotente dark:bg-darkBackground
 }
 
-.produc_Detail{
-  @apply bg-background   dark:bg-darkBackground dark:text-textosNoNegro dark:border-gray-600
+.produc_Detail {
+  @apply bg-background dark:bg-darkBackground dark:text-textosNoNegro dark:border-gray-600
 }
 
-.produc_precio{
+.produc_precio {
   @apply text-gray-500 dark:text-darkTextosNoNegro
 }
 
-.bg_descripcion{
-  @apply  dark:bg-gray-300 
+.bg_descripcion {
+  @apply dark:bg-gray-300
 }
 
-.edit_seller{
+.edit_seller {
   @apply bg-background dark:bg-darkBlancoSucio
 }
 
 .filtros {
-    @apply border-1 border-borde1 p-[10px];
-}
-.profileOther_Bg{
-@apply bg-background dark:bg-darkBackground
+  @apply border-1 border-borde1 p-[10px];
 }
 
-.profileOtherProfile_Bg{
+.profileOther_Bg {
+  @apply bg-background dark:bg-darkBackground
+}
+
+.profileOtherProfile_Bg {
   @apply bg-background dark:bg-darkBlancoSucio
 }
 
-.inputProfileOther{
-@apply text-textosNoNegro bg-blancoSucio dark:text-darkTextosNoNegro dark:bg-darkBlancoSucio
+.inputProfileOther {
+  @apply text-textosNoNegro bg-blancoSucio dark:text-darkTextosNoNegro dark:bg-darkBlancoSucio
 }
 
-.profileOther_textOnLabel{
+.profileOther_textOnLabel {
   @apply text-textosNoNegro dark:text-darkTextosNoNegro
 }
 
-.comment_Bg{
-@apply bg-blancoSucio dark:bg-darkBlancoSucio
-
-}
-
-.comment_Content{
-@apply text-textosNoNegro dark:text-darkTextosNoNegro
-}
-
-.nameInComment{
- @apply text-azulPotente dark:text-azulSecundario
-}
-
-.map_Bg{
+.comment_Bg {
   @apply bg-blancoSucio dark:bg-darkBlancoSucio
 }
 
-.textOnMap{
+.comment_Content {
+  @apply text-textosNoNegro dark:text-darkTextosNoNegro
+}
+
+.nameInComment {
+  @apply text-azulPotente dark:text-azulSecundario
+}
+
+.map_Bg {
+  @apply bg-blancoSucio dark:bg-darkBlancoSucio
+}
+
+.textOnMap {
   @apply text-azulPotente dark:text-azulSecundario
 }
 
@@ -189,4 +191,12 @@
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.bgDialogs_general {
+  @apply bg-blancoSucio dark:bg-darkBlancoSucio
+}
+
+.textOnDialog {
+  @apply text-textosNoNegro dark:text-darkTextosNoNegro
 }
