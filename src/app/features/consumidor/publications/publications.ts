@@ -268,13 +268,12 @@ export class Publications implements OnInit {
   private closeTimeout: any;
 
   openProductDetail(publication: PublicationDTO) {
-    if (this.publication_selected) return;
+    if (this.open) return this.closePublicationDetail(); //ya no cierra al dar click a otra publicacion
+
     if (this.closeTimeout) {
       clearTimeout(this.closeTimeout);
       this.closeTimeout = undefined;
     }
-
-    //if (this.open) return this.closePublicationDetail(); //ya no cierra al dar click a otra publicacion
 
     this.publication_selected = publication;
     this.open = true;
