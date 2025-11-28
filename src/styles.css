@@ -185,6 +185,14 @@
   @apply text-azulPotente dark:text-azulSecundario
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .bgDialogs_general {
   @apply bg-blancoSucio dark:bg-darkBlancoSucio
 }

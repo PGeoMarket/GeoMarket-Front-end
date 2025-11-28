@@ -31,12 +31,12 @@
         </div>
 
         <!-- Formulario -->
-        <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm" class="space-y-3">
+        <form (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm" class="space-y-4 pt-4">
 
             <!-- Campo de correo -->
             <div>
                 <input type="email" name="email" [(ngModel)]="login.email" placeholder="Correo*"
-                    class="w-full px-4 py-1 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 border-borde2 placeholder-gray-300 inputProfileOther"
+                    class="w-full px-4 py-1 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 border-borde2 placeholder-gray-300 inputProfileOther dark:bg-darkBlancoSucio"
                     #email="ngModel" [class.border-red-500]="email.invalid && (email.touched || loginForm.submitted)"
                     [class.border-gray-300]="email.valid || (!email.touched && !loginForm.submitted)" required email
                     autofocus [disabled]="isLoading" />
@@ -55,7 +55,7 @@
             <!-- Campo de contraseña -->
             <div>
                 <input type="password" name="password" [(ngModel)]="login.password" placeholder="Contraseña*"
-                    class="w-full px-4 py-1 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 border-borde2 placeholder-gray-300 inputProfileOther"
+                    class="w-full px-4 py-1 border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400 border-borde2 placeholder-gray-300 inputProfileOther dark:bg-darkBlancoSucio"
                     #password="ngModel"
                     [class.border-red-500]="password.invalid && (password.touched || loginForm.submitted)"
                     [class.border-gray-300]="password.valid || (!password.touched && !loginForm.submitted)" required
@@ -73,25 +73,13 @@
             </div>
 
             <!-- Botones -->
-            <div class="flex justify-center gap-1 flex-nowrap">
-                <button type="button" class="btn_negative" (click)="onRegisterAs()" appClosedialog [disabled]="isLoading">Registrarse</button>
-                <button type="submit" class="btn_positive" [disabled]="isLoading">
+            <div class="flex justify-center gap-2 flex-nowrap pt-8">
+                <button type="button" class="btn_negative cursor-pointer" (click)="onRegisterAs()" appClosedialog [disabled]="isLoading">Registrarse</button>
+                <button type="submit" class="btn_positive cursor-pointer " [disabled]="isLoading">
                     {{ isLoading ? 'Cargando...' : 'Iniciar sesión' }}
                 </button>
             </div>
 
-            <!-- Líneas separadoras -->
-            <div class="flex items-center justify-center p-2">
-                <div class="w-20 h-px bg-gray-300"></div>
-                <div class="w-20 h-px bg-gray-300 ml-3"></div>
-            </div>
-
-            <!-- Recuperar contraseña -->
-            <div class="mt-4 text-center text-[15px]">
-                <button type="button" class="text-blue-500 hover:underline" [disabled]="isLoading">
-                    Recuperar Contraseña
-                </button>
-            </div>
         </form>
     </div>
 </div>
