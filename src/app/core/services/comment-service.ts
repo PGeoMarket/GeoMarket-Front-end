@@ -13,6 +13,9 @@ export interface CommentDTO {
   publication_id: number | null;
   created_at?: string;
   user: UserDTO; // <-- opcional
+
+  //para comentarios largos
+  expanded?: boolean | false;
 }
 
 

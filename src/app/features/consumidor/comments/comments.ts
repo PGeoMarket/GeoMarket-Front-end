@@ -35,17 +35,18 @@ export class Comments implements OnInit {
     this.commentService.getCommentByPublication(this.publication_id)
       .subscribe({
         next: data => {
-          this.comments = data
+          // Inicializar la propiedad expanded para cada comentario
+          this.comments = data.map(comment => ({
+            ...comment,
+            expanded: false
+          }));
         },
-        error: error => console.error('Error al cargar  comentarios', error),
+        error: error => console.error('Error al cargar comentarios', error),
         complete: () => {
           console.log('Cantidad de comentarios cargados correctamente: ' + this.comments.length)
           this.checkUserComments();
-
         },
-
       })
-
   }
 
   //si el user ya tiene comment
@@ -94,12 +95,12 @@ export class Comments implements OnInit {
   getUserData() {
     this.userService.getMe().subscribe();
     this.user = this.userService.getCurrentUser()!;
-    
+
     if (this.user) {
       if (this.user.role?.nombre == "Vendedor") {
         this.isOwnPublication = this.user.seller?.id == this.seller_id;
       }
-    } 
+    }
   }
 
 }

@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { PublicationService } from '../../services/publication-service';
 import { Observable } from 'rxjs';
 import { SearchHistory } from '../search-history/search-history';
+import { ThemeService } from '../../services/theme-service';
 
 @Component({
   selector: 'app-header',
@@ -32,6 +33,7 @@ export class Header {
     private loginService: LoginService,
     private publicationService: PublicationService,
     private router: Router,
+    private themeService: ThemeService,
   ) {
     this.searchHistory$ = this.userService.searchHistory$;
   }
@@ -40,6 +42,10 @@ export class Header {
 
   toggleMenu() {
     this.open = !this.open;
+  }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
   }
 
   closeMenu() {

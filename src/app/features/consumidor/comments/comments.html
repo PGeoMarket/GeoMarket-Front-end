@@ -4,16 +4,16 @@
 
 @if (!isOwnPublication) {
 
-  @if (!!ownComment) {
-  <button (click)="onRatePublication()" 
-  class="bg-azulPotente text-white w-full h-10 rounded-lg font-medium">Editar comentario</button>
-  <button (click)="removeOwnComment()" 
-  class="bg-red-500 text-white w-full h-10 rounded-lg my-2 font-medium">Eliminar comentario</button>
-  } @else {
-  <button (click)="onRatePublication()" 
+@if (!!ownComment) {
+<button (click)="onRatePublication()" class="bg-azulPotente text-white w-full h-10 rounded-lg font-medium">Editar
+  comentario</button>
+<button (click)="removeOwnComment()" class="bg-red-500 text-white w-full h-10 rounded-lg my-2 font-medium">Eliminar
+  comentario</button>
+} @else {
+<button (click)="onRatePublication()"
   class="bg-azulPotente text-white w-full h-10 rounded-lg font-medium cursor-pointer">Comentar</button>
 
-  }
+}
 
 }
 
@@ -45,10 +45,33 @@
           </div>
         </div>
 
-        <!-- p con clases para romper palabras y respetar saltos de línea -->
-        <p class="text-sm mt-1 whitespace-pre-line comment_Content break-words">
-          {{ comment.texto }}
-        </p>
+        <!-- Contenedor del texto del comentario con altura máxima -->
+        <div class="relative">
+          <p class="text-sm mt-1 whitespace-pre-line comment_Content break-words max-h-[60px] overflow-hidden transition-all duration-300"
+            [class.max-h-none]="comment.expanded">
+            {{ comment.texto }}
+          </p>
+
+          <!-- Botón "Leer más" que aparece solo si el contenido es muy largo -->
+          @if (comment.texto && comment.texto.length > 100 && !comment.expanded) {
+          <div class="absolute bottom-0 right-0 bg-gradient-to-l pl-8 pr-2">
+            <button class="text-blue-500 text-xs font-medium hover:underline cursor-pointer mt-1 block"
+              (click)="comment.expanded = true">
+              Leer más
+            </button>
+          </div>
+          }
+
+          <!-- Botón "Leer menos" cuando está expandido -->
+          @if (comment.expanded) {
+          <div class="absolute bottom-0 right-0 bg-gradient-to-l pl-8 pr-2">
+            <button class="text-blue-500 text-xs font-medium hover:underline cursor-pointer mt-1 block"
+              (click)="comment.expanded = false">
+              Leer menos
+            </button>
+          </div>
+          }
+        </div>
 
         <!-- mejor usar un bloque alineado a la derecha en vez de float -->
         <div class="text-xs comment_Content text-right mt-1">
@@ -62,7 +85,7 @@
   }
 
   } @else {
-  <div class="border border-gray-300 rounded-lg p-4 my-2.5 text-center comment_Content">
+  <div class="border border-borde1 rounded-lg p-4 my-2.5 text-center comment_Content">
     <p class="font-medium text-sm">¡Sé el primero en comentar!</p>
     <p class="text-xs mt-1">Aún no hay comentarios</p>
   </div>
