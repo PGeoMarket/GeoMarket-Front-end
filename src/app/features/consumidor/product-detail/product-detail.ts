@@ -1,4 +1,4 @@
-import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, inject, Input, OnInit, Output } from '@angular/core';
 import { PublicationDTO } from '../../../core/services/publication-service';
 import { CommonModule } from '@angular/common';
 import { Comments } from '../comments/comments';
@@ -45,14 +45,27 @@ export class ProductDetail implements OnInit {
   }
 
   menuAbierto: boolean = false;
+  
   abrirMenu(event: MouseEvent) {
     event.stopPropagation(); // evita que cierre de inmediato
-    //this.editarIndex = this.editarIndex === index ? null : index;
     this.menuAbierto = true;
   }
 
   cerrarMenus() {
     this.menuAbierto = false;
+  }
+
+  // AÑADIR ESTO: Cerrar menú cuando se hace click fuera
+  @HostListener('document:click')
+  onDocumentClick() {
+    if (this.menuAbierto) {
+      this.cerrarMenus();
+    }
+  }
+
+  // AÑADIR ESTO: Evitar que se cierre cuando se hace click dentro del menú
+  evitarCierreMenu(event: MouseEvent) {
+    event.stopPropagation();
   }
 
   removePublicationDetail() {
