@@ -29,13 +29,13 @@
     <!-- Este bloque solo aparece si history tiene al menos 1 elemento -->
     <div
       *ngIf="(history$ | async)!.length > 0"
-      class="mt-1 flex items-center justify-between text-xs text-gray-500"
+      class="mt-1 flex items-center justify-between text-xs text-borde1"
     >
       <div class="flex items-center gap-3">
 <!--         <button class="underline" (click)="toggleShowAll($event)">
           {{ showAll ? 'Ver menos' : 'Ver todas' }}
         </button> -->
-        <button class="underline text-red-500" (click)="clearAll($event)">
+        <button class="underline pl-2 text-red-500" (click)="clearAll($event)">
           Borrar todo
         </button>
       </div>

@@ -1,7 +1,7 @@
-<div class="flex justify-center w-full mb-[15px]" (click)="cerrarMenus()">
+<div class="flex justify-center w-full mb-[15px]">
     <div class="homeFiltersMap bgColorBackground">
         <!-- Filtrar -->
-        <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event"></app-filters>
+        <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = !isAbierto"></app-filters>
 
         <!-- Ubicacion -->
         <div class="z-50">
