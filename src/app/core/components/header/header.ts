@@ -33,7 +33,7 @@ export class Header {
     private loginService: LoginService,
     private publicationService: PublicationService,
     private router: Router,
-/*     private themeService: ThemeService, */
+    private themeService: ThemeService,
   ) {
     this.searchHistory$ = this.userService.searchHistory$;
   }
@@ -44,9 +44,9 @@ export class Header {
     this.open = !this.open;
   }
 
-/*   toggleTheme() {
+  toggleTheme() {
     this.themeService.toggleTheme();
-  } */
+  }
 
   closeMenu() {
     this.open = false;

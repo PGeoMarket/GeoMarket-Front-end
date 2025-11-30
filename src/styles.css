@@ -201,10 +201,8 @@
   @apply text-textosNoNegro dark:text-darkTextosNoNegro
 }
 
-/* 
-Compatibles con las nuevas opciones
 
-@import "tailwindcss";
+
 
 :root {
 
@@ -406,4 +404,3 @@ html.dark {
   @apply text-textosNoNegro;
 }
 
-*/

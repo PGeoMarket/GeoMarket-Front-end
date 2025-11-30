@@ -2,14 +2,14 @@
 
 <form (ngSubmit)="onSubmit()" #editForm="ngForm">
   <div
-    class="border border-borde2 bg-blancoSucio rounded-[20px] p-3 max-h-[calc(105vh-4rem)] md:max-h-[calc(120vh-4rem)] mx-2 flex flex-col">
+    class="border border-borde2 bgDialogs_general rounded-[20px] p-3 max-h-[calc(105vh-4rem)] md:max-h-[calc(120vh-4rem)] mx-2 flex flex-col">
 
     <h1 class="text-azulPotente text-[30px] md:text-[48px] font-medium text-center w-full">Editando Producto</h1>
 
     <div class="flex justify-end gap-2 mr-5">
 
       <label class="inline-flex items-center cursor-pointer">
-        <span class="ms-3 text-sm font-medium text-gray-900 mx-1">Ocultar</span>
+        <span class="ms-3 text-sm font-medium textOnDialog mx-1">Ocultar</span>
 
         <input type="checkbox" class="sr-only peer" [ngModel]="product.visibilidad === 0"
           (ngModelChange)="product.visibilidad = $event ? 0 : 1" name="productHidden">
@@ -53,16 +53,16 @@
         <!-- Inputs -->
         <div class="grid grid-rows-[auto_1fr] md:p-5">
           <div class="flex flex-col h-fit space-y-4">
-            <input type="text" name="productName" class="inputs_registro" placeholder="Nombre del producto" required
+            <input type="text" name="productName" class="inputs_registro bgDialogs_general textOnDialog" placeholder="Nombre del producto" required
               [(ngModel)]="product.titulo" [value]="product.titulo">
 
-            <input type="number" name="productPrice" class="inputs_registro" placeholder="Precio del producto" required
+            <input type="number" name="productPrice" class="inputs_registro bgDialogs_general textOnDialog" placeholder="Precio del producto" required
               [(ngModel)]="product.precio" [value]="product.precio">
 
             <div>
-              <label class="text-textosNoNegro">Categoria</label>
+              <label class="textOnDialog">Categoria</label>
               <select name="productCategory"
-                class="bg-[#EDEDED] border border-borde2 p-1 rounded-md mb-3 text-textosNoNegro" required
+                class="bgDialogs_general border border-borde2 p-1 rounded-md mb-3 textOnDialog" required
                 [(ngModel)]="product.category_id">
                 <option [value]="1">Electrodomesticos</option>
                 <option [value]="2">Alimentos</option>
@@ -73,7 +73,7 @@
           </div>
 
           <textarea name="productDescription"
-            class="bg-white border border-borde2 rounded-md w-full md:h-[full] resize-none p-1"
+            class="bgDialogs_general border border-borde2 rounded-md w-full md:h-[full] resize-none p-1"
             placeholder="Descripcion" [(ngModel)]="product.descripcion"></textarea>
         </div>
 
