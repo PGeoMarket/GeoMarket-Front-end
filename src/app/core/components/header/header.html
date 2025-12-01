@@ -36,12 +36,44 @@
 
 
     <!-- tema y menú -->
-    <div>
-      <div class="flex items-center gap-x-2 ml-4">
-        <img src="/svg/teme.svg" alt="Tema" class="cursor-pointer" (click)="toggleTheme()"/> 
-        <img src="/svg/menu.svg" class="cursor-pointer" (click)="toggleMenu()" />
-      </div>
-    </div>
+<div class="flex items-center gap-x-2 ml-4">
+  <!-- Contenedor para el toggle de tema -->
+  <div class="relative w-[26px] h-[44px] cursor-pointer" (click)="toggleTheme()">
+    <!-- Sol - visible en modo claro -->
+    <img 
+      [src]="'/svg/theme_light.svg'" 
+      alt="Modo claro" 
+      class="theme-icon absolute top-0 left-0 w-full h-full transition-all duration-300"
+      [class.opacity-100]="!isDarkMode"
+      [class.opacity-0]="isDarkMode"
+      [class.rotate-0]="!isDarkMode"
+      [class.rotate-180]="isDarkMode"
+      [class.scale-100]="!isDarkMode"
+      [class.scale-0]="isDarkMode"
+    />
+    
+    <!-- Luna - visible en modo oscuro -->
+    <img 
+      [src]="'/svg/theme_dark.svg'" 
+      alt="Modo oscuro" 
+      class="theme-icon absolute top-0 left-0 w-full h-full transition-all duration-300"
+      [class.opacity-100]="isDarkMode"
+      [class.opacity-0]="!isDarkMode"
+      [class.rotate-0]="isDarkMode"
+      [class.rotate-180]="!isDarkMode"
+      [class.scale-100]="isDarkMode"
+      [class.scale-0]="!isDarkMode"
+    />
+  </div>
+  
+  <!-- Botón del menú (manteniendo tu estructura original) -->
+  <img 
+    [src]="'/svg/menu.svg'" 
+    alt="Menú" 
+    class="cursor-pointer" 
+    (click)="toggleMenu()" 
+  />
+</div>
   </nav>
 
   <!-- OVERLAY para cerrar sidebar cuando se hace click fuera -->

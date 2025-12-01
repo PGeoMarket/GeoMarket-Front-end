@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminSlidebar } from '../slidebars/admin-slidebar/admin-slidebar';
 import { BuyerSlidebar } from '../slidebars/buyer-slidebar/buyer-slidebar';
@@ -20,13 +20,15 @@ import { ThemeService } from '../../services/theme-service';
   templateUrl: './header.html',
   styleUrl: './header.css'
 })
-export class Header {
+export class Header implements OnInit{
 
   // bind al input (si prefieres template-driven ya lo tenías)
   public searchText = '';
 
   // observable del historial (lo puedes usar en template con async)
   public searchHistory$: Observable<SearchEntry[]>;
+
+  isDarkMode!: boolean;
 
   constructor(
     private userService: UserService,
@@ -38,6 +40,11 @@ export class Header {
     this.searchHistory$ = this.userService.searchHistory$;
   }
 
+  ngOnInit(): void {
+    this.isDarkMode = this.themeService.getCurrentTheme()
+      
+  }
+
   open = false;
 
   toggleMenu() {
@@ -46,6 +53,8 @@ export class Header {
 
   toggleTheme() {
     this.themeService.toggleTheme();
+    this.isDarkMode = this.themeService.getCurrentTheme()
+    
   }
 
   closeMenu() {
