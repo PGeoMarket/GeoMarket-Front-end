@@ -1,0 +1,55 @@
+<svg width="26" height="44" viewBox="0 0 42 44" xmlns="http://www.w3.org/2000/svg">
+  <!-- Luna -->
+  <path d="M28 21C28 30.3888 20.3888 38 11 38C8.5618 38 6.24702 37.5116 4.16525 36.6374C7.60952 39.6559 12.1343 41.5 17.06 41.5C27.1731 41.5 35.38 33.2931 35.38 23.18C35.38 15.3439 30.6312 8.77578 23.87 6C26.488 9.467 28 13.9683 28 21Z" fill="#063E67" stroke="#3793d57c" stroke-width="1.3"/>
+
+  <!-- Estrellas tipo sparkle con puntas largas -->
+  <!-- Superior izquierda -->
+  <path d="M8 5 
+           L10 9 
+           L14 9.5 
+           L10 10 
+           L8 14 
+           L7.5 10 
+           L4 9 
+           L7.5 8 Z" fill="#4690FF"/>
+
+  <!-- Superior derecha -->
+  <path d="M33 4 
+           L35 8 
+           L39 8.7 
+           L35 9.3 
+           L33 13 
+           L32.3 9.3 
+           L29 8 
+           L32.3 7 Z" fill="#4690FF"/>
+
+  <!-- Centro derecha -->
+  <path d="M36 18 
+           L38 22 
+           L42 23 
+           L38 24 
+           L36 28 
+           L35 24 
+           L32 23 
+           L35 22 Z" fill="#4690FF"/>
+
+  <!-- Inferior izquierda -->
+  <path d="M10 26 
+           L12 30 
+           L16 31 
+           L12 32 
+           L10 36 
+           L9 32 
+           L6 31 
+           L9 30 Z" fill="#4690FF"/>
+
+  <!-- Inferior derecha -->
+  <path d="M29 30 
+           L31 34 
+           L35 35.2 
+           L31 36.2 
+           L29 40 
+           L28.2 36.2 
+           L25 35.2 
+           L28.2 34 Z" fill="#4690FF"/>
+</svg>
