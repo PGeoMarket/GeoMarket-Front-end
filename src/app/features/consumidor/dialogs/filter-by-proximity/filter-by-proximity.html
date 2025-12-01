@@ -12,14 +12,14 @@
   <h2 class="text-azulPotente text-[2em] md:text-[35px] font-medium text-center w-full">Filtrar por cercania</h2>
 
   <!-- Opciones de cercanía -->
-  <div class="mt-4">
-    <label class="block ml-10 md:ml:30 mb-4 text-[22px]">
+  <div class="mt-4 ">
+    <label class="block ml-10 md:ml:30 mb-4 text-[22px] textOnDialog">
       <input type="radio" class="mr-2 size-4" name="filtro" (click)="filtro_seleccionado='cerca'"> Cerca de mí
     </label>
     <!--     <label class="block ml-10 md:ml:30 mb-4 text-[22px]">
       <input type="checkbox" class="mr-2 size-4"> Todos los lugares
     </label> -->
-    <label class="block ml-10 md:ml:30 mb-4 text-[22px]">
+    <label class="block ml-10 md:ml:30 mb-4 text-[22px] textOnDialog">
       <input type="radio" class="mr-2 size-4" name="filtro" (click)="filtro_seleccionado='personalizado'"> Con distancia
       personalizada
     </label>
@@ -28,9 +28,9 @@
     <!-- Campo para ingresar la distancia -->
     <label class="block ml-10 md:ml:30 mb-4 text-center">
       <input type="text" placeholder="Ingrese radio" [(ngModel)]="coordinate.distancia"
-        class="bg-[#f6f6f6] w-[200px] p-2 rounded-md border border-[#c2c2c2] text-center placeholder-[#c2c2c2]"
+        class="bgDialogs_general w-[200px] p-2 rounded-md border border-[#c2c2c2] text-center placeholder-[#c2c2c2]"
         required>
-      <p class="inline ml-2 md:ml:2 mb-4 text-[22px]">Km</p>
+      <p class="inline ml-2 md:ml:2 mb-4 text-[22px] textOnDialog">Km</p>
     </label>
     }
   </div>

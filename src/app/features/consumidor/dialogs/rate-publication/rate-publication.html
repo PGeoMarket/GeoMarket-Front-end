@@ -1,4 +1,4 @@
-<div class=" p-4 rounded-md border border-gray-400 bg-white font-sans">
+<div class=" p-4 rounded-md border border-gray-400 bgDialogs_general font-sans">
   <form (ngSubmit)="onSubmit(comment_user.value);" #commentForm="ngForm">
     <button class="rounded-lg w-10 h-10 border-0 flex items-center justify-center" appClosedialog>
       <img src="svg/back-icon.svg" alt="atras" class="w-15 h-15">
@@ -6,7 +6,7 @@
     <!-- Encabezado -->
     <div class="flex items-center justify-center flex-wrap">
 
-      <p class="text-2xl ml-4">Calificar</p>
+      <p class="text-2xl ml-4 textOnDialog">Calificar</p>
       <!-- Estrellas: contenedor relativo con espacio reservado -->
       <div class="relative flex flex-col items-center w-full">
         <div class="flex space-x-1">
@@ -41,7 +41,7 @@
     <!-- padre relativo para que el error sea absolute dentro de su espacio -->
     <div class="relative w-full">
       <textarea placeholder="Deja un comentario aquí.." name="comment_user"
-        class="w-full h-[120px] border border-gray-400 rounded-lg bg-white resize-none p-3 focus:outline-none focus:border-[#144467]"
+        class="w-full h-[120px] border border-gray-400 rounded-lg bgDialogs_general textOnDialog resize-none p-3 focus:outline-none focus:border-[#144467]"
         [class.border-red-500]="comment_user.invalid && (comment_user.touched || commentForm.submitted)" required
         #comment_user="ngModel" [(ngModel)]="own_texto"></textarea>
 

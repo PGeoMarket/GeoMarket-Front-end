@@ -17,22 +17,22 @@
 
       <!-- Motivos para PUBLICACIONES -->
       @if (publication_id) {
-        <label class="flex items-center gap-2">
+        <label class="flex items-center gap-2 textOnDialog">
           <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="1" class="accent-azulPotente" />
           <span>Producto prohibido</span>
         </label>
 
-        <label class="flex items-center gap-2">
+        <label class="flex items-center gap-2 textOnDialog">
           <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="2" class="accent-azulPotente" />
           <span>Información engañosa</span>
         </label>
 
-        <label class="flex items-center gap-2">
+        <label class="flex items-center gap-2 textOnDialog">
           <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="3" class="accent-azulPotente" />
           <span>Producto peligroso</span>
         </label>
 
-        <label class="flex items-center gap-2">
+        <label class="flex items-center gap-2 textOnDialog">
           <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="4" class="accent-azulPotente" />
           <span>Práctica comercial sospechosa</span>
         </label>
@@ -40,29 +40,29 @@
 
       <!-- Motivos para PERFILES -->
       @if (seller_id) {
-        <label class="flex items-center gap-2">
+        <label class="flex items-center gap-2 textOnDialog">
           <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="5" class="accent-azulPotente" />
           <span>Perfil falso o suplantación</span>
         </label>
 
-        <label class="flex items-center gap-2">
+        <label class="flex items-center gap-2 textOnDialog">
           <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="6" class="accent-azulPotente" />
           <span>Comportamiento abusivo</span>
         </label>
       }
 
       <!-- Motivos que aplican a ambos (both) -->
-      <label class="flex items-center gap-2">
+      <label class="flex items-center gap-2 textOnDialog">
         <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="7" class="accent-azulPotente" />
         <span>Spam</span>
       </label>
 
-      <label class="flex items-center gap-2">
+      <label class="flex items-center gap-2 textOnDialog">
         <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="8" class="accent-azulPotente" />
         <span>Contenido inapropiado</span>
       </label>
 
-      <label class="flex items-center gap-2">
+      <label class="flex items-center gap-2 textOnDialog">
         <input type="radio" [(ngModel)]="reason_id" name="reason" [value]="9" class="accent-azulPotente" />
         <span>Otro motivo</span>
       </label>
@@ -72,7 +72,7 @@
         placeholder="Especificar..."
         [disabled]="reason_id !== 9"
         [class.opacity-50]="reason_id !== 9"
-        class="w-full h-[5em] border border-borde2 rounded-xl p-3 resize-none 
+        class="textOnDialog w-full h-[5em] border border-borde2 rounded-xl p-3 resize-none 
                focus:outline-none focus:ring-2 focus:ring-azulSecundario focus:border-transparent"></textarea>
 
       <!-- Botones -->
