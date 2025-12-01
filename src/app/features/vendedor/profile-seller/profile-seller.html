@@ -91,11 +91,11 @@
             <!-- Catálogo grid con scroll -->
             @if (tab=="catalogo" || !tab) {
 
-            <div class="h-full overflow-x-hidden" (click)="cerrarMenus()">
-                <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event" [fromProfile]="true"
+            <div class="h-full overflow-x-hidden">
+                <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = !isAbierto" [fromProfile]="true"
                     class="w-full mx-[10%]"></app-filters>
 
-                    <app-edit-publication></app-edit-publication>
+                    <app-edit-publication (click)="cerrarMenus()"></app-edit-publication>
             </div>
             }
 

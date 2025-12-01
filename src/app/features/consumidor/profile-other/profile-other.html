@@ -94,11 +94,11 @@
     <div class="flex-1 min-h-0 relative">
       <!-- Catálogo grid con scroll -->
       @if (tab=="catalogo" || !tab) {
-      <div class="h-full overflow-x-hidden" (click)="cerrarFiltros()">
+      <div class="h-full overflow-x-hidden">
 
-        <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = $event" [fromProfile]="true"
+        <app-filters [isAbierto]="isAbierto" (isAbiertoChange)="isAbierto = !isAbierto" [fromProfile]="true"
           class="w-full mx-[10%]"></app-filters>
-        <app-publications [isFrom_cache]="true"></app-publications>
+        <app-publications [isFrom_cache]="true" (click)="cerrarFiltros()"></app-publications>
 
         <!-- Falta la pantalla productos -->
       </div>

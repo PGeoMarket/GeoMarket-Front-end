@@ -54,9 +54,9 @@
   <p class="pubicationCategory produc_precio text-base md:text-lg">{{publication_detail.category?.categoria}}</p>
 
   <!-- Descripción -->
-  <div class="bg_descripcion rounded-lg p-4 md:p-5">
+  <div class="bgColorBlancoSucio rounded-lg p-4 md:p-5">
     <h3 class="font-semibold mb-2 text-lg md:text-xl">Descripción</h3>
-    <p class="text-sm md:text-base text-gray-700 leading-relaxed">
+    <p class="text-sm md:text-base colorTextosNoNegro leading-relaxed">
       {{publication_detail.descripcion}}
     </p>
   </div>
@@ -70,7 +70,7 @@
   }
 
   <!-- Usuario vendedor -->
-  <div class="bg-gray-300 rounded-xl p-4 md:p-5 flex items-center space-x-4 cursor-pointer"
+  <div class="bgColorBlancoSucio rounded-xl p-4 md:p-5 flex items-center space-x-4 cursor-pointer"
     [routerLink]="['/ProfileOther', seller_product_detail.id]">
     <img class="w-10 h-10 md:w-12 md:h-12 rounded-full"
       [src]=" seller_product_detail.user.image?.url || 'svg/profile.svg'" alt="foto">
