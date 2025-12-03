@@ -335,8 +335,8 @@ html.dark {
   @apply bg-background;
 }
 
-.produc_precio {
-  @apply text-gray-500;
+.produt_precio {
+  @apply text-textosNoNegro;
 }
 
 .bg_descripcion {

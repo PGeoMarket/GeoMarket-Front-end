@@ -33,7 +33,7 @@
 
   <!-- Precio y botón favorito -->
   <div class="flex justify-between items-center">
-    <p class="produc_precio text-xl md:text-2xl font-semibold">{{publication_detail.precio | currency: 'COP'}}</p>
+    <p class="produt_precio text-xl md:text-2xl font-semibold">{{publication_detail.precio | currency: 'COP'}}</p>
     <button class="bg-transparent" (click)="changeFavoritePublication()">
       <img [src]="favorito ? 'svg/favoritesoscuro_relleno.svg' : 'svg/favoritesoscuro_vacio.svg'" alt="corazon"
         class="w-10 h-10 md:w-12 md:h-12 fav-icon">
@@ -51,7 +51,7 @@
   </div>
 
   <!-- Categoria -->
-  <p class="pubicationCategory produc_precio text-base md:text-lg">{{publication_detail.category?.categoria}}</p>
+  <p class="divPublications_Categoria">{{publication_detail.category?.categoria}}</p>
 
   <!-- Descripción -->
   <div class="bgColorBlancoSucio rounded-lg p-4 md:p-5">
@@ -88,7 +88,7 @@
   </div>
 
   <!-- Comentarios -->
-  <div class="mt-5 md:mt-6 produc_precio ">
+  <div class="mt-5 md:mt-6 produt_precio ">
     <app-comments [publication_id]="publication_detail.id!" [seller_id]="publication_detail.seller_id!"></app-comments>
   </div>
 
