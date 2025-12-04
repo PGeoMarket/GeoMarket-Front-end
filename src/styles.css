@@ -404,3 +404,10 @@ html.dark {
   @apply text-textosNoNegro;
 }
 
+.ProfilConsumer {
+  @apply  text-textosNoNegro  bg-blancoSucio border-borde1;
+}
+
+.inputProfilConsumer {
+ @apply  text-textosNoNegro text-sm
+}

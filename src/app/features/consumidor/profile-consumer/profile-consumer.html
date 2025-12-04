@@ -1,6 +1,6 @@
 <!-- Card de perfil -->
 <div
-  class="bg-white border dark:bg-darkBlancoSucio border-gray-300 dark:border-gray-600 rounded-xl p-6 mx-auto flex flex-col items-center shadow mt-10 w-full max-w-[400px] relative">
+  class=" border ProfilConsumer  rounded-xl p-6 mx-auto flex flex-col items-center shadow mt-10 w-full max-w-[400px] relative">
 
   <!-- Botón volver -->
   <div class="absolute top-4 left-4">
@@ -18,20 +18,20 @@
 
   <!-- Formulario de datos -->
   <form class="w-full flex flex-col gap-3">
-    <label class="text-gray-700 dark:text-darkTextosNoNegro text-sm">Nombre</label>
+    <label class="inputProfilConsumer">Nombre</label>
     <input type="text" value="{{user?.primer_nombre}} {{user?.segundo_nombre}}" disabled
       class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 inputProfileOther text-base">
 
-    <label class="text-gray-700 dark:text-darkTextosNoNegro text-sm">Apellidos</label>
+    <label class="inputProfilConsumer">Apellidos</label>
     <input type="text" value="{{user?.primer_apellido}} {{user?.segundo_apellido}}" disabled
       class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 inputProfileOther text-base">
 
-    <label class="text-gray-700 dark:text-darkTextosNoNegro text-sm">Correo</label>
+    <label class="inputProfilConsumer">Correo</label>
     <input type="email" value="{{user?.email}}" disabled
       class="rounded-md border border-gray-300 px-3 py-1 bg-gray-100 text-gray-500 inputProfileOther text-base">
 
     <button type="button"
-      class="mt-4 px-4 py-1 rounded-md bg-gray-100 text-[#06406A] border border-gray-300 self-center dark:bg-darkBlancoSucio dark:border-gray-600  dark:text-darkTextosNoNegro cursor-pointer" (click)="onOpenEditConsumer()">
+      class="mt-4 px-4 py-1 rounded-md bg-gray-100 text-[#06406A] border border-gray-200 self-center inputProfileOther dark:border-gray-600  dark:text-darkTextosNoNegro cursor-pointer" (click)="onOpenEditConsumer()">
       Editar datos
     </button>
   </form>
